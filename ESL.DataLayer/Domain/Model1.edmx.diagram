@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="8c3207aa903f47aba2f9a3272ebd2b49" Name="Diagram1">
+        <EntityTypeShape EntityType="ESLModel.sysdiagram" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_Code" Width="1.5" PointX="3" PointY="14.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_CodeGroup" Width="1.5" PointX="0.75" PointY="15.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_Contract" Width="1.5" PointX="10.5" PointY="16.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_Course" Width="1.5" PointX="7.5" PointY="16.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_Document" Width="1.5" PointX="5.25" PointY="18.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_Gallery" Width="1.5" PointX="7.5" PointY="20.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_GalleryDocument" Width="1.5" PointX="12.75" PointY="19.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_Menu" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_News" Width="1.5" PointX="7.5" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_NewsDocument" Width="1.5" PointX="7.5" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_Organization" Width="1.5" PointX="10.5" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_Page" Width="1.5" PointX="10.25" PointY="25.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_Region" Width="1.5" PointX="12.5" PointY="23.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_Role" Width="1.5" PointX="3" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_SubCourse" Width="1.5" PointX="9.75" PointY="20.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_SubMenu" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_User" Width="1.5" PointX="5.25" PointY="11.125" IsExpanded="true" />
+        <AssociationConnector Association="ESLModel.FK_Tbl_Code_Tbl_CodeGroup" ManuallyRouted="false" />
+        <AssociationConnector Association="ESLModel.FK_Tbl_Contract_Tbl_Code" ManuallyRouted="false" />
+        <AssociationConnector Association="ESLModel.FK_Tbl_Document_Tbl_Code" ManuallyRouted="false" />
+        <AssociationConnector Association="ESLModel.FK_Tbl_NewsDocument_Tbl_Code" ManuallyRouted="false" />
+        <AssociationConnector Association="ESLModel.FK_Tbl_Organization_Tbl_Code" ManuallyRouted="false" />
+        <AssociationConnector Association="ESLModel.FK_Tbl_User_Tbl_Code" ManuallyRouted="false" />
+        <AssociationConnector Association="ESLModel.FK_Tbl_Contract_Tbl_Document" ManuallyRouted="false" />
+        <AssociationConnector Association="ESLModel.FK_Tbl_Course_Tbl_Document" ManuallyRouted="false" />
+        <AssociationConnector Association="ESLModel.FK_Tbl_SubCourse_Tbl_Course" ManuallyRouted="false" />
+        <AssociationConnector Association="ESLModel.FK_Tbl_Gallery_Tbl_Document" ManuallyRouted="false" />
+        <AssociationConnector Association="ESLModel.FK_Tbl_GalleryDocument_Tbl_Document" ManuallyRouted="false" />
+        <AssociationConnector Association="ESLModel.FK_Tbl_NewsDocument_Tbl_Document" ManuallyRouted="false" />
+        <AssociationConnector Association="ESLModel.FK_Tbl_Organization_Tbl_Document" ManuallyRouted="false" />
+        <AssociationConnector Association="ESLModel.FK_Tbl_Region_Tbl_Document" ManuallyRouted="false" />
+        <AssociationConnector Association="ESLModel.FK_Tbl_SubCourse_Tbl_Document" ManuallyRouted="false" />
+        <AssociationConnector Association="ESLModel.FK_Tbl_GalleryDocument_Tbl_Gallery" ManuallyRouted="false" />
+        <AssociationConnector Association="ESLModel.FK_Tbl_SubMenu_Menu" ManuallyRouted="false" />
+        <AssociationConnector Association="ESLModel.FK_Tbl_News_Tbl_User" ManuallyRouted="false" />
+        <AssociationConnector Association="ESLModel.FK_Tbl_NewsDocument_Tbl_News" ManuallyRouted="false" />
+        <AssociationConnector Association="ESLModel.FK_Tbl_Region_Tbl_Page" ManuallyRouted="false" />
+        <AssociationConnector Association="ESLModel.FK_Tbl_User_Tbl_Role" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
