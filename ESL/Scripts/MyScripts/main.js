@@ -1,17 +1,26 @@
 var scrollTop = $("#scrollTop");
+if ($("main .overlay").length == 0) {
+    $(".index-header .menu").css({
+        "box-shadow": "0 2px 4px",
+        "padding": "1rem 0",
+        "background": "linear-gradient(95deg, #5533ff 40%, #25ddf5 100%)"
+    })
+}
 $(window).scroll(function () {
-    if ($(window).scrollTop() > 10) {
-        $(".index-header .menu").css({
-            "box-shadow": "0 2px 4px",
-            "padding": "1rem 0",
-            "background": "linear-gradient(95deg, #5533ff 40%, #25ddf5 100%)"
-        })
-    } else {
-        $(".index-header .menu").css({
-            "box-shadow": "unset",
-            "padding": "unset",
-            "background": "transparent"
-        })
+    if ($("main .overlay").length == 1) {
+        if ($(window).scrollTop() > 10) {
+            $(".index-header .menu").css({
+                "box-shadow": "0 2px 4px",
+                "padding": "1rem 0",
+                "background": "linear-gradient(95deg, #5533ff 40%, #25ddf5 100%)"
+            })
+        } else {
+            $(".index-header .menu").css({
+                "box-shadow": "unset",
+                "padding": "unset",
+                "background": "transparent"
+            })
+        }
     }
     if ($(window).scrollTop() > 250) {
         scrollTop.fadeIn("ease")

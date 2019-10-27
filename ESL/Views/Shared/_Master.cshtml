@@ -1,13 +1,111 @@
-﻿<!DOCTYPE html>
-
-<html>
+﻿<!doctype html>
+<html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>@ViewBag.Title | آکادمی تخصصی آیلتس</title>
+    <link rel="stylesheet" href="~/Content/Fonts/font awesome/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="~/Content/Plugins/Boostrap4/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/Css/MyCss/defaults.css">
+    <link rel="stylesheet" href="~/Content/Css/font.css">
+    <link rel="stylesheet" href="~/Content/Plugins/Owl.Carousel/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/Content/Plugins/Owl.Carousel/owl.theme.default.min.css">
+    <link rel="stylesheet" href="~/Content/Css/MyCss/styles.css">
 </head>
 <body>
-    <div>
-        @RenderBody()
-    </div>
+    <header class="index-header">
+        <div class="menu">
+            <div class="container">
+                <nav class="navbar navbar-expand-sm">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu"
+                            aria-controls="menu" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="far fa-bars"></span>
+                    </button>
+                    <div class="mobile-icon">
+                        <a href="">
+                            <span>ثبت نام</span>
+                            <span class="far fa-user-plus"></span>
+                        </a>
+                        <a href="">
+                            <span>ورود</span>
+                            <span class="far fa-sign-in"></span>
+                        </a>
+                    </div>
+                    <div class="collapse navbar-collapse" id="menu">
+                        <div class="navbar-nav">
+                            <a class="signUp nav-link" href="#">ثبت نام</a>
+                            <a class="login nav-link" href="#">ورود</a>
+                            <a class="menu-item nav-link active" href="@Url.Action("Index", "Home")">صفحه اصلی</a>
+                            <a class="menu-item nav-link" href="@Url.Action("Index", "AboutUs")">خانه آیلتس</a>
+                            <a class="menu-item nav-link" href="@Url.Action("Index", "Courses")">دوره های آموزشی</a>
+                            <a class="menu-item nav-link" href="@Url.Action("Index", "Home")">آرشیو اخبار</a>
+                            <a class="menu-item nav-link" href="@Url.Action("Index", "Gallery")">گالری عکس</a>
+                            <a class="menu-item nav-link" href="@Url.Action("Index", "ContactUs")">ارتباط با ما</a>
+                        </div>
+                    </div>
+                </nav>
+                <div class="logo">
+                    <div class="text">
+                        <p>آکادمی تخصصی زبان انگلیسی</p>
+                        <p>English As a Second Language</p>
+                    </div>
+                    <img src="~/Content/Images/logo.png" alt="">
+                </div>
+            </div>
+        </div>
+    </header>
+    @RenderBody()
+    <footer>
+        <div class="top-part d-flex align-items-center mb-4">
+            <div class="right-part col-xl-8 d-flex flex-wrap">
+                <div class="links col-lg-4 col-md-6">
+                    <p>خانه آیلتس</p>
+                    <ul>
+                        <li><a href=""><span>- </span>دوره های آموزشی</a></li>
+                        <li><a href=""><span>- </span>آرشیو اخبار</a></li>
+                        <li><a href=""><span>- </span>سازمان ها</a></li>
+                        <li><a href=""><span>- </span>ارتباط با ما</a></li>
+                    </ul>
+                    <div class="social-media mt-4">
+                        <a href=""><span class="fab fa-instagram"></span></a>
+                        <a href=""><span class="fab fa-telegram-plane"></span></a>
+                        <a href=""><img src="~/Content/Images/aparat.png" alt=""></a>
+                    </div>
+                </div>
+                <div class="links col-lg-4 col-md-6">
+                    <p>شماره تماس</p>
+                    <ul>
+                        <li><span>تلفن ثابت&ensp;</span>:<span>&ensp;88728711</span></li>
+                        <li><span>تلفن همراه&ensp;</span>:<span>&ensp;09906279568</span></li>
+                    </ul>
+                </div>
+                <div class="links col-lg-4 col-md-6">
+                    <p>آدرس شعبه مرکزی</p>
+                    <p>تهران ، عباس آباد ، خیابان احمد قصیر ، نبش کوچه یازدهم ، برج 38 ، طبقه دوم ، واحد 11.</p>
+                </div>
+            </div>
+
+            <div class="left-part d-flex justify-content-end col-xl-4">
+                <div class="text">
+                    <p>آکادمی تخصصی زبان انگلیسی</p>
+                    <p>English As a Second Language</p>
+                </div>
+                <div class="img"><img src="~/Content/Images/logo.png" alt=""></div>
+            </div>
+
+        </div>
+        <div class="bottom-part">
+            <p>تمام حقوق و مطالب این سایت برای آکادمی زبان ESL محفوظ است.</p>
+        </div>
+        <a href="" id="scrollTop"><span class="far fa-chevron-up"></span></a>
+    </footer>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/Plugins/Boostrap4/bootstrap.min.js"></script>
+    <script src="~/Scripts/Plugins/Owl.Carousel/owl.carousel.min.js"></script>
+    <script src="~/Scripts/Plugins/Owl.Carousel/owl.carousel2.thumbs.min.js"></script>
+    <script src="~/Scripts/MyScripts/main.js"></script>
+    @RenderSection("Scripts", false)
 </body>
 </html>
