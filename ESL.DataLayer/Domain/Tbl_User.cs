@@ -26,15 +26,9 @@ namespace ESL.DataLayer.Domain
         public int User_GenderCodeID { get; set; }
         public string User_UserName { get; set; }
         public string User_Email { get; set; }
-        public bool User_EmailConfirmed { get; set; }
+        public Nullable<bool> User_EmailConfirmed { get; set; }
         public string User_PasswordHash { get; set; }
-        public string User_SecurityStamp { get; set; }
         public string User_PhoneNumber { get; set; }
-        public bool User_PhoneNumberConfirmed { get; set; }
-        public bool User_TwoFactorEnabled { get; set; }
-        public Nullable<System.DateTime> User_LockoutEndDateUtc { get; set; }
-        public bool User_LockoutEnabled { get; set; }
-        public int User_AccessFailedCount { get; set; }
         public string User_FirstName { get; set; }
         public string User_lastName { get; set; }
         public string User_IdentityNumber { get; set; }
