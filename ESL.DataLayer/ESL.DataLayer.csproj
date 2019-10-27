@@ -51,15 +51,74 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
-    <Compile Include="Domain\Model1.Context.cs">
+    <Compile Include="Domain\ESL.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.Context.tt</DependentUpon>
+      <DependentUpon>ESL.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Domain\Model1.Designer.cs">
+    <Compile Include="Domain\ESL.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.edmx</DependentUpon>
+      <DependentUpon>ESL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Domain\ESL.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ESL.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Domain\sysdiagram.cs">
+      <DependentUpon>ESL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Domain\Tbl_Code.cs">
+      <DependentUpon>ESL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Domain\Tbl_CodeGroup.cs">
+      <DependentUpon>ESL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Domain\Tbl_Contract.cs">
+      <DependentUpon>ESL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Domain\Tbl_Course.cs">
+      <DependentUpon>ESL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Domain\Tbl_Document.cs">
+      <DependentUpon>ESL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Domain\Tbl_Gallery.cs">
+      <DependentUpon>ESL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Domain\Tbl_GalleryDocument.cs">
+      <DependentUpon>ESL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Domain\Tbl_Menu.cs">
+      <DependentUpon>ESL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Domain\Tbl_News.cs">
+      <DependentUpon>ESL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Domain\Tbl_NewsDocument.cs">
+      <DependentUpon>ESL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Domain\Tbl_Organization.cs">
+      <DependentUpon>ESL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Domain\Tbl_Page.cs">
+      <DependentUpon>ESL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Domain\Tbl_Region.cs">
+      <DependentUpon>ESL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Domain\Tbl_Role.cs">
+      <DependentUpon>ESL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Domain\Tbl_SubCourse.cs">
+      <DependentUpon>ESL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Domain\Tbl_SubMenu.cs">
+      <DependentUpon>ESL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Domain\Tbl_User.cs">
+      <DependentUpon>ESL.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -68,26 +127,30 @@
     <Folder Include="ViewModels\" />
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="Domain\Model1.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.Config" />
-    <None Include="Domain\Model1.edmx.diagram">
-      <DependentUpon>Model1.edmx</DependentUpon>
+    <EntityDeploy Include="Domain\ESL.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ESL.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Domain\ESL.edmx.diagram">
+      <DependentUpon>ESL.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Domain\Model1.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Model1.Context.cs</LastGenOutput>
-    </Content>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+    <Content Include="Domain\ESL.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ESL.edmx</DependentUpon>
+      <LastGenOutput>ESL.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Domain\ESL.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ESL.edmx</DependentUpon>
+      <LastGenOutput>ESL.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
