@@ -1,9 +1,11 @@
 var scrollTop = $("#scrollTop");
 if ($("main .overlay").length == 0) {
     $(".index-header .menu").css({
-        "box-shadow": "0 2px 4px",
-        "padding": "1rem 0",
-        "background": "linear-gradient(95deg, #5533ff 40%, #25ddf5 100%)"
+        "background": "linear-gradient(95deg, #5533ff 40%, #25ddf5 100%)",
+        "position": "fixed",
+        "top": "0",
+        "padding-bottom": "1rem",
+        "box-shadow": "0 2px 4px"
     })
 }
 $(window).scroll(function () {
