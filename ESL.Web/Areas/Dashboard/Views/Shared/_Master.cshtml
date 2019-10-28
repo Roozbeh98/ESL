@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+
+    <link href="~/Content/Plugins/Boostrap3/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/Fonts/font awesome/css/fontawesome-all.min.css" rel="stylesheet" />
+    <link href="~/Content/Css/font.css" rel="stylesheet" />
+
+    <link href="~/Content/Css/MyCss/Dashboard.css" rel="stylesheet" />
+
+    <link href="~/Content/Plugins/jQuery.Select2/select2.min.css" rel="stylesheet" />
+    <link href="~/Content/Plugins/jQuery.Select2/select2-bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/Plugins/MaterialDesignSwitch/MaterialDesignSwitch.css" rel="stylesheet" />
+
+</head>
+<body>
+
+
+
+    <header class="main-header container-fluid  navbar-fixed-top">
+
+        <div class="row">
+
+            <div class="col-md-3  navHeader">
+                <img src="~/Content/Images/logo.png" style="height:30px;" />
+            </div>
+            <nav class="col-md-9  navbar navbar-inverse " style="border-radius:0;">
+
+                @Html.Partial("_Nav")
+
+            </nav>
+        </div>
+
+    </header>
+    <main>
+        <div class="container-fluid">
+            @RenderBody()
+        </div>
+    </main>
+
+
+
+    <footer></footer>
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+
+
+    <script src="~/Scripts/Plugins/Boostrap3/bootstrap.min.js"></script>
+
+    <script src="~/Scripts/Plugins/DataTables-1.10.18/js/jquery.dataTables.js"></script>
+    <script src="~/Scripts/Plugins/DataTables-1.10.18/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Scripts/Plugins/ckeditor/ckeditor.js"></script>
+    <script src="~/Scripts/Plugins/jQuery.slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="~/Scripts/Plugins/jQuery.Select2/select2.js"></script>
+    <script src="~/Scripts/Plugins/jQuery.Select2/i18n/fa.js"></script>
+
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+
+    @RenderSection("Scripts", false)
+
+    @RenderSection("Modal", false)
+
+</body>
+</html>

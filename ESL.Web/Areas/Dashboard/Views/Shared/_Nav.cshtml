@@ -1,0 +1,112 @@
+﻿@*@using D_Library.Models.Repository
+    @using D_Library.Models.Model*@
+
+@{
+    //Rep_AccountInfo info = new Rep_AccountInfo();
+    //AccountInfoModel infoModel = new AccountInfoModel();
+    //infoModel = info.GetInfoForNavbar(User.Identity.Name);
+    //if (User.Identity.IsAuthenticated)
+    if (true)
+    {
+        <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+
+                <!-- Messages: style can be found in dropdown.less-->
+                <li class="dropdown messages-menu menu-item ">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-envelope nav-top-userInfo-icon"></i>
+                        <span class="label label-success">0</span>
+                    </a>
+
+                </li>
+                <!-- Notifications: style can be found in dropdown.less -->
+                <li class="dropdown notifications-menu menu-item">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-bell nav-top-userInfo-icon" style="padding-right: 7px;"></i>
+                        <span class="label label-warning">0</span>
+                    </a>
+
+                </li>
+                <!-- User Account: style can be found in dropdown.less -->
+                <li class="dropdown user user-menu menu-item ">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                        <i class="glyphicon glyphicon-user  nav-top-userInfo-icon"></i>
+
+                        <span class="hidden-xs nav-username">روزبه شامخی</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <!-- User image -->
+                        <li class="user-header">
+
+
+                            <img src="~/Content/Images/abstract-user-flat-3.png" style="width:100px;height:100px;" class=" img-circle" alt="User Image">
+
+                            <p>
+                                روزبه شامخی
+                                <br />
+                                <small>ادمین</small>
+                            </p>
+                        </li>
+                        <!-- Menu Body -->
+                        @*<li class="user-body">
+                                <form action="@Url.Action("Dashboard","Dashboard")" class="col-xs-4 text-left">
+
+                                    <button type="submit" class="btn btn-primary glyphicon glyphicon glyphicon-user " data-toggle="tooltip" data-placement="top" title="پروفایل"></button>
+
+                                </form>
+                                <form action="@Url.Action("Dashboard","Dashboard")" class="col-xs-4 text-center ">
+                                    <button type="submit" class="btn btn-primary glyphicon glyphicon-cog " data-toggle="tooltip" data-placement="top" title="تنظمات کاربری"></button>
+
+                                </form>
+                                <form action="@Url.Action("Dashboard","Dashboard")" class="col-xs-4 text-right">
+                                    <button type="submit" class="btn btn-primary glyphicon glyphicon-folder-open " data-toggle="tooltip" data-placement="top" title="فایل های من"></button>
+
+                                </form>
+
+                            </li>*@
+                        <!-- Menu Footer-->
+                        <li class="user-footer">
+                            <div class="pull-left">
+                                <a href="@Url.Action("Dashboard","Dashboard")" class="btn btn-default btn-flat" style="width:65px;">داشبورد</a>
+                            </div>
+                            <div class="pull-right">
+                                <a href="@Url.Action("Logout","Account")" class="btn btn-default btn-flat" style="width:65px;">خروج</a>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+    }
+    else
+    {
+        <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+
+                <li class="btn navbar-btn nav-item-out-login ">
+                    <a href="@Url.Action("Search","Home")" class="nav-item-out-login-a" style="padding:6px 0px 0px 0px; ">
+                        <i class="glyphicon glyphicon-search nav-item-out-login-a-i-search "></i>
+                        <span class="hidden-xs ">جستجو</span>
+                    </a>
+
+                </li>
+                <li class="btn navbar-btn nav-item-out-login ">
+                    <a href="@Url.Action("Logout","Account")" class="nav-item-out-login-a" style="padding:6px 0px 0px 0px;">
+                        <i class="glyphicon glyphicon-log-in nav-item-out-login-a-i-login "></i>
+                        <span class="hidden-xs ">ورود</span>
+                    </a>
+
+                </li>
+
+            </ul>
+        </div>
+
+    }
+}
+
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>

@@ -1,0 +1,160 @@
+﻿body {
+    font-family: Iransans;
+    background-color: whitesmoke;
+    color: whitesmoke;
+}
+
+/*********************************************** navbar ********************************************/
+.navbar-inverse {
+    background-color: #222d32;
+    height: 60px;
+    border: none;
+    border-bottom: 3px solid #9d9d9d;
+}
+
+.navHeader {
+    height: 60px;
+    background-color: #222d32;
+    padding-top: 13px;
+    border-bottom: 3px solid #9d9d9d;
+    padding-right: 30px;
+}
+
+    .navHeader a {
+        text-decoration: none;
+        font-size: 20px;
+        color: #9d9d9d;
+    }
+
+.nav-item-out-login {
+    text-decoration: none;
+    font-size: 18px;
+    color: #9d9d9d;
+}
+
+.nav-item-out-login-a {
+    display: block;
+    padding: 0px;
+}
+
+.nav-item-out-login-a-i-search {
+    width: 30px;
+    height: 30px;
+    border: 2px solid;
+    border-radius: 100%;
+    padding-top: 6px;
+    padding-right: 1px;
+    font-size: 14px;
+}
+
+.nav-item-out-login-a-i-login {
+    width: 30px;
+    height: 30px;
+    border: 2px solid;
+    border-radius: 100%;
+    padding-top: 5.5px;
+    padding-right: 3px;
+    font-size: 14px;
+}
+
+.nav-item-out-login:hover, .nav-item-out-login:active {
+    text-decoration: none;
+    font-size: 18px;
+    color: whitesmoke;
+}
+
+.main-header .navbar .nav > li > a > .label {
+    position: absolute;
+    top: 9px;
+    right: 7px;
+    text-align: center;
+    font-size: 9px;
+    padding: 2px 3px;
+    line-height: .9;
+}
+
+.nav-top-userInfo-icon {
+    width: 30px;
+    height: 30px;
+    border: 2px solid;
+    border-radius: 100%;
+    padding-top: 6px;
+    padding-right: 6px;
+}
+
+.main-header .navbar-custom-menu, .main-header .navbar-right {
+    margin-left: 5px;
+    float: left;
+}
+
+.navbar-custom-menu > .navbar-nav > li > .dropdown-menu {
+    position: absolute;
+    right: auto;
+    left: 0;
+}
+
+.navbar-custom-menu > .navbar-nav > li {
+    margin-top: 0px;
+}
+
+.nav-username {
+    margin-left: 5px;
+    margin-right: 5px;
+    font-size: 16px;
+}
+
+.navbar-nav > .user-menu > .dropdown-menu {
+    border-radius: 0;
+    padding: 1px 0 0 0;
+    border-top-width: 0;
+    width: 280px;
+}
+
+    .navbar-nav > .user-menu > .dropdown-menu > li.user-header {
+        height: 175px;
+        padding: 10px;
+        text-align: center;
+    }
+
+.main-header li.user-header {
+    background-color: #222d32;
+}
+
+.navbar-nav > .user-menu > .dropdown-menu > li.user-header > p {
+    z-index: 5;
+    color: #fff;
+    color: rgba(255,255,255,0.8);
+    font-size: 17px;
+    margin-top: 10px;
+}
+
+.navbar-nav > .user-menu > .dropdown-menu > .user-body {
+    padding: 10px;
+    border-top: 1px solid #dddddd;
+    height: 55px;
+    background-color: white;
+}
+
+.navbar-nav > .user-menu > .dropdown-menu > .user-footer {
+    background-color: #f9f9f9;
+    padding: 7px;
+    height: 50px;
+}
+
+
+@media screen and (max-width:990px) {
+
+
+    /*********************************************** navbar *********************************************/
+    .navHeader {
+        height: 60px;
+        background-color: #222d32;
+        padding-top: 13px;
+        border-bottom: 3px solid #9d9d9d;
+        text-align: center;
+    }
+
+    .navbar-custom-menu > .navbar-nav > li {
+        float: right;
+    }
+}
