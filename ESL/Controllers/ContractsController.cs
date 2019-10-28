@@ -4,11 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace ESL.Areas.Dashboard.Controllers
+namespace ESL.Controllers
 {
-    public class HomeController : Controller
+    public class ContractsController : Controller
     {
-        // GET: Dashboard/Home
+        // GET: Contract
         public ActionResult Index()
         {
             return View();

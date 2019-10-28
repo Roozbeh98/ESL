@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewBag.Title = "تماس با ما";
+    Layout = "~/Views/Shared/_Master.cshtml";
+}
+
+<main class="inner-page contactUs">
+    <div class="container text-center">
+        <h3 class="title">ارتباط با ما</h3>
+        <h6 class="mt-3 mb-5 subtitle">ارتباط رایگان از طریق ایمیل و مشاوره تلفنی</h6>
+        <div class="contents d-flex flex-wrap">
+            <div class="right-part col-lg-5 ml-5 col-sm-12">
+                <img src="~/Content/Images/contactUs.png" alt="">
+            </div>
+            <div class="left-part col-lg-6 col-sm-12">
+                <form action="" method="post">
+                    <div class="form-row">
+                        <div class="form-group col col-xs-12">
+                            <input type="text" class="form-control" id="lastName" placeholder="نام خانوادگی">
+                        </div>
+                        <div class="form-group col col-xs-12">
+                            <input type="text" class="form-control" id="firstName" placeholder="نام">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col col-xs-12">
+                            <input type="text" class="form-control" id="email" placeholder="ایمیل">
+                        </div>
+                        <div class="form-group col col-xs-12">
+                            <input type="text" class="form-control" id="subject" placeholder="موضوع">
+                        </div>
+                    </div>
+                    <textarea class="form-control" id="text" cols="30" rows="10" placeholder="متن خود را بنویسید..."></textarea>
+                    <div class="form-group mt-4">
+                        <input class="btn" type="submit" value="ارسال">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="mt-5 companies text-center">
+        <h3 class="title">سازمان ها</h3>
+        <h6 class="mt-3 mb-5 subtitle">شامل سازمان ها و همکاران</h6>
+        <div class="companies-list">
+            <div class="list-carousel owl-carousel owl-theme">
+                <div class="img"><img src="~/Content/Images/tejaratBank.png" alt=""></div>
+                <div class="img"><img src="~/Content/Images/MatagheazadeAnzali.png" alt=""></div>
+                <div class="img"><img src="~/Content/Images/PalayeshnafteEsfehan.png" alt=""></div>
+                <div class="img"><img src="~/Content/Images/Irankhudro.png" alt=""></div>
+            </div>
+        </div>
+    </div>
+</main>

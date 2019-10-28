@@ -616,12 +616,17 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Dashboard\Controllers\AccountController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\DashboardController.cs" />
-    <Compile Include="Areas\Dashboard\Controllers\HomeController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\SettingController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\UserController.cs" />
     <Compile Include="Areas\Dashboard\DashboardAreaRegistration.cs" />
+    <Compile Include="Controllers\AboutUsController.cs" />
+    <Compile Include="Controllers\ContactUsController.cs" />
+    <Compile Include="Controllers\ContractsController.cs" />
+    <Compile Include="Controllers\CoursesController.cs" />
     <Compile Include="Controllers\ErrorsController.cs" />
+    <Compile Include="Controllers\GalleryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SubCoursesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -645,6 +650,13 @@
     <Content Include="Scripts\Plugins\ckeditor\skins\moono-lisa\readme.md" />
     <Content Include="Views\Shared\_Master.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\AboutUs\Index.cshtml" />
+    <Content Include="Views\ContactUs\Index.cshtml" />
+    <Content Include="Views\Gallery\Index.cshtml" />
+    <Content Include="Views\Courses\Index.cshtml" />
+    <Content Include="Views\Contracts\Index.cshtml" />
+    <Content Include="Views\SubCourses\Index.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -657,24 +669,9 @@
     <Folder Include="Areas\Dashboard\Models\" />
     <Folder Include="Areas\Dashboard\Views\Account\" />
     <Folder Include="Areas\Dashboard\Views\Dashboard\" />
-    <Folder Include="Areas\Dashboard\Views\Home\" />
     <Folder Include="Areas\Dashboard\Views\Setting\" />
     <Folder Include="Models\" />
     <Folder Include="Views\Errors\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ESL.Common\ESL.Common.csproj">
-      <Project>{069dc7d9-c1fb-4719-82cc-dbb45b7dd00c}</Project>
-      <Name>ESL.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ESL.DataLayer\ESL.DataLayer.csproj">
-      <Project>{84737d8d-72c6-4a0c-8c36-d9773e965135}</Project>
-      <Name>ESL.DataLayer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ESL.Services\ESL.Services.csproj">
-      <Project>{e7097287-0e2f-4bac-9d9b-1e08258ad09b}</Project>
-      <Name>ESL.Services</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
