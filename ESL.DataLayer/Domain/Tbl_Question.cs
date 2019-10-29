@@ -17,12 +17,12 @@ namespace ESL.DataLayer.Domain
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Tbl_Question()
         {
-            this.Tbl_Exam = new HashSet<Tbl_Exam>();
             this.Tbl_Response1 = new HashSet<Tbl_Response>();
         }
     
         public int Question_ID { get; set; }
         public System.Guid Question_Guid { get; set; }
+        public int Question_ExamID { get; set; }
         public int Question_ResponseID { get; set; }
         public int Question_TypeCodeID { get; set; }
         public string Question_Title { get; set; }
@@ -33,8 +33,7 @@ namespace ESL.DataLayer.Domain
         public bool Question_IsDelete { get; set; }
     
         public virtual Tbl_Code Tbl_Code { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tbl_Exam> Tbl_Exam { get; set; }
+        public virtual Tbl_Exam Tbl_Exam { get; set; }
         public virtual Tbl_Response Tbl_Response { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_Response> Tbl_Response1 { get; set; }
