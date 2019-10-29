@@ -18,12 +18,15 @@ namespace ESL.DataLayer.Domain
         public Tbl_User()
         {
             this.Tbl_News = new HashSet<Tbl_News>();
+            this.Tbl_UserExam = new HashSet<Tbl_UserExam>();
+            this.Tbl_UserExamAccess = new HashSet<Tbl_UserExamAccess>();
         }
     
         public int User_ID { get; set; }
         public System.Guid User_Guid { get; set; }
         public int User_RoleID { get; set; }
         public int User_GenderCodeID { get; set; }
+        public int User_LevelCodeID { get; set; }
         public string User_UserName { get; set; }
         public string User_Email { get; set; }
         public Nullable<bool> User_EmailConfirmed { get; set; }
@@ -39,8 +42,13 @@ namespace ESL.DataLayer.Domain
         public bool User_IsDelete { get; set; }
     
         public virtual Tbl_Code Tbl_Code { get; set; }
+        public virtual Tbl_Code Tbl_Code1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_News> Tbl_News { get; set; }
         public virtual Tbl_Role Tbl_Role { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tbl_UserExam> Tbl_UserExam { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tbl_UserExamAccess> Tbl_UserExamAccess { get; set; }
     }
 }
