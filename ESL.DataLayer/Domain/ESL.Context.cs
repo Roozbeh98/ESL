@@ -25,11 +25,13 @@ namespace ESL.DataLayer.Domain
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<Tbl_Code> Tbl_Code { get; set; }
         public virtual DbSet<Tbl_CodeGroup> Tbl_CodeGroup { get; set; }
         public virtual DbSet<Tbl_Contract> Tbl_Contract { get; set; }
         public virtual DbSet<Tbl_Course> Tbl_Course { get; set; }
         public virtual DbSet<Tbl_Document> Tbl_Document { get; set; }
+        public virtual DbSet<Tbl_Exam> Tbl_Exam { get; set; }
         public virtual DbSet<Tbl_Gallery> Tbl_Gallery { get; set; }
         public virtual DbSet<Tbl_GalleryDocument> Tbl_GalleryDocument { get; set; }
         public virtual DbSet<Tbl_Menu> Tbl_Menu { get; set; }
@@ -37,10 +39,14 @@ namespace ESL.DataLayer.Domain
         public virtual DbSet<Tbl_NewsDocument> Tbl_NewsDocument { get; set; }
         public virtual DbSet<Tbl_Organization> Tbl_Organization { get; set; }
         public virtual DbSet<Tbl_Page> Tbl_Page { get; set; }
+        public virtual DbSet<Tbl_Question> Tbl_Question { get; set; }
         public virtual DbSet<Tbl_Region> Tbl_Region { get; set; }
+        public virtual DbSet<Tbl_Response> Tbl_Response { get; set; }
         public virtual DbSet<Tbl_Role> Tbl_Role { get; set; }
         public virtual DbSet<Tbl_SubCourse> Tbl_SubCourse { get; set; }
         public virtual DbSet<Tbl_SubMenu> Tbl_SubMenu { get; set; }
         public virtual DbSet<Tbl_User> Tbl_User { get; set; }
+        public virtual DbSet<Tbl_UserExam> Tbl_UserExam { get; set; }
+        public virtual DbSet<Tbl_UserExamAccess> Tbl_UserExamAccess { get; set; }
     }
 }

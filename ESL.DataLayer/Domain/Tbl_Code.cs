@@ -21,7 +21,10 @@ namespace ESL.DataLayer.Domain
             this.Tbl_Document = new HashSet<Tbl_Document>();
             this.Tbl_NewsDocument = new HashSet<Tbl_NewsDocument>();
             this.Tbl_Organization = new HashSet<Tbl_Organization>();
+            this.Tbl_Question = new HashSet<Tbl_Question>();
+            this.Tbl_Response = new HashSet<Tbl_Response>();
             this.Tbl_User = new HashSet<Tbl_User>();
+            this.Tbl_User1 = new HashSet<Tbl_User>();
         }
     
         public int Code_ID { get; set; }
@@ -40,6 +43,12 @@ namespace ESL.DataLayer.Domain
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_Organization> Tbl_Organization { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tbl_Question> Tbl_Question { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tbl_Response> Tbl_Response { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_User> Tbl_User { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tbl_User> Tbl_User1 { get; set; }
     }
 }

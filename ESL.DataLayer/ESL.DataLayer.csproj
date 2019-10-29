@@ -68,6 +68,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ESL.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Domain\Person.cs" />
+    <Compile Include="Domain\sysdiagram.cs">
+      <DependentUpon>ESL.tt</DependentUpon>
+    </Compile>
     <Compile Include="Domain\Tbl_Code.cs">
       <DependentUpon>ESL.tt</DependentUpon>
     </Compile>
@@ -81,6 +85,9 @@
       <DependentUpon>ESL.tt</DependentUpon>
     </Compile>
     <Compile Include="Domain\Tbl_Document.cs">
+      <DependentUpon>ESL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Domain\Tbl_Exam.cs">
       <DependentUpon>ESL.tt</DependentUpon>
     </Compile>
     <Compile Include="Domain\Tbl_Gallery.cs">
@@ -104,7 +111,13 @@
     <Compile Include="Domain\Tbl_Page.cs">
       <DependentUpon>ESL.tt</DependentUpon>
     </Compile>
+    <Compile Include="Domain\Tbl_Question.cs">
+      <DependentUpon>ESL.tt</DependentUpon>
+    </Compile>
     <Compile Include="Domain\Tbl_Region.cs">
+      <DependentUpon>ESL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Domain\Tbl_Response.cs">
       <DependentUpon>ESL.tt</DependentUpon>
     </Compile>
     <Compile Include="Domain\Tbl_Role.cs">
@@ -119,6 +132,13 @@
     <Compile Include="Domain\Tbl_User.cs">
       <DependentUpon>ESL.tt</DependentUpon>
     </Compile>
+    <Compile Include="Domain\Tbl_UserExam.cs">
+      <DependentUpon>ESL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Domain\Tbl_UserExamAccess.cs">
+      <DependentUpon>ESL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MetaData\MetaData_Menu.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
