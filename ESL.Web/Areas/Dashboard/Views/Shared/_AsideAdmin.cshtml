@@ -146,6 +146,34 @@
 
     </li>
 
+    <li data-toggle="collapse" data-target="#sub-menu-exam">
+
+        <a href="#">
+            <i class="glyphicon glyphicon-book"></i>
+            مدیرت آزمون ها
+            <i class="glyphicon glyphicon-chevron-right pull-right"></i>
+        </a>
+
+        <ul class="collapse nav aside-sub-panel " id="sub-menu-exam">
+
+            <li>
+                <a href="@Url.Action("Index", "Exam")">
+                    <i class="glyphicon glyphicon-book"></i>
+                    لیست آزمون ها
+                </a>
+            </li>
+
+            <li>
+                <a href="@Url.Action("CreateOrEdit", "Exam")">
+                    <i class="glyphicon glyphicon-book"></i>
+                    آزمون جدید
+                </a>
+            </li>
+
+        </ul>
+
+    </li>
+
 
     <li>
         <a href="@Url.Action("Setting","Setting")">

@@ -1,0 +1,85 @@
+﻿@model IEnumerable<ESL.DataLayer.ViewModels.Model_Exam>
+@using ESL.Common.Plugins
+
+@{
+    ViewBag.Title = "لیست آزمون ها";
+    Layout = "~/Areas/Dashboard/Views/Shared/_Master.cshtml";
+}
+
+<h2>لیست آزمون ها</h2>
+
+<p>
+    @Html.ActionLink("آزمون جدید", "CreateOrEdit")
+</p>
+
+<table class="table">
+
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Mark)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PassMark)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreationDate)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mark)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PassMark)
+            </td>
+            <td>
+                @PersianDateExtensionMethods.ToPeString(item.CreationDate, "yyyy/MM/dd")
+            </td>
+            <td>
+                @Html.ActionLink("ویرایش", "CreateOrEdit", new { id = item.ID }) |
+                @Html.ActionLink("حذف", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+    }
+
+</table>
+
+@section Modal {
+    <script>
+
+        function ChangeUserInfo(id) {
+            $.ajax({
+                url: "/User/ChangeUserInfo/" + id,
+                type: "Get",
+                data: {}
+            }).done(function (result) {
+                $('#myModal').modal('show');
+                $('#myModalLabel').html('ویرایش اطلاعات');
+                $('#myModalBody').html(result);
+            });
+        }
+
+        function BanUser(id) {
+            $.ajax({
+                url: "/User/BanUser/" + id,
+                type: "Get",
+                data: {}
+            }).done(function (result) {
+                $('#myModal').modal('show');
+                $('#myModalLabel').html('تعلیق');
+                $('#myModalBody').html(result);
+            });
+        }
+
+    </script>
+}
