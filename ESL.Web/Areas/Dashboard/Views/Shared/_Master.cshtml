@@ -35,10 +35,14 @@
         </div>
 
     </header>
-    <main>
-        <div class="container-fluid">
+
+    <main class="Main-Config" >
+        <aside class="aside-Config" >
+            @Html.Partial("_AsideAdmin")
+        </aside>
+        <section class="section-Config">
             @RenderBody()
-        </div>
+        </section>
     </main>
 
 

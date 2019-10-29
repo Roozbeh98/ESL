@@ -104,6 +104,7 @@
     <Content Include="Content\Css\font.css" />
     <Content Include="Content\Css\MyCss\Dashboard.css" />
     <Content Include="Content\Css\MyCss\defaults.css" />
+    <Content Include="Content\Css\MyCss\Login.css" />
     <Content Include="Content\Css\MyCss\styles.css" />
     <Content Include="Content\Fonts\font awesome\css\fontawesome-all.min.css" />
     <Content Include="Content\Fonts\font awesome\webfonts\fa-brands-400.svg" />
@@ -191,6 +192,8 @@
     <Content Include="Content\Plugins\jQuery.Select2\select2-bootstrap-build.scss" />
     <Content Include="Content\Plugins\jQuery.Select2\select2-bootstrap.less" />
     <Content Include="Content\Plugins\jQuery.Select2\select2-bootstrap.scss" />
+    <Content Include="Areas\Dashboard\Views\Dashboard\Index.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Account\Login.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -671,8 +674,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Dashboard\Models\" />
-    <Folder Include="Areas\Dashboard\Views\Account\" />
-    <Folder Include="Areas\Dashboard\Views\Dashboard\" />
     <Folder Include="Areas\Dashboard\Views\Setting\" />
     <Folder Include="Areas\Dashboard\Views\User\" />
     <Folder Include="Models\" />
