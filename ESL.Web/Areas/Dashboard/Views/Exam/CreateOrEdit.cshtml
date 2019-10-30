@@ -1,16 +1,11 @@
 ﻿@model ESL.DataLayer.ViewModels.Model_Exam
 
-@{
-    ViewBag.Title = "CreateOrEdit";
-    Layout = "~/Areas/Dashboard/Views/Shared/_Master.cshtml";
-}
-
 <h2>CreateOrEdit</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Model_Exam</h4>
         <hr />

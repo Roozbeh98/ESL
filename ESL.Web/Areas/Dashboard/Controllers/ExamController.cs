@@ -18,7 +18,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
         public ActionResult Index()
         {
-            var examList = db.Tbl_Exam.Select(x => new Model_Exam
+            var examList = db.Tbl_Exam.Where(x => x.Exam_IsDelete == false).Select(x => new Model_Exam
             {
                 ID = x.Exam_ID,
                 Title = x.Exam_Title,
@@ -48,7 +48,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                 }
             }
 
-            return View(model);
+            return PartialView(model);
         }
 
         [HttpPost]
@@ -100,14 +100,64 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             return View();
         }
 
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        [HttpGet]
+        public ActionResult Delete(int? id)
         {
-            //Tbl_Exam tbl_Exam = await db.Tbl_Exam.FindAsync(id);
-            //db.Tbl_Exam.Remove(tbl_Exam);
-            //await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+            if (id != null)
+            {
+                Model_DeleteModal model = new Model_DeleteModal();
+
+                var exam = db.Tbl_Exam.Where(x => x.Exam_ID == id).FirstOrDefault();
+
+                if (exam != null)
+                {
+                    model.ID = id.Value;
+                    model.Name = exam.Exam_Title;
+                    model.Description = "آیا از حذف آزمون مورد نظر اطمینان دارید ؟";
+
+                    return PartialView(model);
+                }
+                else
+                {
+                    return HttpNotFound();
+                }
+            }
+
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(Model_DeleteModal model)
+        {
+            if (ModelState.IsValid)
+            {
+                var exam = db.Tbl_Exam.Where(x => x.Exam_ID == model.ID).FirstOrDefault();
+
+                if (exam != null)
+                {
+                    exam.Exam_IsDelete = true;
+
+                    db.Entry(exam).State = EntityState.Modified;
+
+                    if (Convert.ToBoolean(db.SaveChanges() > 0))
+                    {
+
+                        TempData["TosterState"] = "success";
+                        TempData["TosterType"] = TosterType.Maseage;
+                        TempData["TosterTitel"] = "2";
+                        TempData["TosterMassage"] = "عملیات با موفقیت انجام شده";
+
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        return View();
+                    }
+                }
+            }
+
+            return View();
         }
 
         protected override void Dispose(bool disposing)

@@ -138,13 +138,13 @@
     <Compile Include="Domain\Tbl_UserExamAccess.cs">
       <DependentUpon>ESL.tt</DependentUpon>
     </Compile>
+    <Compile Include="Enums\Enum.cs" />
     <Compile Include="MetaData\MetaData_Menu.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\Model_DeleteModal.cs" />
     <Compile Include="ViewModels\Model_Exam.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Enums\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="App.Config" />
     <EntityDeploy Include="Domain\ESL.edmx">

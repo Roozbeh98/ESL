@@ -1,0 +1,25 @@
+﻿@{
+    if (TempData["TosterState"] != null)
+    {
+        switch ((TosterType)TempData["TosterType"])
+        {
+            case TosterType.JustTitel:
+                <script>
+                           TosterJustTitel("@TempData["TosterState"]","@TempData["TosterTitel"]");
+                </script>
+                break;
+            case TosterType.WithTitel:
+                <script>
+                            TosterWithTitel("@TempData["TosterState"]","@TempData["TosterMassage"]","@TempData["TosterTitel"]");
+                </script>
+                break;
+            case TosterType.Maseage:
+                <script>
+                            TosterWithOutTitel("@TempData["TosterState"]","@TempData["TosterMassage"]");
+                </script>
+                break;
+            default:
+                break;
+        }
+    }
+}

@@ -9,8 +9,20 @@
 <h2>لیست آزمون ها</h2>
 
 <p>
-    @Html.ActionLink("آزمون جدید", "CreateOrEdit")
+    <a href="#" onclick="Create()">افزودن</a>
 </p>
+
+@if (TempData["Response"] != null)
+{
+    if (TempData["Response"].ToString() == "DeleteSuccess")
+    {
+        <p>آره حذف میشه</p>
+    }
+    else
+    {
+        TempData["Response"] = null;
+    }
+}
 
 <table class="table">
 
@@ -46,8 +58,8 @@
                 @PersianDateExtensionMethods.ToPeString(item.CreationDate, "yyyy/MM/dd")
             </td>
             <td>
-                @Html.ActionLink("ویرایش", "CreateOrEdit", new { id = item.ID }) |
-                @Html.ActionLink("حذف", "Delete", new { id = item.ID })
+                <a href="#" onclick="Edit(@item.ID)">ویرایش</a>
+                <a href="#" onclick="Delete(@item.ID)">حذف</a>
             </td>
         </tr>
     }
@@ -62,26 +74,38 @@
 @section Modal {
     <script>
 
-        function ChangeUserInfo(id) {
+        function Delete(id) {
             $.ajax({
-                url: "/User/ChangeUserInfo/" + id,
+                url: "/Dashboard/Exam/Delete/" + id,
                 type: "Get",
                 data: {}
             }).done(function (result) {
                 $('#myModal').modal('show');
-                $('#myModalLabel').html('ویرایش اطلاعات');
+                $('#myModalLabel').html('حدف آزمون');
                 $('#myModalBody').html(result);
             });
         }
 
-        function BanUser(id) {
+        function Create() {
             $.ajax({
-                url: "/User/BanUser/" + id,
+                url: "/Dashboard/Exam/CreateOrEdit",
                 type: "Get",
                 data: {}
             }).done(function (result) {
                 $('#myModal').modal('show');
-                $('#myModalLabel').html('تعلیق');
+                $('#myModalLabel').html('افزودن آزمون');
+                $('#myModalBody').html(result);
+            });
+        }
+
+        function Edit(id) {
+            $.ajax({
+                url: "/Dashboard/Exam/CreateOrEdit/" + id,
+                type: "Get",
+                data: {}
+            }).done(function (result) {
+                $('#myModal').modal('show');
+                $('#myModalLabel').html('ویرایش آزمون');
                 $('#myModalBody').html(result);
             });
         }

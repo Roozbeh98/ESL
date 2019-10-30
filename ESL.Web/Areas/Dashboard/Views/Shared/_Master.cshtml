@@ -13,12 +13,11 @@
 
     <link href="~/Content/Plugins/jQuery.Select2/select2.min.css" rel="stylesheet" />
     <link href="~/Content/Plugins/jQuery.Select2/select2-bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/Plugins/jQuery.toastr/custom/toastr.css" rel="stylesheet" />
     <link href="~/Content/Plugins/MaterialDesignSwitch/MaterialDesignSwitch.css" rel="stylesheet" />
 
 </head>
 <body>
-
-
 
     <header class="main-header container-fluid  navbar-fixed-top">
 
@@ -36,8 +35,8 @@
 
     </header>
 
-    <main class="Main-Config" >
-        <aside class="aside-Config" >
+    <main class="Main-Config">
+        <aside class="aside-Config">
             @Html.Partial("_AsideAdmin")
         </aside>
         <section class="section-Config">
@@ -45,30 +44,29 @@
         </section>
     </main>
 
-
-
     <footer></footer>
 
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 
-
-
     <script src="~/Scripts/Plugins/Boostrap3/bootstrap.min.js"></script>
-
     <script src="~/Scripts/Plugins/DataTables-1.10.18/js/jquery.dataTables.js"></script>
     <script src="~/Scripts/Plugins/DataTables-1.10.18/js/dataTables.bootstrap.min.js"></script>
     <script src="~/Scripts/Plugins/ckeditor/ckeditor.js"></script>
     <script src="~/Scripts/Plugins/jQuery.slimscroll/jquery.slimscroll.min.js"></script>
     <script src="~/Scripts/Plugins/jQuery.Select2/select2.js"></script>
     <script src="~/Scripts/Plugins/jQuery.Select2/i18n/fa.js"></script>
+    <script src="~/Scripts/Plugins/jQuery.toastr/toastr.min.js"></script>
 
-    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+    <script src="~/Scripts/MyScripts/Toastr_Config.js"></script>
+    @Html.Partial("_Toster")
 
     @RenderSection("Scripts", false)
 
     @RenderSection("Modal", false)
+
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
 
 </body>
 </html>
