@@ -212,13 +212,14 @@
     <Content Include="Content\Plugins\jQuery.Select2\select2-bootstrap.less" />
     <Content Include="Content\Plugins\jQuery.Select2\select2-bootstrap.scss" />
     <Content Include="Areas\Dashboard\Views\Dashboard\Index.cshtml" />
-    <Content Include="Areas\Dashboard\Views\Account\Login.cshtml" />
     <Content Include="Areas\Dashboard\Views\Exam\Delete.cshtml" />
     <Content Include="Areas\Dashboard\Views\Exam\Index.cshtml" />
     <Content Include="Areas\Dashboard\Views\Exam\CreateOrEdit.cshtml" />
     <Content Include="Content\Plugins\jQuery.toastr\toastr.scss" />
     <Content Include="Content\Plugins\jQuery.toastr\toastr.less" />
     <Content Include="Areas\Dashboard\Views\Shared\_Toster.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Account\Login.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Account\_Register.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -680,6 +681,8 @@
     <Compile Include="Areas\Dashboard\Controllers\ExamController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\UserController.cs" />
     <Compile Include="Areas\Dashboard\DashboardAreaRegistration.cs" />
+    <Compile Include="Areas\Dashboard\Models\ViewModels\Model_Login.cs" />
+    <Compile Include="Areas\Dashboard\Models\ViewModels\Model_Register.cs" />
     <Compile Include="Controllers\AboutUsController.cs" />
     <Compile Include="Controllers\ContactUsController.cs" />
     <Compile Include="Controllers\ContractsController.cs" />
@@ -709,7 +712,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Dashboard\Models\" />
     <Folder Include="Areas\Dashboard\Views\Setting\" />
     <Folder Include="Areas\Dashboard\Views\User\" />
     <Folder Include="Models\" />

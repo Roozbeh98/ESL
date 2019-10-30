@@ -22,41 +22,49 @@ table.dataTable {
 div.dataTables_wrapper div.dataTables_length label {
     font-weight: normal;
     text-align: left;
-    white-space: nowrap
+    white-space: nowrap;
+    width: 100%;
 }
 
 div.dataTables_wrapper div.dataTables_length select {
-    width: 150px;
-    display: inline-block
+    width: 75px;
+    display: inline-block;
+    width: inherit;
 }
 
 div.dataTables_wrapper div.dataTables_filter {
-    text-align: right;
-    float:left;
-
+    text-align: right
 }
 
     div.dataTables_wrapper div.dataTables_filter label {
         font-weight: normal;
         white-space: nowrap;
-        text-align: left
+        text-align: left;
+        width: 100%;
     }
 
     div.dataTables_wrapper div.dataTables_filter input {
+        margin-left: 0.5em;
         display: inline-block;
-        width: auto
+        width: inherit;
     }
 
 div.dataTables_wrapper div.dataTables_info {
     padding-top: 8px;
-    white-space: nowrap
+    white-space: nowrap;
+    margin-top: 20px;
+    color: #9d9d9d;
+    margin-right: 3px;
+    font-family: IRANSansB;
+    font-size: 14px;
+    font-weight: bold;
 }
 
 div.dataTables_wrapper div.dataTables_paginate {
-    float:left;
     margin: 0;
     white-space: nowrap;
-    text-align: right
+    text-align: right;
+    margin-top: 20px;
 }
 
     div.dataTables_wrapper div.dataTables_paginate ul.pagination {
@@ -74,16 +82,13 @@ div.dataTables_wrapper div.dataTables_processing {
     text-align: center;
     padding: 1em 0
 }
-/*table.dataTable thead > tr > th {
-    outline: none
-}*/
 
 table.dataTable thead > tr > th.sorting_asc, table.dataTable thead > tr > th.sorting_desc, table.dataTable thead > tr > th.sorting, table.dataTable thead > tr > td.sorting_asc, table.dataTable thead > tr > td.sorting_desc, table.dataTable thead > tr > td.sorting {
     padding-left: 30px
 }
 
 table.dataTable thead > tr > th:active, table.dataTable thead > tr > td:active {
-    /*outline: none*/
+    outline: none
 }
 
 table.dataTable thead .sorting, table.dataTable thead .sorting_asc, table.dataTable thead .sorting_desc, table.dataTable thead .sorting_asc_disabled, table.dataTable thead .sorting_desc_disabled {
@@ -97,12 +102,14 @@ table.dataTable thead .sorting, table.dataTable thead .sorting_asc, table.dataTa
         left: 8px;
         display: block;
         font-family: 'Glyphicons Halflings';
-        opacity: 0.5
+        opacity: 1;
+        color: #337ab7;
     }
 
     table.dataTable thead .sorting:after {
-        opacity: 0.2;
-        content: "\e150"
+        opacity: 1;
+        content: "\e150";
+        color: #9d9d9d;
     }
 
     table.dataTable thead .sorting_asc:after {

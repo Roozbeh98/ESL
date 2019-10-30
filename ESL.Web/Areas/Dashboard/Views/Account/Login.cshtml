@@ -1,6 +1,100 @@
-﻿
+﻿@model ESL.Web.Areas.Dashboard.Models.ViewModels.Model_Login
+
 @{
     ViewBag.Title = "Login";
     Layout = "~/Areas/Dashboard/Views/Shared/_Master.cshtml";
 }
+
+
+
+
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Areas/Dashboard/Views/Shared/_Master.cshtml";
+}
+
+
+
+
+<div class="panel panel-default" style="max-width:600px;background-color:#222d32">
+
+    <div class="panel-body login">
+        <div style="text-align:center">
+            <img src="~/Content/Images/logo.png" class="Login-img" alt="Alternate Text" />
+        </div>
+
+        <div class="" style="padding-top:0px;padding-bottom:30px;">
+            <ul class="Login-btn-group ">
+                <li class="tab "><a href="#signup">ثبت نام</a></li>
+                <li class="tab active"><a href="#login">ورود</a></li>
+            </ul>
+        </div>
+
+        <div class="Login-content">
+
+            <div id="login">
+                <h3 class="text-center" style="">خوش آمدید!</h3>
+
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="login-items">
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label " })
+
+                            @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "" } })
+
+                            @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label " })
+
+                            @Html.PasswordFor(model => model.Password, new { htmlAttributes = new { @class = "" } })
+
+                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                        </div>
+
+
+                    </div>
+
+                    <input type="submit" name="name" value="ورود" class="btn btn-block  esl-btn esl-btn-success esl-btn-L " />
+
+                }
+
+            </div>
+
+            @Html.Partial("_Register")
+
+
+        </div>
+    </div>
+
+</div>
+
+@section Scripts{
+    <script>
+        $('.tab a').on('click', function (e) {
+
+            e.preventDefault();
+
+            $(this).parent().addClass('active');
+            $(this).parent().siblings().removeClass('active');
+
+            target = $(this).attr('href');
+
+            $('.Login-content > div').not(target).hide();
+
+            $(target).fadeIn(600);
+
+        });
+
+    </script>
+}
+
+
+
+
 

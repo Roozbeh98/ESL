@@ -280,6 +280,113 @@ body {
 
 
 /*********************************************** Form **********************************************/
+.esl-btn{
+    border-radius:0px;
+}
+.esl-btn-success {
+    background: #3ecf8e;
+    color: #fff;
+}
+    .esl-btn-success:hover {
+        background: #35996c;
+        color: #fff;
+    }
+.esl-btn-s {
+    padding: 0px;
+    font-size: 14px;
+    font-weight: bold;
+}
+.esl-btn-sm {
+    padding: 5px;
+    font-size: 14px;
+    font-weight: bold;
+}
+.esl-btn-L {
+    padding: 10px;
+    font-size: 14px;
+    font-weight: bold;
+}
+.esl-btn-LX {
+    padding: 15px;
+    font-size: 14px;
+    font-weight: bold;
+}
+.esl-btn-LXX {
+    padding: 20px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/****************************************** Login/Register *****************************************/
+.login {
+    color:#3ecf8e;
+}
+.Login-img {
+    padding:15px;
+}
+
+.Login-btn-group {
+    list-style: none;
+    padding: 0;
+}
+
+    .Login-btn-group :after {
+        content: "";
+        display: inline;
+        clear: both;
+    }
+
+
+    .Login-btn-group li a {
+        display: block;
+        text-decoration: none;
+        padding: 10px;
+        background: rgba(160, 179, 176, .25);
+        color: #3ecf8e;
+        font-size: 14px;
+        font-weight:bold;
+        float: left;
+        width: 50%;
+        text-align: center;
+        cursor: pointer;
+        transition: 0.5s ease;
+    }
+
+        .Login-btn-group li a:hover {
+            background: #35996c;
+            color: #fff;
+        }
+
+    .Login-btn-group .active a {
+        background: #3ecf8e;
+        color: #fff;
+    }
+
+.Login-content > div:last-child {
+    display: none;
+}
+
+.login-items{
+
+}
+
+    .login-items > .form-group > input {
+        font-size: 14px;
+        display: block;
+        width: 100%;
+        padding: 5px 10px;
+        background: none;
+        background-image: none;
+        border: 1px solid #a0b3b0;
+        color: #fff;
+        border-radius: 0;
+        transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .login-items > .form-group > input {
+        outline: 0;
+        border-color: #1ab188;
+    }
 
 
 
