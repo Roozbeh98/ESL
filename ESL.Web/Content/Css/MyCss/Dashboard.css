@@ -7,12 +7,14 @@ body {
 
 
 .modal {
+    color:whitesmoke;
 }
 
 .modal-content {
     top: 15vh;
     border-radius: 0px;
     background-color: #222D32;
+    padding-bottom:34px;
 }
 
 .modal-btn-singel {
@@ -56,6 +58,7 @@ body {
 .modal-main {
     padding-left: 15px;
     padding-right: 15px;
+    font-size:12px;
 }
 
 /*********************************************** Config ********************************************/

@@ -58,16 +58,13 @@
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Stimulsoft.Base, Version=2014.3.0.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Stimulsoft.Base">
       <HintPath>..\..\..\..\Desktop\Stimul\Stimulsoft.Base.dll</HintPath>
     </Reference>
-    <Reference Include="Stimulsoft.Report, Version=2014.3.0.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Stimulsoft.Report">
       <HintPath>..\..\..\..\Desktop\Stimul\Stimulsoft.Report.dll</HintPath>
     </Reference>
-    <Reference Include="Stimulsoft.Report.Mvc, Version=2014.3.0.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Stimulsoft.Report.Mvc">
       <HintPath>..\..\..\..\Desktop\Stimul\Stimulsoft.Report.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
@@ -235,7 +232,10 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\MyScripts\DataTabels_Config.js" />
+    <Content Include="Scripts\MyScripts\FilePond_Config.js" />
     <Content Include="Scripts\MyScripts\main.js" />
+    <Content Include="Scripts\MyScripts\Select2_Config.js" />
     <Content Include="Scripts\MyScripts\Toastr_Config.js" />
     <Content Include="Scripts\Plugins\Boostrap3\bootstrap.js" />
     <Content Include="Scripts\Plugins\Boostrap3\bootstrap.min.js" />
