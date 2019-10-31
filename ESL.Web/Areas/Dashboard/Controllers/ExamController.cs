@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using ESL.DataLayer.Domain;
 using ESL.DataLayer.ViewModels;
+using System.IO;
 
 namespace ESL.Web.Areas.Dashboard.Controllers
 {
@@ -89,6 +90,11 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                 if (Convert.ToBoolean(db.SaveChanges() > 0))
                 {
+                    TempData["TosterState"] = "success";
+                    TempData["TosterType"] = TosterType.Maseage;
+                    TempData["TosterTitel"] = "2";
+                    TempData["TosterMassage"] = "عملیات با موفقیت انجام شده";
+
                     return RedirectToAction("Index");
                 }
                 else
@@ -100,7 +106,6 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             return View();
         }
 
-        [HttpGet]
         public ActionResult Delete(int? id)
         {
             if (id != null)
@@ -167,6 +172,65 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+        public ActionResult Test()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult SaveFile()
+        {
+            if (Request.Files.Count > 0)
+            {
+                var file = Request.Files[0];
+
+                if (file != null && file.ContentLength > 0)
+                {
+                    file.SaveAs(Server.MapPath($"/App_Data/{file.FileName}"));
+                    return Json(file.FileName);
+                }
+            }
+
+            return Json(false);
+        }
+
+        [HttpDelete]
+        public JsonResult RevertFile()
+        {
+            string res;
+
+            MemoryStream memstream = new MemoryStream();
+            Request.InputStream.CopyTo(memstream);
+            memstream.Position = 0;
+            using (StreamReader reader = new StreamReader(memstream))
+            {
+                res = reader.ReadToEnd();
+            }
+
+            res = res.Remove(res.Length - 1);
+            string filename = res.Substring(1);
+
+            string source = Request.MapPath($"/App_Data/{filename}");
+
+            if (System.IO.File.Exists(source))
+            {
+                System.IO.File.Delete(source);
+            }
+
+            return Json(true);
         }
     }
 }

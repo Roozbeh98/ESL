@@ -46,7 +46,7 @@
                         <td scope="row">@x</td>
                         <td scope="row">
                             <span> @Html.DisplayFor(modelItem => item.Title) </span>
-</td>
+                        </td>
                         <td scope="row">
                             <span> @Html.DisplayFor(modelItem => item.Mark) </span>
                         </td>
@@ -57,6 +57,7 @@
                             <span> @PersianDateExtensionMethods.ToPeString(item.CreationDate, "yyyy/MM/dd") </span>
                         </td>
                         <td scope="row" >
+                            <a class="btn btn-info btn-sm glyphicon glyphicon-list" onclick="Info(@item.ID)"> </a>
                             <a class="btn btn-warning btn-sm glyphicon glyphicon-pencil" onclick="Edit(@item.ID)"> </a>
                             <a class="btn btn-danger btn-sm glyphicon glyphicon-trash" onclick="Delete(@item.ID)"> </a>
                         </td>

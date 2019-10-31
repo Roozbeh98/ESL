@@ -400,12 +400,12 @@ body {
     }
 
     .aside-Config {
-        width: 100%;
+        width: calc(100% - 30px);
         margin-left: 15px;
     }
 
     .section-Config {
-        width: 100%;
+        width: calc(100% - 30px);
     }
 
     /*********************************************** Aside *********************************************/

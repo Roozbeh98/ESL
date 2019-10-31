@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
+    <title>داشبورد | @ViewBag.Title</title>
 
     <link href="~/Content/Plugins/Boostrap3/bootstrap.css" rel="stylesheet" />
     <link href="~/Content/Fonts/font awesome/css/fontawesome-all.min.css" rel="stylesheet" />
@@ -16,6 +16,8 @@
     <link href="~/Content/Plugins/jQuery.Select2/select2-bootstrap.css" rel="stylesheet" />
     <link href="~/Content/Plugins/jQuery.toastr/custom/toastr.css" rel="stylesheet" />
     <link href="~/Content/Plugins/MaterialDesignSwitch/MaterialDesignSwitch.css" rel="stylesheet" />
+
+    @RenderSection("Styles", false)
 
 </head>
 <body>
