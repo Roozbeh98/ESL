@@ -16,7 +16,7 @@ namespace ESL.Web.Areas.Dashboard
         {
             context.MapRoute(
                 "Dashboard_default",
-                "Dashboard/{controller}/{action}/{id}",
+                "{controller}/{action}/{id}",
                 new { action = "Index", id = UrlParameter.Optional }
             );
         }

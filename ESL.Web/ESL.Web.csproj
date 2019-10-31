@@ -224,7 +224,8 @@
     <Content Include="Areas\Dashboard\Views\Shared\_Toster.cshtml" />
     <Content Include="Areas\Dashboard\Views\Account\Login.cshtml" />
     <Content Include="Areas\Dashboard\Views\Account\_Register.cshtml" />
-    <Content Include="Areas\Dashboard\Views\Exam\Test.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Exam\Details.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Exam\CreateOrEditQuestion.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -1285,7 +1286,10 @@
     <Compile Include="Areas\Dashboard\Controllers\ExamController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\UserController.cs" />
     <Compile Include="Areas\Dashboard\DashboardAreaRegistration.cs" />
+    <Compile Include="Areas\Dashboard\Models\ViewModels\Model_DeleteModal.cs" />
+    <Compile Include="Areas\Dashboard\Models\ViewModels\Model_Exam.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_Login.cs" />
+    <Compile Include="Areas\Dashboard\Models\ViewModels\Model_Question.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_Register.cs" />
     <Compile Include="Controllers\AboutUsController.cs" />
     <Compile Include="Controllers\ContactUsController.cs" />
