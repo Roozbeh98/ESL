@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ESL.DataLayer.ViewModels.Model_Exam>
+﻿@model IEnumerable<ESL.Web.Areas.Dashboard.Models.ViewModels.Model_Exam>
 @using ESL.Common.Plugins
 
 @{
@@ -7,8 +7,8 @@
 }
 
 
-
 <div class="panel panel-body panel-default  navigation">
+
     <div class="pull-left">
         <h4 class="navigation-title"><b>لیست آزمون ها</b></h4>
     </div>
@@ -16,15 +16,15 @@
     <div class="pull-right">
         <a href="#" onclick="Create()"><i class="glyphicon glyphicon-plus navigation-btn-icon"></i></a>
     </div>
-</div>
 
+</div>
 
 <div class="panel panel-default">
 
     <div class="panel-body table-body"style="overflow-x:auto;">
 
-        @*<table id="DateTable" class="table  table-bordered table-striped" style="width:100%;">*@
         <table id="DateTable" class="table  table-bordered table-striped table-secondary"  style="width:100%;">
+
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">#</th>
@@ -35,13 +35,16 @@
                     <th scope="col" data-orderable="false">کنترل</th>
                 </tr>
             </thead>
+
             <tbody>
                 @{
                     int x = 0;
                 }
+
                 @foreach (var item in Model)
                 {
                     x++;
+
                     <tr>
                         <td scope="row">@x</td>
                         <td scope="row">
@@ -57,7 +60,7 @@
                             <span> @PersianDateExtensionMethods.ToPeString(item.CreationDate, "yyyy/MM/dd") </span>
                         </td>
                         <td scope="row" >
-                            <a class="btn btn-info btn-sm glyphicon glyphicon-list" onclick="Info(@item.ID)"> </a>
+                            <a class="btn btn-info btn-sm glyphicon glyphicon-list" href="@Url.Action("Details", "Exam", new { id = item.ID })"> </a>
                             <a class="btn btn-warning btn-sm glyphicon glyphicon-pencil" onclick="Edit(@item.ID)"> </a>
                             <a class="btn btn-danger btn-sm glyphicon glyphicon-trash" onclick="Delete(@item.ID)"> </a>
                         </td>
@@ -69,8 +72,8 @@
         </table>
 
     </div>
-</div>
 
+</div>
 
 
 @Html.Partial("_Modal")
@@ -80,7 +83,7 @@
 
         function Delete(id) {
             $.ajax({
-                url: "/Dashboard/Exam/Delete/" + id,
+                url: "/Exam/Delete/" + id,
                 type: "Get",
                 data: {}
             }).done(function (result) {
@@ -92,7 +95,7 @@
 
         function Create() {
             $.ajax({
-                url: "/Dashboard/Exam/CreateOrEdit",
+                url: "/Exam/CreateOrEdit",
                 type: "Get",
                 data: {}
             }).done(function (result) {
@@ -104,7 +107,7 @@
 
         function Edit(id) {
             $.ajax({
-                url: "/Dashboard/Exam/CreateOrEdit/" + id,
+                url: "/Exam/CreateOrEdit/" + id,
                 type: "Get",
                 data: {}
             }).done(function (result) {

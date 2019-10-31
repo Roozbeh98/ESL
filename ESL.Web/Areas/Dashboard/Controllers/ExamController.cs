@@ -8,8 +8,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ESL.DataLayer.Domain;
-using ESL.DataLayer.ViewModels;
 using System.IO;
+using ESL.Web.Areas.Dashboard.Models.ViewModels;
 
 namespace ESL.Web.Areas.Dashboard.Controllers
 {
@@ -174,20 +174,41 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             base.Dispose(disposing);
         }
 
-
-
-
-
-
-
-
-
-
-
-
-        public ActionResult Test()
+        public ActionResult Details(int id)
         {
-            return View();
+            var q = db.Tbl_Question.Where(x => x.Tbl_Exam.Exam_ID == id).Select(x => new Model_Question
+            {
+                ID = x.Question_ID,
+                Title = x.Question_Title,
+                Type = x.Tbl_Code.Code_Display,
+                Response = x.Tbl_Response.Response_ID,
+                Mark = x.Question_Mark,
+                CreationDate = x.Question_CreationDate
+
+            }).ToList();
+
+            return View(q);
+        }
+
+        public ActionResult CreateOrEditQuestion(int? id)
+        {
+            Model_Question model = new Model_Question();
+
+            if (id != null)
+            {
+                var q = db.Tbl_Question.Where(x => x.Question_ID == id).FirstOrDefault();
+
+                if (q != null)
+                {
+                    model.ID = q.Question_ID;
+                    model.Title = q.Question_Title;
+                    model.Type = q.Tbl_Code.Code_Display;
+                    model.Response = q.Question_ResponseID;
+                    model.Mark = q.Question_Mark;
+                }
+            }
+
+            return PartialView(model);
         }
 
         [HttpPost]

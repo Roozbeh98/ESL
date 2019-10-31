@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ESL.DataLayer.ViewModels
+namespace ESL.Web.Areas.Dashboard.Models.ViewModels
 {
     public class Model_DeleteModal
     {
