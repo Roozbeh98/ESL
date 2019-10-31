@@ -17,6 +17,11 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
         [StringLength(100, ErrorMessage = "مقدار وارد شده بیش 100 کارکتراست")]
         public string Family { get; set; }
+        [Display(Name = "جنسیت")]
+        [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
+        [StringLength(100, ErrorMessage = "مقدار وارد شده بیش 100 کارکتراست")]
+        [DataType(DataType.Currency)]
+        public int Gender { get; set; }
         [Display(Name = "موبایل")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
         [StringLength(11, ErrorMessage = "مقدار وارد شده بیش 11 کارکتراست")]

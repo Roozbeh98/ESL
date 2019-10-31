@@ -41,11 +41,17 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         [HttpPost]
         public ActionResult _Register(Model_Register model)
         {
-            //if (User.Identity.IsAuthenticated)
-            //{
-            //    return RedirectToAction("Dashboard", "Dashboard");
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Dashboard", "Dashboard");
+            }
 
-            //}
+            if (!ModelState.IsValid)
+            {
+                return View("Register", model);
+            }
+
+
             return View();
         }
 
