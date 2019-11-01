@@ -201,6 +201,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                 if (q != null)
                 {
                     model.ID = q.Question_ID;
+                    model.ExamID = q.Question_ExamID;
                     model.Title = q.Question_Title;
                     model.Type = q.Tbl_Code.Code_Display;
                     model.Response = q.Question_ResponseID;
@@ -209,6 +210,64 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             }
 
             return PartialView(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateOrEditQuestion(Model_Question model)
+        {
+            if (ModelState.IsValid)
+            {
+                Tbl_Question q = new Tbl_Question();
+
+                if (model.ID != null)
+                {
+                    q = db.Tbl_Question.Where(x => x.Question_ID == model.ID).FirstOrDefault();
+
+                    if (q != null)
+                    {
+                        q.Question_Title = model.Title;
+                        //q.Question_TypeCodeID = model.;
+                        //q.Question_ResponseID = model.;
+                        q.Question_Mark = model.Mark;
+                        q.Question_ModifiedDate = DateTime.Now;
+
+                        db.Entry(q).State = EntityState.Modified;
+                    }
+                    else
+                    {
+                        return HttpNotFound();
+                    }
+                }
+                else
+                {
+                    q.Question_ExamID = model.ExamID;
+                    q.Question_Title = model.Title;
+                    //q.Question_TypeCodeID = model.;
+                    //q.Question_ResponseID = model.;
+                    q.Question_Mark = model.Mark;
+                    q.Question_Order = db.Tbl_Question.OrderByDescending(x => x.Question_Order).First().Question_Order;
+                    q.Question_CreationDate = q.Question_CreationDate = DateTime.Now;
+
+                    db.Tbl_Question.Add(q);
+                }
+
+                if (Convert.ToBoolean(db.SaveChanges() > 0))
+                {
+                    TempData["TosterState"] = "success";
+                    TempData["TosterType"] = TosterType.Maseage;
+                    TempData["TosterTitel"] = "2";
+                    TempData["TosterMassage"] = "عملیات با موفقیت انجام شده";
+
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return View();
+                }
+            }
+
+            return View();
         }
 
         [HttpPost]
