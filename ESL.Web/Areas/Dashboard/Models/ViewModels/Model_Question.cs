@@ -1,19 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
 
 namespace ESL.Web.Areas.Dashboard.Models.ViewModels
 {
     public class Model_Question
     {
         [Display(Name = "شناسه")]
-        public int? ID { get; set; }
-
-        [Display(Name = "شناسه آزمون")]
-        public int ExamID { get; set; }
+        public int ID { get; set; }
 
         [Display(Name = "عنوان")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
@@ -21,18 +14,21 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
 
         [Display(Name = "نوع")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
-        public Guid Type { get; set; }
+        public string Type { get; set; }
 
         [Display(Name = "گروه")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
-        public Guid Group { get; set; }
+        public string Group { get; set; }
 
         [Display(Name = "پاسخ")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
-        public Guid Response { get; set; }
+        public string Response { get; set; }
 
         [Display(Name = "نمره")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
         public int Mark { get; set; }
+
+        [Display(Name = "تاریخ ایجاد")]
+        public DateTime CreationDate { get; set; }
     }
 }

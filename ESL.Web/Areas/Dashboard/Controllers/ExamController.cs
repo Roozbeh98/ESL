@@ -175,25 +175,40 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             base.Dispose(disposing);
         }
 
-        public ActionResult Details(int id)
+        public ActionResult Details(int? id)
         {
-            var q = db.Tbl_Question.Where(x => x.Tbl_Exam.Exam_ID == id).Select(x => new Model_QuestionList
+            if (!id.HasValue)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            Model_Questions model = new Model_Questions();
+            model.ExamID = id.Value;
+
+            model.Questions = db.Tbl_Question.Where(x => x.Tbl_Exam.Exam_ID == id).Select(x => new Model_Question
             {
                 ID = x.Question_ID,
                 Title = x.Question_Title,
                 Type = x.Tbl_Code.Code_Display,
+                Group = db.Tbl_Code.Where(y => y.Code_ID.Equals(x.Question_GroupCodeID)).FirstOrDefault().Code_Name,
                 Response = db.Tbl_Code.Where(y => y.Code_ID.Equals(x.Question_ResponseID)).FirstOrDefault().Code_Name,
                 Mark = x.Question_Mark,
                 CreationDate = x.Question_CreationDate
 
             }).ToList();
 
-            return View(q);
+            return View(model);
         }
 
-        public ActionResult CreateOrEditQuestion(int? id)
+        public ActionResult CreateQuestion(int id)
         {
-            Model_Question model = new Model_Question();
+            Model_QuestionCreate model = new Model_QuestionCreate();
+            model.ExamID = id;
+
+            return PartialView(model);
+        }
+
+        public ActionResult EditQuestion(int? id)
+        {
+            Model_QuestionCreate model = new Model_QuestionCreate();
 
             if (id != null)
             {
@@ -202,7 +217,6 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                 if (q != null)
                 {
                     model.ID = q.Question_ID;
-                    //model.ExamID = q.Question_ExamID;
                     model.Title = q.Question_Title;
                     model.Type = q.Tbl_Code.Code_Guid;
                     model.Group = db.Tbl_Code.Where(y => y.Code_ID.Equals(q.Question_GroupCodeID)).FirstOrDefault().Code_Guid;
@@ -216,7 +230,47 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateOrEditQuestion(Model_Question model)
+        public ActionResult CreateQuestion(Model_QuestionCreate model)
+        {
+            if (ModelState.IsValid)
+            {
+                Tbl_Question q = new Tbl_Question();
+
+                q.Question_ExamID = model.ExamID;
+                q.Question_Title = model.Title;
+                q.Question_TypeCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Type);
+                q.Question_GroupCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Group);
+                q.Question_ResponseID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Response);
+                q.Question_Mark = model.Mark;
+                q.Question_Order = db.Tbl_Question.Any() ? db.Tbl_Question.OrderByDescending(x => x.Question_Order).First().Question_Order : 1;
+                q.Question_CreationDate = q.Question_CreationDate = DateTime.Now;
+
+                db.Tbl_Question.Add(q);
+
+                if (Convert.ToBoolean(db.SaveChanges() > 0))
+                {
+                    TempData["TosterState"] = "success";
+                    TempData["TosterType"] = TosterType.Maseage;
+                    TempData["TosterMassage"] = "عملیات با موفقیت انجام شده";
+
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    TempData["TosterState"] = "error";
+                    TempData["TosterType"] = TosterType.Maseage;
+                    TempData["TosterMassage"] = "عملیات با موفقیت انجام نشده";
+
+                    return RedirectToAction("Details");
+                }
+            }
+
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditQuestion(Model_QuestionCreate model)
         {
             if (ModelState.IsValid)
             {

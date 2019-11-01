@@ -1,44 +1,10 @@
-﻿@model IEnumerable<ESL.Web.Areas.Dashboard.Models.ViewModels.Model_QuestionList>
+﻿@model ESL.Web.Areas.Dashboard.Models.ViewModels.Model_Questions
+
 @using ESL.Common.Plugins
 
 @{
     ViewBag.Title = "لیست سوالات";
     Layout = "~/Areas/Dashboard/Views/Shared/_Master.cshtml";
-}
-
-@section Styles {
-
-    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css" rel="stylesheet" />
-    <link href="https://unpkg.com/filepond/dist/filepond.min.css" rel="stylesheet">
-    <link href="https://unpkg.com/filepond-plugin-file-poster/dist/filepond-plugin-file-poster.css" rel="stylesheet">
-    <script src="~/Scripts/Plugins/ckeditor/ckeditor.js"></script>
-    <script src="~/Scripts/Plugins/ckfinder/ckfinder.js"></script>
-
-    <style>
-
-        .filepond--drop-label {
-            color: #4c4e53;
-        }
-
-        .filepond--label-action {
-            text-decoration-color: #babdc0;
-        }
-
-        .filepond--panel-root {
-            border-radius: 2em;
-            background-color: #edf0f4;
-            height: 1em;
-        }
-
-        .filepond--item-panel {
-            background-color: #595e68;
-        }
-
-        .filepond--drip-blob {
-            background-color: #7f8a9a;
-        }
-    </style>
-
 }
 
 
@@ -49,23 +15,10 @@
     </div>
 
     <div class="pull-right">
-        <a href="#" onclick="Create()"><i class="glyphicon glyphicon-plus navigation-btn-icon"></i></a>
+        <a href="#" onclick="Create(@Model.ExamID)"><i class="glyphicon glyphicon-plus navigation-btn-icon"></i></a>
     </div>
 
 </div>
-
-@*<input type="file"
-           class="filepond"
-           name="filepond"
-           multiple
-           instant-upload
-           data-max-file-size="3MB"
-           data-max-files="3">
-
-    <hr />
-
-    <textarea class="ckeditor" name="editor1"></textarea>
-    <button type="submit">Save</button>*@
 
 <div class="panel panel-default">
 
@@ -76,11 +29,12 @@
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">@Html.DisplayNameFor(model => model.Title)</th>
-                    <th scope="col">@Html.DisplayNameFor(model => model.Type)</th>
-                    <th scope="col">@Html.DisplayNameFor(model => model.Response)</th>
-                    <th scope="col"> @Html.DisplayNameFor(model => model.Mark)</th>
-                    <th scope="col"> @Html.DisplayNameFor(model => model.CreationDate)</th>
+                    <th scope="col">عنوان</th>
+                    <th scope="col">نوع</th>
+                    <th scope="col">گروه</th>
+                    <th scope="col">پاسخ</th>
+                    <th scope="col">نمره</th>
+                    <th scope="col">تاریخ ایجاد</th>
                     <th scope="col" data-orderable="false">کنترل</th>
                 </tr>
             </thead>
@@ -91,7 +45,7 @@
                     int x = 0;
                 }
 
-                @foreach (var item in Model)
+                @foreach (var item in Model.Questions)
                 {
                     x++;
 
@@ -102,6 +56,9 @@
                         </td>
                         <td scope="row">
                             <span> @Html.DisplayFor(modelItem => item.Type) </span>
+                        </td>
+                        <td scope="row">
+                            <span> @Html.DisplayFor(modelItem => item.Group) </span>
                         </td>
                         <td scope="row">
                             <span> @Html.DisplayFor(modelItem => item.Response) </span>
@@ -134,53 +91,11 @@
 
 @section Scripts {
 
-    <script src="https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.min.js"></script>
-    <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.min.js"></script>
-    <script src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.min.js"></script>
-    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.js"></script>
-    <script src="https://unpkg.com/filepond/dist/filepond.min.js"></script>
-
-    <script>
-
-        // We want to preview images, so we need to register the Image Preview plugin
-        FilePond.registerPlugin(
-
-            // encodes the file as base64 data
-            FilePondPluginFileEncode,
-
-            // validates the size of the file
-            FilePondPluginFileValidateSize,
-
-            // corrects mobile image orientation
-            FilePondPluginImageExifOrientation,
-
-            // previews dropped images
-            FilePondPluginImagePreview,
-        );
-
-        // Select the file input and use create() to turn it into a pond
-        FilePond.create(
-            document.querySelector('.filepond')
-        );
-
-    </script>
-
-    <script>
-
-        FilePond.setOptions({
-            server: {
-                process: '@Url.Action("SaveFile", "Exam")',
-                revert: '@Url.Action("RevertFile", "Exam")'
-            }
-        });
-
-    </script>
-
     <script>
 
         function Delete(id) {
             $.ajax({
-                url: "/Exam/Delete/" + id,
+                url: "/Exam/DeleteQuestion/" + id,
                 type: "Get",
                 data: {}
             }).done(function (result) {
@@ -190,9 +105,9 @@
             });
         }
 
-        function Create() {
+        function Create(id) {
             $.ajax({
-                url: "/Exam/CreateOrEditQuestion",
+                url: "/Exam/CreateQuestion/" + id,
                 type: "Get",
                 data: {}
             }).done(function (result) {
@@ -204,7 +119,7 @@
 
         function Edit(id) {
             $.ajax({
-                url: "/Exam/CreateOrEdit/" + id,
+                url: "/Exam/EditQuestion/" + id,
                 type: "Get",
                 data: {}
             }).done(function (result) {
