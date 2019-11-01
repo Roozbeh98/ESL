@@ -1290,6 +1290,7 @@
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_Exam.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_Login.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_Question.cs" />
+    <Compile Include="Areas\Dashboard\Models\ViewModels\Model_QuestionList.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_Register.cs" />
     <Compile Include="Controllers\AboutUsController.cs" />
     <Compile Include="Controllers\ContactUsController.cs" />

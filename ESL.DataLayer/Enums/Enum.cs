@@ -12,4 +12,12 @@ namespace ESL.Web
         WithTitel,
         Maseage
     }
+
+    public enum CodeGroup
+    {
+        Gender = 1,
+        QuestionGroup = 4,
+        QuestionType = 5,
+        QuestionOption = 6
+    }
 }

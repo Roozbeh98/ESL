@@ -22,6 +22,7 @@ namespace ESL.DataLayer.Domain
             this.Tbl_NewsDocument = new HashSet<Tbl_NewsDocument>();
             this.Tbl_Organization = new HashSet<Tbl_Organization>();
             this.Tbl_Question = new HashSet<Tbl_Question>();
+            this.Tbl_Question1 = new HashSet<Tbl_Question>();
             this.Tbl_Response = new HashSet<Tbl_Response>();
             this.Tbl_User = new HashSet<Tbl_User>();
             this.Tbl_User1 = new HashSet<Tbl_User>();
@@ -44,6 +45,8 @@ namespace ESL.DataLayer.Domain
         public virtual ICollection<Tbl_Organization> Tbl_Organization { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_Question> Tbl_Question { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tbl_Question> Tbl_Question1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_Response> Tbl_Response { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

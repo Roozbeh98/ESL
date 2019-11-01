@@ -30,14 +30,13 @@ namespace ESL.DataLayer.Domain
         public string User_UserName { get; set; }
         public string User_Email { get; set; }
         public Nullable<bool> User_EmailConfirmed { get; set; }
+        public string User_PasswordSalt { get; set; }
         public string User_PasswordHash { get; set; }
         public string User_PhoneNumber { get; set; }
         public string User_FirstName { get; set; }
         public string User_lastName { get; set; }
         public string User_IdentityNumber { get; set; }
-        public string User_Telephone { get; set; }
-        public string User_Address { get; set; }
-        public string User_PostalCode { get; set; }
+        public string User_Mobile { get; set; }
         public bool User_IsBan { get; set; }
         public bool User_IsDelete { get; set; }
     

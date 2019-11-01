@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using ESL.DataLayer.Domain;
 using System.IO;
 using ESL.Web.Areas.Dashboard.Models.ViewModels;
+using ESL.Services.BaseRepository;
 
 namespace ESL.Web.Areas.Dashboard.Controllers
 {
@@ -176,12 +177,12 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
         public ActionResult Details(int id)
         {
-            var q = db.Tbl_Question.Where(x => x.Tbl_Exam.Exam_ID == id).Select(x => new Model_Question
+            var q = db.Tbl_Question.Where(x => x.Tbl_Exam.Exam_ID == id).Select(x => new Model_QuestionList
             {
                 ID = x.Question_ID,
                 Title = x.Question_Title,
                 Type = x.Tbl_Code.Code_Display,
-                Response = x.Tbl_Response.Response_ID,
+                Response = db.Tbl_Code.Where(y => y.Code_ID.Equals(x.Question_ResponseID)).FirstOrDefault().Code_Name,
                 Mark = x.Question_Mark,
                 CreationDate = x.Question_CreationDate
 
@@ -201,10 +202,11 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                 if (q != null)
                 {
                     model.ID = q.Question_ID;
-                    model.ExamID = q.Question_ExamID;
+                    //model.ExamID = q.Question_ExamID;
                     model.Title = q.Question_Title;
-                    model.Type = q.Tbl_Code.Code_Display;
-                    model.Response = q.Question_ResponseID;
+                    model.Type = q.Tbl_Code.Code_Guid;
+                    model.Group = db.Tbl_Code.Where(y => y.Code_ID.Equals(q.Question_GroupCodeID)).FirstOrDefault().Code_Guid;
+                    model.Response = q.Tbl_Response.Response_Guid;
                     model.Mark = q.Question_Mark;
                 }
             }
@@ -227,8 +229,9 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     if (q != null)
                     {
                         q.Question_Title = model.Title;
-                        //q.Question_TypeCodeID = model.;
-                        //q.Question_ResponseID = model.;
+                        q.Question_TypeCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Type);
+                        q.Question_GroupCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Group);
+                        q.Question_ResponseID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Response);
                         q.Question_Mark = model.Mark;
                         q.Question_ModifiedDate = DateTime.Now;
 
@@ -243,10 +246,11 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                 {
                     q.Question_ExamID = model.ExamID;
                     q.Question_Title = model.Title;
-                    //q.Question_TypeCodeID = model.;
-                    //q.Question_ResponseID = model.;
+                    q.Question_TypeCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Type);
+                    q.Question_GroupCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Group);
+                    q.Question_ResponseID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Response);
                     q.Question_Mark = model.Mark;
-                    q.Question_Order = db.Tbl_Question.OrderByDescending(x => x.Question_Order).First().Question_Order;
+                    q.Question_Order = db.Tbl_Question.Any() ? db.Tbl_Question.OrderByDescending(x => x.Question_Order).First().Question_Order : 1;
                     q.Question_CreationDate = q.Question_CreationDate = DateTime.Now;
 
                     db.Tbl_Question.Add(q);
@@ -269,6 +273,42 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
             return View();
         }
+
+        //[HttpGet]
+        //public JsonResult Get_AllStudentList(string searchTerm)
+        //{
+        //    List<DropDownModel> t = new List<DropDownModel>();
+
+        //    var q = from a in db.Tbl_BaseRolesPermission where (a.Tbl_Permission.Permission_Name == "Student") select a;
+
+
+        //    foreach (var item in q)
+        //    {
+        //        var p = from b in db.Tbl_Login where (b.Login_BaseRoleID == item.BRP_BaseRoleID) select b;
+
+        //        if (p != null)
+        //        {
+        //            foreach (var Student in p)
+        //            {
+        //                if (!Student.Login_RegisterActive)
+        //                {
+        //                    t.Add(new DropDownModel((int)Student.Login_UserID, Student.Tbl_User.User_Name + " " + Student.Tbl_User.User_Family));
+        //                }
+        //            }
+        //        }
+        //    }
+
+        //    var md = t.Select(a => new { id = a.id, text = a.name });
+
+        //    if (searchTerm != null)
+        //    {
+        //        md = t.Where(a => a.name.Contains(searchTerm)).Select((a => new { id = a.id, text = a.name }));
+        //    }
+
+
+
+        //    return Json(md, JsonRequestBehavior.AllowGet);
+        //}
 
         [HttpPost]
         public JsonResult SaveFile()
