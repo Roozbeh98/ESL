@@ -17,11 +17,15 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
         [StringLength(100, ErrorMessage = "مقدار وارد شده بیش 100 کارکتراست")]
         public string Family { get; set; }
+        [Display(Name = "کد ملی")]
+        [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
+        [MaxLength(10, ErrorMessage = "کدملی نامعتبر")]
+        [MinLength(10, ErrorMessage = "کدملی نامعتبر")]
+        public string IdentityNumber { get; set; }
         [Display(Name = "جنسیت")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
         [StringLength(100, ErrorMessage = "مقدار وارد شده بیش 100 کارکتراست")]
-        [DataType(DataType.Currency)]
-        public int Gender { get; set; }
+        public Guid Gender { get; set; }
         [Display(Name = "موبایل")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
         [StringLength(11, ErrorMessage = "مقدار وارد شده بیش 11 کارکتراست")]
