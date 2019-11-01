@@ -24,7 +24,7 @@ namespace ESL.DataLayer.Domain
         public System.Guid Question_Guid { get; set; }
         public int Question_ExamID { get; set; }
         public int Question_GroupCodeID { get; set; }
-        public int Question_ResponseID { get; set; }
+        public Nullable<int> Question_ResponseID { get; set; }
         public int Question_TypeCodeID { get; set; }
         public string Question_Title { get; set; }
         public int Question_Mark { get; set; }

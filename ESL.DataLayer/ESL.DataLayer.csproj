@@ -163,18 +163,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Domain\ESL.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ESL.edmx</DependentUpon>
-      <LastGenOutput>ESL.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Domain\ESL.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ESL.edmx</DependentUpon>
-      <LastGenOutput>ESL.cs</LastGenOutput>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.Config" />
     <EntityDeploy Include="Domain\ESL.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -187,6 +175,18 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Domain\ESL.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ESL.edmx</DependentUpon>
+      <LastGenOutput>ESL.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Domain\ESL.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ESL.edmx</DependentUpon>
+      <LastGenOutput>ESL.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

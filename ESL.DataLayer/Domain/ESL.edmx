@@ -171,7 +171,7 @@
           <Property Name="Question_Guid" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Question_ExamID" Type="int" Nullable="false" />
           <Property Name="Question_GroupCodeID" Type="int" Nullable="false" />
-          <Property Name="Question_ResponseID" Type="int" Nullable="false" />
+          <Property Name="Question_ResponseID" Type="int" />
           <Property Name="Question_TypeCodeID" Type="int" Nullable="false" />
           <Property Name="Question_Title" Type="ntext" Nullable="false" />
           <Property Name="Question_Mark" Type="int" Nullable="false" />
@@ -454,19 +454,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Tbl_Question_Tbl_Code">
-          <End Role="Tbl_Code" Type="Self.Tbl_Code" Multiplicity="1" />
-          <End Role="Tbl_Question" Type="Self.Tbl_Question" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tbl_Code">
-              <PropertyRef Name="Code_ID" />
-            </Principal>
-            <Dependent Role="Tbl_Question">
-              <PropertyRef Name="Question_TypeCodeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Tbl_Question_Tbl_Code1">
+        <Association Name="FK_Tbl_Question_Tbl_Code_GroupCodeID">
           <End Role="Tbl_Code" Type="Self.Tbl_Code" Multiplicity="1" />
           <End Role="Tbl_Question" Type="Self.Tbl_Question" Multiplicity="*" />
           <ReferentialConstraint>
@@ -475,6 +463,18 @@
             </Principal>
             <Dependent Role="Tbl_Question">
               <PropertyRef Name="Question_GroupCodeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_Question_Tbl_Code_TypeCodeID">
+          <End Role="Tbl_Code" Type="Self.Tbl_Code" Multiplicity="1" />
+          <End Role="Tbl_Question" Type="Self.Tbl_Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Code">
+              <PropertyRef Name="Code_ID" />
+            </Principal>
+            <Dependent Role="Tbl_Question">
+              <PropertyRef Name="Question_TypeCodeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -491,7 +491,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Tbl_Question_Tbl_Response">
-          <End Role="Tbl_Response" Type="Self.Tbl_Response" Multiplicity="1" />
+          <End Role="Tbl_Response" Type="Self.Tbl_Response" Multiplicity="0..1" />
           <End Role="Tbl_Question" Type="Self.Tbl_Question" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tbl_Response">
@@ -750,11 +750,11 @@
             <End Role="Tbl_Document" EntitySet="Tbl_Document" />
             <End Role="Tbl_Organization" EntitySet="Tbl_Organization" />
           </AssociationSet>
-          <AssociationSet Name="FK_Tbl_Question_Tbl_Code" Association="Self.FK_Tbl_Question_Tbl_Code">
+          <AssociationSet Name="FK_Tbl_Question_Tbl_Code_GroupCodeID" Association="Self.FK_Tbl_Question_Tbl_Code_GroupCodeID">
             <End Role="Tbl_Code" EntitySet="Tbl_Code" />
             <End Role="Tbl_Question" EntitySet="Tbl_Question" />
           </AssociationSet>
-          <AssociationSet Name="FK_Tbl_Question_Tbl_Code1" Association="Self.FK_Tbl_Question_Tbl_Code1">
+          <AssociationSet Name="FK_Tbl_Question_Tbl_Code_TypeCodeID" Association="Self.FK_Tbl_Question_Tbl_Code_TypeCodeID">
             <End Role="Tbl_Code" EntitySet="Tbl_Code" />
             <End Role="Tbl_Question" EntitySet="Tbl_Question" />
           </AssociationSet>
@@ -852,8 +852,8 @@
           <NavigationProperty Name="Tbl_Document" Relationship="Self.FK_Tbl_Document_Tbl_Code" FromRole="Tbl_Code" ToRole="Tbl_Document" />
           <NavigationProperty Name="Tbl_NewsDocument" Relationship="Self.FK_Tbl_NewsDocument_Tbl_Code" FromRole="Tbl_Code" ToRole="Tbl_NewsDocument" />
           <NavigationProperty Name="Tbl_Organization" Relationship="Self.FK_Tbl_Organization_Tbl_Code" FromRole="Tbl_Code" ToRole="Tbl_Organization" />
-          <NavigationProperty Name="Tbl_Question" Relationship="Self.FK_Tbl_Question_Tbl_Code" FromRole="Tbl_Code" ToRole="Tbl_Question" />
-          <NavigationProperty Name="Tbl_Question1" Relationship="Self.FK_Tbl_Question_Tbl_Code1" FromRole="Tbl_Code" ToRole="Tbl_Question" />
+          <NavigationProperty Name="Tbl_Question" Relationship="Self.FK_Tbl_Question_Tbl_Code_GroupCodeID" FromRole="Tbl_Code" ToRole="Tbl_Question" />
+          <NavigationProperty Name="Tbl_Question1" Relationship="Self.FK_Tbl_Question_Tbl_Code_TypeCodeID" FromRole="Tbl_Code" ToRole="Tbl_Question" />
           <NavigationProperty Name="Tbl_Response" Relationship="Self.FK_Tbl_Response_Tbl_Code" FromRole="Tbl_Code" ToRole="Tbl_Response" />
           <NavigationProperty Name="Tbl_User" Relationship="Self.FK_Tbl_User_Tbl_Code" FromRole="Tbl_Code" ToRole="Tbl_User" />
           <NavigationProperty Name="Tbl_User1" Relationship="Self.FK_Tbl_User_Tbl_Code1" FromRole="Tbl_Code" ToRole="Tbl_User" />
@@ -1034,7 +1034,7 @@
           <Property Name="Question_Guid" Type="Guid" Nullable="false" />
           <Property Name="Question_ExamID" Type="Int32" Nullable="false" />
           <Property Name="Question_GroupCodeID" Type="Int32" Nullable="false" />
-          <Property Name="Question_ResponseID" Type="Int32" Nullable="false" />
+          <Property Name="Question_ResponseID" Type="Int32" />
           <Property Name="Question_TypeCodeID" Type="Int32" Nullable="false" />
           <Property Name="Question_Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Question_Mark" Type="Int32" Nullable="false" />
@@ -1042,8 +1042,8 @@
           <Property Name="Question_CreationDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="Question_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="Question_IsDelete" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Tbl_Code" Relationship="Self.FK_Tbl_Question_Tbl_Code" FromRole="Tbl_Question" ToRole="Tbl_Code" />
-          <NavigationProperty Name="Tbl_Code1" Relationship="Self.FK_Tbl_Question_Tbl_Code1" FromRole="Tbl_Question" ToRole="Tbl_Code" />
+          <NavigationProperty Name="Tbl_Code" Relationship="Self.FK_Tbl_Question_Tbl_Code_GroupCodeID" FromRole="Tbl_Question" ToRole="Tbl_Code" />
+          <NavigationProperty Name="Tbl_Code1" Relationship="Self.FK_Tbl_Question_Tbl_Code_TypeCodeID" FromRole="Tbl_Question" ToRole="Tbl_Code" />
           <NavigationProperty Name="Tbl_Exam" Relationship="Self.FK_Tbl_Question_Tbl_Exam" FromRole="Tbl_Question" ToRole="Tbl_Exam" />
           <NavigationProperty Name="Tbl_Response" Relationship="Self.FK_Tbl_Question_Tbl_Response" FromRole="Tbl_Question" ToRole="Tbl_Response" />
           <NavigationProperty Name="Tbl_Response1" Relationship="Self.FK_Tbl_Response_Tbl_Question" FromRole="Tbl_Question" ToRole="Tbl_Response" />
@@ -1233,19 +1233,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Tbl_Question_Tbl_Code">
-          <End Role="Tbl_Code" Type="Self.Tbl_Code" Multiplicity="1" />
-          <End Role="Tbl_Question" Type="Self.Tbl_Question" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tbl_Code">
-              <PropertyRef Name="Code_ID" />
-            </Principal>
-            <Dependent Role="Tbl_Question">
-              <PropertyRef Name="Question_TypeCodeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Tbl_Question_Tbl_Code1">
+        <Association Name="FK_Tbl_Question_Tbl_Code_GroupCodeID">
           <End Role="Tbl_Code" Type="Self.Tbl_Code" Multiplicity="1" />
           <End Role="Tbl_Question" Type="Self.Tbl_Question" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1254,6 +1242,18 @@
             </Principal>
             <Dependent Role="Tbl_Question">
               <PropertyRef Name="Question_GroupCodeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_Question_Tbl_Code_TypeCodeID">
+          <End Role="Tbl_Code" Type="Self.Tbl_Code" Multiplicity="1" />
+          <End Role="Tbl_Question" Type="Self.Tbl_Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Code">
+              <PropertyRef Name="Code_ID" />
+            </Principal>
+            <Dependent Role="Tbl_Question">
+              <PropertyRef Name="Question_TypeCodeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1498,7 +1498,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Tbl_Question_Tbl_Response">
-          <End Role="Tbl_Response" Type="Self.Tbl_Response" Multiplicity="1" />
+          <End Role="Tbl_Response" Type="Self.Tbl_Response" Multiplicity="0..1" />
           <End Role="Tbl_Question" Type="Self.Tbl_Question" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tbl_Response">
@@ -1601,11 +1601,11 @@
             <End Role="Tbl_Code" EntitySet="Tbl_Code" />
             <End Role="Tbl_Organization" EntitySet="Tbl_Organization" />
           </AssociationSet>
-          <AssociationSet Name="FK_Tbl_Question_Tbl_Code" Association="Self.FK_Tbl_Question_Tbl_Code">
+          <AssociationSet Name="FK_Tbl_Question_Tbl_Code_GroupCodeID" Association="Self.FK_Tbl_Question_Tbl_Code_GroupCodeID">
             <End Role="Tbl_Code" EntitySet="Tbl_Code" />
             <End Role="Tbl_Question" EntitySet="Tbl_Question" />
           </AssociationSet>
-          <AssociationSet Name="FK_Tbl_Question_Tbl_Code1" Association="Self.FK_Tbl_Question_Tbl_Code1">
+          <AssociationSet Name="FK_Tbl_Question_Tbl_Code_TypeCodeID" Association="Self.FK_Tbl_Question_Tbl_Code_TypeCodeID">
             <End Role="Tbl_Code" EntitySet="Tbl_Code" />
             <End Role="Tbl_Question" EntitySet="Tbl_Question" />
           </AssociationSet>

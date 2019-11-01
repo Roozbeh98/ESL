@@ -15,7 +15,7 @@
     </div>
 
     <div class="pull-right">
-        <a href="#" onclick="Create(@Model.ExamID)"><i class="glyphicon glyphicon-plus navigation-btn-icon"></i></a>
+        <a href="@Url.Action("CreateQuestion", "Exam", new { id = Model.ExamID })"><i class="glyphicon glyphicon-plus navigation-btn-icon"></i></a>
     </div>
 
 </div>
@@ -45,36 +45,39 @@
                     int x = 0;
                 }
 
-                @foreach (var item in Model.Questions)
+                @if (Model.Questions != null)
                 {
-                    x++;
+                    foreach (var item in Model.Questions)
+                    {
+                        x++;
 
-                    <tr>
-                        <td scope="row">@x</td>
-                        <td scope="row">
-                            <span> @Html.DisplayFor(modelItem => item.Title) </span>
-                        </td>
-                        <td scope="row">
-                            <span> @Html.DisplayFor(modelItem => item.Type) </span>
-                        </td>
-                        <td scope="row">
-                            <span> @Html.DisplayFor(modelItem => item.Group) </span>
-                        </td>
-                        <td scope="row">
-                            <span> @Html.DisplayFor(modelItem => item.Response) </span>
-                        </td>
-                        <td scope="row">
-                            <span> @Html.DisplayFor(modelItem => item.Mark) </span>
-                        </td>
-                        <td scope="row">
-                            <span> @PersianDateExtensionMethods.ToPeString(item.CreationDate, "yyyy/MM/dd") </span>
-                        </td>
-                        <td scope="row">
-                            <a class="btn btn-info btn-sm glyphicon glyphicon-list" href="@Url.Action("Details", "Exam", new { id = item.ID })"> </a>
-                            <a class="btn btn-warning btn-sm glyphicon glyphicon-pencil" onclick="Edit(@item.ID)"> </a>
-                            <a class="btn btn-danger btn-sm glyphicon glyphicon-trash" onclick="Delete(@item.ID)"> </a>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td scope="row">@x</td>
+                            <td scope="row">
+                                <span> @Html.DisplayFor(modelItem => item.Title) </span>
+                            </td>
+                            <td scope="row">
+                                <span> @Html.DisplayFor(modelItem => item.Type) </span>
+                            </td>
+                            <td scope="row">
+                                <span> @Html.DisplayFor(modelItem => item.Group) </span>
+                            </td>
+                            <td scope="row">
+                                <span> @Html.DisplayFor(modelItem => item.Response) </span>
+                            </td>
+                            <td scope="row">
+                                <span> @Html.DisplayFor(modelItem => item.Mark) </span>
+                            </td>
+                            <td scope="row">
+                                <span> @PersianDateExtensionMethods.ToPeString(item.CreationDate, "yyyy/MM/dd") </span>
+                            </td>
+                            <td scope="row">
+                                <a class="btn btn-info btn-sm glyphicon glyphicon-list" href="@Url.Action("Details", "Exam", new { id = item.ID })"> </a>
+                                <a class="btn btn-warning btn-sm glyphicon glyphicon-pencil" onclick="Edit(@item.ID)"> </a>
+                                <a class="btn btn-danger btn-sm glyphicon glyphicon-trash" onclick="Delete(@item.ID)"> </a>
+                            </td>
+                        </tr>
+                    }
                 }
 
             </tbody>
@@ -105,17 +108,17 @@
             });
         }
 
-        function Create(id) {
-            $.ajax({
-                url: "/Exam/CreateQuestion/" + id,
-                type: "Get",
-                data: {}
-            }).done(function (result) {
-                $('#myModal').modal('show');
-                $('#myModalLabel').html('طرح سوال');
-                $('#myModalBody').html(result);
-            });
-        }
+        //function Create(id) {
+        //    $.ajax({
+        //        url: "/Exam/CreateQuestion/" + id,
+        //        type: "Get",
+        //        data: {}
+        //    }).done(function (result) {
+        //        $('#myModal').modal('show');
+        //        $('#myModalLabel').html('طرح سوال');
+        //        $('#myModalBody').html(result);
+        //    });
+        //}
 
         function Edit(id) {
             $.ajax({

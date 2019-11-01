@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="9a695218fe39445cb6e244b4a11e1c3d" Name="Diagram1">
+      <Diagram DiagramId="9d7786d7960c4755a2bcdfda21782f6a" Name="Diagram1">
         <EntityTypeShape EntityType="ESLModel.sysdiagram" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ESLModel.Tbl_Code" Width="1.5" PointX="3" PointY="19.25" IsExpanded="true" />
         <EntityTypeShape EntityType="ESLModel.Tbl_CodeGroup" Width="1.5" PointX="0.75" PointY="20.25" IsExpanded="true" />
@@ -33,8 +33,8 @@
         <AssociationConnector Association="ESLModel.FK_Tbl_Document_Tbl_Code" ManuallyRouted="false" />
         <AssociationConnector Association="ESLModel.FK_Tbl_NewsDocument_Tbl_Code" ManuallyRouted="false" />
         <AssociationConnector Association="ESLModel.FK_Tbl_Organization_Tbl_Code" ManuallyRouted="false" />
-        <AssociationConnector Association="ESLModel.FK_Tbl_Question_Tbl_Code" ManuallyRouted="false" />
-        <AssociationConnector Association="ESLModel.FK_Tbl_Question_Tbl_Code1" ManuallyRouted="false" />
+        <AssociationConnector Association="ESLModel.FK_Tbl_Question_Tbl_Code_GroupCodeID" ManuallyRouted="false" />
+        <AssociationConnector Association="ESLModel.FK_Tbl_Question_Tbl_Code_TypeCodeID" ManuallyRouted="false" />
         <AssociationConnector Association="ESLModel.FK_Tbl_Response_Tbl_Code" ManuallyRouted="false" />
         <AssociationConnector Association="ESLModel.FK_Tbl_User_Tbl_Code" ManuallyRouted="false" />
         <AssociationConnector Association="ESLModel.FK_Tbl_User_Tbl_Code1" ManuallyRouted="false" />
