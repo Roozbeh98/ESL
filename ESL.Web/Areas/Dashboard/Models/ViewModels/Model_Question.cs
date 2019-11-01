@@ -11,6 +11,9 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
         [Display(Name = "شناسه")]
         public int? ID { get; set; }
 
+        [Display(Name = "شناسه امتحان")]
+        public int ExamID { get; set; }
+
         [Display(Name = "عنوان")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
         public string Title { get; set; }
