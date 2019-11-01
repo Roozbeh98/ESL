@@ -59,5 +59,10 @@ namespace ESL.Services.BaseRepository
         {
             return db.Tbl_Code.Where(x => x.Code_Guid.Equals(guid)).SingleOrDefault().Code_ID;
         }
+
+        public static string Get_CodeNameWithGUID(Guid guid)
+        {
+            return db.Tbl_Code.Where(x => x.Code_Guid.Equals(guid)).SingleOrDefault().Code_Name;
+        }
     }
 }

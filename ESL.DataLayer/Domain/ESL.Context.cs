@@ -32,6 +32,7 @@ namespace ESL.DataLayer.Domain
         public virtual DbSet<Tbl_Course> Tbl_Course { get; set; }
         public virtual DbSet<Tbl_Document> Tbl_Document { get; set; }
         public virtual DbSet<Tbl_Exam> Tbl_Exam { get; set; }
+        public virtual DbSet<Tbl_ExamInPerson> Tbl_ExamInPerson { get; set; }
         public virtual DbSet<Tbl_Gallery> Tbl_Gallery { get; set; }
         public virtual DbSet<Tbl_GalleryDocument> Tbl_GalleryDocument { get; set; }
         public virtual DbSet<Tbl_Menu> Tbl_Menu { get; set; }
@@ -48,5 +49,6 @@ namespace ESL.DataLayer.Domain
         public virtual DbSet<Tbl_User> Tbl_User { get; set; }
         public virtual DbSet<Tbl_UserExam> Tbl_UserExam { get; set; }
         public virtual DbSet<Tbl_UserExamAccess> Tbl_UserExamAccess { get; set; }
+        public virtual DbSet<Tbl_UserExamInPerson> Tbl_UserExamInPerson { get; set; }
     }
 }

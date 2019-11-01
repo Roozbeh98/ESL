@@ -9,9 +9,6 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
 {
     public class Model_QuestionCreate
     {
-        [Display(Name = "شناسه")]
-        public int? ID { get; set; }
-
         [Display(Name = "شناسه آزمون")]
         public int ExamID { get; set; }
 
@@ -29,7 +26,17 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
         public Guid Group { get; set; }
 
+        [Display(Name = "ضمیمه 1")]
+        public string Filepond1 { get; set; }
 
+        [Display(Name = "ضمیمه 2")]
+        public string Filepond2 { get; set; }
+
+        [Display(Name = "ضمیمه 3")]
+        public string Filepond3 { get; set; }
+
+        [Display(Name = "ضمیمه 4")]
+        public string Filepond4 { get; set; }
 
         [Display(Name = "پاسخ")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]

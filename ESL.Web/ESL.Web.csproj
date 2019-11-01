@@ -226,6 +226,8 @@
     <Content Include="Areas\Dashboard\Views\Account\_Register.cshtml" />
     <Content Include="Areas\Dashboard\Views\Exam\Details.cshtml" />
     <Content Include="Areas\Dashboard\Views\Exam\CreateQuestion.cshtml" />
+    <Content Include="Areas\Dashboard\Views\ExamInPerson\Index.cshtml" />
+    <Content Include="Areas\Dashboard\Views\ExamInPerson\Create.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -239,6 +241,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\MyScripts\CKEditor_Config.js" />
     <Content Include="Scripts\MyScripts\DataTabels_Config.js" />
     <Content Include="Scripts\MyScripts\FilePond_Config.js" />
     <Content Include="Scripts\MyScripts\main.js" />
@@ -1282,12 +1285,15 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Dashboard\Controllers\AccountController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\DashboardController.cs" />
+    <Compile Include="Areas\Dashboard\Controllers\ExamInPersonController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\SettingController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\ExamController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\UserController.cs" />
     <Compile Include="Areas\Dashboard\DashboardAreaRegistration.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_DeleteModal.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_Exam.cs" />
+    <Compile Include="Areas\Dashboard\Models\ViewModels\Model_ExamInPersonCreate.cs" />
+    <Compile Include="Areas\Dashboard\Models\ViewModels\Model_ExamsInPerson.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_Login.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_QuestionCreate.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_Questions.cs" />

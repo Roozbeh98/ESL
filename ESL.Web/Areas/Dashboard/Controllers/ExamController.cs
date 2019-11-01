@@ -183,27 +183,34 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             Model_Questions model = new Model_Questions();
             model.ExamID = id.Value;
 
-            model.Questions = db.Tbl_Question.Where(x => x.Tbl_Exam.Exam_ID == id).Select(x => new Model_Question
-            {
-                ID = x.Question_ID,
-                Title = x.Question_Title,
-                Type = x.Tbl_Code.Code_Display,
-                Group = db.Tbl_Code.Where(y => y.Code_ID.Equals(x.Question_GroupCodeID)).FirstOrDefault().Code_Name,
-                Response = db.Tbl_Code.Where(y => y.Code_ID.Equals(x.Question_ResponseID)).FirstOrDefault().Code_Name,
-                Mark = x.Question_Mark,
-                CreationDate = x.Question_CreationDate
+            var q = db.Tbl_Question.Where(x => x.Tbl_Exam.Exam_ID == id).ToList();
 
-            }).ToList();
+            if (q.Count > 0)
+            {
+                model.Questions = q.Select(x => new Model_Question
+                {
+                    ID = x.Question_ID,
+                    Title = x.Question_Title,
+                    Type = x.Tbl_Code.Code_Display,
+                    Group = db.Tbl_Code.Where(y => y.Code_ID.Equals(x.Question_GroupCodeID)).FirstOrDefault().Code_Name,
+                    Response = db.Tbl_Code.Where(y => y.Code_ID.Equals(x.Question_ResponseID)).FirstOrDefault().Code_Name,
+                    Mark = x.Question_Mark,
+                    CreationDate = x.Question_CreationDate
+
+                }).ToList();
+            }
 
             return View(model);
         }
 
         public ActionResult CreateQuestion(int id)
         {
-            Model_QuestionCreate model = new Model_QuestionCreate();
-            model.ExamID = id;
+            Model_QuestionCreate model = new Model_QuestionCreate
+            {
+                ExamID = id
+            };
 
-            return PartialView(model);
+            return View(model);
         }
 
         public ActionResult EditQuestion(int? id)
@@ -216,7 +223,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                 if (q != null)
                 {
-                    model.ID = q.Question_ID;
+                    //model.ID = q.Question_ID;
                     model.Title = q.Question_Title;
                     model.Type = q.Tbl_Code.Code_Guid;
                     model.Group = db.Tbl_Code.Where(y => y.Code_ID.Equals(q.Question_GroupCodeID)).FirstOrDefault().Code_Guid;
@@ -235,17 +242,69 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             if (ModelState.IsValid)
             {
                 Tbl_Question q = new Tbl_Question();
-
                 q.Question_ExamID = model.ExamID;
                 q.Question_Title = model.Title;
                 q.Question_TypeCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Type);
                 q.Question_GroupCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Group);
-                q.Question_ResponseID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Response);
+                //Question_ResponseID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Response);
                 q.Question_Mark = model.Mark;
                 q.Question_Order = db.Tbl_Question.Any() ? db.Tbl_Question.OrderByDescending(x => x.Question_Order).First().Question_Order : 1;
-                q.Question_CreationDate = q.Question_CreationDate = DateTime.Now;
+                q.Question_CreationDate = q.Question_ModifiedDate = DateTime.Now;
 
-                db.Tbl_Question.Add(q);
+                Tbl_Response p1 = new Tbl_Response();
+                p1.Response_QuestionID = q.Question_ID;
+                p1.Response_TypeCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Type);
+                p1.Response_Title = model.Filepond1;
+                p1.Response_Order = db.Tbl_Response.Any(x => x.Response_QuestionID.Equals(q.Question_ID)) ? db.Tbl_Question.OrderByDescending(x => x.Question_Order).First().Question_Order : 1;
+
+                //p1.Tbl_Question = q;
+
+                Tbl_Response p2 = new Tbl_Response();
+                p1.Response_QuestionID = q.Question_ID;
+                p1.Response_TypeCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Type);
+                p1.Response_Title = model.Filepond2;
+                p1.Response_Order = db.Tbl_Response.Any(x => x.Response_QuestionID.Equals(q.Question_ID)) ? db.Tbl_Question.OrderByDescending(x => x.Question_Order).First().Question_Order : 1;
+
+                Tbl_Response p3 = new Tbl_Response();
+                p1.Response_QuestionID = q.Question_ID;
+                p1.Response_TypeCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Type);
+                p1.Response_Title = model.Filepond3;
+                p1.Response_Order = db.Tbl_Response.Any(x => x.Response_QuestionID.Equals(q.Question_ID)) ? db.Tbl_Question.OrderByDescending(x => x.Question_Order).First().Question_Order : 1;
+
+                Tbl_Response p4 = new Tbl_Response();
+                p1.Response_QuestionID = q.Question_ID;
+                p1.Response_TypeCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Type);
+                p1.Response_Title = model.Filepond4;
+                p1.Response_Order = db.Tbl_Response.Any(x => x.Response_QuestionID.Equals(q.Question_ID)) ? db.Tbl_Question.OrderByDescending(x => x.Question_Order).First().Question_Order : 1;
+
+                db.Tbl_Response.Add(p1);
+                db.Tbl_Response.Add(p2);
+                db.Tbl_Response.Add(p3);
+                db.Tbl_Response.Add(p4);
+
+                switch (Rep_CodeGroup.Get_CodeNameWithGUID(model.Response))
+                {
+                    case "1":
+                        q.Question_ResponseID = p1.Response_ID;
+                        break;
+
+                    case "2":
+                        q.Question_ResponseID = p2.Response_ID;
+                        break;
+
+                    case "3":
+                        q.Question_ResponseID = p3.Response_ID;
+                        break;
+
+                    case "4":
+                        q.Question_ResponseID = p4.Response_ID;
+                        break;
+
+                    default:
+                        break;
+                }
+
+                db.Entry(q).State = EntityState.Modified;
 
                 if (Convert.ToBoolean(db.SaveChanges() > 0))
                 {
@@ -276,9 +335,9 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             {
                 Tbl_Question q = new Tbl_Question();
 
-                if (model.ID != null)
+                if (model.ExamID != null)  // ID
                 {
-                    q = db.Tbl_Question.Where(x => x.Question_ID == model.ID).FirstOrDefault();
+                    q = db.Tbl_Question.Where(x => x.Question_ID == model.ExamID).FirstOrDefault();  // ID
 
                     if (q != null)
                     {
@@ -327,42 +386,6 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
             return View();
         }
-
-        //[HttpGet]
-        //public JsonResult Get_AllStudentList(string searchTerm)
-        //{
-        //    List<DropDownModel> t = new List<DropDownModel>();
-
-        //    var q = from a in db.Tbl_BaseRolesPermission where (a.Tbl_Permission.Permission_Name == "Student") select a;
-
-
-        //    foreach (var item in q)
-        //    {
-        //        var p = from b in db.Tbl_Login where (b.Login_BaseRoleID == item.BRP_BaseRoleID) select b;
-
-        //        if (p != null)
-        //        {
-        //            foreach (var Student in p)
-        //            {
-        //                if (!Student.Login_RegisterActive)
-        //                {
-        //                    t.Add(new DropDownModel((int)Student.Login_UserID, Student.Tbl_User.User_Name + " " + Student.Tbl_User.User_Family));
-        //                }
-        //            }
-        //        }
-        //    }
-
-        //    var md = t.Select(a => new { id = a.id, text = a.name });
-
-        //    if (searchTerm != null)
-        //    {
-        //        md = t.Where(a => a.name.Contains(searchTerm)).Select((a => new { id = a.id, text = a.name }));
-        //    }
-
-
-
-        //    return Json(md, JsonRequestBehavior.AllowGet);
-        //}
 
         [HttpPost]
         public JsonResult SaveFile()
