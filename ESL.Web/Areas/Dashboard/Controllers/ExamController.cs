@@ -387,42 +387,6 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             return View();
         }
 
-        //[HttpGet]
-        //public JsonResult Get_AllStudentList(string searchTerm)
-        //{
-        //    List<DropDownModel> t = new List<DropDownModel>();
-
-        //    var q = from a in db.Tbl_BaseRolesPermission where (a.Tbl_Permission.Permission_Name == "Student") select a;
-
-
-        //    foreach (var item in q)
-        //    {
-        //        var p = from b in db.Tbl_Login where (b.Login_BaseRoleID == item.BRP_BaseRoleID) select b;
-
-        //        if (p != null)
-        //        {
-        //            foreach (var Student in p)
-        //            {
-        //                if (!Student.Login_RegisterActive)
-        //                {
-        //                    t.Add(new DropDownModel((int)Student.Login_UserID, Student.Tbl_User.User_Name + " " + Student.Tbl_User.User_Family));
-        //                }
-        //            }
-        //        }
-        //    }
-
-        //    var md = t.Select(a => new { id = a.id, text = a.name });
-
-        //    if (searchTerm != null)
-        //    {
-        //        md = t.Where(a => a.name.Contains(searchTerm)).Select((a => new { id = a.id, text = a.name }));
-        //    }
-
-
-
-        //    return Json(md, JsonRequestBehavior.AllowGet);
-        //}
-
         [HttpPost]
         public JsonResult SaveFile()
         {

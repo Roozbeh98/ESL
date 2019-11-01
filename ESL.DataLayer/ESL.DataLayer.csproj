@@ -110,6 +110,9 @@
     <Compile Include="Domain\Tbl_Exam.cs">
       <DependentUpon>ESL.tt</DependentUpon>
     </Compile>
+    <Compile Include="Domain\Tbl_ExamInPerson.cs">
+      <DependentUpon>ESL.tt</DependentUpon>
+    </Compile>
     <Compile Include="Domain\Tbl_Gallery.cs">
       <DependentUpon>ESL.tt</DependentUpon>
     </Compile>
@@ -156,6 +159,9 @@
       <DependentUpon>ESL.tt</DependentUpon>
     </Compile>
     <Compile Include="Domain\Tbl_UserExamAccess.cs">
+      <DependentUpon>ESL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Domain\Tbl_UserExamInPerson.cs">
       <DependentUpon>ESL.tt</DependentUpon>
     </Compile>
     <Compile Include="Enums\Enum.cs" />
