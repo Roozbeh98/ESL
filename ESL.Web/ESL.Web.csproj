@@ -231,6 +231,7 @@
     <Content Include="Areas\Dashboard\Views\ExamInPerson\Edit.cshtml" />
     <Content Include="Areas\Dashboard\Views\ExamInPerson\Delete.cshtml" />
     <Content Include="Areas\Dashboard\Views\ExamInPerson\Details.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Setting\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -1350,7 +1351,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Dashboard\Views\Setting\" />
     <Folder Include="Areas\Dashboard\Views\User\" />
     <Folder Include="Models\" />
     <Folder Include="Views\Errors\" />
