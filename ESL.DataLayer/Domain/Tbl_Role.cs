@@ -14,18 +14,9 @@ namespace ESL.DataLayer.Domain
     
     public partial class Tbl_Role
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Tbl_Role()
-        {
-            this.Tbl_User = new HashSet<Tbl_User>();
-        }
-    
         public int Role_ID { get; set; }
         public System.Guid Role_Guid { get; set; }
         public string Role_Name { get; set; }
         public string Role_Display { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tbl_User> Tbl_User { get; set; }
     }
 }
