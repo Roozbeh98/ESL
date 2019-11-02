@@ -6,34 +6,26 @@ using System.Web;
 
 namespace ESL.Web.Areas.Dashboard.Models.ViewModels
 {
-    public class Model_ExamsInPerson
+    public class Model_UsersExamInPerson
     {
         [Display(Name = "شناسه")]
         public int ID { get; set; }
 
-        [Display(Name = "عنوان")]
+        [Display(Name = "کاربر")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
-        public string Title { get; set; }
+        public string User { get; set; }
 
-        [Display(Name = "بها")]
+        [Display(Name = "شماره صندلی")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
-        public int Cost { get; set; }
-
-        [Display(Name = "مکان")]
-        [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
-        public string Location { get; set; }
-
-        [Display(Name = "ظرفیت")]
-        [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
-        public int Capacity { get; set; }
+        public int? SeatNumber { get; set; }
 
         [Display(Name = "نمره")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
-        public int TotalMark { get; set; }
+        public int Mark { get; set; }
 
-        [Display(Name = "حداقل نمره قبولی")]
+        [Display(Name = "وضعیت حضور")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
-        public int PassMark { get; set; }
+        public string IsPresent { get; set; }
 
         [Display(Name = "تاریخ ایجاد")]
         public DateTime CreationDate { get; set; }
