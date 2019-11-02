@@ -80,6 +80,12 @@ body {
     margin-right:15px;
 }
 
+.section-without-login-Config {
+    width: 100%;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
 /*********************************************** navbar ********************************************/
 .navbar-inverse {
     background-color: #222d32;

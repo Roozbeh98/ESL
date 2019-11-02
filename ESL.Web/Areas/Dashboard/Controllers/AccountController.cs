@@ -30,12 +30,76 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         [HttpPost]
         public ActionResult Login (Model_Login model)
         {
-            //if (User.Identity.IsAuthenticated)
-            //{
-            //    return RedirectToAction("Dashboard", "Dashboard");
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("index", "Dashboard");
 
-            //}
-            return View();
+            }
+
+
+            if (!ModelState.IsValid)
+            {
+
+                ViewBag.State = "Error";
+
+                return View("Login", model);
+
+
+
+            }
+            var q = db.Tbl_User.Where(a => a.User_Email == model.Username || a.User_Mobile == model.Username).SingleOrDefault();
+
+
+            var SaltPassword = model.Password + q.User_PasswordSalt;
+            var SaltPasswordBytes = Encoding.UTF8.GetBytes(SaltPassword);
+            var SaltPasswordHush = Convert.ToBase64String(SHA512.Create().ComputeHash(SaltPasswordBytes));
+
+
+            if (q.User_PasswordHash == SaltPasswordHush)
+            {
+                string s = string.Empty;
+
+
+
+                s = Rep_UserRole.Get_RoleNameWithID(q.User_RoleID);
+
+
+                var Ticket = new FormsAuthenticationTicket(0, model.Username, DateTime.Now, model.RemenberMe ? DateTime.Now.AddDays(30) : DateTime.Now.AddDays(1), true, s);
+                var EncryptedTicket = FormsAuthentication.Encrypt(Ticket);
+                var Cookie = new HttpCookie(FormsAuthentication.FormsCookieName, EncryptedTicket)
+                {
+                    Expires = Ticket.Expiration
+                    // Domain =
+
+                };
+                Response.Cookies.Add(Cookie);
+                return RedirectToAction("index", "Dashboard" , new { area = "Dashboard" });
+            }
+            else
+            {
+                //err
+                ViewBag.Message = "پسورد نادرست است !";
+                ViewBag.State = "Error";
+                return View();
+
+            }
+
+        }
+
+
+     
+        public ActionResult Logout()
+        {
+            FormsAuthentication.SignOut();
+            var Cookie = new HttpCookie(FormsAuthentication.FormsCookieName)
+            {
+                Expires = DateTime.Now.AddDays(-1)
+            };
+
+            Response.Cookies.Add(Cookie);
+            Session.RemoveAll();
+
+            return RedirectToAction("Login", "Account", new { area = "Dashboard" });
         }
 
         [HttpPost]
@@ -54,13 +118,14 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
             Tbl_User _User = new Tbl_User();
 
+            _User.User_Guid = Guid.NewGuid();
             _User.User_Email = model.Email;
             _User.User_FirstName = model.Name;
             _User.User_lastName = model.Family;
             _User.User_Mobile = model.Mobile;
             _User.User_IdentityNumber = model.IdentityNumber;
             _User.User_RoleID = 1;
-            _User.User_GenderCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Gender);
+            _User.User_GenderCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(Guid.Parse( model.Gender));
 
             var Salt = Guid.NewGuid().ToString("N");
             var SaltPassword = model.Password + Salt;
@@ -69,6 +134,8 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
             _User.User_PasswordHash = SaltPasswordHush;
             _User.User_PasswordSalt = Salt;
+
+            db.Tbl_User.Add(_User);
 
             if (Convert.ToBoolean(db.SaveChanges() > 0))
             {

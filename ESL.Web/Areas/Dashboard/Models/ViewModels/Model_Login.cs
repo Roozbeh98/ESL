@@ -16,5 +16,7 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
+        public bool RemenberMe { get; set; }
+
     }
 }

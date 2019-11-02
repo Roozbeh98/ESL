@@ -166,6 +166,7 @@
     </Compile>
     <Compile Include="Enums\Enum.cs" />
     <Compile Include="MetaData\MetaData_Menu.cs" />
+    <Compile Include="Models\Model_AccountInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

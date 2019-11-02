@@ -25,7 +25,7 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
         [Display(Name = "جنسیت")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
         [StringLength(100, ErrorMessage = "مقدار وارد شده بیش 100 کارکتراست")]
-        public Guid Gender { get; set; }
+        public string Gender { get; set; }
         [Display(Name = "موبایل")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
         [StringLength(11, ErrorMessage = "مقدار وارد شده بیش 11 کارکتراست")]

@@ -29,26 +29,30 @@
                 @using (Html.BeginForm())
                 {
                     @Html.AntiForgeryToken()
-                    <div class="login-items">
+                <div class="login-items">
 
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label " })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label " })
 
-                            @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "" } })
+                        @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "" } })
 
-                            @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label " })
-
-                            @Html.PasswordFor(model => model.Password, new { htmlAttributes = new { @class = "" } })
-
-                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-                        </div>
-
-
+                        @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
                     </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label " })
+
+                        @Html.PasswordFor(model => model.Password, new { htmlAttributes = new { @class = "" } })
+
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.EditorFor(model => model.RemenberMe)
+                        <label>مرا به خاطر بسپار</label>
+                    </div>
+
+                </div>
 
                     <input type="submit" name="name" value="ورود" class="btn btn-block  esl-btn esl-btn-success esl-btn-L " />
 

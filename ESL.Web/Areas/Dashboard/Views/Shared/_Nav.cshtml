@@ -1,12 +1,12 @@
-﻿@*@using D_Library.Models.Repository
-    @using D_Library.Models.Model*@
+﻿@using ESL.Services.BaseRepository
+@using ESL.DataLayer.Models
+
 
 @{
-    //Rep_AccountInfo info = new Rep_AccountInfo();
-    //AccountInfoModel infoModel = new AccountInfoModel();
-    //infoModel = info.GetInfoForNavbar(User.Identity.Name);
-    //if (User.Identity.IsAuthenticated)
-    if (true)
+    Rep_User info = new Rep_User();
+    Model_AccountInfo infoModel = new Model_AccountInfo();
+    infoModel = info.GetInfoForNavbar(User.Identity.Name);
+    if (User.Identity.IsAuthenticated)
     {
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
@@ -32,7 +32,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                         <i class="glyphicon glyphicon-user  nav-top-userInfo-icon"></i>
 
-                        <span class="hidden-xs nav-username">روزبه شامخی</span>
+                        <span class="hidden-xs nav-username">@infoModel.Name</span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
@@ -42,9 +42,9 @@
                             <img src="~/Content/Images/abstract-user-flat-3.png" style="width:100px;height:100px;" class=" img-circle" alt="User Image">
 
                             <p>
-                                روزبه شامخی
+                                @infoModel.Name
                                 <br />
-                                <small>ادمین</small>
+                                <small>@infoModel.Role</small>
                             </p>
                         </li>
                         <!-- Menu Body -->

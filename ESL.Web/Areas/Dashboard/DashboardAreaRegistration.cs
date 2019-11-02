@@ -2,21 +2,21 @@
 
 namespace ESL.Web.Areas.Dashboard
 {
-    public class DashboardAreaRegistration : AreaRegistration 
+    public class DashboardAreaRegistration : AreaRegistration
     {
-        public override string AreaName 
+        public override string AreaName
         {
-            get 
+            get
             {
                 return "Dashboard";
             }
         }
 
-        public override void RegisterArea(AreaRegistrationContext context) 
+        public override void RegisterArea(AreaRegistrationContext context)
         {
             context.MapRoute(
                 "Dashboard_default",
-                "{controller}/{action}/{id}",
+                "Dashboard/{controller}/{action}/{id}",
                 new { action = "Index", id = UrlParameter.Optional }
             );
         }

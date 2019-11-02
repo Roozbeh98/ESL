@@ -39,12 +39,22 @@
     </header>
 
     <main class="Main-Config">
-        <aside class="aside-Config">
-            @Html.Partial("_AsideAdmin")
-        </aside>
-        <section class="section-Config">
-            @RenderBody()
-        </section>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <aside class="aside-Config">
+                @Html.Partial("_AsideAdmin")
+            </aside>
+            <section class="section-Config">
+                @RenderBody()
+            </section>
+        }
+        else
+        {
+            <section class="section-without-login-Config">
+                @RenderBody()
+            </section>
+        }
+
     </main>
 
     <footer></footer>
