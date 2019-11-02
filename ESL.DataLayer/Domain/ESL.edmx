@@ -616,6 +616,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Tbl_User_Tbl_Role">
+          <End Role="Tbl_Role" Type="Self.Tbl_Role" Multiplicity="1" />
+          <End Role="Tbl_User" Type="Self.Tbl_User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Role">
+              <PropertyRef Name="Role_ID" />
+            </Principal>
+            <Dependent Role="Tbl_User">
+              <PropertyRef Name="User_RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Tbl_UserExam_Tbl_Exam">
           <End Role="Tbl_Exam" Type="Self.Tbl_Exam" Multiplicity="1" />
           <End Role="Tbl_UserExam" Type="Self.Tbl_UserExam" Multiplicity="*" />
@@ -814,6 +826,10 @@
             <End Role="Tbl_Menu" EntitySet="Tbl_Menu" />
             <End Role="Tbl_SubMenu" EntitySet="Tbl_SubMenu" />
           </AssociationSet>
+          <AssociationSet Name="FK_Tbl_User_Tbl_Role" Association="Self.FK_Tbl_User_Tbl_Role">
+            <End Role="Tbl_Role" EntitySet="Tbl_Role" />
+            <End Role="Tbl_User" EntitySet="Tbl_User" />
+          </AssociationSet>
           <AssociationSet Name="FK_Tbl_UserExam_Tbl_Exam" Association="Self.FK_Tbl_UserExam_Tbl_Exam">
             <End Role="Tbl_Exam" EntitySet="Tbl_Exam" />
             <End Role="Tbl_UserExam" EntitySet="Tbl_UserExam" />
@@ -980,6 +996,10 @@
           <AssociationSet Name="FK_Tbl_Response_Tbl_Question" Association="ESLModel.FK_Tbl_Response_Tbl_Question">
             <End Role="Tbl_Question" EntitySet="Tbl_Question" />
             <End Role="Tbl_Response" EntitySet="Tbl_Response" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_User_Tbl_Role" Association="ESLModel.FK_Tbl_User_Tbl_Role">
+            <End Role="Tbl_Role" EntitySet="Tbl_Role" />
+            <End Role="Tbl_User" EntitySet="Tbl_User" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_UserExam_Tbl_User" Association="ESLModel.FK_Tbl_UserExam_Tbl_User">
             <End Role="Tbl_User" EntitySet="Tbl_User" />
@@ -1267,6 +1287,7 @@
           <Property Name="Role_Guid" Type="Guid" Nullable="false" />
           <Property Name="Role_Name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="Role_Display" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Tbl_User" Relationship="ESLModel.FK_Tbl_User_Tbl_Role" FromRole="Tbl_Role" ToRole="Tbl_User" />
         </EntityType>
         <EntityType Name="Tbl_SubCourse">
           <Key>
@@ -1317,6 +1338,7 @@
           <Property Name="User_IsBan" Type="Boolean" Nullable="false" />
           <Property Name="User_IsDelete" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Tbl_News" Relationship="ESLModel.FK_Tbl_News_Tbl_User" FromRole="Tbl_User" ToRole="Tbl_News" />
+          <NavigationProperty Name="Tbl_Role" Relationship="ESLModel.FK_Tbl_User_Tbl_Role" FromRole="Tbl_User" ToRole="Tbl_Role" />
           <NavigationProperty Name="Tbl_UserExam" Relationship="ESLModel.FK_Tbl_UserExam_Tbl_User" FromRole="Tbl_User" ToRole="Tbl_UserExam" />
           <NavigationProperty Name="Tbl_UserExamAccess" Relationship="ESLModel.FK_Tbl_UserExamAccess_Tbl_User" FromRole="Tbl_User" ToRole="Tbl_UserExamAccess" />
           <NavigationProperty Name="Tbl_UserExamInPerson" Relationship="ESLModel.FK_Tbl_UserExamInPerson_Tbl_User" FromRole="Tbl_User" ToRole="Tbl_UserExamInPerson" />
@@ -1700,6 +1722,18 @@
             </Principal>
             <Dependent Role="Tbl_Response">
               <PropertyRef Name="Response_QuestionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_User_Tbl_Role">
+          <End Type="ESLModel.Tbl_Role" Role="Tbl_Role" Multiplicity="1" />
+          <End Type="ESLModel.Tbl_User" Role="Tbl_User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Role">
+              <PropertyRef Name="Role_ID" />
+            </Principal>
+            <Dependent Role="Tbl_User">
+              <PropertyRef Name="User_RoleID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
