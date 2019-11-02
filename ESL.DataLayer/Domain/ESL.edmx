@@ -96,6 +96,7 @@
           <Property Name="EIP_TotalMark" Type="int" Nullable="false" />
           <Property Name="EIP_PassMark" Type="int" Nullable="false" />
           <Property Name="EIP_Cost" Type="int" Nullable="false" />
+          <Property Name="EIP_Location" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="EIP_CreationDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="EIP_ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="EIP_IsDelete" Type="bit" Nullable="false" />
@@ -311,6 +312,8 @@
           <Property Name="UEIP_Mark" Type="int" Nullable="false" />
           <Property Name="UEIP_PaymentID" Type="int" />
           <Property Name="UEIP_IsPresent" Type="bit" Nullable="false" />
+          <Property Name="UEIP_CreationDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="UEIP_ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="UEIP_IsDelete" Type="bit" Nullable="false" />
         </EntityType>
         <Association Name="FK_Tbl_Code_Tbl_CodeGroup">
@@ -613,42 +616,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Tbl_User_Tbl_Code">
-          <End Role="Tbl_Code" Type="Self.Tbl_Code" Multiplicity="1" />
-          <End Role="Tbl_User" Type="Self.Tbl_User" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tbl_Code">
-              <PropertyRef Name="Code_ID" />
-            </Principal>
-            <Dependent Role="Tbl_User">
-              <PropertyRef Name="User_GenderCodeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Tbl_User_Tbl_Code1">
-          <End Role="Tbl_Code" Type="Self.Tbl_Code" Multiplicity="0..1" />
-          <End Role="Tbl_User" Type="Self.Tbl_User" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tbl_Code">
-              <PropertyRef Name="Code_ID" />
-            </Principal>
-            <Dependent Role="Tbl_User">
-              <PropertyRef Name="User_LevelCodeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Tbl_User_Tbl_Role">
-          <End Role="Tbl_Role" Type="Self.Tbl_Role" Multiplicity="1" />
-          <End Role="Tbl_User" Type="Self.Tbl_User" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tbl_Role">
-              <PropertyRef Name="Role_ID" />
-            </Principal>
-            <Dependent Role="Tbl_User">
-              <PropertyRef Name="User_RoleID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Tbl_UserExam_Tbl_Exam">
           <End Role="Tbl_Exam" Type="Self.Tbl_Exam" Multiplicity="1" />
           <End Role="Tbl_UserExam" Type="Self.Tbl_UserExam" Multiplicity="*" />
@@ -847,18 +814,6 @@
             <End Role="Tbl_Menu" EntitySet="Tbl_Menu" />
             <End Role="Tbl_SubMenu" EntitySet="Tbl_SubMenu" />
           </AssociationSet>
-          <AssociationSet Name="FK_Tbl_User_Tbl_Code" Association="Self.FK_Tbl_User_Tbl_Code">
-            <End Role="Tbl_Code" EntitySet="Tbl_Code" />
-            <End Role="Tbl_User" EntitySet="Tbl_User" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Tbl_User_Tbl_Code1" Association="Self.FK_Tbl_User_Tbl_Code1">
-            <End Role="Tbl_Code" EntitySet="Tbl_Code" />
-            <End Role="Tbl_User" EntitySet="Tbl_User" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Tbl_User_Tbl_Role" Association="Self.FK_Tbl_User_Tbl_Role">
-            <End Role="Tbl_Role" EntitySet="Tbl_Role" />
-            <End Role="Tbl_User" EntitySet="Tbl_User" />
-          </AssociationSet>
           <AssociationSet Name="FK_Tbl_UserExam_Tbl_Exam" Association="Self.FK_Tbl_UserExam_Tbl_Exam">
             <End Role="Tbl_Exam" EntitySet="Tbl_Exam" />
             <End Role="Tbl_UserExam" EntitySet="Tbl_UserExam" />
@@ -946,14 +901,6 @@
             <End Role="Tbl_Code" EntitySet="Tbl_Code" />
             <End Role="Tbl_Response" EntitySet="Tbl_Response" />
           </AssociationSet>
-          <AssociationSet Name="FK_Tbl_User_Tbl_Code" Association="ESLModel.FK_Tbl_User_Tbl_Code">
-            <End Role="Tbl_Code" EntitySet="Tbl_Code" />
-            <End Role="Tbl_User" EntitySet="Tbl_User" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Tbl_User_Tbl_Code1" Association="ESLModel.FK_Tbl_User_Tbl_Code1">
-            <End Role="Tbl_Code" EntitySet="Tbl_Code" />
-            <End Role="Tbl_User" EntitySet="Tbl_User" />
-          </AssociationSet>
           <AssociationSet Name="FK_Tbl_Contract_Tbl_Document" Association="ESLModel.FK_Tbl_Contract_Tbl_Document">
             <End Role="Tbl_Document" EntitySet="Tbl_Document" />
             <End Role="Tbl_Contract" EntitySet="Tbl_Contract" />
@@ -1034,10 +981,6 @@
             <End Role="Tbl_Question" EntitySet="Tbl_Question" />
             <End Role="Tbl_Response" EntitySet="Tbl_Response" />
           </AssociationSet>
-          <AssociationSet Name="FK_Tbl_User_Tbl_Role" Association="ESLModel.FK_Tbl_User_Tbl_Role">
-            <End Role="Tbl_Role" EntitySet="Tbl_Role" />
-            <End Role="Tbl_User" EntitySet="Tbl_User" />
-          </AssociationSet>
           <AssociationSet Name="FK_Tbl_UserExam_Tbl_User" Association="ESLModel.FK_Tbl_UserExam_Tbl_User">
             <End Role="Tbl_User" EntitySet="Tbl_User" />
             <End Role="Tbl_UserExam" EntitySet="Tbl_UserExam" />
@@ -1078,8 +1021,6 @@
           <NavigationProperty Name="Tbl_Question" Relationship="ESLModel.FK_Tbl_Question_Tbl_Code_GroupCodeID" FromRole="Tbl_Code" ToRole="Tbl_Question" />
           <NavigationProperty Name="Tbl_Question1" Relationship="ESLModel.FK_Tbl_Question_Tbl_Code_TypeCodeID" FromRole="Tbl_Code" ToRole="Tbl_Question" />
           <NavigationProperty Name="Tbl_Response" Relationship="ESLModel.FK_Tbl_Response_Tbl_Code" FromRole="Tbl_Code" ToRole="Tbl_Response" />
-          <NavigationProperty Name="Tbl_User" Relationship="ESLModel.FK_Tbl_User_Tbl_Code" FromRole="Tbl_Code" ToRole="Tbl_User" />
-          <NavigationProperty Name="Tbl_User1" Relationship="ESLModel.FK_Tbl_User_Tbl_Code1" FromRole="Tbl_Code" ToRole="Tbl_User" />
         </EntityType>
         <EntityType Name="Tbl_CodeGroup">
           <Key>
@@ -1169,6 +1110,7 @@
           <Property Name="EIP_TotalMark" Type="Int32" Nullable="false" />
           <Property Name="EIP_PassMark" Type="Int32" Nullable="false" />
           <Property Name="EIP_Cost" Type="Int32" Nullable="false" />
+          <Property Name="EIP_Location" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="EIP_CreationDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="EIP_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="EIP_IsDelete" Type="Boolean" Nullable="false" />
@@ -1325,7 +1267,6 @@
           <Property Name="Role_Guid" Type="Guid" Nullable="false" />
           <Property Name="Role_Name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="Role_Display" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Tbl_User" Relationship="ESLModel.FK_Tbl_User_Tbl_Role" FromRole="Tbl_Role" ToRole="Tbl_User" />
         </EntityType>
         <EntityType Name="Tbl_SubCourse">
           <Key>
@@ -1375,10 +1316,7 @@
           <Property Name="User_Mobile" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="User_IsBan" Type="Boolean" Nullable="false" />
           <Property Name="User_IsDelete" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Tbl_Code" Relationship="ESLModel.FK_Tbl_User_Tbl_Code" FromRole="Tbl_User" ToRole="Tbl_Code" />
-          <NavigationProperty Name="Tbl_Code1" Relationship="ESLModel.FK_Tbl_User_Tbl_Code1" FromRole="Tbl_User" ToRole="Tbl_Code" />
           <NavigationProperty Name="Tbl_News" Relationship="ESLModel.FK_Tbl_News_Tbl_User" FromRole="Tbl_User" ToRole="Tbl_News" />
-          <NavigationProperty Name="Tbl_Role" Relationship="ESLModel.FK_Tbl_User_Tbl_Role" FromRole="Tbl_User" ToRole="Tbl_Role" />
           <NavigationProperty Name="Tbl_UserExam" Relationship="ESLModel.FK_Tbl_UserExam_Tbl_User" FromRole="Tbl_User" ToRole="Tbl_UserExam" />
           <NavigationProperty Name="Tbl_UserExamAccess" Relationship="ESLModel.FK_Tbl_UserExamAccess_Tbl_User" FromRole="Tbl_User" ToRole="Tbl_UserExamAccess" />
           <NavigationProperty Name="Tbl_UserExamInPerson" Relationship="ESLModel.FK_Tbl_UserExamInPerson_Tbl_User" FromRole="Tbl_User" ToRole="Tbl_UserExamInPerson" />
@@ -1423,6 +1361,8 @@
           <Property Name="UEIP_Mark" Type="Int32" Nullable="false" />
           <Property Name="UEIP_PaymentID" Type="Int32" />
           <Property Name="UEIP_IsPresent" Type="Boolean" Nullable="false" />
+          <Property Name="UEIP_CreationDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="UEIP_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="UEIP_IsDelete" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Tbl_ExamInPerson" Relationship="ESLModel.FK_Tbl_UserExamInPerson_Tbl_ExamInPerson" FromRole="Tbl_UserExamInPerson" ToRole="Tbl_ExamInPerson" />
           <NavigationProperty Name="Tbl_User" Relationship="ESLModel.FK_Tbl_UserExamInPerson_Tbl_User" FromRole="Tbl_UserExamInPerson" ToRole="Tbl_User" />
@@ -1520,30 +1460,6 @@
             </Principal>
             <Dependent Role="Tbl_Response">
               <PropertyRef Name="Response_TypeCodeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Tbl_User_Tbl_Code">
-          <End Type="ESLModel.Tbl_Code" Role="Tbl_Code" Multiplicity="1" />
-          <End Type="ESLModel.Tbl_User" Role="Tbl_User" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tbl_Code">
-              <PropertyRef Name="Code_ID" />
-            </Principal>
-            <Dependent Role="Tbl_User">
-              <PropertyRef Name="User_GenderCodeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Tbl_User_Tbl_Code1">
-          <End Type="ESLModel.Tbl_Code" Role="Tbl_Code" Multiplicity="0..1" />
-          <End Type="ESLModel.Tbl_User" Role="Tbl_User" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tbl_Code">
-              <PropertyRef Name="Code_ID" />
-            </Principal>
-            <Dependent Role="Tbl_User">
-              <PropertyRef Name="User_LevelCodeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1787,18 +1703,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Tbl_User_Tbl_Role">
-          <End Type="ESLModel.Tbl_Role" Role="Tbl_Role" Multiplicity="1" />
-          <End Type="ESLModel.Tbl_User" Role="Tbl_User" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tbl_Role">
-              <PropertyRef Name="Role_ID" />
-            </Principal>
-            <Dependent Role="Tbl_User">
-              <PropertyRef Name="User_RoleID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Tbl_UserExam_Tbl_User">
           <End Type="ESLModel.Tbl_User" Role="Tbl_User" Multiplicity="1" />
           <End Type="ESLModel.Tbl_UserExam" Role="Tbl_UserExam" Multiplicity="*" />
@@ -1835,7 +1739,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -1934,6 +1838,7 @@
                 <ScalarProperty Name="EIP_IsDelete" ColumnName="EIP_IsDelete" />
                 <ScalarProperty Name="EIP_ModifiedDate" ColumnName="EIP_ModifiedDate" />
                 <ScalarProperty Name="EIP_CreationDate" ColumnName="EIP_CreationDate" />
+                <ScalarProperty Name="EIP_Location" ColumnName="EIP_Location" />
                 <ScalarProperty Name="EIP_Cost" ColumnName="EIP_Cost" />
                 <ScalarProperty Name="EIP_PassMark" ColumnName="EIP_PassMark" />
                 <ScalarProperty Name="EIP_TotalMark" ColumnName="EIP_TotalMark" />
@@ -2163,6 +2068,8 @@
             <EntityTypeMapping TypeName="ESLModel.Tbl_UserExamInPerson">
               <MappingFragment StoreEntitySet="Tbl_UserExamInPerson">
                 <ScalarProperty Name="UEIP_IsDelete" ColumnName="UEIP_IsDelete" />
+                <ScalarProperty Name="UEIP_ModifiedDate" ColumnName="UEIP_ModifiedDate" />
+                <ScalarProperty Name="UEIP_CreationDate" ColumnName="UEIP_CreationDate" />
                 <ScalarProperty Name="UEIP_IsPresent" ColumnName="UEIP_IsPresent" />
                 <ScalarProperty Name="UEIP_PaymentID" ColumnName="UEIP_PaymentID" />
                 <ScalarProperty Name="UEIP_Mark" ColumnName="UEIP_Mark" />

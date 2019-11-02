@@ -1,8 +1,9 @@
-﻿@model IEnumerable<ESL.Web.Areas.Dashboard.Models.ViewModels.Model_ExamsInPerson>
+﻿@model IEnumerable<ESL.Web.Areas.Dashboard.Models.ViewModels.Model_UsersExamInPerson>
+
 @using ESL.Common.Plugins
 
 @{
-    ViewBag.Title = "لیست آزمون های حضوری";
+    ViewBag.Title = "لیست افراد حاضر در آزمون";
     Layout = "~/Areas/Dashboard/Views/Shared/_Master.cshtml";
 }
 
@@ -10,12 +11,12 @@
 <div class="panel panel-body panel-default  navigation">
 
     <div class="pull-left">
-        <h4 class="navigation-title"><b>لیست آزمون های حضوری</b></h4>
+        <h4 class="navigation-title"><b>لیست افراد حاضر در آزمون</b></h4>
     </div>
 
-    <div class="pull-right">
-        <a href="#" onclick="Create()"><i class="glyphicon glyphicon-plus navigation-btn-icon"></i></a>
-    </div>
+    @*<div class="pull-right">
+        <a href="@Url.Action("CreateQuestion", "Exam", new { id = Model.ExamID })"><i class="glyphicon glyphicon-plus navigation-btn-icon"></i></a>
+    </div>*@
 
 </div>
 
@@ -28,18 +29,17 @@
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">@Html.DisplayNameFor(model => model.Title)</th>
-                    <th scope="col">@Html.DisplayNameFor(model => model.Cost)</th>
-                    <th scope="col">@Html.DisplayNameFor(model => model.Location)</th>
-                    <th scope="col">@Html.DisplayNameFor(model => model.Capacity)</th>
-                    <th scope="col"> @Html.DisplayNameFor(model => model.TotalMark)</th>
-                    <th scope="col"> @Html.DisplayNameFor(model => model.PassMark)</th>
-                    <th scope="col"> @Html.DisplayNameFor(model => model.CreationDate)</th>
-                    <th scope="col" data-orderable="false">کنترل</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.User)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.SeatNumber)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Mark)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.IsPresent)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.CreationDate)</th>
+                    @*<th scope="col" data-orderable="false">کنترل</th>*@
                 </tr>
             </thead>
 
             <tbody>
+
                 @{
                     int x = 0;
                 }
@@ -51,31 +51,25 @@
                     <tr>
                         <td scope="row">@x</td>
                         <td scope="row">
-                            <span> @Html.DisplayFor(modelItem => item.Title) </span>
+                            <span> @Html.DisplayFor(modelItem => item.User) </span>
                         </td>
                         <td scope="row">
-                            <span> @Html.DisplayFor(modelItem => item.Cost) </span>
+                            <span> @Html.DisplayFor(modelItem => item.SeatNumber) </span>
                         </td>
                         <td scope="row">
-                            <span> @Html.DisplayFor(modelItem => item.Location) </span>
+                            <span> @Html.DisplayFor(modelItem => item.Mark) </span>
                         </td>
                         <td scope="row">
-                            <span> @Html.DisplayFor(modelItem => item.Capacity) </span>
-                        </td>
-                        <td scope="row">
-                            <span> @Html.DisplayFor(modelItem => item.TotalMark) </span>
-                        </td>
-                        <td scope="row">
-                            <span> @Html.DisplayFor(modelItem => item.PassMark) </span>
+                            <span> @Html.DisplayFor(modelItem => item.IsPresent) </span>
                         </td>
                         <td scope="row">
                             <span> @PersianDateExtensionMethods.ToPeString(item.CreationDate, "yyyy/MM/dd") </span>
                         </td>
-                        <td scope="row">
-                            <a class="btn btn-info btn-sm glyphicon glyphicon-list" href="@Url.Action("Details", "ExamInPerson", new { id = item.ID })"> </a>
+                        @*<td scope="row">
+                            <a class="btn btn-info btn-sm glyphicon glyphicon-list" href="@Url.Action("Details", "Exam", new { id = item.ID })"> </a>
                             <a class="btn btn-warning btn-sm glyphicon glyphicon-pencil" onclick="Edit(@item.ID)"> </a>
                             <a class="btn btn-danger btn-sm glyphicon glyphicon-trash" onclick="Delete(@item.ID)"> </a>
-                        </td>
+                        </td>*@
                     </tr>
                 }
 
@@ -88,14 +82,16 @@
 </div>
 
 
-@Html.Partial("_Modal")
+@*@Html.Partial("_Modal")*@
 
-@section Modal {
+
+@*@section Scripts {
+
     <script>
 
         function Delete(id) {
             $.ajax({
-                url: "/ExamInPerson/Delete/" + id,
+                url: "/Exam/DeleteQuestion/" + id,
                 type: "Get",
                 data: {}
             }).done(function (result) {
@@ -105,21 +101,21 @@
             });
         }
 
-        function Create() {
+        function Create(id) {
             $.ajax({
-                url: "/ExamInPerson/Create",
+                url: "/Exam/CreateQuestion/" + id,
                 type: "Get",
                 data: {}
             }).done(function (result) {
                 $('#myModal').modal('show');
-                $('#myModalLabel').html('افزودن آزمون');
+                $('#myModalLabel').html('طرح سوال');
                 $('#myModalBody').html(result);
             });
         }
 
         function Edit(id) {
             $.ajax({
-                url: "/ExamInPerson/Edit/" + id,
+                url: "/Exam/EditQuestion/" + id,
                 type: "Get",
                 data: {}
             }).done(function (result) {
@@ -130,4 +126,5 @@
         }
 
     </script>
-}
+
+}*@

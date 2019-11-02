@@ -21,6 +21,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                 ID = x.EIP_ID,
                 Title = x.EIP_Title,
                 Cost = x.EIP_Cost,
+                Location = x.EIP_Location,
                 Capacity = x.EIP_Capacity,
                 TotalMark = x.EIP_TotalMark,
                 PassMark = x.EIP_PassMark,
@@ -44,11 +45,15 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             {
                 Tbl_ExamInPerson q = new Tbl_ExamInPerson
                 {
+                    EIP_Guid = Guid.NewGuid(),
                     EIP_Title = model.Title,
                     EIP_Cost = model.Cost,
+                    EIP_Location = model.Location,
                     EIP_Capacity = model.Capacity,
                     EIP_TotalMark = model.TotalMark,
-                    EIP_PassMark = model.PassMark
+                    EIP_PassMark = model.PassMark,
+                    EIP_CreationDate = DateTime.Now,
+                    EIP_ModifiedDate = DateTime.Now
                 };
 
                 db.Tbl_ExamInPerson.Add(q);
@@ -74,95 +79,65 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
-        //public ActionResult Edit(int id)
-        //{
-        //    Model_Exam model = new Model_Exam();
-
-        //    if (id != null)
-        //    {
-        //        var exam = db.Tbl_Exam.Where(x => x.Exam_ID == id).FirstOrDefault();
-
-        //        if (exam != null)
-        //        {
-        //            model.ID = exam.Exam_ID;
-        //            model.Title = exam.Exam_Title;
-        //            model.Mark = exam.Exam_Mark;
-        //            model.PassMark = exam.Exam_PassMark;
-        //        }
-        //    }
-
-        //    return PartialView(model);
-        //}
-
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit(Model_Exam model)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        Tbl_Exam exam = new Tbl_Exam();
-
-        //        if (model.ID != null)
-        //        {
-        //            exam = db.Tbl_Exam.Where(x => x.Exam_ID == model.ID).FirstOrDefault();
-
-        //            if (exam != null)
-        //            {
-        //                exam.Exam_Title = model.Title;
-        //                exam.Exam_Mark = model.Mark;
-        //                exam.Exam_PassMark = model.PassMark;
-        //                exam.Exam_ModifiedDate = DateTime.Now;
-
-        //                db.Entry(exam).State = EntityState.Modified;
-        //            }
-        //            else
-        //            {
-        //                return HttpNotFound();
-        //            }
-        //        }
-        //        else
-        //        {
-        //            exam.Exam_Title = model.Title;
-        //            exam.Exam_Mark = model.Mark;
-        //            exam.Exam_PassMark = model.PassMark;
-        //            exam.Exam_CreationDate = exam.Exam_ModifiedDate = DateTime.Now;
-
-        //            db.Tbl_Exam.Add(exam);
-        //        }
-
-        //        if (Convert.ToBoolean(db.SaveChanges() > 0))
-        //        {
-        //            TempData["TosterState"] = "success";
-        //            TempData["TosterType"] = TosterType.Maseage;
-        //            TempData["TosterTitel"] = "2";
-        //            TempData["TosterMassage"] = "عملیات با موفقیت انجام شده";
-
-        //            return RedirectToAction("Index");
-        //        }
-        //        else
-        //        {
-        //            return View();
-        //        }
-        //    }
-
-        //    return View();
-        //}
-
-        public ActionResult Delete(int? id)
+        public ActionResult Edit(int id)
         {
-            if (id != null)
+            var q = db.Tbl_ExamInPerson.Where(x => x.EIP_ID == id).SingleOrDefault();
+
+            if (q != null)
             {
-                Model_DeleteModal model = new Model_DeleteModal();
-
-                var exam = db.Tbl_Exam.Where(x => x.Exam_ID == id).FirstOrDefault();
-
-                if (exam != null)
+                Model_ExamInPersonEdit model = new Model_ExamInPersonEdit()
                 {
-                    model.ID = id.Value;
-                    model.Name = exam.Exam_Title;
-                    model.Description = "آیا از حذف آزمون مورد نظر اطمینان دارید ؟";
+                    ID = q.EIP_ID,
+                    Title = q.EIP_Title,
+                    Cost = q.EIP_Cost,
+                    Location = q.EIP_Location,
+                    Capacity = q.EIP_Capacity,
+                    TotalMark = q.EIP_TotalMark,
+                    PassMark = q.EIP_PassMark
+                };
 
-                    return PartialView(model);
+                return PartialView(model);
+            }
+
+            return HttpNotFound();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(Model_ExamInPersonEdit model)
+        {
+            if (ModelState.IsValid)
+            {
+                Tbl_ExamInPerson q = db.Tbl_ExamInPerson.Where(x => x.EIP_ID == model.ID).SingleOrDefault();
+
+                if (q != null)
+                {
+                    q.EIP_Title = model.Title;
+                    q.EIP_Cost = model.Cost;
+                    q.EIP_Capacity = model.Capacity;
+                    q.EIP_TotalMark = model.TotalMark;
+                    q.EIP_PassMark = model.PassMark;
+
+                    q.EIP_ModifiedDate = DateTime.Now;
+
+                    db.Entry(q).State = EntityState.Modified;
+
+                    if (Convert.ToBoolean(db.SaveChanges() > 0))
+                    {
+                        TempData["TosterState"] = "success";
+                        TempData["TosterType"] = TosterType.Maseage;
+                        TempData["TosterMassage"] = "عملیات با موفقیت انجام شده";
+
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        TempData["TosterState"] = "error";
+                        TempData["TosterType"] = TosterType.Maseage;
+                        TempData["TosterMassage"] = "عملیات با موفقیت انجام نشده";
+
+                        return RedirectToAction("Index");
+                    }
                 }
                 else
                 {
@@ -173,38 +148,86 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
+        public ActionResult Delete(int? id)
+        {
+            if (id != null)
+            {
+                Model_DeleteModal model = new Model_DeleteModal();
+
+                var q = db.Tbl_ExamInPerson.Where(x => x.EIP_ID == id).SingleOrDefault();
+
+                if (q != null)
+                {
+                    model.ID = id.Value;
+                    model.Name = q.EIP_Title;
+                    model.Description = "آیا از حذف آزمون مورد نظر اطمینان دارید ؟";
+
+                    return PartialView(model);
+                }
+                else
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+            }
+
+            return HttpNotFound();
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(Model_DeleteModal model)
         {
             if (ModelState.IsValid)
             {
-                var exam = db.Tbl_Exam.Where(x => x.Exam_ID == model.ID).FirstOrDefault();
+                var q = db.Tbl_ExamInPerson.Where(x => x.EIP_ID == model.ID).SingleOrDefault();
 
-                if (exam != null)
+                if (q != null)
                 {
-                    exam.Exam_IsDelete = true;
+                    q.EIP_IsDelete = true;
 
-                    db.Entry(exam).State = EntityState.Modified;
+                    db.Entry(q).State = EntityState.Modified;
 
                     if (Convert.ToBoolean(db.SaveChanges() > 0))
                     {
-
                         TempData["TosterState"] = "success";
                         TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterTitel"] = "2";
                         TempData["TosterMassage"] = "عملیات با موفقیت انجام شده";
 
                         return RedirectToAction("Index");
                     }
                     else
                     {
-                        return View();
+                        TempData["TosterState"] = "error";
+                        TempData["TosterType"] = TosterType.Maseage;
+                        TempData["TosterMassage"] = "عملیات با موفقیت انجام نشده";
+
+                        return HttpNotFound();
                     }
                 }
             }
 
-            return View();
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        }
+
+        public ActionResult Details(int? id)
+        {
+            if (id.HasValue)
+            {
+                var q = db.Tbl_UserExamInPerson.Where(x => x.UEIP_EIPID == id).Select(x => new Model_UsersExamInPerson
+                {
+                    ID = x.UEIP_ID,
+                    User = x.Tbl_User.User_FirstName + " " + x.Tbl_User.User_lastName,
+                    SeatNumber = x.UEIP_SeatNumber,
+                    Mark = x.UEIP_Mark,
+                    IsPresent = x.UEIP_IsPresent ? "حاضر" : "",
+                    CreationDate = x.UEIP_CreationDate
+
+                }).ToList();
+
+                return View(q);
+            }
+
+            return HttpNotFound();
         }
 
         protected override void Dispose(bool disposing)
@@ -213,6 +236,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             {
                 db.Dispose();
             }
+
             base.Dispose(disposing);
         }
     }
