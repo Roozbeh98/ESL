@@ -111,7 +111,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         {
             if (id != null)
             {
-                Model_DeleteModal model = new Model_DeleteModal();
+                Model_MessageModal model = new Model_MessageModal();
 
                 var exam = db.Tbl_Exam.Where(x => x.Exam_ID == id).FirstOrDefault();
 
@@ -134,7 +134,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(Model_DeleteModal model)
+        public ActionResult Delete(Model_MessageModal model)
         {
             if (ModelState.IsValid)
             {

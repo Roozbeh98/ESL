@@ -19,7 +19,7 @@ namespace ESL.DataLayer.Domain
         public int UEIP_UserID { get; set; }
         public int UEIP_EIPID { get; set; }
         public Nullable<int> UEIP_SeatNumber { get; set; }
-        public int UEIP_Mark { get; set; }
+        public Nullable<int> UEIP_Mark { get; set; }
         public Nullable<int> UEIP_PaymentID { get; set; }
         public bool UEIP_IsPresent { get; set; }
         public System.DateTime UEIP_CreationDate { get; set; }

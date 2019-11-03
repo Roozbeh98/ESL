@@ -37,5 +37,10 @@ namespace ESL.Services.BaseRepository
             }
 
         }
+
+        public int Get_UserIDWithGUID(Guid guid)
+        {
+            return db.Tbl_User.Where(x => x.User_Guid == guid).SingleOrDefault().User_ID;
+        }
     }
 }

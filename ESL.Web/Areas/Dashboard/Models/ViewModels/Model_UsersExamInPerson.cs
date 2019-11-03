@@ -21,13 +21,17 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
 
         [Display(Name = "نمره")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
-        public int Mark { get; set; }
+        public int? Mark { get; set; }
 
         [Display(Name = "وضعیت حضور")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
-        public string IsPresent { get; set; }
+        public bool IsPresent { get; set; }
 
         [Display(Name = "تاریخ ایجاد")]
         public DateTime CreationDate { get; set; }
+
+        [Display(Name = "وضعیت ثبت نام")]
+        [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
+        public bool IsDelete { get; set; }
     }
 }

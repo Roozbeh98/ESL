@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace ESL.Web.Areas.Dashboard.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ExamInPersonController : Controller
     {
         private ESLEntities db = new ESLEntities();
@@ -152,7 +153,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         {
             if (id != null)
             {
-                Model_DeleteModal model = new Model_DeleteModal();
+                Model_MessageModal model = new Model_MessageModal();
 
                 var q = db.Tbl_ExamInPerson.Where(x => x.EIP_ID == id).SingleOrDefault();
 
@@ -175,7 +176,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(Model_DeleteModal model)
+        public ActionResult Delete(Model_MessageModal model)
         {
             if (ModelState.IsValid)
             {
@@ -211,7 +212,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
         public ActionResult Details(int? id)
         {
-            if (id.HasValue)
+            if (id.HasValue && db.Tbl_UserExamInPerson.Any(x => x.UEIP_EIPID == id))
             {
                 var q = db.Tbl_UserExamInPerson.Where(x => x.UEIP_EIPID == id).Select(x => new Model_UsersExamInPerson
                 {
@@ -219,8 +220,9 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     User = x.Tbl_User.User_FirstName + " " + x.Tbl_User.User_lastName,
                     SeatNumber = x.UEIP_SeatNumber,
                     Mark = x.UEIP_Mark,
-                    IsPresent = x.UEIP_IsPresent ? "حاضر" : "",
-                    CreationDate = x.UEIP_CreationDate
+                    IsPresent = x.UEIP_IsPresent,
+                    CreationDate = x.UEIP_CreationDate,
+                    IsDelete = x.UEIP_IsDelete
 
                 }).ToList();
 
