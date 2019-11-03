@@ -42,7 +42,15 @@
         @if (User.Identity.IsAuthenticated)
         {
             <aside class="aside-Config">
-                @Html.Partial("_AsideAdmin")
+                @if (User.IsInRole("Admin"))
+                {
+                    @Html.Partial("_AsideAdmin")
+                }
+                else
+                {
+                    @Html.Partial("_AsideUser")
+                }
+
             </aside>
             <section class="section-Config">
                 @RenderBody()
