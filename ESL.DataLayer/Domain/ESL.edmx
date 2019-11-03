@@ -308,8 +308,8 @@
           <Property Name="UEIP_Guid" Type="uniqueidentifier" Nullable="false" />
           <Property Name="UEIP_UserID" Type="int" Nullable="false" />
           <Property Name="UEIP_EIPID" Type="int" Nullable="false" />
-          <Property Name="UEIP_SeatNumber" Type="int" />
-          <Property Name="UEIP_Mark" Type="int" />
+          <Property Name="UEIP_SeatNumber" Type="int" Nullable="false" />
+          <Property Name="UEIP_Mark" Type="int" Nullable="false" />
           <Property Name="UEIP_PaymentID" Type="int" />
           <Property Name="UEIP_IsPresent" Type="bit" Nullable="false" />
           <Property Name="UEIP_CreationDate" Type="datetime2" Precision="7" Nullable="false" />
@@ -1379,8 +1379,8 @@
           <Property Name="UEIP_Guid" Type="Guid" Nullable="false" />
           <Property Name="UEIP_UserID" Type="Int32" Nullable="false" />
           <Property Name="UEIP_EIPID" Type="Int32" Nullable="false" />
-          <Property Name="UEIP_SeatNumber" Type="Int32" />
-          <Property Name="UEIP_Mark" Type="Int32" />
+          <Property Name="UEIP_SeatNumber" Type="Int32" Nullable="false" />
+          <Property Name="UEIP_Mark" Type="Int32" Nullable="false" />
           <Property Name="UEIP_PaymentID" Type="Int32" />
           <Property Name="UEIP_IsPresent" Type="Boolean" Nullable="false" />
           <Property Name="UEIP_CreationDate" Type="DateTime" Nullable="false" Precision="7" />

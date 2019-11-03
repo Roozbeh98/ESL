@@ -16,6 +16,7 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
         public int Cost { get; set; }
 
+        [DataType(DataType.MultilineText)]
         [Display(Name = "مکان")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
         public string Location { get; set; }

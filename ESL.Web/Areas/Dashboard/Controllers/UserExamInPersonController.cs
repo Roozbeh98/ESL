@@ -240,8 +240,6 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     model.Name = q.Tbl_User.User_FirstName + " " + q.Tbl_User.User_lastName;
                     model.Description = $"آیا از لغو ثبت نام کاربر { model.Name } اطمینان دارید ؟";
 
-                    ViewBag.ExamID = id;
-
                     return PartialView(model);
                 }
                 else
@@ -302,8 +300,6 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     model.ID = id.Value;
                     model.Name = q.Tbl_User.User_FirstName + " " + q.Tbl_User.User_lastName;
                     model.Description = $"آیا از ثبت نام مجدد کاربر { model.Name } اطمینان دارید ؟";
-
-                    ViewBag.ExamID = id;
 
                     return PartialView(model);
                 }

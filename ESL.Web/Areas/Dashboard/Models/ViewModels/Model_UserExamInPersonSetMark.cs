@@ -14,6 +14,6 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
 
         [Display(Name = "نمره")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
-        public int? Mark { get; set; }
+        public int Mark { get; set; }
     }
 }

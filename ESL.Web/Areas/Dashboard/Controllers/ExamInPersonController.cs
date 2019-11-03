@@ -212,7 +212,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
         public ActionResult Details(int? id)
         {
-            if (id.HasValue && db.Tbl_UserExamInPerson.Any(x => x.UEIP_EIPID == id))
+            if (id.HasValue && db.Tbl_ExamInPerson.Any(x => x.EIP_ID == id))
             {
                 var q = db.Tbl_UserExamInPerson.Where(x => x.UEIP_EIPID == id).Select(x => new Model_UsersExamInPerson
                 {
@@ -225,6 +225,8 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     IsDelete = x.UEIP_IsDelete
 
                 }).ToList();
+
+                ViewBag.ExamID = id;
 
                 return View(q);
             }

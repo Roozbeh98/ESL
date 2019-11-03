@@ -14,6 +14,6 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
 
         [Display(Name = "شماره صندلی")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
-        public int? SeatNumber { get; set; }
+        public int SeatNumber { get; set; }
     }
 }
