@@ -232,6 +232,12 @@
     <Content Include="Areas\Dashboard\Views\ExamInPerson\Delete.cshtml" />
     <Content Include="Areas\Dashboard\Views\ExamInPerson\Details.cshtml" />
     <Content Include="Areas\Dashboard\Views\Setting\Index.cshtml" />
+    <Content Include="Areas\Dashboard\Views\UserExamInPerson\Create.cshtml" />
+    <Content Include="Areas\Dashboard\Views\UserExamInPerson\UnRegister.cshtml" />
+    <Content Include="Areas\Dashboard\Views\UserExamInPerson\Register.cshtml" />
+    <Content Include="Areas\Dashboard\Views\UserExamInPerson\SetMark.cshtml" />
+    <Content Include="Areas\Dashboard\Views\UserExamInPerson\SetSeatNumber.cshtml" />
+    <Content Include="Areas\Dashboard\Views\UserExamInPerson\SetPresence.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -1293,8 +1299,9 @@
     <Compile Include="Areas\Dashboard\Controllers\SettingController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\ExamController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\UserController.cs" />
+    <Compile Include="Areas\Dashboard\Controllers\UserExamInPersonController.cs" />
     <Compile Include="Areas\Dashboard\DashboardAreaRegistration.cs" />
-    <Compile Include="Areas\Dashboard\Models\ViewModels\Model_DeleteModal.cs" />
+    <Compile Include="Areas\Dashboard\Models\ViewModels\Model_MessageModal.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_Exam.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_ExamInPersonCreate.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_ExamInPersonEdit.cs" />
@@ -1304,6 +1311,10 @@
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_Questions.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_Register.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_Question.cs" />
+    <Compile Include="Areas\Dashboard\Models\ViewModels\Model_UserExamInPersonCreate.cs" />
+    <Compile Include="Areas\Dashboard\Models\ViewModels\Model_UserExamInPersonSetMark.cs" />
+    <Compile Include="Areas\Dashboard\Models\ViewModels\Model_UserExamInPersonSetPresence.cs" />
+    <Compile Include="Areas\Dashboard\Models\ViewModels\Model_UserExamInPersonSetSeatNumber.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_UsersExamInPerson.cs" />
     <Compile Include="Controllers\AboutUsController.cs" />
     <Compile Include="Controllers\ContactUsController.cs" />

@@ -83,7 +83,7 @@
 
         function Delete(id) {
             $.ajax({
-                url: "/Exam/Delete/" + id,
+                url: "/Dashboard/Exam/Delete/" + id,
                 type: "Get",
                 data: {}
             }).done(function (result) {
@@ -95,7 +95,7 @@
 
         function Create() {
             $.ajax({
-                url: "/Exam/CreateOrEdit",
+                url: "/Dashboard/Exam/CreateOrEdit",
                 type: "Get",
                 data: {}
             }).done(function (result) {
@@ -107,7 +107,7 @@
 
         function Edit(id) {
             $.ajax({
-                url: "/Exam/CreateOrEdit/" + id,
+                url: "/Dashboard/Exam/CreateOrEdit/" + id,
                 type: "Get",
                 data: {}
             }).done(function (result) {

@@ -14,9 +14,9 @@
         <h4 class="navigation-title"><b>لیست افراد حاضر در آزمون</b></h4>
     </div>
 
-    @*<div class="pull-right">
-        <a href="@Url.Action("CreateQuestion", "Exam", new { id = Model.ExamID })"><i class="glyphicon glyphicon-plus navigation-btn-icon"></i></a>
-    </div>*@
+    <div class="pull-right">
+        <a href="javascript:void(0)" onclick="Create(@ViewBag.ExamID)"><i class="glyphicon glyphicon-plus navigation-btn-icon"></i></a>
+    </div>
 
 </div>
 
@@ -34,7 +34,8 @@
                     <th scope="col">@Html.DisplayNameFor(model => model.Mark)</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.IsPresent)</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.CreationDate)</th>
-                    @*<th scope="col" data-orderable="false">کنترل</th>*@
+                    <th scope="col">@Html.DisplayNameFor(model => model.IsDelete)</th>
+                    <th scope="col" data-orderable="false">کنترل</th>
                 </tr>
             </thead>
 
@@ -60,16 +61,27 @@
                             <span> @Html.DisplayFor(modelItem => item.Mark) </span>
                         </td>
                         <td scope="row">
-                            <span> @Html.DisplayFor(modelItem => item.IsPresent) </span>
+                            <span>@( item.IsPresent ? "حاضر" : "غایب" )</span>
                         </td>
                         <td scope="row">
                             <span> @PersianDateExtensionMethods.ToPeString(item.CreationDate, "yyyy/MM/dd") </span>
                         </td>
-                        @*<td scope="row">
-                            <a class="btn btn-info btn-sm glyphicon glyphicon-list" href="@Url.Action("Details", "Exam", new { id = item.ID })"> </a>
-                            <a class="btn btn-warning btn-sm glyphicon glyphicon-pencil" onclick="Edit(@item.ID)"> </a>
-                            <a class="btn btn-danger btn-sm glyphicon glyphicon-trash" onclick="Delete(@item.ID)"> </a>
-                        </td>*@
+                        <td scope="row">
+                            <span>@( item.IsDelete? "لغو" : "تایید شده"  )</span>
+                        </td>
+                        <td scope="row">
+                            @if (!item.IsDelete)
+                            {
+                                <a class="btn btn-info btn-sm fas fa-file-excel" style="line-height: 18px;padding-left: 12px;padding-right: 12px;" href="javascript:void(0)" onclick="SetMark(@item.ID)"> </a>
+                                <a class="btn btn-warning btn-sm fas fa-couch" style="line-height: 18px;padding-left: 9px;padding-right: 9px;" href="javascript:void(0)" onclick="SetSeatNumber(@item.ID)"> </a>
+                                <a class="btn btn-primary btn-sm glyphicon glyphicon-ok" href="javascript:void(0)" onclick="SetPresence(@item.ID)"> </a>
+                                <a class="btn btn-success btn-sm glyphicon glyphicon-user" href="javascript:void(0)" onclick="UnRegister(@item.ID)"> </a>
+                            }
+                            else
+                            {
+                                <a class="btn btn-danger btn-sm glyphicon glyphicon-user" href="javascript:void(0)" onclick="Register(@item.ID)"> </a>
+                            }
+                        </td>
                     </tr>
                 }
 
@@ -82,49 +94,85 @@
 </div>
 
 
-@*@Html.Partial("_Modal")*@
+@Html.Partial("_Modal")
 
 
-@*@section Scripts {
+@section Scripts {
 
     <script>
 
-        function Delete(id) {
-            $.ajax({
-                url: "/Exam/DeleteQuestion/" + id,
-                type: "Get",
-                data: {}
-            }).done(function (result) {
-                $('#myModal').modal('show');
-                $('#myModalLabel').html('حدف آزمون');
-                $('#myModalBody').html(result);
-            });
-        }
-
         function Create(id) {
             $.ajax({
-                url: "/Exam/CreateQuestion/" + id,
+                url: "/Dashboard/UserExamInPerson/Create/" + id,
                 type: "Get",
                 data: {}
             }).done(function (result) {
                 $('#myModal').modal('show');
-                $('#myModalLabel').html('طرح سوال');
+                $('#myModalLabel').html('ثبت نام');
                 $('#myModalBody').html(result);
             });
         }
 
-        function Edit(id) {
+        function UnRegister(id) {
             $.ajax({
-                url: "/Exam/EditQuestion/" + id,
+                url: "/Dashboard/UserExamInPerson/UnRegister/" + id,
                 type: "Get",
                 data: {}
             }).done(function (result) {
                 $('#myModal').modal('show');
-                $('#myModalLabel').html('ویرایش آزمون');
+                $('#myModalLabel').html('لغو ثبت نام');
+                $('#myModalBody').html(result);
+            });
+        }
+
+        function Register(id) {
+            $.ajax({
+                url: "/Dashboard/UserExamInPerson/Register/" + id,
+                type: "Get",
+                data: {}
+            }).done(function (result) {
+                $('#myModal').modal('show');
+                $('#myModalLabel').html('لغو ثبت نام');
+                $('#myModalBody').html(result);
+            });
+        }
+
+        function SetMark(id) {
+            $.ajax({
+                url: "/Dashboard/UserExamInPerson/SetMark/" + id,
+                type: "Get",
+                data: {}
+            }).done(function (result) {
+                $('#myModal').modal('show');
+                $('#myModalLabel').html('تغییر نمره');
+                $('#myModalBody').html(result);
+            });
+        }
+
+        function SetSeatNumber(id) {
+            $.ajax({
+                url: "/Dashboard/UserExamInPerson/SetSeatNumber/" + id,
+                type: "Get",
+                data: {}
+            }).done(function (result) {
+                $('#myModal').modal('show');
+                $('#myModalLabel').html('تغییر شماره صندلی');
+                $('#myModalBody').html(result);
+            });
+        }
+
+        function SetPresence(id) {
+            $.ajax({
+                url: "/Dashboard/UserExamInPerson/SetPresence/" + id,
+                type: "Get",
+                data: {}
+            }).done(function (result) {
+                $('#myModal').modal('show');
+                $('#myModalLabel').html('تغییر وضعیت حضور');
                 $('#myModalBody').html(result);
             });
         }
 
     </script>
 
-}*@
+}
