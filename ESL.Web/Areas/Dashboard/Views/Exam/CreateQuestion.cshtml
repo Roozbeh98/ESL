@@ -6,7 +6,9 @@
     Layout = "~/Areas/Dashboard/Views/Shared/_Master.cshtml";
 }
 
+
 @section Styles {
+
     <script src="~/Scripts/Plugins/ckeditor/ckeditor.js"></script>
     <script src="~/Scripts/Plugins/ckfinder/ckfinder.js"></script>
 
@@ -37,7 +39,9 @@
         .filepond--drip-blob {
             background-color: #7f8a9a;
         }
+
     </style>
+
 }
 
 
@@ -180,8 +184,8 @@
 
         FilePond.setOptions({
                 server: {
-                    process: '@Url.Action("SaveFile", "Exam")',
-                    revert: '@Url.Action("RevertFile", "Exam")'
+                    process: '@Url.Action("SaveFile", "Upload")',
+                    revert: '@Url.Action("RevertFile", "Upload")'
                 }
             });
 

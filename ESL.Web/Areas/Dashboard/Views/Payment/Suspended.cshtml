@@ -1,0 +1,137 @@
+﻿@model IEnumerable<ESL.Web.Areas.Dashboard.Models.ViewModels.Model_Payment>
+@using ESL.Common.Plugins
+
+@{
+    ViewBag.Title = "لیست پرداختی ها تایید نشده";
+    Layout = "~/Areas/Dashboard/Views/Shared/_Master.cshtml";
+}
+
+
+<div class="panel panel-body panel-default  navigation">
+
+    <div class="pull-left">
+        <h4 class="navigation-title"><b>لیست پرداختی ها تایید نشده</b></h4>
+    </div>
+
+    <div class="pull-right">
+        <a href="#" onclick="Create()"><i class="glyphicon glyphicon-plus navigation-btn-icon"></i></a>
+    </div>
+
+</div>
+
+<div class="panel panel-default">
+
+    <div class="panel-body table-body" style="overflow-x:auto;">
+
+        <table id="DateTable" class="table  table-bordered table-striped table-secondary" style="width:100%;">
+
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.User)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Type)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Way)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.State)</th>
+                    <th scope="col"> @Html.DisplayNameFor(model => model.Cost)</th>
+                    <th scope="col"> @Html.DisplayNameFor(model => model.TrackingToken)</th>
+                    <th scope="col"> @Html.DisplayNameFor(model => model.Document)</th>
+                    <th scope="col"> @Html.DisplayNameFor(model => model.Date)</th>
+                    <th scope="col" data-orderable="false">کنترل</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @{
+                    int x = 0;
+                }
+
+                @foreach (var item in Model)
+                {
+                    x++;
+
+                    <tr>
+                        <td scope="row">@x</td>
+                        <td scope="row">
+                            <span> @Html.DisplayFor(modelItem => item.User) </span>
+                        </td>
+                        <td scope="row">
+                            <span> @Html.DisplayFor(modelItem => item.Type) </span>
+                        </td>
+                        <td scope="row">
+                            <span> @Html.DisplayFor(modelItem => item.Way) </span>
+                        </td>
+                        <td scope="row">
+                            <span> @Html.DisplayFor(modelItem => item.State) </span>
+                        </td>
+                        <td scope="row">
+                            <span> @Html.DisplayFor(modelItem => item.Cost) </span>
+                        </td>
+                        <td scope="row">
+                            <span> @Html.DisplayFor(modelItem => item.TrackingToken) </span>
+                        </td>
+                        <td scope="row">
+                            <span> @Html.DisplayFor(modelItem => item.Document) </span>
+                        </td>
+                        <td scope="row">
+                            <span> @PersianDateExtensionMethods.ToPeString(item.Date, "yyyy/MM/dd") </span>
+                        </td>
+                        <td scope="row">
+                            <a class="btn btn-info btn-sm glyphicon glyphicon-list" href="@Url.Action("Details", "ExamInPerson", new { id = item.ID })"> </a>
+                            <a class="btn btn-warning btn-sm glyphicon glyphicon-pencil" onclick="Edit(@item.ID)"> </a>
+                            <a class="btn btn-danger btn-sm glyphicon glyphicon-trash" onclick="Delete(@item.ID)"> </a>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+@Html.Partial("_Modal")
+
+@section Modal {
+    <script>
+
+        function Delete(id) {
+            $.ajax({
+                url: "/Dashboard/ExamInPerson/Delete/" + id,
+                type: "Get",
+                data: {}
+            }).done(function (result) {
+                $('#myModal').modal('show');
+                $('#myModalLabel').html('حدف آزمون');
+                $('#myModalBody').html(result);
+            });
+        }
+
+        function Create() {
+            $.ajax({
+                url: "/Dashboard/ExamInPerson/Create",
+                type: "Get",
+                data: {}
+            }).done(function (result) {
+                $('#myModal').modal('show');
+                $('#myModalLabel').html('افزودن آزمون');
+                $('#myModalBody').html(result);
+            });
+        }
+
+        function Edit(id) {
+            $.ajax({
+                url: "/Dashboard/ExamInPerson/Edit/" + id,
+                type: "Get",
+                data: {}
+            }).done(function (result) {
+                $('#myModal').modal('show');
+                $('#myModalLabel').html('ویرایش آزمون');
+                $('#myModalBody').html(result);
+            });
+        }
+
+    </script>
+}

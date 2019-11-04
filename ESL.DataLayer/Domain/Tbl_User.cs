@@ -18,6 +18,7 @@ namespace ESL.DataLayer.Domain
         public Tbl_User()
         {
             this.Tbl_News = new HashSet<Tbl_News>();
+            this.Tbl_Payment = new HashSet<Tbl_Payment>();
             this.Tbl_UserExam = new HashSet<Tbl_UserExam>();
             this.Tbl_UserExamAccess = new HashSet<Tbl_UserExamAccess>();
             this.Tbl_UserExamInPerson = new HashSet<Tbl_UserExamInPerson>();
@@ -36,11 +37,14 @@ namespace ESL.DataLayer.Domain
         public string User_lastName { get; set; }
         public string User_IdentityNumber { get; set; }
         public string User_Mobile { get; set; }
+        public int User_Credit { get; set; }
         public bool User_IsBan { get; set; }
         public bool User_IsDelete { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_News> Tbl_News { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tbl_Payment> Tbl_Payment { get; set; }
         public virtual Tbl_Role Tbl_Role { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_UserExam> Tbl_UserExam { get; set; }
