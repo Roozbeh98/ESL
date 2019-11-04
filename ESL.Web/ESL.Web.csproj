@@ -1321,6 +1321,7 @@
     <Compile Include="Controllers\ContactUsController.cs" />
     <Compile Include="Controllers\ContractsController.cs" />
     <Compile Include="Controllers\CoursesController.cs" />
+    <Compile Include="Controllers\DocumentsController.cs" />
     <Compile Include="Controllers\ErrorsController.cs" />
     <Compile Include="Controllers\GalleryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -1330,6 +1331,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Attribute\CustomAuthorizeAttribute.cs" />
+    <Compile Include="Models\ViewModels\Model_Documents.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1366,6 +1368,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Dashboard\Views\Message\" />
     <Folder Include="Areas\Dashboard\Views\User\" />
+    <Folder Include="Views\Documents\" />
     <Folder Include="Views\Errors\" />
   </ItemGroup>
   <ItemGroup>
