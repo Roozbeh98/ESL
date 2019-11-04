@@ -28,6 +28,7 @@ namespace ESL.DataLayer.Domain
         public int EIP_PassMark { get; set; }
         public int EIP_Cost { get; set; }
         public string EIP_Location { get; set; }
+        public bool EIP_IsActive { get; set; }
         public System.DateTime EIP_CreationDate { get; set; }
         public System.DateTime EIP_ModifiedDate { get; set; }
         public bool EIP_IsDelete { get; set; }

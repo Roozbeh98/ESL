@@ -97,6 +97,7 @@
           <Property Name="EIP_PassMark" Type="int" Nullable="false" />
           <Property Name="EIP_Cost" Type="int" Nullable="false" />
           <Property Name="EIP_Location" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="EIP_IsActive" Type="bit" Nullable="false" />
           <Property Name="EIP_CreationDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="EIP_ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="EIP_IsDelete" Type="bit" Nullable="false" />
@@ -192,7 +193,8 @@
           <Property Name="Payment_Cost" Type="int" Nullable="false" />
           <Property Name="Payment_TrackingToken" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Payment_DocumentID" Type="int" />
-          <Property Name="Payment_Date" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="Payment_CreateDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="Payment_ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="Payment_IsDelete" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Tbl_Question">
@@ -1254,6 +1256,7 @@
           <Property Name="EIP_PassMark" Type="Int32" Nullable="false" />
           <Property Name="EIP_Cost" Type="Int32" Nullable="false" />
           <Property Name="EIP_Location" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="EIP_IsActive" Type="Boolean" Nullable="false" />
           <Property Name="EIP_CreationDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="EIP_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="EIP_IsDelete" Type="Boolean" Nullable="false" />
@@ -1363,7 +1366,8 @@
           <Property Name="Payment_Cost" Type="Int32" Nullable="false" />
           <Property Name="Payment_TrackingToken" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="Payment_DocumentID" Type="Int32" />
-          <Property Name="Payment_Date" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="Payment_CreateDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="Payment_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="Payment_IsDelete" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Tbl_Code" Relationship="ESLModel.FK_Tbl_Payment_Tbl_Code_StateCodeID" FromRole="Tbl_Payment" ToRole="Tbl_Code" />
           <NavigationProperty Name="Tbl_Code1" Relationship="ESLModel.FK_Tbl_Payment_Tbl_Code_TypeCodeID" FromRole="Tbl_Payment" ToRole="Tbl_Code" />
@@ -2078,6 +2082,7 @@
                 <ScalarProperty Name="EIP_IsDelete" ColumnName="EIP_IsDelete" />
                 <ScalarProperty Name="EIP_ModifiedDate" ColumnName="EIP_ModifiedDate" />
                 <ScalarProperty Name="EIP_CreationDate" ColumnName="EIP_CreationDate" />
+                <ScalarProperty Name="EIP_IsActive" ColumnName="EIP_IsActive" />
                 <ScalarProperty Name="EIP_Location" ColumnName="EIP_Location" />
                 <ScalarProperty Name="EIP_Cost" ColumnName="EIP_Cost" />
                 <ScalarProperty Name="EIP_PassMark" ColumnName="EIP_PassMark" />
@@ -2178,7 +2183,8 @@
             <EntityTypeMapping TypeName="ESLModel.Tbl_Payment">
               <MappingFragment StoreEntitySet="Tbl_Payment">
                 <ScalarProperty Name="Payment_IsDelete" ColumnName="Payment_IsDelete" />
-                <ScalarProperty Name="Payment_Date" ColumnName="Payment_Date" />
+                <ScalarProperty Name="Payment_ModifiedDate" ColumnName="Payment_ModifiedDate" />
+                <ScalarProperty Name="Payment_CreateDate" ColumnName="Payment_CreateDate" />
                 <ScalarProperty Name="Payment_DocumentID" ColumnName="Payment_DocumentID" />
                 <ScalarProperty Name="Payment_TrackingToken" ColumnName="Payment_TrackingToken" />
                 <ScalarProperty Name="Payment_Cost" ColumnName="Payment_Cost" />

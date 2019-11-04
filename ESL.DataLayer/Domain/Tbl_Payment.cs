@@ -23,7 +23,8 @@ namespace ESL.DataLayer.Domain
         public int Payment_Cost { get; set; }
         public string Payment_TrackingToken { get; set; }
         public Nullable<int> Payment_DocumentID { get; set; }
-        public System.DateTime Payment_Date { get; set; }
+        public System.DateTime Payment_CreateDate { get; set; }
+        public System.DateTime Payment_ModifiedDate { get; set; }
         public bool Payment_IsDelete { get; set; }
     
         public virtual Tbl_Code Tbl_Code { get; set; }

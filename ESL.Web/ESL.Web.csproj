@@ -241,6 +241,10 @@
     <Content Include="Areas\Dashboard\Views\Payment\Index.cshtml" />
     <Content Include="Areas\Dashboard\Views\Payment\Suspended.cshtml" />
     <Content Include="Areas\Dashboard\Views\Payment\Create.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Payment\ChangeState.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Payment\Edit.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Payment\Delete.cshtml" />
+    <Content Include="Areas\Dashboard\Views\ExamInPerson\SetActiveness.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -1311,6 +1315,7 @@
     <Compile Include="Areas\Dashboard\Controllers\UserController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\UserExamInPersonController.cs" />
     <Compile Include="Areas\Dashboard\DashboardAreaRegistration.cs" />
+    <Compile Include="Areas\Dashboard\Models\ViewModels\Model_ExamInPersonSetActiveness.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_MessageModal.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_Exam.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_ExamInPersonCreate.cs" />
@@ -1318,7 +1323,9 @@
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_ExamsInPerson.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_Login.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_Payment.cs" />
+    <Compile Include="Areas\Dashboard\Models\ViewModels\Model_PaymentChangeState.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_PaymentCreate.cs" />
+    <Compile Include="Areas\Dashboard\Models\ViewModels\Model_PaymentEdit.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_QuestionCreate.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_Questions.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_Register.cs" />
