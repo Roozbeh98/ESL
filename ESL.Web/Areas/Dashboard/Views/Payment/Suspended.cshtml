@@ -14,7 +14,7 @@
     </div>
 
     <div class="pull-right">
-        <a href="#" onclick="Create()"><i class="glyphicon glyphicon-plus navigation-btn-icon"></i></a>
+        <a href="@Url.Action("Create", "Payment", new { area = "Dashboard" })"><i class="glyphicon glyphicon-plus navigation-btn-icon"></i></a>
     </div>
 
 </div>
@@ -35,7 +35,7 @@
                     <th scope="col"> @Html.DisplayNameFor(model => model.Cost)</th>
                     <th scope="col"> @Html.DisplayNameFor(model => model.TrackingToken)</th>
                     <th scope="col"> @Html.DisplayNameFor(model => model.Document)</th>
-                    <th scope="col"> @Html.DisplayNameFor(model => model.Date)</th>
+                    <th scope="col"> @Html.DisplayNameFor(model => model.CreateDate)</th>
                     <th scope="col" data-orderable="false">کنترل</th>
                 </tr>
             </thead>
@@ -73,12 +73,12 @@
                             <span> @Html.DisplayFor(modelItem => item.Document) </span>
                         </td>
                         <td scope="row">
-                            <span> @PersianDateExtensionMethods.ToPeString(item.Date, "yyyy/MM/dd") </span>
+                            <span> @PersianDateExtensionMethods.ToPeString(item.CreateDate, "yyyy/MM/dd") </span>
                         </td>
                         <td scope="row">
-                            <a class="btn btn-info btn-sm glyphicon glyphicon-list" href="@Url.Action("Details", "ExamInPerson", new { id = item.ID })"> </a>
-                            <a class="btn btn-warning btn-sm glyphicon glyphicon-pencil" onclick="Edit(@item.ID)"> </a>
-                            <a class="btn btn-danger btn-sm glyphicon glyphicon-trash" onclick="Delete(@item.ID)"> </a>
+                            <a class="btn btn-info btn-sm glyphicon glyphicon-ok" href="javascript:void(0)" onclick="ChangeState(@item.ID)"> </a>
+                            <a class="btn btn-warning btn-sm glyphicon glyphicon-pencil" href="@Url.Action("Edit", "Payment", new { area = "Dashboard", id = item.ID })"> </a>
+                            <a class="btn btn-danger btn-sm glyphicon glyphicon-trash" href="javascript:void(0)" onclick="Delete(@item.ID)"> </a>
                         </td>
                     </tr>
                 }
@@ -94,44 +94,35 @@
 
 @Html.Partial("_Modal")
 
+
 @section Modal {
+
     <script>
+
+        function ChangeState(id) {
+            $.ajax({
+                url: "/Dashboard/Payment/ChangeState/" + id,
+                type: "Get",
+                data: {}
+            }).done(function (result) {
+                $('#myModal').modal('show');
+                $('#myModalLabel').html('تغییر وضعیت پرداخت');
+                $('#myModalBody').html(result);
+            });
+        }
 
         function Delete(id) {
             $.ajax({
-                url: "/Dashboard/ExamInPerson/Delete/" + id,
+                url: "/Dashboard/Payment/Delete/" + id,
                 type: "Get",
                 data: {}
             }).done(function (result) {
                 $('#myModal').modal('show');
-                $('#myModalLabel').html('حدف آزمون');
-                $('#myModalBody').html(result);
-            });
-        }
-
-        function Create() {
-            $.ajax({
-                url: "/Dashboard/ExamInPerson/Create",
-                type: "Get",
-                data: {}
-            }).done(function (result) {
-                $('#myModal').modal('show');
-                $('#myModalLabel').html('افزودن آزمون');
-                $('#myModalBody').html(result);
-            });
-        }
-
-        function Edit(id) {
-            $.ajax({
-                url: "/Dashboard/ExamInPerson/Edit/" + id,
-                type: "Get",
-                data: {}
-            }).done(function (result) {
-                $('#myModal').modal('show');
-                $('#myModalLabel').html('ویرایش آزمون');
+                $('#myModalLabel').html('حدف پرداخت');
                 $('#myModalBody').html(result);
             });
         }
 
     </script>
+
 }

@@ -1,0 +1,136 @@
+﻿@model ESL.Web.Areas.Dashboard.Models.ViewModels.Model_PaymentEdit
+@using ESL.Services.BaseRepository
+
+@{
+    ViewBag.Title = "ویرایش پرداخت";
+    Layout = "~/Areas/Dashboard/Views/Shared/_Master.cshtml";
+}
+
+
+<div class="panel panel-body panel-default  navigation">
+
+    <div class="pull-left">
+        <h4 class="navigation-title"><b>ویرایش پرداخت</b></h4>
+    </div>
+
+    <div class="pull-right">
+        <a href="@Url.Action("Index", "Payment")"><i class="glyphicon glyphicon-arrow-left navigation-btn-icon"></i></a>
+    </div>
+
+</div>
+
+<div class="panel panel-default">
+
+    <div class="panel-body">
+
+        @using (Html.BeginForm("Edit", "Payment", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="modal-main">
+
+                <div class="row" style="margin: 0 -30px;">
+
+                    <div class="col-md-6">
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.User, htmlAttributes: new { @class = "control-label" })
+                            @Html.DropDownListFor(model => model.User, new List<SelectListItem>() { new Rep_User().Get_UserSelectListItemWithGUID(Model.User) }, new { @class = "form-control Select2_Normal" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label" })
+                            @Html.DropDownListFor(model => model.Type, Rep_CodeGroup.Get_AllCodesWithGroupWithGUID(CodeGroup.PaymentType), new { @class = "form-control Select2_Normal" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Way, htmlAttributes: new { @class = "control-label" })
+                            @Html.DropDownListFor(model => model.Way, Rep_CodeGroup.Get_AllCodesWithGroupWithGUID(CodeGroup.PaymentWay), new { @class = "form-control Select2_Normal" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.State, htmlAttributes: new { @class = "control-label" })
+                            @Html.DropDownListFor(model => model.State, Rep_CodeGroup.Get_AllCodesWithGroupWithGUID(CodeGroup.PaymentState), new { @class = "form-control Select2_Normal" })
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Cost, htmlAttributes: new { @class = "control-label" })
+                            <div class="input-group">
+                                <span class=" input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                                @Html.EditorFor(model => model.Cost, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.Cost, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.TrackingToken, htmlAttributes: new { @class = "control-label" })
+                            <div class="input-group">
+                                <span class=" input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                                @Html.EditorFor(model => model.TrackingToken, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.TrackingToken, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label">ضمیمه</label>
+                            <input class="form-control" type="file" name="document" />
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div style="margin-top:20px;">
+                <button class="btn btn-danger modal-btn-Dual pull-left" type="button" data-dismiss="modal">انصراف</button>
+                <button class="btn btn-success modal-btn-Dual pull-right " type="submit" name="btn-Delete">تایید</button>
+            </div>
+        }
+
+    </div>
+
+</div>
+
+
+@section Scripts {
+
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+    <script src="~/Scripts/Plugins/jQuery.Select2/select2.js"></script>
+    <script src="~/Scripts/Plugins/jQuery.Select2/i18n/fa.js"></script>
+
+    <script src="~/Scripts/MyScripts/Select2_Config.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#User").select2({
+                theme: "bootstrap",
+                language: "fa",
+                dir: "rtl",
+                tokenSeparators: [',', ' '],
+                minimumResultsForSearch: 6,
+                placeholder: 'انتخاب کنید',
+                ajax: {
+                    url: '/UserExamInPerson/Get_Users',
+                    dataType: "json",
+                    data: function (params) {
+                        return {
+                            searchTerm: params.term
+                        };
+                    },
+                    processResults: function (data, params) {
+                        return {
+                            results: data
+                        };
+                    }
+                }
+            });
+        });
+    </script>
+
+}

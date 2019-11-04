@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ESL.DataLayer.Models;
+using System.Web.Mvc;
 
 namespace ESL.Services.BaseRepository
 {
@@ -41,6 +42,12 @@ namespace ESL.Services.BaseRepository
         public int Get_UserIDWithGUID(Guid guid)
         {
             return db.Tbl_User.Where(x => x.User_Guid == guid).SingleOrDefault().User_ID;
+        }
+
+        public SelectListItem Get_UserSelectListItemWithGUID(Guid guid)
+        {
+            var q = db.Tbl_User.Where(x => x.User_Guid == guid).SingleOrDefault();
+            return new SelectListItem() { Value = q.User_Guid.ToString(), Text = q.User_FirstName + " " + q.User_lastName };
         }
     }
 }

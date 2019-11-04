@@ -23,6 +23,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                 Title = x.EIP_Title,
                 Cost = x.EIP_Cost,
                 Location = x.EIP_Location,
+                Activeness = x.EIP_IsActive,
                 Capacity = x.EIP_Capacity,
                 TotalMark = x.EIP_TotalMark,
                 PassMark = x.EIP_PassMark,
@@ -232,6 +233,60 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             }
 
             return HttpNotFound();
+        }
+
+        public ActionResult SetActiveness(int id)
+        {
+            var q = db.Tbl_ExamInPerson.Where(x => x.EIP_ID == id).SingleOrDefault();
+
+            if (q != null)
+            {
+                Model_ExamInPersonSetActiveness model = new Model_ExamInPersonSetActiveness()
+                {
+                    ID = id,
+                    Activeness = q.EIP_IsActive
+                };
+
+                return PartialView(model);
+            }
+
+            return HttpNotFound();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SetActiveness(Model_ExamInPersonSetActiveness model)
+        {
+            if (ModelState.IsValid)
+            {
+                var q = db.Tbl_ExamInPerson.Where(x => x.EIP_ID == model.ID).SingleOrDefault();
+
+                if (q != null)
+                {
+                    q.EIP_IsActive = model.Activeness;
+
+                    db.Entry(q).State = EntityState.Modified;
+
+                    if (Convert.ToBoolean(db.SaveChanges() > 0))
+                    {
+                        TempData["TosterState"] = "success";
+                        TempData["TosterType"] = TosterType.Maseage;
+                        TempData["TosterMassage"] = "عملیات با موفقیت انجام شده";
+
+                        return RedirectToAction("Index", "ExamInPerson", new { area = "Dashboard" });
+                    }
+                    else
+                    {
+                        TempData["TosterState"] = "error";
+                        TempData["TosterType"] = TosterType.Maseage;
+                        TempData["TosterMassage"] = "عملیات با موفقیت انجام نشده";
+
+                        return HttpNotFound();
+                    }
+                }
+            }
+
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
         protected override void Dispose(bool disposing)

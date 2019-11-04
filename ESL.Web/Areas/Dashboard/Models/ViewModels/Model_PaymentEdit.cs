@@ -6,26 +6,26 @@ using System.Web;
 
 namespace ESL.Web.Areas.Dashboard.Models.ViewModels
 {
-    public class Model_Payment
+    public class Model_PaymentEdit
     {
         [Display(Name = "شناسه")]
         public int ID { get; set; }
 
-        [Display(Name = "کاربر")]
+        [Display(Name = "شناسه کاربر")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
-        public string User { get; set; }
+        public Guid User { get; set; }
 
         [Display(Name = "نوع پرداخت")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
-        public string Type { get; set; }
+        public Guid Type { get; set; }
 
         [Display(Name = "روش پرداخت")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
-        public string Way { get; set; }
+        public Guid Way { get; set; }
 
         [Display(Name = "وضعیت پرداخت")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
-        public string State { get; set; }
+        public Guid State { get; set; }
 
         [Display(Name = "بها")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
@@ -34,12 +34,5 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
         [Display(Name = "کد رهگیری")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
         public string TrackingToken { get; set; }
-
-        [Display(Name = "ضمیمه")]
-        [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
-        public string Document { get; set; }
-
-        [Display(Name = "تاریخ" )]
-        public DateTime CreateDate { get; set; }
     }
 }
