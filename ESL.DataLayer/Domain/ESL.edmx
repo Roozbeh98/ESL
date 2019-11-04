@@ -179,6 +179,22 @@
           <Property Name="Page_Guid" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Page_Name" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
+        <EntityType Name="Tbl_Payment">
+          <Key>
+            <PropertyRef Name="Payment_ID" />
+          </Key>
+          <Property Name="Payment_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Payment_Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Payment_UserID" Type="int" Nullable="false" />
+          <Property Name="Payment_TypeCodeID" Type="int" Nullable="false" />
+          <Property Name="Payment_WayCodeID" Type="int" Nullable="false" />
+          <Property Name="Payment_StateCodeID" Type="int" Nullable="false" />
+          <Property Name="Payment_Cost" Type="int" Nullable="false" />
+          <Property Name="Payment_TrackingToken" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Payment_DocumentID" Type="int" />
+          <Property Name="Payment_Date" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="Payment_IsDelete" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="Tbl_Question">
           <Key>
             <PropertyRef Name="Question_ID" />
@@ -273,6 +289,7 @@
           <Property Name="User_lastName" Type="nvarchar" MaxLength="128" />
           <Property Name="User_IdentityNumber" Type="nvarchar" MaxLength="128" />
           <Property Name="User_Mobile" Type="nvarchar" MaxLength="128" />
+          <Property Name="User_Credit" Type="int" Nullable="false" />
           <Property Name="User_IsBan" Type="bit" Nullable="false" />
           <Property Name="User_IsDelete" Type="bit" Nullable="false" />
         </EntityType>
@@ -481,6 +498,66 @@
             </Principal>
             <Dependent Role="Tbl_Organization">
               <PropertyRef Name="Organization_DocumentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_Payment_Tbl_Code_StateCodeID">
+          <End Role="Tbl_Code" Type="Self.Tbl_Code" Multiplicity="1" />
+          <End Role="Tbl_Payment" Type="Self.Tbl_Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Code">
+              <PropertyRef Name="Code_ID" />
+            </Principal>
+            <Dependent Role="Tbl_Payment">
+              <PropertyRef Name="Payment_StateCodeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_Payment_Tbl_Code_TypeCodeID">
+          <End Role="Tbl_Code" Type="Self.Tbl_Code" Multiplicity="1" />
+          <End Role="Tbl_Payment" Type="Self.Tbl_Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Code">
+              <PropertyRef Name="Code_ID" />
+            </Principal>
+            <Dependent Role="Tbl_Payment">
+              <PropertyRef Name="Payment_TypeCodeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_Payment_Tbl_Code_WayCodeID">
+          <End Role="Tbl_Code" Type="Self.Tbl_Code" Multiplicity="1" />
+          <End Role="Tbl_Payment" Type="Self.Tbl_Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Code">
+              <PropertyRef Name="Code_ID" />
+            </Principal>
+            <Dependent Role="Tbl_Payment">
+              <PropertyRef Name="Payment_WayCodeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_Payment_Tbl_Document">
+          <End Role="Tbl_Document" Type="Self.Tbl_Document" Multiplicity="0..1" />
+          <End Role="Tbl_Payment" Type="Self.Tbl_Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Document">
+              <PropertyRef Name="Document_ID" />
+            </Principal>
+            <Dependent Role="Tbl_Payment">
+              <PropertyRef Name="Payment_DocumentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_Payment_Tbl_User">
+          <End Role="Tbl_User" Type="Self.Tbl_User" Multiplicity="1" />
+          <End Role="Tbl_Payment" Type="Self.Tbl_Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_User">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="Tbl_Payment">
+              <PropertyRef Name="Payment_UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -716,6 +793,7 @@
           <EntitySet Name="Tbl_NewsDocument" EntityType="Self.Tbl_NewsDocument" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Organization" EntityType="Self.Tbl_Organization" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Page" EntityType="Self.Tbl_Page" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_Payment" EntityType="Self.Tbl_Payment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Question" EntityType="Self.Tbl_Question" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Region" EntityType="Self.Tbl_Region" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Response" EntityType="Self.Tbl_Response" Schema="dbo" store:Type="Tables" />
@@ -781,6 +859,26 @@
           <AssociationSet Name="FK_Tbl_Organization_Tbl_Document" Association="Self.FK_Tbl_Organization_Tbl_Document">
             <End Role="Tbl_Document" EntitySet="Tbl_Document" />
             <End Role="Tbl_Organization" EntitySet="Tbl_Organization" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Payment_Tbl_Code_StateCodeID" Association="Self.FK_Tbl_Payment_Tbl_Code_StateCodeID">
+            <End Role="Tbl_Code" EntitySet="Tbl_Code" />
+            <End Role="Tbl_Payment" EntitySet="Tbl_Payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Payment_Tbl_Code_TypeCodeID" Association="Self.FK_Tbl_Payment_Tbl_Code_TypeCodeID">
+            <End Role="Tbl_Code" EntitySet="Tbl_Code" />
+            <End Role="Tbl_Payment" EntitySet="Tbl_Payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Payment_Tbl_Code_WayCodeID" Association="Self.FK_Tbl_Payment_Tbl_Code_WayCodeID">
+            <End Role="Tbl_Code" EntitySet="Tbl_Code" />
+            <End Role="Tbl_Payment" EntitySet="Tbl_Payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Payment_Tbl_Document" Association="Self.FK_Tbl_Payment_Tbl_Document">
+            <End Role="Tbl_Document" EntitySet="Tbl_Document" />
+            <End Role="Tbl_Payment" EntitySet="Tbl_Payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Payment_Tbl_User" Association="Self.FK_Tbl_Payment_Tbl_User">
+            <End Role="Tbl_User" EntitySet="Tbl_User" />
+            <End Role="Tbl_Payment" EntitySet="Tbl_Payment" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_Question_Tbl_Code_GroupCodeID" Association="Self.FK_Tbl_Question_Tbl_Code_GroupCodeID">
             <End Role="Tbl_Code" EntitySet="Tbl_Code" />
@@ -875,6 +973,7 @@
           <EntitySet Name="Tbl_NewsDocument" EntityType="ESLModel.Tbl_NewsDocument" />
           <EntitySet Name="Tbl_Organization" EntityType="ESLModel.Tbl_Organization" />
           <EntitySet Name="Tbl_Page" EntityType="ESLModel.Tbl_Page" />
+          <EntitySet Name="Tbl_Payment" EntityType="ESLModel.Tbl_Payment" />
           <EntitySet Name="Tbl_Question" EntityType="ESLModel.Tbl_Question" />
           <EntitySet Name="Tbl_Region" EntityType="ESLModel.Tbl_Region" />
           <EntitySet Name="Tbl_Response" EntityType="ESLModel.Tbl_Response" />
@@ -904,6 +1003,18 @@
           <AssociationSet Name="FK_Tbl_Organization_Tbl_Code" Association="ESLModel.FK_Tbl_Organization_Tbl_Code">
             <End Role="Tbl_Code" EntitySet="Tbl_Code" />
             <End Role="Tbl_Organization" EntitySet="Tbl_Organization" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Payment_Tbl_Code_StateCodeID" Association="ESLModel.FK_Tbl_Payment_Tbl_Code_StateCodeID">
+            <End Role="Tbl_Code" EntitySet="Tbl_Code" />
+            <End Role="Tbl_Payment" EntitySet="Tbl_Payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Payment_Tbl_Code_TypeCodeID" Association="ESLModel.FK_Tbl_Payment_Tbl_Code_TypeCodeID">
+            <End Role="Tbl_Code" EntitySet="Tbl_Code" />
+            <End Role="Tbl_Payment" EntitySet="Tbl_Payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Payment_Tbl_Code_WayCodeID" Association="ESLModel.FK_Tbl_Payment_Tbl_Code_WayCodeID">
+            <End Role="Tbl_Code" EntitySet="Tbl_Code" />
+            <End Role="Tbl_Payment" EntitySet="Tbl_Payment" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_Question_Tbl_Code_GroupCodeID" Association="ESLModel.FK_Tbl_Question_Tbl_Code_GroupCodeID">
             <End Role="Tbl_Code" EntitySet="Tbl_Code" />
@@ -944,6 +1055,10 @@
           <AssociationSet Name="FK_Tbl_Organization_Tbl_Document" Association="ESLModel.FK_Tbl_Organization_Tbl_Document">
             <End Role="Tbl_Document" EntitySet="Tbl_Document" />
             <End Role="Tbl_Organization" EntitySet="Tbl_Organization" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Payment_Tbl_Document" Association="ESLModel.FK_Tbl_Payment_Tbl_Document">
+            <End Role="Tbl_Document" EntitySet="Tbl_Document" />
+            <End Role="Tbl_Payment" EntitySet="Tbl_Payment" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_Region_Tbl_Document" Association="ESLModel.FK_Tbl_Region_Tbl_Document">
             <End Role="Tbl_Document" EntitySet="Tbl_Document" />
@@ -988,6 +1103,10 @@
           <AssociationSet Name="FK_Tbl_Region_Tbl_Page" Association="ESLModel.FK_Tbl_Region_Tbl_Page">
             <End Role="Tbl_Page" EntitySet="Tbl_Page" />
             <End Role="Tbl_Region" EntitySet="Tbl_Region" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Payment_Tbl_User" Association="ESLModel.FK_Tbl_Payment_Tbl_User">
+            <End Role="Tbl_User" EntitySet="Tbl_User" />
+            <End Role="Tbl_Payment" EntitySet="Tbl_Payment" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_Question_Tbl_Response" Association="ESLModel.FK_Tbl_Question_Tbl_Response">
             <End Role="Tbl_Response" EntitySet="Tbl_Response" />
@@ -1038,6 +1157,9 @@
           <NavigationProperty Name="Tbl_Document" Relationship="ESLModel.FK_Tbl_Document_Tbl_Code" FromRole="Tbl_Code" ToRole="Tbl_Document" />
           <NavigationProperty Name="Tbl_NewsDocument" Relationship="ESLModel.FK_Tbl_NewsDocument_Tbl_Code" FromRole="Tbl_Code" ToRole="Tbl_NewsDocument" />
           <NavigationProperty Name="Tbl_Organization" Relationship="ESLModel.FK_Tbl_Organization_Tbl_Code" FromRole="Tbl_Code" ToRole="Tbl_Organization" />
+          <NavigationProperty Name="Tbl_Payment" Relationship="ESLModel.FK_Tbl_Payment_Tbl_Code_StateCodeID" FromRole="Tbl_Code" ToRole="Tbl_Payment" />
+          <NavigationProperty Name="Tbl_Payment1" Relationship="ESLModel.FK_Tbl_Payment_Tbl_Code_TypeCodeID" FromRole="Tbl_Code" ToRole="Tbl_Payment" />
+          <NavigationProperty Name="Tbl_Payment2" Relationship="ESLModel.FK_Tbl_Payment_Tbl_Code_WayCodeID" FromRole="Tbl_Code" ToRole="Tbl_Payment" />
           <NavigationProperty Name="Tbl_Question" Relationship="ESLModel.FK_Tbl_Question_Tbl_Code_GroupCodeID" FromRole="Tbl_Code" ToRole="Tbl_Question" />
           <NavigationProperty Name="Tbl_Question1" Relationship="ESLModel.FK_Tbl_Question_Tbl_Code_TypeCodeID" FromRole="Tbl_Code" ToRole="Tbl_Question" />
           <NavigationProperty Name="Tbl_Response" Relationship="ESLModel.FK_Tbl_Response_Tbl_Code" FromRole="Tbl_Code" ToRole="Tbl_Response" />
@@ -1099,6 +1221,7 @@
           <NavigationProperty Name="Tbl_GalleryDocument" Relationship="ESLModel.FK_Tbl_GalleryDocument_Tbl_Document" FromRole="Tbl_Document" ToRole="Tbl_GalleryDocument" />
           <NavigationProperty Name="Tbl_NewsDocument" Relationship="ESLModel.FK_Tbl_NewsDocument_Tbl_Document" FromRole="Tbl_Document" ToRole="Tbl_NewsDocument" />
           <NavigationProperty Name="Tbl_Organization" Relationship="ESLModel.FK_Tbl_Organization_Tbl_Document" FromRole="Tbl_Document" ToRole="Tbl_Organization" />
+          <NavigationProperty Name="Tbl_Payment" Relationship="ESLModel.FK_Tbl_Payment_Tbl_Document" FromRole="Tbl_Document" ToRole="Tbl_Payment" />
           <NavigationProperty Name="Tbl_Region" Relationship="ESLModel.FK_Tbl_Region_Tbl_Document" FromRole="Tbl_Document" ToRole="Tbl_Region" />
           <NavigationProperty Name="Tbl_SubCourse" Relationship="ESLModel.FK_Tbl_SubCourse_Tbl_Document" FromRole="Tbl_Document" ToRole="Tbl_SubCourse" />
         </EntityType>
@@ -1227,6 +1350,27 @@
           <Property Name="Page_Name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Tbl_Region" Relationship="ESLModel.FK_Tbl_Region_Tbl_Page" FromRole="Tbl_Page" ToRole="Tbl_Region" />
         </EntityType>
+        <EntityType Name="Tbl_Payment">
+          <Key>
+            <PropertyRef Name="Payment_ID" />
+          </Key>
+          <Property Name="Payment_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Payment_Guid" Type="Guid" Nullable="false" />
+          <Property Name="Payment_UserID" Type="Int32" Nullable="false" />
+          <Property Name="Payment_TypeCodeID" Type="Int32" Nullable="false" />
+          <Property Name="Payment_WayCodeID" Type="Int32" Nullable="false" />
+          <Property Name="Payment_StateCodeID" Type="Int32" Nullable="false" />
+          <Property Name="Payment_Cost" Type="Int32" Nullable="false" />
+          <Property Name="Payment_TrackingToken" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Payment_DocumentID" Type="Int32" />
+          <Property Name="Payment_Date" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="Payment_IsDelete" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Tbl_Code" Relationship="ESLModel.FK_Tbl_Payment_Tbl_Code_StateCodeID" FromRole="Tbl_Payment" ToRole="Tbl_Code" />
+          <NavigationProperty Name="Tbl_Code1" Relationship="ESLModel.FK_Tbl_Payment_Tbl_Code_TypeCodeID" FromRole="Tbl_Payment" ToRole="Tbl_Code" />
+          <NavigationProperty Name="Tbl_Code2" Relationship="ESLModel.FK_Tbl_Payment_Tbl_Code_WayCodeID" FromRole="Tbl_Payment" ToRole="Tbl_Code" />
+          <NavigationProperty Name="Tbl_Document" Relationship="ESLModel.FK_Tbl_Payment_Tbl_Document" FromRole="Tbl_Payment" ToRole="Tbl_Document" />
+          <NavigationProperty Name="Tbl_User" Relationship="ESLModel.FK_Tbl_Payment_Tbl_User" FromRole="Tbl_Payment" ToRole="Tbl_User" />
+        </EntityType>
         <EntityType Name="Tbl_Question">
           <Key>
             <PropertyRef Name="Question_ID" />
@@ -1335,9 +1479,11 @@
           <Property Name="User_lastName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="User_IdentityNumber" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="User_Mobile" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="User_Credit" Type="Int32" Nullable="false" />
           <Property Name="User_IsBan" Type="Boolean" Nullable="false" />
           <Property Name="User_IsDelete" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Tbl_News" Relationship="ESLModel.FK_Tbl_News_Tbl_User" FromRole="Tbl_User" ToRole="Tbl_News" />
+          <NavigationProperty Name="Tbl_Payment" Relationship="ESLModel.FK_Tbl_Payment_Tbl_User" FromRole="Tbl_User" ToRole="Tbl_Payment" />
           <NavigationProperty Name="Tbl_Role" Relationship="ESLModel.FK_Tbl_User_Tbl_Role" FromRole="Tbl_User" ToRole="Tbl_Role" />
           <NavigationProperty Name="Tbl_UserExam" Relationship="ESLModel.FK_Tbl_UserExam_Tbl_User" FromRole="Tbl_User" ToRole="Tbl_UserExam" />
           <NavigationProperty Name="Tbl_UserExamAccess" Relationship="ESLModel.FK_Tbl_UserExamAccess_Tbl_User" FromRole="Tbl_User" ToRole="Tbl_UserExamAccess" />
@@ -1446,6 +1592,42 @@
             </Principal>
             <Dependent Role="Tbl_Organization">
               <PropertyRef Name="Organization_TypeCodeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_Payment_Tbl_Code_StateCodeID">
+          <End Type="ESLModel.Tbl_Code" Role="Tbl_Code" Multiplicity="1" />
+          <End Type="ESLModel.Tbl_Payment" Role="Tbl_Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Code">
+              <PropertyRef Name="Code_ID" />
+            </Principal>
+            <Dependent Role="Tbl_Payment">
+              <PropertyRef Name="Payment_StateCodeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_Payment_Tbl_Code_TypeCodeID">
+          <End Type="ESLModel.Tbl_Code" Role="Tbl_Code" Multiplicity="1" />
+          <End Type="ESLModel.Tbl_Payment" Role="Tbl_Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Code">
+              <PropertyRef Name="Code_ID" />
+            </Principal>
+            <Dependent Role="Tbl_Payment">
+              <PropertyRef Name="Payment_TypeCodeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_Payment_Tbl_Code_WayCodeID">
+          <End Type="ESLModel.Tbl_Code" Role="Tbl_Code" Multiplicity="1" />
+          <End Type="ESLModel.Tbl_Payment" Role="Tbl_Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Code">
+              <PropertyRef Name="Code_ID" />
+            </Principal>
+            <Dependent Role="Tbl_Payment">
+              <PropertyRef Name="Payment_WayCodeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1566,6 +1748,18 @@
             </Principal>
             <Dependent Role="Tbl_Organization">
               <PropertyRef Name="Organization_DocumentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_Payment_Tbl_Document">
+          <End Type="ESLModel.Tbl_Document" Role="Tbl_Document" Multiplicity="0..1" />
+          <End Type="ESLModel.Tbl_Payment" Role="Tbl_Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Document">
+              <PropertyRef Name="Document_ID" />
+            </Principal>
+            <Dependent Role="Tbl_Payment">
+              <PropertyRef Name="Payment_DocumentID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1698,6 +1892,18 @@
             </Principal>
             <Dependent Role="Tbl_Region">
               <PropertyRef Name="Region_PageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_Payment_Tbl_User">
+          <End Type="ESLModel.Tbl_User" Role="Tbl_User" Multiplicity="1" />
+          <End Type="ESLModel.Tbl_Payment" Role="Tbl_Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_User">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="Tbl_Payment">
+              <PropertyRef Name="Payment_UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1968,6 +2174,23 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Payment">
+            <EntityTypeMapping TypeName="ESLModel.Tbl_Payment">
+              <MappingFragment StoreEntitySet="Tbl_Payment">
+                <ScalarProperty Name="Payment_IsDelete" ColumnName="Payment_IsDelete" />
+                <ScalarProperty Name="Payment_Date" ColumnName="Payment_Date" />
+                <ScalarProperty Name="Payment_DocumentID" ColumnName="Payment_DocumentID" />
+                <ScalarProperty Name="Payment_TrackingToken" ColumnName="Payment_TrackingToken" />
+                <ScalarProperty Name="Payment_Cost" ColumnName="Payment_Cost" />
+                <ScalarProperty Name="Payment_StateCodeID" ColumnName="Payment_StateCodeID" />
+                <ScalarProperty Name="Payment_WayCodeID" ColumnName="Payment_WayCodeID" />
+                <ScalarProperty Name="Payment_TypeCodeID" ColumnName="Payment_TypeCodeID" />
+                <ScalarProperty Name="Payment_UserID" ColumnName="Payment_UserID" />
+                <ScalarProperty Name="Payment_Guid" ColumnName="Payment_Guid" />
+                <ScalarProperty Name="Payment_ID" ColumnName="Payment_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Tbl_Question">
             <EntityTypeMapping TypeName="ESLModel.Tbl_Question">
               <MappingFragment StoreEntitySet="Tbl_Question">
@@ -2056,6 +2279,7 @@
               <MappingFragment StoreEntitySet="Tbl_User">
                 <ScalarProperty Name="User_IsDelete" ColumnName="User_IsDelete" />
                 <ScalarProperty Name="User_IsBan" ColumnName="User_IsBan" />
+                <ScalarProperty Name="User_Credit" ColumnName="User_Credit" />
                 <ScalarProperty Name="User_Mobile" ColumnName="User_Mobile" />
                 <ScalarProperty Name="User_IdentityNumber" ColumnName="User_IdentityNumber" />
                 <ScalarProperty Name="User_lastName" ColumnName="User_lastName" />

@@ -18,6 +18,11 @@ namespace ESL.Web
         Gender = 1,
         QuestionGroup = 4,
         QuestionType = 5,
-        QuestionOption = 6
+        QuestionOption = 6,
+        PaymentType = 8,
+        PaymentWay = 9,
+        PaymentState = 10,
+        DocumentType = 11,
+        UploadFolder = 12
     }
 }

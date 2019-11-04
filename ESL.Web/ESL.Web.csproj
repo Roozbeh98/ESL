@@ -238,6 +238,9 @@
     <Content Include="Areas\Dashboard\Views\UserExamInPerson\SetMark.cshtml" />
     <Content Include="Areas\Dashboard\Views\UserExamInPerson\SetSeatNumber.cshtml" />
     <Content Include="Areas\Dashboard\Views\UserExamInPerson\SetPresence.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Payment\Index.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Payment\Suspended.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Payment\Create.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -1268,6 +1271,10 @@
     <Content Include="Scripts\Plugins\DataTables-1.10.18\js\dataTables.semanticui.min.js" />
     <Content Include="Scripts\Plugins\DataTables-1.10.18\js\jquery.dataTables.js" />
     <Content Include="Scripts\Plugins\DataTables-1.10.18\js\jquery.dataTables.min.js" />
+    <Content Include="Scripts\Plugins\jQuery.Filepond\filepond-plugin-file-encode.esm.js" />
+    <Content Include="Scripts\Plugins\jQuery.Filepond\filepond-plugin-file-encode.esm.min.js" />
+    <Content Include="Scripts\Plugins\jQuery.Filepond\filepond-plugin-file-encode.js" />
+    <Content Include="Scripts\Plugins\jQuery.Filepond\filepond-plugin-file-encode.min.js" />
     <Content Include="Scripts\Plugins\jQuery.Select2\i18n\en.js" />
     <Content Include="Scripts\Plugins\jQuery.Select2\i18n\fa.js" />
     <Content Include="Scripts\Plugins\jQuery.Select2\select2.js" />
@@ -1297,8 +1304,10 @@
     <Compile Include="Areas\Dashboard\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\ExamInPersonController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\MessageController.cs" />
+    <Compile Include="Areas\Dashboard\Controllers\PaymentController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\SettingController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\ExamController.cs" />
+    <Compile Include="Areas\Dashboard\Controllers\UploadController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\UserController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\UserExamInPersonController.cs" />
     <Compile Include="Areas\Dashboard\DashboardAreaRegistration.cs" />
@@ -1308,6 +1317,8 @@
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_ExamInPersonEdit.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_ExamsInPerson.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_Login.cs" />
+    <Compile Include="Areas\Dashboard\Models\ViewModels\Model_Payment.cs" />
+    <Compile Include="Areas\Dashboard\Models\ViewModels\Model_PaymentCreate.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_QuestionCreate.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_Questions.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_Register.cs" />
@@ -1363,8 +1374,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Folder Include="App_Data\Payment\" />
     <Folder Include="Areas\Dashboard\Views\Message\" />
+    <Folder Include="Areas\Dashboard\Views\Upload\" />
     <Folder Include="Areas\Dashboard\Views\User\" />
     <Folder Include="Views\Errors\" />
   </ItemGroup>

@@ -40,6 +40,7 @@ namespace ESL.DataLayer.Domain
         public virtual DbSet<Tbl_NewsDocument> Tbl_NewsDocument { get; set; }
         public virtual DbSet<Tbl_Organization> Tbl_Organization { get; set; }
         public virtual DbSet<Tbl_Page> Tbl_Page { get; set; }
+        public virtual DbSet<Tbl_Payment> Tbl_Payment { get; set; }
         public virtual DbSet<Tbl_Question> Tbl_Question { get; set; }
         public virtual DbSet<Tbl_Region> Tbl_Region { get; set; }
         public virtual DbSet<Tbl_Response> Tbl_Response { get; set; }
