@@ -135,22 +135,23 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                 db.Tbl_Payment.Add(q);
 
-                if (Convert.ToBoolean(db.SaveChanges() > 0))
+                if (new Rep_Wallet().Set_Credit(new Rep_Wallet().Get_WalletGUIDWithUserGUID(model.User), model.Type, model.Cost, model.State))
                 {
-                    TempData["TosterState"] = "success";
-                    TempData["TosterType"] = TosterType.Maseage;
-                    TempData["TosterMassage"] = "عملیات با موفقیت انجام شده";
+                    if (Convert.ToBoolean(db.SaveChanges() > 0))
+                    {
+                        TempData["TosterState"] = "success";
+                        TempData["TosterType"] = TosterType.Maseage;
+                        TempData["TosterMassage"] = "عملیات با موفقیت انجام شده";
 
-                    return RedirectToAction("Index");
-                }
-                else
-                {
-                    TempData["TosterState"] = "error";
-                    TempData["TosterType"] = TosterType.Maseage;
-                    TempData["TosterMassage"] = "عملیات با موفقیت انجام نشده";
+                        return RedirectToAction("Index");
+                    }
+                };
 
-                    return View();
-                }
+                TempData["TosterState"] = "error";
+                TempData["TosterType"] = TosterType.Maseage;
+                TempData["TosterMassage"] = "عملیات با موفقیت انجام نشده";
+
+                return View();
             }
 
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

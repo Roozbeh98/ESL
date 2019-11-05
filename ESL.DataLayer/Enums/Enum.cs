@@ -25,4 +25,11 @@ namespace ESL.Web
         DocumentType = 11,
         UploadFolder = 12
     }
+
+    public enum WalletAction
+    {
+        Increase,
+        Decrease,
+        NoAction
+    }
 }
