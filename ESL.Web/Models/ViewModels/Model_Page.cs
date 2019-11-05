@@ -7,8 +7,10 @@ using System.Web.Mvc;
 
 namespace ESL.Web.Models.ViewModels
 {
-    public class Model_Documents
+    public class Model_Page
     {
+        [Display(Name = "کاور")]
+        public string cover { get; set; }
         [Display(Name = "عنوان")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
         public string titel { get; set; }

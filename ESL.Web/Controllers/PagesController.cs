@@ -6,10 +6,14 @@ using System.Web.Mvc;
 
 namespace ESL.Web.Controllers
 {
-    public class DocumentsController : Controller
+    public class PagesController : Controller
     {
-        // GET: Documents
-        public ActionResult Index(int id)
+        // GET: Pages
+        public ActionResult Index()
+        {
+            return View();
+        }
+        public ActionResult Create()
         {
             return View();
         }

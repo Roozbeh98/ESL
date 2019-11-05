@@ -1304,6 +1304,7 @@
     <Compile Include="Areas\Dashboard\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\ExamInPersonController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\MessageController.cs" />
+    <Compile Include="Areas\Dashboard\Controllers\PageController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\PaymentController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\SettingController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\ExamController.cs" />
@@ -1332,10 +1333,10 @@
     <Compile Include="Controllers\ContactUsController.cs" />
     <Compile Include="Controllers\ContractsController.cs" />
     <Compile Include="Controllers\CoursesController.cs" />
-    <Compile Include="Controllers\DocumentsController.cs" />
     <Compile Include="Controllers\ErrorsController.cs" />
     <Compile Include="Controllers\GalleryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PagesController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\SubCoursesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -1378,10 +1379,11 @@
   <ItemGroup>
     <Folder Include="App_Data\Payment\" />
     <Folder Include="Areas\Dashboard\Views\Message\" />
+    <Folder Include="Areas\Dashboard\Views\Page\" />
     <Folder Include="Areas\Dashboard\Views\Upload\" />
     <Folder Include="Areas\Dashboard\Views\User\" />
-    <Folder Include="Views\Documents\" />
     <Folder Include="Views\Errors\" />
+    <Folder Include="Views\Pages\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ESL.Common\ESL.Common.csproj">
