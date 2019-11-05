@@ -20,6 +20,8 @@ namespace ESL.Web.Models.ViewModels
         public string body { get; set; }
         [Display(Name = "پیوست")]
         public string [] attachment { get; set; }
+        [Display(Name = "برچسب")]
+        public string[] Tag { get; set; }
 
     }
 }
