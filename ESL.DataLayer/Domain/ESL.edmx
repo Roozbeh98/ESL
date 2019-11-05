@@ -335,6 +335,17 @@
           <Property Name="UEIP_ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="UEIP_IsDelete" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="Tbl_Wallet">
+          <Key>
+            <PropertyRef Name="Wallet_ID" />
+          </Key>
+          <Property Name="Wallet_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Wallet_Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Wallet_UserID" Type="int" Nullable="false" />
+          <Property Name="Wallet_Credit" Type="int" Nullable="false" />
+          <Property Name="Wallet_CreationDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="Wallet_ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
+        </EntityType>
         <Association Name="FK_Tbl_Code_Tbl_CodeGroup">
           <End Role="Tbl_CodeGroup" Type="Self.Tbl_CodeGroup" Multiplicity="1" />
           <End Role="Tbl_Code" Type="Self.Tbl_Code" Multiplicity="*" />
@@ -779,6 +790,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Tbl_Wallet_Tbl_User">
+          <End Role="Tbl_User" Type="Self.Tbl_User" Multiplicity="1" />
+          <End Role="Tbl_Wallet" Type="Self.Tbl_Wallet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_User">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="Tbl_Wallet">
+              <PropertyRef Name="Wallet_UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="ESLModelStoreContainer">
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Code" EntityType="Self.Tbl_Code" Schema="dbo" store:Type="Tables" />
@@ -806,6 +829,7 @@
           <EntitySet Name="Tbl_UserExam" EntityType="Self.Tbl_UserExam" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_UserExamAccess" EntityType="Self.Tbl_UserExamAccess" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_UserExamInPerson" EntityType="Self.Tbl_UserExamInPerson" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_Wallet" EntityType="Self.Tbl_Wallet" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Tbl_Code_Tbl_CodeGroup" Association="Self.FK_Tbl_Code_Tbl_CodeGroup">
             <End Role="Tbl_CodeGroup" EntitySet="Tbl_CodeGroup" />
             <End Role="Tbl_Code" EntitySet="Tbl_Code" />
@@ -954,6 +978,10 @@
             <End Role="Tbl_User" EntitySet="Tbl_User" />
             <End Role="Tbl_UserExamInPerson" EntitySet="Tbl_UserExamInPerson" />
           </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Wallet_Tbl_User" Association="Self.FK_Tbl_Wallet_Tbl_User">
+            <End Role="Tbl_User" EntitySet="Tbl_User" />
+            <End Role="Tbl_Wallet" EntitySet="Tbl_Wallet" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -986,6 +1014,7 @@
           <EntitySet Name="Tbl_UserExam" EntityType="ESLModel.Tbl_UserExam" />
           <EntitySet Name="Tbl_UserExamAccess" EntityType="ESLModel.Tbl_UserExamAccess" />
           <EntitySet Name="Tbl_UserExamInPerson" EntityType="ESLModel.Tbl_UserExamInPerson" />
+          <EntitySet Name="Tbl_Wallet" EntityType="ESLModel.Tbl_Wallet" />
           <AssociationSet Name="FK_Tbl_Code_Tbl_CodeGroup" Association="ESLModel.FK_Tbl_Code_Tbl_CodeGroup">
             <End Role="Tbl_CodeGroup" EntitySet="Tbl_CodeGroup" />
             <End Role="Tbl_Code" EntitySet="Tbl_Code" />
@@ -1133,6 +1162,10 @@
           <AssociationSet Name="FK_Tbl_UserExamInPerson_Tbl_User" Association="ESLModel.FK_Tbl_UserExamInPerson_Tbl_User">
             <End Role="Tbl_User" EntitySet="Tbl_User" />
             <End Role="Tbl_UserExamInPerson" EntitySet="Tbl_UserExamInPerson" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Wallet_Tbl_User" Association="ESLModel.FK_Tbl_Wallet_Tbl_User">
+            <End Role="Tbl_User" EntitySet="Tbl_User" />
+            <End Role="Tbl_Wallet" EntitySet="Tbl_Wallet" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="sysdiagram">
@@ -1492,6 +1525,7 @@
           <NavigationProperty Name="Tbl_UserExam" Relationship="ESLModel.FK_Tbl_UserExam_Tbl_User" FromRole="Tbl_User" ToRole="Tbl_UserExam" />
           <NavigationProperty Name="Tbl_UserExamAccess" Relationship="ESLModel.FK_Tbl_UserExamAccess_Tbl_User" FromRole="Tbl_User" ToRole="Tbl_UserExamAccess" />
           <NavigationProperty Name="Tbl_UserExamInPerson" Relationship="ESLModel.FK_Tbl_UserExamInPerson_Tbl_User" FromRole="Tbl_User" ToRole="Tbl_UserExamInPerson" />
+          <NavigationProperty Name="Tbl_Wallet" Relationship="ESLModel.FK_Tbl_Wallet_Tbl_User" FromRole="Tbl_User" ToRole="Tbl_Wallet" />
         </EntityType>
         <EntityType Name="Tbl_UserExam">
           <Key>
@@ -1538,6 +1572,18 @@
           <Property Name="UEIP_IsDelete" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Tbl_ExamInPerson" Relationship="ESLModel.FK_Tbl_UserExamInPerson_Tbl_ExamInPerson" FromRole="Tbl_UserExamInPerson" ToRole="Tbl_ExamInPerson" />
           <NavigationProperty Name="Tbl_User" Relationship="ESLModel.FK_Tbl_UserExamInPerson_Tbl_User" FromRole="Tbl_UserExamInPerson" ToRole="Tbl_User" />
+        </EntityType>
+        <EntityType Name="Tbl_Wallet">
+          <Key>
+            <PropertyRef Name="Wallet_ID" />
+          </Key>
+          <Property Name="Wallet_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Wallet_Guid" Type="Guid" Nullable="false" />
+          <Property Name="Wallet_UserID" Type="Int32" Nullable="false" />
+          <Property Name="Wallet_Credit" Type="Int32" Nullable="false" />
+          <Property Name="Wallet_CreationDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="Wallet_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
+          <NavigationProperty Name="Tbl_User" Relationship="ESLModel.FK_Tbl_Wallet_Tbl_User" FromRole="Tbl_Wallet" ToRole="Tbl_User" />
         </EntityType>
         <Association Name="FK_Tbl_Code_Tbl_CodeGroup">
           <End Type="ESLModel.Tbl_CodeGroup" Role="Tbl_CodeGroup" Multiplicity="1" />
@@ -1983,6 +2029,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Tbl_Wallet_Tbl_User">
+          <End Type="ESLModel.Tbl_User" Role="Tbl_User" Multiplicity="1" />
+          <End Type="ESLModel.Tbl_Wallet" Role="Tbl_Wallet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_User">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="Tbl_Wallet">
+              <PropertyRef Name="Wallet_UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2342,6 +2400,18 @@
                 <ScalarProperty Name="UEIP_UserID" ColumnName="UEIP_UserID" />
                 <ScalarProperty Name="UEIP_Guid" ColumnName="UEIP_Guid" />
                 <ScalarProperty Name="UEIP_ID" ColumnName="UEIP_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Wallet">
+            <EntityTypeMapping TypeName="ESLModel.Tbl_Wallet">
+              <MappingFragment StoreEntitySet="Tbl_Wallet">
+                <ScalarProperty Name="Wallet_ModifiedDate" ColumnName="Wallet_ModifiedDate" />
+                <ScalarProperty Name="Wallet_CreationDate" ColumnName="Wallet_CreationDate" />
+                <ScalarProperty Name="Wallet_Credit" ColumnName="Wallet_Credit" />
+                <ScalarProperty Name="Wallet_UserID" ColumnName="Wallet_UserID" />
+                <ScalarProperty Name="Wallet_Guid" ColumnName="Wallet_Guid" />
+                <ScalarProperty Name="Wallet_ID" ColumnName="Wallet_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

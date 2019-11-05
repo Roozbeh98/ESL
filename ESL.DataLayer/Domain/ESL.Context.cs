@@ -51,5 +51,6 @@ namespace ESL.DataLayer.Domain
         public virtual DbSet<Tbl_UserExam> Tbl_UserExam { get; set; }
         public virtual DbSet<Tbl_UserExamAccess> Tbl_UserExamAccess { get; set; }
         public virtual DbSet<Tbl_UserExamInPerson> Tbl_UserExamInPerson { get; set; }
+        public virtual DbSet<Tbl_Wallet> Tbl_Wallet { get; set; }
     }
 }

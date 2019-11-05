@@ -167,6 +167,9 @@
     <Compile Include="Domain\Tbl_UserExamInPerson.cs">
       <DependentUpon>ESL.tt</DependentUpon>
     </Compile>
+    <Compile Include="Domain\Tbl_Wallet.cs">
+      <DependentUpon>ESL.tt</DependentUpon>
+    </Compile>
     <Compile Include="Enums\Enum.cs" />
     <Compile Include="MetaData\MetaData_Menu.cs" />
     <Compile Include="Models\Model_AccountInfo.cs" />
