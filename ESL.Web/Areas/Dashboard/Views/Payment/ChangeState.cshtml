@@ -1,0 +1,32 @@
+﻿@model ESL.Web.Areas.Dashboard.Models.ViewModels.Model_PaymentChangeState
+@using ESL.Services.BaseRepository
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.ID)
+
+    <div class="modal-main">
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.State, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownListFor(model => model.State, Rep_CodeGroup.Get_AllCodesWithGroupWithGUID(CodeGroup.PaymentState), new { @class = "form-control Select2_Normal" })
+        </div>
+
+    </div>
+
+    <div style="margin-top:20px;">
+        <button class="btn btn-danger modal-btn-Dual pull-left" type="button" data-dismiss="modal">انصراف</button>
+        <button class="btn btn-success modal-btn-Dual pull-right " type="submit" name="btn-Delete">تایید</button>
+    </div>
+}
+
+
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+<script src="~/Scripts/Plugins/jQuery.Select2/select2.js"></script>
+<script src="~/Scripts/Plugins/jQuery.Select2/i18n/fa.js"></script>
+
+<script src="~/Scripts/MyScripts/Select2_Config.js"></script>

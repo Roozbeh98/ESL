@@ -24,6 +24,10 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
         public string Location { get; set; }
 
+        [Display(Name = "فعال سازی")]
+        [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
+        public bool Activeness { get; set; }
+
         [Display(Name = "ظرفیت")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
         public int Capacity { get; set; }

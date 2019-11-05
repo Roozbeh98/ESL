@@ -137,6 +137,12 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
             db.Tbl_User.Add(_User);
 
+            Tbl_Wallet _Wallet = new Tbl_Wallet();
+            _Wallet.Wallet_Guid = Guid.NewGuid();
+            _Wallet.Tbl_User = _User;
+
+            db.Tbl_Wallet.Add(_Wallet);
+
             if (Convert.ToBoolean(db.SaveChanges() > 0))
             {
 
