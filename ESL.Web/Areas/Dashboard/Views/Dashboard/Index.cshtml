@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "صفحه اصلی";
     Layout = "~/Areas/Dashboard/Views/Shared/_Master.cshtml";
 }
 
@@ -16,11 +16,487 @@
     </div>
 </div>
 
+@if (User.IsInRole("Admin"))
+{
+    <div class="row">
 
-<div class="panel panel-default">
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading" style="background-color: #fff; color: #337ab7; height:100px;">
 
-    <div class="panel-body">
-        <h1>joon</h1>
+                    <div class=" text-center pull-left">
+                        <div style="font-size: 2.5em;margin-top:10px; ">0%</div>
+
+                    </div>
+                    <div class=" text-right pull-right">
+                        <span class="glyphicon glyphicon-cloud" style="font-size: 3.5em;"></span>
+                        <div style="font-size: 1em; font-weight:bold; direction:ltr">100 MB</div>
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="panel-footer" style="background-color: #fff; color: #337ab7;">
+                    <div class="text-center" style="font-size: 1em; font-weight:bold; ">فضا در اختیار</div>
+                    <!--<div class="pull-right"><span class="glyphicon glyphicon-circle-arrow-right"></span></div>-->
+
+                    <div class="clearfix"></div>
+                </div>
+
+
+            </div>
+        </div>
+
+
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading" style="background-color: #fff; color: #337ab7;height:100px;">
+
+                    <div class=" text-center pull-left">
+                        <div style="font-size: 2.5em;margin-top:10px; ">0</div>
+
+                    </div>
+                    <div class=" text-right pull-right">
+                        <span class="glyphicon glyphicon-book" style="font-size: 3.5em;"></span>
+                        <div style="font-size: 1em; font-weight:bold; direction:ltr">10 Max</div>
+
+                    </div>
+
+
+
+                </div>
+
+
+                <div class="panel-footer" style="background-color: #fff; color: #337ab7;">
+                    <div class="text-center" style="font-size: 1em; font-weight:bold; ">آزمون های حضوری ماه جاری</div>
+                    <!--<div class="pull-right"><span class="glyphicon glyphicon-circle-arrow-right"></span></div>-->
+
+                    <div class="clearfix"></div>
+                </div>
+
+
+            </div>
+        </div>
+
+
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading" style="background-color: #fff; color: #337ab7;height:100px;">
+
+                    <div class=" text-center pull-left">
+                        <div style="font-size: 2.5em;margin-top:10px; ">0</div>
+
+                    </div>
+                    <div class=" text-right pull-right">
+                        <span class="glyphicon glyphicon-list" style="font-size: 3.5em;"></span>
+                        <div style="font-size: 1em; font-weight:bold; direction:ltr">نا محدود</div>
+
+                    </div>
+
+
+                </div>
+
+                <a href="#">
+                    <div class="panel-footer" style="background-color: #fff; color: #337ab7;">
+                        <div class="pull-left">صورت حساب های تایید نشده</div>
+                        <div class="pull-right"><span class="glyphicon glyphicon-circle-arrow-right"></span></div>
+
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+
+
+
+            </div>
+        </div>
+
     </div>
-</div>
 
+    <div class="row">
+
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading" style="background-color: #fff; color: #337ab7; height:100px;">
+
+                    <div class=" text-center pull-left">
+                        <div style="font-size: 2.5em;margin-top:10px; ">0%</div>
+
+                    </div>
+                    <div class=" text-right pull-right">
+                        <span class="glyphicon glyphicon-cloud" style="font-size: 3.5em;"></span>
+                        <div style="font-size: 1em; font-weight:bold; direction:ltr">100 MB</div>
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="panel-footer" style="background-color: #fff; color: #337ab7;">
+                    <div class="text-center" style="font-size: 1em; font-weight:bold; ">فضا سرور</div>
+                    <!--<div class="pull-right"><span class="glyphicon glyphicon-circle-arrow-right"></span></div>-->
+
+                    <div class="clearfix"></div>
+                </div>
+
+
+            </div>
+        </div>
+
+
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading" style="background-color: #fff; color: #337ab7;height:100px;">
+
+                    <div class=" text-center pull-left">
+                        <div style="font-size: 2.5em;margin-top:10px; ">0</div>
+
+                    </div>
+                    <div class=" text-right pull-right">
+                        <span class="glyphicon glyphicon-book" style="font-size: 3.5em;"></span>
+                        <div style="font-size: 1em; font-weight:bold; direction:ltr">10 Max</div>
+
+                    </div>
+
+
+
+                </div>
+
+
+                <div class="panel-footer" style="background-color: #fff; color: #337ab7;">
+                    <div class="text-center" style="font-size: 1em; font-weight:bold; ">آزمون های غیر حضوری ماه جاری</div>
+                    <!--<div class="pull-right"><span class="glyphicon glyphicon-circle-arrow-right"></span></div>-->
+
+                    <div class="clearfix"></div>
+                </div>
+
+
+            </div>
+        </div>
+
+
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading" style="background-color: #fff; color: #337ab7;height:100px;">
+
+                    <div class=" text-center pull-left">
+                        <div style="font-size: 2.5em;margin-top:10px; ">0</div>
+
+                    </div>
+                    <div class=" text-right pull-right">
+                        <span class="glyphicon glyphicon-picture" style="font-size: 3.5em;"></span>
+                        <div style="font-size: 1em; font-weight:bold; direction:ltr">نا محدود</div>
+
+                    </div>
+
+
+                </div>
+
+                <a href="#">
+                    <div class="panel-footer" style="background-color: #fff; color: #337ab7;">
+                        <div class="pull-left">دوره های آموزشی</div>
+                        <div class="pull-right"><span class="glyphicon glyphicon-circle-arrow-right"></span></div>
+
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+
+
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading" style="background-color: #fff; color: #337ab7; height:100px;">
+
+                    <div class=" text-center pull-left">
+                        <div style="font-size: 2.5em;margin-top:10px; ">0</div>
+
+                    </div>
+                    <div class=" text-right pull-right">
+                        <span class="glyphicon glyphicon-stats" style="font-size: 3.5em;"></span>
+                        <div style="font-size: 1em; font-weight:bold; direction:ltr">100 MB</div>
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="panel-footer" style="background-color: #fff; color: #337ab7;">
+                    <div class="text-center" style="font-size: 1em; font-weight:bold; ">آمار بازدید</div>
+                    <!--<div class="pull-right"><span class="glyphicon glyphicon-circle-arrow-right"></span></div>-->
+
+                    <div class="clearfix"></div>
+                </div>
+
+
+            </div>
+        </div>
+
+
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading" style="background-color: #fff; color: #337ab7;height:100px;">
+
+                    <div class=" text-center pull-left">
+                        <div style="font-size: 2.5em;margin-top:10px; ">0</div>
+
+                    </div>
+                    <div class=" text-right pull-right">
+                        <span class="glyphicon glyphicon-envelope" style="font-size: 3.5em;"></span>
+                        <div style="font-size: 1em; font-weight:bold; direction:ltr">10 Max</div>
+
+                    </div>
+
+
+
+                </div>
+
+
+                <div class="panel-footer" style="background-color: #fff; color: #337ab7;">
+                    <div class="text-center" style="font-size: 1em; font-weight:bold; ">تعداد پیام های خوانده نشده</div>
+                    <!--<div class="pull-right"><span class="glyphicon glyphicon-circle-arrow-right"></span></div>-->
+
+                    <div class="clearfix"></div>
+                </div>
+
+
+            </div>
+        </div>
+
+
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading" style="background-color: #fff; color: #337ab7;height:100px;">
+
+                    <div class=" text-center pull-left">
+                        <div style="font-size: 2.5em;margin-top:10px; ">0</div>
+
+                    </div>
+                    <div class=" text-right pull-right">
+                        <span class="glyphicon glyphicon-user" style="font-size: 3.5em;"></span>
+                        <div style="font-size: 1em; font-weight:bold; direction:ltr">نا محدود</div>
+
+                    </div>
+
+
+                </div>
+
+                <a href="#">
+                    <div class="panel-footer" style="background-color: #fff; color: #337ab7;">
+                        <div class="pull-left">کاربران</div>
+                        <div class="pull-right"><span class="glyphicon glyphicon-circle-arrow-right"></span></div>
+
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+
+
+
+            </div>
+        </div>
+
+    </div>
+}
+else
+{
+    <div class="row">
+
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading" style="background-color: #fff; color: #337ab7; height:100px;">
+
+                    <div class=" text-center pull-left">
+                        <div style="font-size: 2.5em;margin-top:10px; ">0%</div>
+
+                    </div>
+                    <div class=" text-right pull-right">
+                        <span class="glyphicon glyphicon-cloud" style="font-size: 3.5em;"></span>
+                        <div style="font-size: 1em; font-weight:bold; direction:ltr">100 MB</div>
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="panel-footer" style="background-color: #fff; color: #337ab7;">
+                    <div class="text-center" style="font-size: 1em; font-weight:bold; ">تعداد غیبت ها در ترم جاری</div>
+                    <!--<div class="pull-right"><span class="glyphicon glyphicon-circle-arrow-right"></span></div>-->
+
+                    <div class="clearfix"></div>
+                </div>
+
+
+            </div>
+        </div>
+
+
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading" style="background-color: #fff; color: #337ab7;height:100px;">
+
+                    <div class=" text-center pull-left">
+                        <div style="font-size: 2.5em;margin-top:10px; ">0</div>
+
+                    </div>
+                    <div class=" text-right pull-right">
+                        <span class="glyphicon glyphicon-book" style="font-size: 3.5em;"></span>
+                        <div style="font-size: 1em; font-weight:bold; direction:ltr">10 Max</div>
+
+                    </div>
+
+
+
+                </div>
+
+
+                <div class="panel-footer" style="background-color: #fff; color: #337ab7;">
+                    <div class="text-center" style="font-size: 1em; font-weight:bold; ">آزمون های حضوری ماه جاری</div>
+                    <!--<div class="pull-right"><span class="glyphicon glyphicon-circle-arrow-right"></span></div>-->
+
+                    <div class="clearfix"></div>
+                </div>
+
+
+            </div>
+        </div>
+
+
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading" style="background-color: #fff; color: #337ab7;height:100px;">
+
+                    <div class=" text-center pull-left">
+                        <div style="font-size: 2.5em;margin-top:10px; ">0</div>
+
+                    </div>
+                    <div class=" text-right pull-right">
+                        <span class="glyphicon glyphicon-list" style="font-size: 3.5em;"></span>
+                        <div style="font-size: 1em; font-weight:bold; direction:ltr">نا محدود</div>
+
+                    </div>
+
+
+                </div>
+
+                <a href="#">
+                    <div class="panel-footer" style="background-color: #fff; color: #337ab7;">
+                        <div class="pull-left">شارژ سریع</div>
+                        <div class="pull-right"><span class="glyphicon glyphicon-circle-arrow-right"></span></div>
+
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+
+
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading" style="background-color: #fff; color: #337ab7; height:100px;">
+
+                    <div class=" text-center pull-left">
+                        <div style="font-size: 2.5em;margin-top:10px; ">0%</div>
+
+                    </div>
+                    <div class=" text-right pull-right">
+                        <span class="glyphicon glyphicon-cloud" style="font-size: 3.5em;"></span>
+                        <div style="font-size: 1em; font-weight:bold; direction:ltr">100 MB</div>
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="panel-footer" style="background-color: #fff; color: #337ab7;">
+                    <div class="text-center" style="font-size: 1em; font-weight:bold; ">اعتبار</div>
+                    <!--<div class="pull-right"><span class="glyphicon glyphicon-circle-arrow-right"></span></div>-->
+
+                    <div class="clearfix"></div>
+                </div>
+
+
+            </div>
+        </div>
+
+
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading" style="background-color: #fff; color: #337ab7;height:100px;">
+
+                    <div class=" text-center pull-left">
+                        <div style="font-size: 2.5em;margin-top:10px; ">0</div>
+
+                    </div>
+                    <div class=" text-right pull-right">
+                        <span class="glyphicon glyphicon-book" style="font-size: 3.5em;"></span>
+                        <div style="font-size: 1em; font-weight:bold; direction:ltr">10 Max</div>
+
+                    </div>
+
+
+
+                </div>
+
+
+                <div class="panel-footer" style="background-color: #fff; color: #337ab7;">
+                    <div class="text-center" style="font-size: 1em; font-weight:bold; ">سطح</div>
+                    <!--<div class="pull-right"><span class="glyphicon glyphicon-circle-arrow-right"></span></div>-->
+
+                    <div class="clearfix"></div>
+                </div>
+
+
+            </div>
+        </div>
+
+
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading" style="background-color: #fff; color: #337ab7;height:100px;">
+
+                    <div class=" text-center pull-left">
+                        <div style="font-size: 2.5em;margin-top:10px; ">0</div>
+
+                    </div>
+                    <div class=" text-right pull-right">
+                        <span class="glyphicon glyphicon-picture" style="font-size: 3.5em;"></span>
+                        <div style="font-size: 1em; font-weight:bold; direction:ltr">نا محدود</div>
+
+                    </div>
+
+
+                </div>
+
+                <a href="#">
+                    <div class="panel-footer" style="background-color: #fff; color: #337ab7;">
+                        <div class="pull-left">دوره های آموزشی</div>
+                        <div class="pull-right"><span class="glyphicon glyphicon-circle-arrow-right"></span></div>
+
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+
+
+
+            </div>
+        </div>
+
+    </div>
+}
