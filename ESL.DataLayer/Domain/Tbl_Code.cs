@@ -17,15 +17,16 @@ namespace ESL.DataLayer.Domain
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Tbl_Code()
         {
-            this.Tbl_Contract = new HashSet<Tbl_Contract>();
             this.Tbl_Document = new HashSet<Tbl_Document>();
-            this.Tbl_NewsDocument = new HashSet<Tbl_NewsDocument>();
+            this.Tbl_ExamRemotely = new HashSet<Tbl_ExamRemotely>();
             this.Tbl_Organization = new HashSet<Tbl_Organization>();
+            this.Tbl_PageDocuments = new HashSet<Tbl_PageDocuments>();
             this.Tbl_Payment = new HashSet<Tbl_Payment>();
             this.Tbl_Payment1 = new HashSet<Tbl_Payment>();
             this.Tbl_Payment2 = new HashSet<Tbl_Payment>();
             this.Tbl_Question = new HashSet<Tbl_Question>();
             this.Tbl_Question1 = new HashSet<Tbl_Question>();
+            this.Tbl_Region = new HashSet<Tbl_Region>();
             this.Tbl_Response = new HashSet<Tbl_Response>();
         }
     
@@ -37,13 +38,13 @@ namespace ESL.DataLayer.Domain
     
         public virtual Tbl_CodeGroup Tbl_CodeGroup { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tbl_Contract> Tbl_Contract { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_Document> Tbl_Document { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tbl_NewsDocument> Tbl_NewsDocument { get; set; }
+        public virtual ICollection<Tbl_ExamRemotely> Tbl_ExamRemotely { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_Organization> Tbl_Organization { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tbl_PageDocuments> Tbl_PageDocuments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_Payment> Tbl_Payment { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -54,6 +55,8 @@ namespace ESL.DataLayer.Domain
         public virtual ICollection<Tbl_Question> Tbl_Question { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_Question> Tbl_Question1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tbl_Region> Tbl_Region { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_Response> Tbl_Response { get; set; }
     }

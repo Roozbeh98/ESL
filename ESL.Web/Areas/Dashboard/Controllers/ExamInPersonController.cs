@@ -1,4 +1,5 @@
-﻿using ESL.DataLayer.Domain;
+﻿using ESL.Common.Plugins;
+using ESL.DataLayer.Domain;
 using ESL.Web.Areas.Dashboard.Models.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -20,13 +21,15 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             var q = db.Tbl_ExamInPerson.Where(x => x.EIP_IsDelete == false).Select(x => new Model_ExamsInPerson
             {
                 ID = x.EIP_ID,
-                Title = x.EIP_Title,
+                Exam = x.Tbl_SubExam.SE_Title,
+                Description = x.EIP_Description,
                 Cost = x.EIP_Cost,
                 Location = x.EIP_Location,
                 Activeness = x.EIP_IsActive,
                 Capacity = x.EIP_Capacity,
                 TotalMark = x.EIP_TotalMark,
                 PassMark = x.EIP_PassMark,
+                Date = x.EIP_Date,
                 CreationDate = x.EIP_CreationDate
 
             }).ToList();
@@ -48,14 +51,16 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                 Tbl_ExamInPerson q = new Tbl_ExamInPerson
                 {
                     EIP_Guid = Guid.NewGuid(),
-                    EIP_Title = model.Title,
+                    EIP_SEID = db.Tbl_SubExam.Where(x => x.SE_Guid.ToString() == model.SubExam).SingleOrDefault().SE_ID,
+                    EIP_Description = model.Description,
                     EIP_Cost = model.Cost,
                     EIP_Location = model.Location,
                     EIP_Capacity = model.Capacity,
                     EIP_TotalMark = model.TotalMark,
                     EIP_PassMark = model.PassMark,
+                    EIP_Date = DateConverter.ToGeorgianDateTime(model.Date),
                     EIP_CreationDate = DateTime.Now,
-                    EIP_ModifiedDate = DateTime.Now
+                    EIP_ModifiedDate = DateTime.Now,
                 };
 
                 db.Tbl_ExamInPerson.Add(q);
@@ -90,12 +95,15 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                 Model_ExamInPersonEdit model = new Model_ExamInPersonEdit()
                 {
                     ID = q.EIP_ID,
-                    Title = q.EIP_Title,
+                    Exam = q.Tbl_SubExam.Tbl_Exam.Exam_Guid.ToString(),
+                    SubExam = q.Tbl_SubExam.SE_Guid.ToString(),
+                    Description = q.EIP_Description,
                     Cost = q.EIP_Cost,
                     Location = q.EIP_Location,
                     Capacity = q.EIP_Capacity,
                     TotalMark = q.EIP_TotalMark,
-                    PassMark = q.EIP_PassMark
+                    PassMark = q.EIP_PassMark,
+                    Date = q.EIP_Date
                 };
 
                 return PartialView(model);
@@ -114,7 +122,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                 if (q != null)
                 {
-                    q.EIP_Title = model.Title;
+                    q.EIP_Description = model.Description;
                     q.EIP_Cost = model.Cost;
                     q.EIP_Capacity = model.Capacity;
                     q.EIP_TotalMark = model.TotalMark;
@@ -161,7 +169,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                 if (q != null)
                 {
                     model.ID = id.Value;
-                    model.Name = q.EIP_Title;
+                    model.Name = q.EIP_Description;
                     model.Description = "آیا از حذف آزمون مورد نظر اطمینان دارید ؟";
 
                     return PartialView(model);
@@ -287,6 +295,31 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             }
 
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        }
+
+        public JsonResult Get_ExamList(string searchTerm)
+        {
+            var q = db.Tbl_Exam.ToList();
+
+            if (searchTerm != null)
+            {
+                q = db.Tbl_Exam.Where(a => a.Exam_Title.Contains(searchTerm)).ToList();
+            }
+
+            var md = q.Select(a => new { id = a.Exam_ID, text = a.Exam_Title });
+
+            return Json(md, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult Get_SubExamList(string ExamID)
+        {
+            var q = db.Tbl_Exam.Where(a => a.Exam_Guid.ToString() == ExamID).SingleOrDefault();
+
+            var t = db.Tbl_SubExam.Where(a => a.Tbl_Exam.Exam_ID == q.Exam_ID).ToList();
+            var md = t.Select(a => new { id = a.SE_Guid, text = a.SE_Title });
+
+            return Json(md, JsonRequestBehavior.AllowGet);
         }
 
         protected override void Dispose(bool disposing)

@@ -12,19 +12,16 @@ namespace ESL.DataLayer.Domain
     using System;
     using System.Collections.Generic;
     
-    public partial class Tbl_Contract
+    public partial class Tbl_PageDocuments
     {
-        public int Contract_ID { get; set; }
-        public System.Guid Contract_Guid { get; set; }
-        public int Contract_DocumentID { get; set; }
-        public int Contract_TypeCodeID { get; set; }
-        public string Contract_Title { get; set; }
-        public string Contract_Description { get; set; }
-        public System.DateTime Contract_CreationDate { get; set; }
-        public System.DateTime Contract_ModifiedDate { get; set; }
-        public bool Contract_IsDelete { get; set; }
+        public int PD_ID { get; set; }
+        public System.Guid PD_Guid { get; set; }
+        public int PD_TypeCodeID { get; set; }
+        public int PD_DocumentID { get; set; }
+        public int PD_PageID { get; set; }
     
         public virtual Tbl_Code Tbl_Code { get; set; }
         public virtual Tbl_Document Tbl_Document { get; set; }
+        public virtual Tbl_Page Tbl_Page { get; set; }
     }
 }

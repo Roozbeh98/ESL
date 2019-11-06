@@ -12,26 +12,24 @@ namespace ESL.DataLayer.Domain
     using System;
     using System.Collections.Generic;
     
-    public partial class Tbl_Course
+    public partial class Tbl_SubExam
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Tbl_Course()
+        public Tbl_SubExam()
         {
-            this.Tbl_SubCourse = new HashSet<Tbl_SubCourse>();
+            this.Tbl_ExamInPerson = new HashSet<Tbl_ExamInPerson>();
         }
     
-        public int Course_ID { get; set; }
-        public System.Guid Course_Guid { get; set; }
-        public int Course_DocumentID { get; set; }
-        public string Course_Title { get; set; }
-        public string Course_Abstract { get; set; }
-        public string Course_Description { get; set; }
-        public System.DateTime Course_CreationDate { get; set; }
-        public System.DateTime Course_ModifiedDate { get; set; }
-        public bool Course_IsDelete { get; set; }
+        public int SE_ID { get; set; }
+        public System.Guid SE_Guid { get; set; }
+        public int SE_ExamID { get; set; }
+        public string SE_Title { get; set; }
+        public System.DateTime SE_CreationDate { get; set; }
+        public System.DateTime SE_ModifiedDate { get; set; }
+        public bool SE_IsDelete { get; set; }
     
-        public virtual Tbl_Document Tbl_Document { get; set; }
+        public virtual Tbl_Exam Tbl_Exam { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tbl_SubCourse> Tbl_SubCourse { get; set; }
+        public virtual ICollection<Tbl_ExamInPerson> Tbl_ExamInPerson { get; set; }
     }
 }

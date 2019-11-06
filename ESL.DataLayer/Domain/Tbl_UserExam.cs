@@ -17,12 +17,12 @@ namespace ESL.DataLayer.Domain
         public int UE_ID { get; set; }
         public System.Guid UE_Guid { get; set; }
         public int UE_UserID { get; set; }
-        public int UE_ExamID { get; set; }
+        public int UE_ERID { get; set; }
         public int UE_Mark { get; set; }
         public System.DateTime UE_Date { get; set; }
         public bool UE_IsDelete { get; set; }
     
-        public virtual Tbl_Exam Tbl_Exam { get; set; }
+        public virtual Tbl_ExamRemotely Tbl_ExamRemotely { get; set; }
         public virtual Tbl_User Tbl_User { get; set; }
     }
 }

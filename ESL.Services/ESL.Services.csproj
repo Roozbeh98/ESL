@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseRepository\Rep_CodeGroup.cs" />
+    <Compile Include="BaseRepository\Rep_Exam.cs" />
     <Compile Include="BaseRepository\Rep_User.cs" />
     <Compile Include="BaseRepository\Rep_UserRole.cs" />
     <Compile Include="BaseRepository\Rep_Wallet.cs" />

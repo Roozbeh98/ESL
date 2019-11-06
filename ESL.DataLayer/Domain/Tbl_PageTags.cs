@@ -12,16 +12,14 @@ namespace ESL.DataLayer.Domain
     using System;
     using System.Collections.Generic;
     
-    public partial class Tbl_NewsDocument
+    public partial class Tbl_PageTags
     {
-        public int ND_ID { get; set; }
-        public System.Guid ND_Guid { get; set; }
-        public int ND_NewsID { get; set; }
-        public int ND_DocumentID { get; set; }
-        public int ND_TypeCodeID { get; set; }
+        public int PT_ID { get; set; }
+        public System.Guid PT_Guid { get; set; }
+        public int PT_TagID { get; set; }
+        public int PT_PageID { get; set; }
     
-        public virtual Tbl_Code Tbl_Code { get; set; }
-        public virtual Tbl_Document Tbl_Document { get; set; }
-        public virtual Tbl_News Tbl_News { get; set; }
+        public virtual Tbl_Page Tbl_Page { get; set; }
+        public virtual Tbl_Tag Tbl_Tag { get; set; }
     }
 }

@@ -20,6 +20,7 @@ namespace ESL.DataLayer.Domain
         public int GD_DocumentID { get; set; }
         public int GD_Title { get; set; }
         public System.DateTime GD_CreationDate { get; set; }
+        public bool GD_IsCover { get; set; }
     
         public virtual Tbl_Document Tbl_Document { get; set; }
         public virtual Tbl_Gallery Tbl_Gallery { get; set; }

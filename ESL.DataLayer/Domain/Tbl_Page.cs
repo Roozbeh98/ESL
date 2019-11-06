@@ -17,14 +17,28 @@ namespace ESL.DataLayer.Domain
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Tbl_Page()
         {
-            this.Tbl_Region = new HashSet<Tbl_Region>();
+            this.Tbl_PageDocuments = new HashSet<Tbl_PageDocuments>();
+            this.Tbl_PageTags = new HashSet<Tbl_PageTags>();
         }
     
         public int Page_ID { get; set; }
         public System.Guid Page_Guid { get; set; }
-        public string Page_Name { get; set; }
+        public int Page_UserID { get; set; }
+        public int Page_RegionID { get; set; }
+        public int Page_PCID { get; set; }
+        public string Page_Titel { get; set; }
+        public string Page_Description { get; set; }
+        public int Page_IsDelete { get; set; }
+        public System.DateTime Page_CreateDate { get; set; }
+        public System.DateTime Page_Modify { get; set; }
+        public string Page_Abstract { get; set; }
     
+        public virtual Tbl_PageCategory Tbl_PageCategory { get; set; }
+        public virtual Tbl_Region Tbl_Region { get; set; }
+        public virtual Tbl_User Tbl_User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tbl_Region> Tbl_Region { get; set; }
+        public virtual ICollection<Tbl_PageDocuments> Tbl_PageDocuments { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tbl_PageTags> Tbl_PageTags { get; set; }
     }
 }

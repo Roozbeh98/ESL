@@ -12,22 +12,20 @@ namespace ESL.DataLayer.Domain
     using System;
     using System.Collections.Generic;
     
-    public partial class Tbl_Gallery
+    public partial class Tbl_PageCategory
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Tbl_Gallery()
+        public Tbl_PageCategory()
         {
-            this.Tbl_GalleryDocument = new HashSet<Tbl_GalleryDocument>();
+            this.Tbl_Page = new HashSet<Tbl_Page>();
         }
     
-        public int Gallery_ID { get; set; }
-        public System.Guid Gallery_Guid { get; set; }
-        public string Gallery_Title { get; set; }
-        public System.DateTime Gallery_CreationDate { get; set; }
-        public bool Gallery_HasAlbum { get; set; }
-        public bool Gallery_IsDelete { get; set; }
+        public int PC_ID { get; set; }
+        public System.Guid PC_Guid { get; set; }
+        public string PC_Name { get; set; }
+        public string PC_Display { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tbl_GalleryDocument> Tbl_GalleryDocument { get; set; }
+        public virtual ICollection<Tbl_Page> Tbl_Page { get; set; }
     }
 }

@@ -14,16 +14,20 @@ namespace ESL.DataLayer.Domain
     
     public partial class Tbl_Region
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Tbl_Region()
+        {
+            this.Tbl_Page = new HashSet<Tbl_Page>();
+        }
+    
         public int Region_ID { get; set; }
         public System.Guid Region_Guid { get; set; }
-        public int Region_PageID { get; set; }
-        public Nullable<int> Region_DocumentID { get; set; }
         public string Region_Name { get; set; }
-        public string Region_Title { get; set; }
-        public string Region_Description { get; set; }
-        public bool Region_HasDocument { get; set; }
+        public string Region_Display { get; set; }
+        public int Region_CodeID { get; set; }
     
-        public virtual Tbl_Document Tbl_Document { get; set; }
-        public virtual Tbl_Page Tbl_Page { get; set; }
+        public virtual Tbl_Code Tbl_Code { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tbl_Page> Tbl_Page { get; set; }
     }
 }

@@ -12,30 +12,32 @@ namespace ESL.DataLayer.Domain
     using System;
     using System.Collections.Generic;
     
-    public partial class Tbl_Document
+    public partial class Tbl_ExamRemotely
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Tbl_Document()
+        public Tbl_ExamRemotely()
         {
-            this.Tbl_GalleryDocument = new HashSet<Tbl_GalleryDocument>();
-            this.Tbl_Organization = new HashSet<Tbl_Organization>();
-            this.Tbl_PageDocuments = new HashSet<Tbl_PageDocuments>();
-            this.Tbl_Payment = new HashSet<Tbl_Payment>();
+            this.Tbl_Question = new HashSet<Tbl_Question>();
+            this.Tbl_UserExam = new HashSet<Tbl_UserExam>();
+            this.Tbl_UserExamAccess = new HashSet<Tbl_UserExamAccess>();
         }
     
-        public int Document_ID { get; set; }
-        public System.Guid Document_Guid { get; set; }
-        public int Document_TypeCodeID { get; set; }
-        public string Document_Path { get; set; }
+        public int ER_ID { get; set; }
+        public System.Guid ER_Guid { get; set; }
+        public int ER_GroupCodeID { get; set; }
+        public string ER_Title { get; set; }
+        public int ER_Mark { get; set; }
+        public int ER_PassMark { get; set; }
+        public System.DateTime ER_CreationDate { get; set; }
+        public System.DateTime ER_ModifiedDate { get; set; }
+        public bool ER_IsDelete { get; set; }
     
         public virtual Tbl_Code Tbl_Code { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tbl_GalleryDocument> Tbl_GalleryDocument { get; set; }
+        public virtual ICollection<Tbl_Question> Tbl_Question { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tbl_Organization> Tbl_Organization { get; set; }
+        public virtual ICollection<Tbl_UserExam> Tbl_UserExam { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tbl_PageDocuments> Tbl_PageDocuments { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tbl_Payment> Tbl_Payment { get; set; }
+        public virtual ICollection<Tbl_UserExamAccess> Tbl_UserExamAccess { get; set; }
     }
 }

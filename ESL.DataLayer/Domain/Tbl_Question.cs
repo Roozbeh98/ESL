@@ -22,7 +22,7 @@ namespace ESL.DataLayer.Domain
     
         public int Question_ID { get; set; }
         public System.Guid Question_Guid { get; set; }
-        public int Question_ExamID { get; set; }
+        public int Question_ERID { get; set; }
         public int Question_GroupCodeID { get; set; }
         public Nullable<int> Question_ResponseID { get; set; }
         public int Question_TypeCodeID { get; set; }
@@ -35,7 +35,7 @@ namespace ESL.DataLayer.Domain
     
         public virtual Tbl_Code Tbl_Code { get; set; }
         public virtual Tbl_Code Tbl_Code1 { get; set; }
-        public virtual Tbl_Exam Tbl_Exam { get; set; }
+        public virtual Tbl_ExamRemotely Tbl_ExamRemotely { get; set; }
         public virtual Tbl_Response Tbl_Response { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_Response> Tbl_Response1 { get; set; }

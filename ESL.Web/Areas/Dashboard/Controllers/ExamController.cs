@@ -20,13 +20,13 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
         public ActionResult Index()
         {
-            var examList = db.Tbl_Exam.Where(x => x.Exam_IsDelete == false).Select(x => new Model_Exam
+            var examList = db.Tbl_ExamRemotely.Where(x => x.ER_IsDelete == false).Select(x => new Model_Exam
             {
-                ID = x.Exam_ID,
-                Title = x.Exam_Title,
-                Mark = x.Exam_Mark,
-                PassMark = x.Exam_PassMark,
-                CreationDate = x.Exam_CreationDate
+                ID = x.ER_ID,
+                Title = x.ER_Title,
+                Mark = x.ER_Mark,
+                PassMark = x.ER_PassMark,
+                CreationDate = x.ER_CreationDate
 
             }).ToList();
 
@@ -39,14 +39,14 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
             if (id != null)
             {
-                var exam = db.Tbl_Exam.Where(x => x.Exam_ID == id).FirstOrDefault();
+                var exam = db.Tbl_ExamRemotely.Where(x => x.ER_ID == id).FirstOrDefault();
 
                 if (exam != null)
                 {
-                    model.ID = exam.Exam_ID;
-                    model.Title = exam.Exam_Title;
-                    model.Mark = exam.Exam_Mark;
-                    model.PassMark = exam.Exam_PassMark;
+                    model.ID = exam.ER_ID;
+                    model.Title = exam.ER_Title;
+                    model.Mark = exam.ER_Mark;
+                    model.PassMark = exam.ER_PassMark;
                 }
             }
 
@@ -59,18 +59,18 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         {
             if (ModelState.IsValid)
             {
-                Tbl_Exam exam = new Tbl_Exam();
+                Tbl_ExamRemotely exam = new Tbl_ExamRemotely();
 
                 if (model.ID != null)
                 {
-                    exam = db.Tbl_Exam.Where(x => x.Exam_ID == model.ID).FirstOrDefault();
+                    exam = db.Tbl_ExamRemotely.Where(x => x.ER_ID == model.ID).FirstOrDefault();
 
                     if (exam != null)
                     {
-                        exam.Exam_Title = model.Title;
-                        exam.Exam_Mark = model.Mark;
-                        exam.Exam_PassMark = model.PassMark;
-                        exam.Exam_ModifiedDate = DateTime.Now;
+                        exam.ER_Title = model.Title;
+                        exam.ER_Mark = model.Mark;
+                        exam.ER_PassMark = model.PassMark;
+                        exam.ER_ModifiedDate = DateTime.Now;
 
                         db.Entry(exam).State = EntityState.Modified;
                     }
@@ -81,12 +81,12 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                 }
                 else
                 {
-                    exam.Exam_Title = model.Title;
-                    exam.Exam_Mark = model.Mark;
-                    exam.Exam_PassMark = model.PassMark;
-                    exam.Exam_CreationDate = exam.Exam_ModifiedDate = DateTime.Now;
+                    exam.ER_Title = model.Title;
+                    exam.ER_Mark = model.Mark;
+                    exam.ER_PassMark = model.PassMark;
+                    exam.ER_CreationDate = exam.ER_ModifiedDate = DateTime.Now;
 
-                    db.Tbl_Exam.Add(exam);
+                    db.Tbl_ExamRemotely.Add(exam);
                 }
 
                 if (Convert.ToBoolean(db.SaveChanges() > 0))
@@ -113,12 +113,12 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             {
                 Model_MessageModal model = new Model_MessageModal();
 
-                var exam = db.Tbl_Exam.Where(x => x.Exam_ID == id).FirstOrDefault();
+                var exam = db.Tbl_ExamRemotely.Where(x => x.ER_ID == id).FirstOrDefault();
 
                 if (exam != null)
                 {
                     model.ID = id.Value;
-                    model.Name = exam.Exam_Title;
+                    model.Name = exam.ER_Title;
                     model.Description = "آیا از حذف آزمون مورد نظر اطمینان دارید ؟";
 
                     return PartialView(model);
@@ -138,11 +138,11 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         {
             if (ModelState.IsValid)
             {
-                var exam = db.Tbl_Exam.Where(x => x.Exam_ID == model.ID).FirstOrDefault();
+                var exam = db.Tbl_ExamRemotely.Where(x => x.ER_ID == model.ID).FirstOrDefault();
 
                 if (exam != null)
                 {
-                    exam.Exam_IsDelete = true;
+                    exam.ER_IsDelete = true;
 
                     db.Entry(exam).State = EntityState.Modified;
 
@@ -183,7 +183,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             Model_Questions model = new Model_Questions();
             model.ExamID = id.Value;
 
-            var q = db.Tbl_Question.Where(x => x.Tbl_Exam.Exam_ID == id).ToList();
+            var q = db.Tbl_Question.Where(x => x.Tbl_ExamRemotely.ER_ID == id).ToList();
 
             if (q.Count > 0)
             {
@@ -242,7 +242,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             if (ModelState.IsValid)
             {
                 Tbl_Question q = new Tbl_Question();
-                q.Question_ExamID = model.ExamID;
+                q.Question_ERID = model.ExamID;
                 q.Question_Title = model.Title;
                 q.Question_TypeCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Type);
                 q.Question_GroupCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Group);
@@ -357,7 +357,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                 }
                 else
                 {
-                    q.Question_ExamID = model.ExamID;
+                    q.Question_ERID = model.ExamID;
                     q.Question_Title = model.Title;
                     q.Question_TypeCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Type);
                     q.Question_GroupCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Group);

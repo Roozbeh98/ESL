@@ -1,155 +1,93 @@
 ﻿
-
 <ul class="navbar nav aside-panel">
     <li>
-        <!--<div style="width: 90%; height: 90%;  border: 2px solid #6BA4D6 ;border-radius: 10%; margin: auto; margin-top: 10px; ">-->
-        @*<img src="~/Content/Images/logo.png" />*@
         <img src="~/Content/Images/abstract-user-flat-3.png" alt="Logo" class="img-responsive img-rounded img-logo" style="height:200px;">
         <!--</div>-->
-        <a href="@Url.Action("Dashboard","Dashboard")">
+        <a href="@Url.Action("index","Dashboard" , new {  aria="Dashboard"})">
             <i class="glyphicon glyphicon-dashboard  "></i>
             داشبورد
-
-        </a>
-    </li>
-
-    <li>
-        <a href="@Url.Action("Search","Home")">
-            <i class="glyphicon glyphicon-book"></i>
-            جستجو کتاب
-
         </a>
     </li>
 
 
-    <li data-toggle="collapse" data-target="#sub-menu-file">
+    <li data-toggle="collapse" data-target="#sub-menu-message">
 
         <a href="#">
             <i class="glyphicon glyphicon-book"></i>
-            مدیرت فایل
-            <i class="glyphicon glyphicon-chevron-right pull-right gly-rotate-90"></i>
-
-        </a>
-
-        <ul class="collapse nav aside-sub-panel " id="sub-menu-file">
-            <li>
-                <a href="#">
-                    <i class="glyphicon glyphicon-book"></i>
-                    فایل های شخصی
-                </a>
-            </li>
-
-            <li>
-                <a href="#">
-                    <i class="glyphicon glyphicon-book"></i>
-                    فایل عمومی
-                </a>
-            </li>
-
-
-        </ul>
-
-
-    <li data-toggle="collapse" data-target="#sub-menu-request">
-
-        <a href="#">
-            <i class="glyphicon glyphicon-book"></i>
-            درخواست ها
-            <i class="glyphicon glyphicon-chevron-right pull-right gly-rotate-90"></i>
-
-        </a>
-
-        <ul class="collapse nav aside-sub-panel " id="sub-menu-request">
-            <li>
-                <a href="@Url.Action("RequestTypeSelector","Dashboard")">
-                    <i class="glyphicon glyphicon-book"></i>
-                    بارگزاری
-                </a>
-            </li>
-
-            <li>
-                <a href="#">
-                    <i class="glyphicon glyphicon-book"></i>
-                    لیست درخواست ها
-                </a>
-            </li>
-
-
-        </ul>
-
-
-    </li>
-
-
-    <li data-toggle="collapse" data-target="#sub-menu-User">
-
-        <a href="#">
-            <i class="glyphicon glyphicon-book"></i>
-            مدیرت کاربران
+            پیام ها
             <i class="glyphicon glyphicon-chevron-right pull-right"></i>
-
         </a>
 
-        <ul class="collapse nav aside-sub-panel " id="sub-menu-User">
+        <ul class="collapse nav aside-sub-panel" id="sub-menu-message">
+
             <li>
-                <a href="@Url.Action("UsersList","User")">
+                <a href="@Url.Action("Index", "Exam")">
                     <i class="glyphicon glyphicon-book"></i>
-                    لیست کاربران
+                    ارسال پیام
+                </a>
+            </li>
+            <li>
+                <a href="@Url.Action("Index", "Exam")">
+                    <i class="glyphicon glyphicon-book"></i>
+                    ارسال پیام گروهی
                 </a>
             </li>
 
             <li>
-                <a href="@Url.Action("UsersRegisterNotCompleteList","User")">
+                <a href="@Url.Action("Index", "ExamInPerson")">
                     <i class="glyphicon glyphicon-book"></i>
-                    لیست عضویت های ناتمام
+                    لیست پیام های دریافتی
                 </a>
             </li>
-
             <li>
-                <a href="@Url.Action("RegisterCodeBuilder","User")">
+                <a href="@Url.Action("Index", "ExamInPerson")">
                     <i class="glyphicon glyphicon-book"></i>
-                    کاربر جدید
+                    لیست پیام های ارسالی
                 </a>
             </li>
 
         </ul>
-
 
     </li>
 
-    <li data-toggle="collapse" data-target="#sub-menu-book">
+    <li data-toggle="collapse" data-target="#sub-menu-pay">
 
-        <a href="#">
+        <a href="javascript:void(0)">
             <i class="glyphicon glyphicon-book"></i>
-            مدیرت کتاب ها
+            مالی
             <i class="glyphicon glyphicon-chevron-right pull-right"></i>
-
         </a>
 
-        <ul class="collapse nav aside-sub-panel " id="sub-menu-book">
+        <ul class="collapse nav aside-sub-panel" id="sub-menu-pay">
+
             <li>
-                <a href="@Url.Action("BookList","Book")">
+                <a href="@Url.Action("Index", "Payment")">
                     <i class="glyphicon glyphicon-book"></i>
-                    لیست کتاب ها
+                    لیست پرداختی ها
                 </a>
             </li>
 
             <li>
-                <a href="@Url.Action("BookTypeSelector","Book")">
+                <a href="@Url.Action("Suspended", "Payment")">
                     <i class="glyphicon glyphicon-book"></i>
-                    کتاب جدید
+                    لیست پرداختی ها تایید نشده
                 </a>
             </li>
 
+            <li>
+                <a href="@Url.Action("Index", "Wallet")">
+                    <i class="glyphicon glyphicon-book"></i>
+                    اعتبار کاربران
+                </a>
+            </li>
 
         </ul>
-
 
     </li>
 
     <li data-toggle="collapse" data-target="#sub-menu-exam">
 
-        <a href="#">
+        <a href="javascript:void(0)">
             <i class="glyphicon glyphicon-book"></i>
             مدیرت آزمون ها
             <i class="glyphicon glyphicon-chevron-right pull-right"></i>
@@ -176,7 +114,13 @@
     </li>
 
 
+    <li>
+        <a href="@Url.Action("Setting","Setting")">
+            <i class="glyphicon glyphicon-book"></i>
+            تنظیمات سامانه
+        </a>
 
+    </li>
 
 
 </ul>

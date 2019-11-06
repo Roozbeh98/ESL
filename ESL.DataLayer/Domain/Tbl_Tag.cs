@@ -12,27 +12,19 @@ namespace ESL.DataLayer.Domain
     using System;
     using System.Collections.Generic;
     
-    public partial class Tbl_News
+    public partial class Tbl_Tag
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Tbl_News()
+        public Tbl_Tag()
         {
-            this.Tbl_NewsDocument = new HashSet<Tbl_NewsDocument>();
+            this.Tbl_PageTags = new HashSet<Tbl_PageTags>();
         }
     
-        public int News_ID { get; set; }
-        public System.Guid News_Guid { get; set; }
-        public int News_UserID { get; set; }
-        public int News_NDID { get; set; }
-        public string News_Title { get; set; }
-        public string News_Abstract { get; set; }
-        public string News_Description { get; set; }
-        public System.DateTime News_CreateDate { get; set; }
-        public System.DateTime News_ModifiedDate { get; set; }
-        public bool News_IsDelete { get; set; }
+        public int Tag_ID { get; set; }
+        public System.Guid Tag_Guid { get; set; }
+        public string Tag_Name { get; set; }
     
-        public virtual Tbl_User Tbl_User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tbl_NewsDocument> Tbl_NewsDocument { get; set; }
+        public virtual ICollection<Tbl_PageTags> Tbl_PageTags { get; set; }
     }
 }

@@ -23,19 +23,21 @@
 
     <div class="panel-body table-body" style="overflow-x:auto;">
 
-        <table id="DateTable" class="table  table-bordered table-striped table-secondary" style="width:100%;">
+        <table id="DateTable" class="table table-bordered table-striped table-secondary" style="width:100%;">
 
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">@Html.DisplayNameFor(model => model.Title)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Exam)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Description)</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.Cost)</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.Location)</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.Activeness)</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.Capacity)</th>
-                    <th scope="col"> @Html.DisplayNameFor(model => model.TotalMark)</th>
-                    <th scope="col"> @Html.DisplayNameFor(model => model.PassMark)</th>
-                    <th scope="col"> @Html.DisplayNameFor(model => model.CreationDate)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.TotalMark)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.PassMark)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Date)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.CreationDate)</th>
                     <th scope="col" data-orderable="false">کنترل</th>
                 </tr>
             </thead>
@@ -52,7 +54,10 @@
                     <tr>
                         <td scope="row">@x</td>
                         <td scope="row">
-                            <span> @Html.DisplayFor(modelItem => item.Title) </span>
+                            <span> @Html.DisplayFor(modelItem => item.Exam) </span>
+                        </td>
+                        <td scope="row">
+                            <span> @Html.DisplayFor(modelItem => item.Description) </span>
                         </td>
                         <td scope="row">
                             <span> @Html.DisplayFor(modelItem => item.Cost) </span>
@@ -71,6 +76,9 @@
                         </td>
                         <td scope="row">
                             <span> @Html.DisplayFor(modelItem => item.PassMark) </span>
+                        </td>
+                        <td scope="row">
+                            <span> @PersianDateExtensionMethods.ToPeString(item.Date, "yyyy/MM/dd HH:mm") </span>
                         </td>
                         <td scope="row">
                             <span> @PersianDateExtensionMethods.ToPeString(item.CreationDate, "yyyy/MM/dd") </span>

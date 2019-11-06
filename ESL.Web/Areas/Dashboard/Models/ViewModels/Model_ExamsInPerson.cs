@@ -11,9 +11,12 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
         [Display(Name = "شناسه")]
         public int ID { get; set; }
 
-        [Display(Name = "عنوان")]
+        [Display(Name = "آزمون")]
+        public string Exam { get; set; }
+
+        [Display(Name = "توضیحات")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
-        public string Title { get; set; }
+        public string Description { get; set; }
 
         [Display(Name = "بها")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
@@ -39,6 +42,9 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
         [Display(Name = "حداقل نمره قبولی")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
         public int PassMark { get; set; }
+
+        [Display(Name = "تاریخ برگذاری")]
+        public DateTime Date { get; set; }
 
         [Display(Name = "تاریخ ایجاد")]
         public DateTime CreationDate { get; set; }

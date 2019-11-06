@@ -34,34 +34,6 @@
           <Property Name="CG_Name" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="CG_Display" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
-        <EntityType Name="Tbl_Contract">
-          <Key>
-            <PropertyRef Name="Contract_ID" />
-          </Key>
-          <Property Name="Contract_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Contract_Guid" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Contract_DocumentID" Type="int" Nullable="false" />
-          <Property Name="Contract_TypeCodeID" Type="int" Nullable="false" />
-          <Property Name="Contract_Title" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="Contract_Description" Type="ntext" Nullable="false" />
-          <Property Name="Contract_CreationDate" Type="datetime2" Precision="7" Nullable="false" />
-          <Property Name="Contract_ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
-          <Property Name="Contract_IsDelete" Type="bit" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Tbl_Course">
-          <Key>
-            <PropertyRef Name="Course_ID" />
-          </Key>
-          <Property Name="Course_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Course_Guid" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Course_DocumentID" Type="int" Nullable="false" />
-          <Property Name="Course_Title" Type="nvarchar" MaxLength="512" Nullable="false" />
-          <Property Name="Course_Abstract" Type="ntext" Nullable="false" />
-          <Property Name="Course_Description" Type="ntext" />
-          <Property Name="Course_CreationDate" Type="datetime2" Precision="7" Nullable="false" />
-          <Property Name="Course_ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
-          <Property Name="Course_IsDelete" Type="bit" Nullable="false" />
-        </EntityType>
         <EntityType Name="Tbl_Document">
           <Key>
             <PropertyRef Name="Document_ID" />
@@ -77,10 +49,8 @@
           </Key>
           <Property Name="Exam_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Exam_Guid" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Exam_GroupCodeID" Type="int" Nullable="false" />
-          <Property Name="Exam_Title" Type="nvarchar" MaxLength="512" Nullable="false" />
-          <Property Name="Exam_Mark" Type="int" Nullable="false" />
-          <Property Name="Exam_PassMark" Type="int" Nullable="false" />
+          <Property Name="Exam_Title" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Exam_HasSubMenu" Type="bit" Nullable="false" />
           <Property Name="Exam_CreationDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="Exam_ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="Exam_IsDelete" Type="bit" Nullable="false" />
@@ -91,16 +61,32 @@
           </Key>
           <Property Name="EIP_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EIP_Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="EIP_SEID" Type="int" Nullable="false" />
           <Property Name="EIP_Capacity" Type="int" Nullable="false" />
-          <Property Name="EIP_Title" Type="nvarchar" MaxLength="512" Nullable="false" />
+          <Property Name="EIP_Description" Type="ntext" Nullable="false" />
           <Property Name="EIP_TotalMark" Type="int" Nullable="false" />
           <Property Name="EIP_PassMark" Type="int" Nullable="false" />
           <Property Name="EIP_Cost" Type="int" Nullable="false" />
           <Property Name="EIP_Location" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="EIP_Date" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="EIP_IsActive" Type="bit" Nullable="false" />
           <Property Name="EIP_CreationDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="EIP_ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="EIP_IsDelete" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tbl_ExamRemotely">
+          <Key>
+            <PropertyRef Name="ER_ID" />
+          </Key>
+          <Property Name="ER_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ER_Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ER_GroupCodeID" Type="int" Nullable="false" />
+          <Property Name="ER_Title" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ER_Mark" Type="int" Nullable="false" />
+          <Property Name="ER_PassMark" Type="int" Nullable="false" />
+          <Property Name="ER_CreationDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="ER_ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="ER_IsDelete" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Tbl_Gallery">
           <Key>
@@ -108,7 +94,6 @@
           </Key>
           <Property Name="Gallery_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Gallery_Guid" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Gallery_DocumentID" Type="int" Nullable="false" />
           <Property Name="Gallery_Title" Type="nchar" MaxLength="10" />
           <Property Name="Gallery_CreationDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="Gallery_HasAlbum" Type="bit" Nullable="false" />
@@ -124,6 +109,7 @@
           <Property Name="GD_DocumentID" Type="int" Nullable="false" />
           <Property Name="GD_Title" Type="int" Nullable="false" />
           <Property Name="GD_CreationDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="GD_IsCover" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Tbl_Menu">
           <Key>
@@ -135,31 +121,6 @@
           <Property Name="Menu_Display" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Menu_Order" Type="int" Nullable="false" />
           <Property Name="Menu_HasSubMenu" Type="bit" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Tbl_News">
-          <Key>
-            <PropertyRef Name="News_ID" />
-          </Key>
-          <Property Name="News_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="News_Guid" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="News_UserID" Type="int" Nullable="false" />
-          <Property Name="News_NDID" Type="int" Nullable="false" />
-          <Property Name="News_Title" Type="nvarchar" MaxLength="256" Nullable="false" />
-          <Property Name="News_Abstract" Type="ntext" Nullable="false" />
-          <Property Name="News_Description" Type="ntext" Nullable="false" />
-          <Property Name="News_CreateDate" Type="datetime2" Precision="7" Nullable="false" />
-          <Property Name="News_ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
-          <Property Name="News_IsDelete" Type="bit" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Tbl_NewsDocument">
-          <Key>
-            <PropertyRef Name="ND_ID" />
-          </Key>
-          <Property Name="ND_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ND_Guid" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="ND_NewsID" Type="int" Nullable="false" />
-          <Property Name="ND_DocumentID" Type="int" Nullable="false" />
-          <Property Name="ND_TypeCodeID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Tbl_Organization">
           <Key>
@@ -178,7 +139,43 @@
           </Key>
           <Property Name="Page_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Page_Guid" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Page_Name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Page_UserID" Type="int" Nullable="false" />
+          <Property Name="Page_RegionID" Type="int" Nullable="false" />
+          <Property Name="Page_PCID" Type="int" Nullable="false" />
+          <Property Name="Page_Titel" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Page_Description" Type="ntext" Nullable="false" />
+          <Property Name="Page_IsDelete" Type="int" Nullable="false" />
+          <Property Name="Page_CreateDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="Page_Modify" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="Page_Abstract" Type="ntext" />
+        </EntityType>
+        <EntityType Name="Tbl_PageCategory">
+          <Key>
+            <PropertyRef Name="PC_ID" />
+          </Key>
+          <Property Name="PC_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PC_Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="PC_Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="PC_Display" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tbl_PageDocuments">
+          <Key>
+            <PropertyRef Name="PD_ID" />
+          </Key>
+          <Property Name="PD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PD_Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="PD_TypeCodeID" Type="int" Nullable="false" />
+          <Property Name="PD_DocumentID" Type="int" Nullable="false" />
+          <Property Name="PD_PageID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tbl_PageTags">
+          <Key>
+            <PropertyRef Name="PT_ID" />
+          </Key>
+          <Property Name="PT_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PT_Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="PT_TagID" Type="int" Nullable="false" />
+          <Property Name="PT_PageID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Tbl_Payment">
           <Key>
@@ -190,7 +187,9 @@
           <Property Name="Payment_TypeCodeID" Type="int" Nullable="false" />
           <Property Name="Payment_WayCodeID" Type="int" Nullable="false" />
           <Property Name="Payment_StateCodeID" Type="int" Nullable="false" />
+          <Property Name="Payment_TitleCodeID" Type="int" Nullable="false" />
           <Property Name="Payment_Cost" Type="int" Nullable="false" />
+          <Property Name="Payment_RemaingWallet" Type="int" Nullable="false" />
           <Property Name="Payment_TrackingToken" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Payment_DocumentID" Type="int" />
           <Property Name="Payment_CreateDate" Type="datetime2" Precision="7" Nullable="false" />
@@ -203,7 +202,7 @@
           </Key>
           <Property Name="Question_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Question_Guid" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Question_ExamID" Type="int" Nullable="false" />
+          <Property Name="Question_ERID" Type="int" Nullable="false" />
           <Property Name="Question_GroupCodeID" Type="int" Nullable="false" />
           <Property Name="Question_ResponseID" Type="int" />
           <Property Name="Question_TypeCodeID" Type="int" Nullable="false" />
@@ -220,12 +219,9 @@
           </Key>
           <Property Name="Region_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Region_Guid" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Region_PageID" Type="int" Nullable="false" />
-          <Property Name="Region_DocumentID" Type="int" />
-          <Property Name="Region_Name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="Region_Title" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="Region_Description" Type="ntext" Nullable="false" />
-          <Property Name="Region_HasDocument" Type="bit" Nullable="false" />
+          <Property Name="Region_Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Region_Display" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Region_CodeID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Tbl_Response">
           <Key>
@@ -248,20 +244,17 @@
           <Property Name="Role_Name" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Role_Display" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
-        <EntityType Name="Tbl_SubCourse">
+        <EntityType Name="Tbl_SubExam">
           <Key>
-            <PropertyRef Name="SC_ID" />
+            <PropertyRef Name="SE_ID" />
           </Key>
-          <Property Name="SC_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="SC_Guid" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="SC_CourseID" Type="int" Nullable="false" />
-          <Property Name="SC_DocumentID" Type="int" Nullable="false" />
-          <Property Name="SC_Title" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="SC_Abstract" Type="ntext" Nullable="false" />
-          <Property Name="SC_Description" Type="ntext" />
-          <Property Name="SC_CreationDate" Type="datetime2" Precision="7" Nullable="false" />
-          <Property Name="SC_ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
-          <Property Name="SC_IsDelete" Type="bit" Nullable="false" />
+          <Property Name="SE_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SE_Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="SE_ExamID" Type="int" Nullable="false" />
+          <Property Name="SE_Title" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="SE_CreationDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="SE_ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="SE_IsDelete" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Tbl_SubMenu">
           <Key>
@@ -273,6 +266,14 @@
           <Property Name="SM_Name" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="SM_Display" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="SM_Order" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tbl_Tag">
+          <Key>
+            <PropertyRef Name="Tag_ID" />
+          </Key>
+          <Property Name="Tag_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Tag_Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Tag_Name" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="Tbl_User">
           <Key>
@@ -302,7 +303,7 @@
           <Property Name="UE_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UE_Guid" Type="uniqueidentifier" Nullable="false" />
           <Property Name="UE_UserID" Type="int" Nullable="false" />
-          <Property Name="UE_ExamID" Type="int" Nullable="false" />
+          <Property Name="UE_ERID" Type="int" Nullable="false" />
           <Property Name="UE_Mark" Type="int" Nullable="false" />
           <Property Name="UE_Date" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="UE_IsDelete" Type="bit" Nullable="false" />
@@ -314,7 +315,7 @@
           <Property Name="UEA_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UEA_Guid" Type="uniqueidentifier" Nullable="false" />
           <Property Name="UEA_UserID" Type="int" Nullable="false" />
-          <Property Name="UEA_ExamID" Type="int" Nullable="false" />
+          <Property Name="UEA_ERID" Type="int" Nullable="false" />
           <Property Name="UEA_Date" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="UEA_IsActive" Type="bit" Nullable="false" />
           <Property Name="UEA_IsDelete" Type="bit" Nullable="false" />
@@ -358,42 +359,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Tbl_Contract_Tbl_Code">
-          <End Role="Tbl_Code" Type="Self.Tbl_Code" Multiplicity="1" />
-          <End Role="Tbl_Contract" Type="Self.Tbl_Contract" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tbl_Code">
-              <PropertyRef Name="Code_ID" />
-            </Principal>
-            <Dependent Role="Tbl_Contract">
-              <PropertyRef Name="Contract_TypeCodeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Tbl_Contract_Tbl_Document">
-          <End Role="Tbl_Document" Type="Self.Tbl_Document" Multiplicity="1" />
-          <End Role="Tbl_Contract" Type="Self.Tbl_Contract" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tbl_Document">
-              <PropertyRef Name="Document_ID" />
-            </Principal>
-            <Dependent Role="Tbl_Contract">
-              <PropertyRef Name="Contract_DocumentID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Tbl_Course_Tbl_Document">
-          <End Role="Tbl_Document" Type="Self.Tbl_Document" Multiplicity="1" />
-          <End Role="Tbl_Course" Type="Self.Tbl_Course" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tbl_Document">
-              <PropertyRef Name="Document_ID" />
-            </Principal>
-            <Dependent Role="Tbl_Course">
-              <PropertyRef Name="Course_DocumentID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Tbl_Document_Tbl_Code">
           <End Role="Tbl_Code" Type="Self.Tbl_Code" Multiplicity="1" />
           <End Role="Tbl_Document" Type="Self.Tbl_Document" Multiplicity="*" />
@@ -406,15 +371,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Tbl_Gallery_Tbl_Document">
-          <End Role="Tbl_Document" Type="Self.Tbl_Document" Multiplicity="1" />
-          <End Role="Tbl_Gallery" Type="Self.Tbl_Gallery" Multiplicity="*" />
+        <Association Name="FK_Tbl_ExamInPerson_Tbl_SubExam">
+          <End Role="Tbl_SubExam" Type="Self.Tbl_SubExam" Multiplicity="1" />
+          <End Role="Tbl_ExamInPerson" Type="Self.Tbl_ExamInPerson" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Tbl_Document">
-              <PropertyRef Name="Document_ID" />
+            <Principal Role="Tbl_SubExam">
+              <PropertyRef Name="SE_ID" />
             </Principal>
-            <Dependent Role="Tbl_Gallery">
-              <PropertyRef Name="Gallery_DocumentID" />
+            <Dependent Role="Tbl_ExamInPerson">
+              <PropertyRef Name="EIP_SEID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_ExamRemotely_Tbl_Code">
+          <End Role="Tbl_Code" Type="Self.Tbl_Code" Multiplicity="1" />
+          <End Role="Tbl_ExamRemotely" Type="Self.Tbl_ExamRemotely" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Code">
+              <PropertyRef Name="Code_ID" />
+            </Principal>
+            <Dependent Role="Tbl_ExamRemotely">
+              <PropertyRef Name="ER_GroupCodeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -442,54 +419,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Tbl_News_Tbl_User">
-          <End Role="Tbl_User" Type="Self.Tbl_User" Multiplicity="1" />
-          <End Role="Tbl_News" Type="Self.Tbl_News" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tbl_User">
-              <PropertyRef Name="User_ID" />
-            </Principal>
-            <Dependent Role="Tbl_News">
-              <PropertyRef Name="News_UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Tbl_NewsDocument_Tbl_Code">
-          <End Role="Tbl_Code" Type="Self.Tbl_Code" Multiplicity="1" />
-          <End Role="Tbl_NewsDocument" Type="Self.Tbl_NewsDocument" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tbl_Code">
-              <PropertyRef Name="Code_ID" />
-            </Principal>
-            <Dependent Role="Tbl_NewsDocument">
-              <PropertyRef Name="ND_TypeCodeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Tbl_NewsDocument_Tbl_Document">
-          <End Role="Tbl_Document" Type="Self.Tbl_Document" Multiplicity="1" />
-          <End Role="Tbl_NewsDocument" Type="Self.Tbl_NewsDocument" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tbl_Document">
-              <PropertyRef Name="Document_ID" />
-            </Principal>
-            <Dependent Role="Tbl_NewsDocument">
-              <PropertyRef Name="ND_DocumentID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Tbl_NewsDocument_Tbl_News">
-          <End Role="Tbl_News" Type="Self.Tbl_News" Multiplicity="1" />
-          <End Role="Tbl_NewsDocument" Type="Self.Tbl_NewsDocument" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tbl_News">
-              <PropertyRef Name="News_ID" />
-            </Principal>
-            <Dependent Role="Tbl_NewsDocument">
-              <PropertyRef Name="ND_NewsID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Tbl_Organization_Tbl_Code">
           <End Role="Tbl_Code" Type="Self.Tbl_Code" Multiplicity="1" />
           <End Role="Tbl_Organization" Type="Self.Tbl_Organization" Multiplicity="*" />
@@ -511,6 +440,102 @@
             </Principal>
             <Dependent Role="Tbl_Organization">
               <PropertyRef Name="Organization_DocumentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_Page_Tbl_PageCategory">
+          <End Role="Tbl_PageCategory" Type="Self.Tbl_PageCategory" Multiplicity="1" />
+          <End Role="Tbl_Page" Type="Self.Tbl_Page" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_PageCategory">
+              <PropertyRef Name="PC_ID" />
+            </Principal>
+            <Dependent Role="Tbl_Page">
+              <PropertyRef Name="Page_PCID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_Page_Tbl_Region">
+          <End Role="Tbl_Region" Type="Self.Tbl_Region" Multiplicity="1" />
+          <End Role="Tbl_Page" Type="Self.Tbl_Page" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Region">
+              <PropertyRef Name="Region_ID" />
+            </Principal>
+            <Dependent Role="Tbl_Page">
+              <PropertyRef Name="Page_RegionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_Page_Tbl_User">
+          <End Role="Tbl_User" Type="Self.Tbl_User" Multiplicity="1" />
+          <End Role="Tbl_Page" Type="Self.Tbl_Page" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_User">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="Tbl_Page">
+              <PropertyRef Name="Page_UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_PageDocuments_Tbl_Code">
+          <End Role="Tbl_Code" Type="Self.Tbl_Code" Multiplicity="1" />
+          <End Role="Tbl_PageDocuments" Type="Self.Tbl_PageDocuments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Code">
+              <PropertyRef Name="Code_ID" />
+            </Principal>
+            <Dependent Role="Tbl_PageDocuments">
+              <PropertyRef Name="PD_TypeCodeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_PageDocuments_Tbl_Document">
+          <End Role="Tbl_Document" Type="Self.Tbl_Document" Multiplicity="1" />
+          <End Role="Tbl_PageDocuments" Type="Self.Tbl_PageDocuments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Document">
+              <PropertyRef Name="Document_ID" />
+            </Principal>
+            <Dependent Role="Tbl_PageDocuments">
+              <PropertyRef Name="PD_DocumentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_PageDocuments_Tbl_Page">
+          <End Role="Tbl_Page" Type="Self.Tbl_Page" Multiplicity="1" />
+          <End Role="Tbl_PageDocuments" Type="Self.Tbl_PageDocuments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Page">
+              <PropertyRef Name="Page_ID" />
+            </Principal>
+            <Dependent Role="Tbl_PageDocuments">
+              <PropertyRef Name="PD_PageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_PageTags_Tbl_Page">
+          <End Role="Tbl_Page" Type="Self.Tbl_Page" Multiplicity="1" />
+          <End Role="Tbl_PageTags" Type="Self.Tbl_PageTags" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Page">
+              <PropertyRef Name="Page_ID" />
+            </Principal>
+            <Dependent Role="Tbl_PageTags">
+              <PropertyRef Name="PT_PageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_PageTags_Tbl_Tag">
+          <End Role="Tbl_Tag" Type="Self.Tbl_Tag" Multiplicity="1" />
+          <End Role="Tbl_PageTags" Type="Self.Tbl_PageTags" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Tag">
+              <PropertyRef Name="Tag_ID" />
+            </Principal>
+            <Dependent Role="Tbl_PageTags">
+              <PropertyRef Name="PT_TagID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -598,15 +623,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Tbl_Question_Tbl_Exam">
-          <End Role="Tbl_Exam" Type="Self.Tbl_Exam" Multiplicity="1" />
+        <Association Name="FK_Tbl_Question_Tbl_ExamRemotely">
+          <End Role="Tbl_ExamRemotely" Type="Self.Tbl_ExamRemotely" Multiplicity="1" />
           <End Role="Tbl_Question" Type="Self.Tbl_Question" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Tbl_Exam">
-              <PropertyRef Name="Exam_ID" />
+            <Principal Role="Tbl_ExamRemotely">
+              <PropertyRef Name="ER_ID" />
             </Principal>
             <Dependent Role="Tbl_Question">
-              <PropertyRef Name="Question_ExamID" />
+              <PropertyRef Name="Question_ERID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -622,27 +647,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Tbl_Region_Tbl_Document">
-          <End Role="Tbl_Document" Type="Self.Tbl_Document" Multiplicity="0..1" />
+        <Association Name="FK_Tbl_Region_Tbl_Code">
+          <End Role="Tbl_Code" Type="Self.Tbl_Code" Multiplicity="1" />
           <End Role="Tbl_Region" Type="Self.Tbl_Region" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Tbl_Document">
-              <PropertyRef Name="Document_ID" />
+            <Principal Role="Tbl_Code">
+              <PropertyRef Name="Code_ID" />
             </Principal>
             <Dependent Role="Tbl_Region">
-              <PropertyRef Name="Region_DocumentID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Tbl_Region_Tbl_Page">
-          <End Role="Tbl_Page" Type="Self.Tbl_Page" Multiplicity="1" />
-          <End Role="Tbl_Region" Type="Self.Tbl_Region" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tbl_Page">
-              <PropertyRef Name="Page_ID" />
-            </Principal>
-            <Dependent Role="Tbl_Region">
-              <PropertyRef Name="Region_PageID" />
+              <PropertyRef Name="Region_CodeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -670,27 +683,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Tbl_SubCourse_Tbl_Course">
-          <End Role="Tbl_Course" Type="Self.Tbl_Course" Multiplicity="1" />
-          <End Role="Tbl_SubCourse" Type="Self.Tbl_SubCourse" Multiplicity="*" />
+        <Association Name="FK_Tbl_SubExam_Tbl_Exam">
+          <End Role="Tbl_Exam" Type="Self.Tbl_Exam" Multiplicity="1" />
+          <End Role="Tbl_SubExam" Type="Self.Tbl_SubExam" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Tbl_Course">
-              <PropertyRef Name="Course_ID" />
+            <Principal Role="Tbl_Exam">
+              <PropertyRef Name="Exam_ID" />
             </Principal>
-            <Dependent Role="Tbl_SubCourse">
-              <PropertyRef Name="SC_CourseID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Tbl_SubCourse_Tbl_Document">
-          <End Role="Tbl_Document" Type="Self.Tbl_Document" Multiplicity="1" />
-          <End Role="Tbl_SubCourse" Type="Self.Tbl_SubCourse" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tbl_Document">
-              <PropertyRef Name="Document_ID" />
-            </Principal>
-            <Dependent Role="Tbl_SubCourse">
-              <PropertyRef Name="SC_DocumentID" />
+            <Dependent Role="Tbl_SubExam">
+              <PropertyRef Name="SE_ExamID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -718,15 +719,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Tbl_UserExam_Tbl_Exam">
-          <End Role="Tbl_Exam" Type="Self.Tbl_Exam" Multiplicity="1" />
+        <Association Name="FK_Tbl_UserExam_Tbl_ExamRemotely">
+          <End Role="Tbl_ExamRemotely" Type="Self.Tbl_ExamRemotely" Multiplicity="1" />
           <End Role="Tbl_UserExam" Type="Self.Tbl_UserExam" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Tbl_Exam">
-              <PropertyRef Name="Exam_ID" />
+            <Principal Role="Tbl_ExamRemotely">
+              <PropertyRef Name="ER_ID" />
             </Principal>
             <Dependent Role="Tbl_UserExam">
-              <PropertyRef Name="UE_ExamID" />
+              <PropertyRef Name="UE_ERID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -742,15 +743,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Tbl_UserExamAccess_Tbl_Exam">
-          <End Role="Tbl_Exam" Type="Self.Tbl_Exam" Multiplicity="1" />
+        <Association Name="FK_Tbl_UserExamAccess_Tbl_ExamRemotely">
+          <End Role="Tbl_ExamRemotely" Type="Self.Tbl_ExamRemotely" Multiplicity="1" />
           <End Role="Tbl_UserExamAccess" Type="Self.Tbl_UserExamAccess" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Tbl_Exam">
-              <PropertyRef Name="Exam_ID" />
+            <Principal Role="Tbl_ExamRemotely">
+              <PropertyRef Name="ER_ID" />
             </Principal>
             <Dependent Role="Tbl_UserExamAccess">
-              <PropertyRef Name="UEA_ExamID" />
+              <PropertyRef Name="UEA_ERID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -806,25 +807,26 @@
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Code" EntityType="Self.Tbl_Code" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_CodeGroup" EntityType="Self.Tbl_CodeGroup" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Tbl_Contract" EntityType="Self.Tbl_Contract" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Tbl_Course" EntityType="Self.Tbl_Course" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Document" EntityType="Self.Tbl_Document" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Exam" EntityType="Self.Tbl_Exam" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_ExamInPerson" EntityType="Self.Tbl_ExamInPerson" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_ExamRemotely" EntityType="Self.Tbl_ExamRemotely" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Gallery" EntityType="Self.Tbl_Gallery" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_GalleryDocument" EntityType="Self.Tbl_GalleryDocument" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Menu" EntityType="Self.Tbl_Menu" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Tbl_News" EntityType="Self.Tbl_News" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Tbl_NewsDocument" EntityType="Self.Tbl_NewsDocument" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Organization" EntityType="Self.Tbl_Organization" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Page" EntityType="Self.Tbl_Page" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_PageCategory" EntityType="Self.Tbl_PageCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_PageDocuments" EntityType="Self.Tbl_PageDocuments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_PageTags" EntityType="Self.Tbl_PageTags" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Payment" EntityType="Self.Tbl_Payment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Question" EntityType="Self.Tbl_Question" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Region" EntityType="Self.Tbl_Region" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Response" EntityType="Self.Tbl_Response" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Role" EntityType="Self.Tbl_Role" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Tbl_SubCourse" EntityType="Self.Tbl_SubCourse" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_SubExam" EntityType="Self.Tbl_SubExam" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_SubMenu" EntityType="Self.Tbl_SubMenu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_Tag" EntityType="Self.Tbl_Tag" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_User" EntityType="Self.Tbl_User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_UserExam" EntityType="Self.Tbl_UserExam" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_UserExamAccess" EntityType="Self.Tbl_UserExamAccess" Schema="dbo" store:Type="Tables" />
@@ -834,25 +836,17 @@
             <End Role="Tbl_CodeGroup" EntitySet="Tbl_CodeGroup" />
             <End Role="Tbl_Code" EntitySet="Tbl_Code" />
           </AssociationSet>
-          <AssociationSet Name="FK_Tbl_Contract_Tbl_Code" Association="Self.FK_Tbl_Contract_Tbl_Code">
-            <End Role="Tbl_Code" EntitySet="Tbl_Code" />
-            <End Role="Tbl_Contract" EntitySet="Tbl_Contract" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Tbl_Contract_Tbl_Document" Association="Self.FK_Tbl_Contract_Tbl_Document">
-            <End Role="Tbl_Document" EntitySet="Tbl_Document" />
-            <End Role="Tbl_Contract" EntitySet="Tbl_Contract" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Tbl_Course_Tbl_Document" Association="Self.FK_Tbl_Course_Tbl_Document">
-            <End Role="Tbl_Document" EntitySet="Tbl_Document" />
-            <End Role="Tbl_Course" EntitySet="Tbl_Course" />
-          </AssociationSet>
           <AssociationSet Name="FK_Tbl_Document_Tbl_Code" Association="Self.FK_Tbl_Document_Tbl_Code">
             <End Role="Tbl_Code" EntitySet="Tbl_Code" />
             <End Role="Tbl_Document" EntitySet="Tbl_Document" />
           </AssociationSet>
-          <AssociationSet Name="FK_Tbl_Gallery_Tbl_Document" Association="Self.FK_Tbl_Gallery_Tbl_Document">
-            <End Role="Tbl_Document" EntitySet="Tbl_Document" />
-            <End Role="Tbl_Gallery" EntitySet="Tbl_Gallery" />
+          <AssociationSet Name="FK_Tbl_ExamInPerson_Tbl_SubExam" Association="Self.FK_Tbl_ExamInPerson_Tbl_SubExam">
+            <End Role="Tbl_SubExam" EntitySet="Tbl_SubExam" />
+            <End Role="Tbl_ExamInPerson" EntitySet="Tbl_ExamInPerson" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_ExamRemotely_Tbl_Code" Association="Self.FK_Tbl_ExamRemotely_Tbl_Code">
+            <End Role="Tbl_Code" EntitySet="Tbl_Code" />
+            <End Role="Tbl_ExamRemotely" EntitySet="Tbl_ExamRemotely" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_GalleryDocument_Tbl_Document" Association="Self.FK_Tbl_GalleryDocument_Tbl_Document">
             <End Role="Tbl_Document" EntitySet="Tbl_Document" />
@@ -862,22 +856,6 @@
             <End Role="Tbl_Gallery" EntitySet="Tbl_Gallery" />
             <End Role="Tbl_GalleryDocument" EntitySet="Tbl_GalleryDocument" />
           </AssociationSet>
-          <AssociationSet Name="FK_Tbl_News_Tbl_User" Association="Self.FK_Tbl_News_Tbl_User">
-            <End Role="Tbl_User" EntitySet="Tbl_User" />
-            <End Role="Tbl_News" EntitySet="Tbl_News" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Tbl_NewsDocument_Tbl_Code" Association="Self.FK_Tbl_NewsDocument_Tbl_Code">
-            <End Role="Tbl_Code" EntitySet="Tbl_Code" />
-            <End Role="Tbl_NewsDocument" EntitySet="Tbl_NewsDocument" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Tbl_NewsDocument_Tbl_Document" Association="Self.FK_Tbl_NewsDocument_Tbl_Document">
-            <End Role="Tbl_Document" EntitySet="Tbl_Document" />
-            <End Role="Tbl_NewsDocument" EntitySet="Tbl_NewsDocument" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Tbl_NewsDocument_Tbl_News" Association="Self.FK_Tbl_NewsDocument_Tbl_News">
-            <End Role="Tbl_News" EntitySet="Tbl_News" />
-            <End Role="Tbl_NewsDocument" EntitySet="Tbl_NewsDocument" />
-          </AssociationSet>
           <AssociationSet Name="FK_Tbl_Organization_Tbl_Code" Association="Self.FK_Tbl_Organization_Tbl_Code">
             <End Role="Tbl_Code" EntitySet="Tbl_Code" />
             <End Role="Tbl_Organization" EntitySet="Tbl_Organization" />
@@ -885,6 +863,38 @@
           <AssociationSet Name="FK_Tbl_Organization_Tbl_Document" Association="Self.FK_Tbl_Organization_Tbl_Document">
             <End Role="Tbl_Document" EntitySet="Tbl_Document" />
             <End Role="Tbl_Organization" EntitySet="Tbl_Organization" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Page_Tbl_PageCategory" Association="Self.FK_Tbl_Page_Tbl_PageCategory">
+            <End Role="Tbl_PageCategory" EntitySet="Tbl_PageCategory" />
+            <End Role="Tbl_Page" EntitySet="Tbl_Page" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Page_Tbl_Region" Association="Self.FK_Tbl_Page_Tbl_Region">
+            <End Role="Tbl_Region" EntitySet="Tbl_Region" />
+            <End Role="Tbl_Page" EntitySet="Tbl_Page" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Page_Tbl_User" Association="Self.FK_Tbl_Page_Tbl_User">
+            <End Role="Tbl_User" EntitySet="Tbl_User" />
+            <End Role="Tbl_Page" EntitySet="Tbl_Page" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_PageDocuments_Tbl_Code" Association="Self.FK_Tbl_PageDocuments_Tbl_Code">
+            <End Role="Tbl_Code" EntitySet="Tbl_Code" />
+            <End Role="Tbl_PageDocuments" EntitySet="Tbl_PageDocuments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_PageDocuments_Tbl_Document" Association="Self.FK_Tbl_PageDocuments_Tbl_Document">
+            <End Role="Tbl_Document" EntitySet="Tbl_Document" />
+            <End Role="Tbl_PageDocuments" EntitySet="Tbl_PageDocuments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_PageDocuments_Tbl_Page" Association="Self.FK_Tbl_PageDocuments_Tbl_Page">
+            <End Role="Tbl_Page" EntitySet="Tbl_Page" />
+            <End Role="Tbl_PageDocuments" EntitySet="Tbl_PageDocuments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_PageTags_Tbl_Page" Association="Self.FK_Tbl_PageTags_Tbl_Page">
+            <End Role="Tbl_Page" EntitySet="Tbl_Page" />
+            <End Role="Tbl_PageTags" EntitySet="Tbl_PageTags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_PageTags_Tbl_Tag" Association="Self.FK_Tbl_PageTags_Tbl_Tag">
+            <End Role="Tbl_Tag" EntitySet="Tbl_Tag" />
+            <End Role="Tbl_PageTags" EntitySet="Tbl_PageTags" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_Payment_Tbl_Code_StateCodeID" Association="Self.FK_Tbl_Payment_Tbl_Code_StateCodeID">
             <End Role="Tbl_Code" EntitySet="Tbl_Code" />
@@ -914,20 +924,16 @@
             <End Role="Tbl_Code" EntitySet="Tbl_Code" />
             <End Role="Tbl_Question" EntitySet="Tbl_Question" />
           </AssociationSet>
-          <AssociationSet Name="FK_Tbl_Question_Tbl_Exam" Association="Self.FK_Tbl_Question_Tbl_Exam">
-            <End Role="Tbl_Exam" EntitySet="Tbl_Exam" />
+          <AssociationSet Name="FK_Tbl_Question_Tbl_ExamRemotely" Association="Self.FK_Tbl_Question_Tbl_ExamRemotely">
+            <End Role="Tbl_ExamRemotely" EntitySet="Tbl_ExamRemotely" />
             <End Role="Tbl_Question" EntitySet="Tbl_Question" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_Question_Tbl_Response" Association="Self.FK_Tbl_Question_Tbl_Response">
             <End Role="Tbl_Response" EntitySet="Tbl_Response" />
             <End Role="Tbl_Question" EntitySet="Tbl_Question" />
           </AssociationSet>
-          <AssociationSet Name="FK_Tbl_Region_Tbl_Document" Association="Self.FK_Tbl_Region_Tbl_Document">
-            <End Role="Tbl_Document" EntitySet="Tbl_Document" />
-            <End Role="Tbl_Region" EntitySet="Tbl_Region" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Tbl_Region_Tbl_Page" Association="Self.FK_Tbl_Region_Tbl_Page">
-            <End Role="Tbl_Page" EntitySet="Tbl_Page" />
+          <AssociationSet Name="FK_Tbl_Region_Tbl_Code" Association="Self.FK_Tbl_Region_Tbl_Code">
+            <End Role="Tbl_Code" EntitySet="Tbl_Code" />
             <End Role="Tbl_Region" EntitySet="Tbl_Region" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_Response_Tbl_Code" Association="Self.FK_Tbl_Response_Tbl_Code">
@@ -938,13 +944,9 @@
             <End Role="Tbl_Question" EntitySet="Tbl_Question" />
             <End Role="Tbl_Response" EntitySet="Tbl_Response" />
           </AssociationSet>
-          <AssociationSet Name="FK_Tbl_SubCourse_Tbl_Course" Association="Self.FK_Tbl_SubCourse_Tbl_Course">
-            <End Role="Tbl_Course" EntitySet="Tbl_Course" />
-            <End Role="Tbl_SubCourse" EntitySet="Tbl_SubCourse" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Tbl_SubCourse_Tbl_Document" Association="Self.FK_Tbl_SubCourse_Tbl_Document">
-            <End Role="Tbl_Document" EntitySet="Tbl_Document" />
-            <End Role="Tbl_SubCourse" EntitySet="Tbl_SubCourse" />
+          <AssociationSet Name="FK_Tbl_SubExam_Tbl_Exam" Association="Self.FK_Tbl_SubExam_Tbl_Exam">
+            <End Role="Tbl_Exam" EntitySet="Tbl_Exam" />
+            <End Role="Tbl_SubExam" EntitySet="Tbl_SubExam" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_SubMenu_Menu" Association="Self.FK_Tbl_SubMenu_Menu">
             <End Role="Tbl_Menu" EntitySet="Tbl_Menu" />
@@ -954,16 +956,16 @@
             <End Role="Tbl_Role" EntitySet="Tbl_Role" />
             <End Role="Tbl_User" EntitySet="Tbl_User" />
           </AssociationSet>
-          <AssociationSet Name="FK_Tbl_UserExam_Tbl_Exam" Association="Self.FK_Tbl_UserExam_Tbl_Exam">
-            <End Role="Tbl_Exam" EntitySet="Tbl_Exam" />
+          <AssociationSet Name="FK_Tbl_UserExam_Tbl_ExamRemotely" Association="Self.FK_Tbl_UserExam_Tbl_ExamRemotely">
+            <End Role="Tbl_ExamRemotely" EntitySet="Tbl_ExamRemotely" />
             <End Role="Tbl_UserExam" EntitySet="Tbl_UserExam" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_UserExam_Tbl_User" Association="Self.FK_Tbl_UserExam_Tbl_User">
             <End Role="Tbl_User" EntitySet="Tbl_User" />
             <End Role="Tbl_UserExam" EntitySet="Tbl_UserExam" />
           </AssociationSet>
-          <AssociationSet Name="FK_Tbl_UserExamAccess_Tbl_Exam" Association="Self.FK_Tbl_UserExamAccess_Tbl_Exam">
-            <End Role="Tbl_Exam" EntitySet="Tbl_Exam" />
+          <AssociationSet Name="FK_Tbl_UserExamAccess_Tbl_ExamRemotely" Association="Self.FK_Tbl_UserExamAccess_Tbl_ExamRemotely">
+            <End Role="Tbl_ExamRemotely" EntitySet="Tbl_ExamRemotely" />
             <End Role="Tbl_UserExamAccess" EntitySet="Tbl_UserExamAccess" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_UserExamAccess_Tbl_User" Association="Self.FK_Tbl_UserExamAccess_Tbl_User">
@@ -991,25 +993,26 @@
           <EntitySet Name="sysdiagrams" EntityType="ESLModel.sysdiagram" />
           <EntitySet Name="Tbl_Code" EntityType="ESLModel.Tbl_Code" />
           <EntitySet Name="Tbl_CodeGroup" EntityType="ESLModel.Tbl_CodeGroup" />
-          <EntitySet Name="Tbl_Contract" EntityType="ESLModel.Tbl_Contract" />
-          <EntitySet Name="Tbl_Course" EntityType="ESLModel.Tbl_Course" />
           <EntitySet Name="Tbl_Document" EntityType="ESLModel.Tbl_Document" />
           <EntitySet Name="Tbl_Exam" EntityType="ESLModel.Tbl_Exam" />
           <EntitySet Name="Tbl_ExamInPerson" EntityType="ESLModel.Tbl_ExamInPerson" />
+          <EntitySet Name="Tbl_ExamRemotely" EntityType="ESLModel.Tbl_ExamRemotely" />
           <EntitySet Name="Tbl_Gallery" EntityType="ESLModel.Tbl_Gallery" />
           <EntitySet Name="Tbl_GalleryDocument" EntityType="ESLModel.Tbl_GalleryDocument" />
           <EntitySet Name="Tbl_Menu" EntityType="ESLModel.Tbl_Menu" />
-          <EntitySet Name="Tbl_News" EntityType="ESLModel.Tbl_News" />
-          <EntitySet Name="Tbl_NewsDocument" EntityType="ESLModel.Tbl_NewsDocument" />
           <EntitySet Name="Tbl_Organization" EntityType="ESLModel.Tbl_Organization" />
           <EntitySet Name="Tbl_Page" EntityType="ESLModel.Tbl_Page" />
+          <EntitySet Name="Tbl_PageCategory" EntityType="ESLModel.Tbl_PageCategory" />
+          <EntitySet Name="Tbl_PageDocuments" EntityType="ESLModel.Tbl_PageDocuments" />
+          <EntitySet Name="Tbl_PageTags" EntityType="ESLModel.Tbl_PageTags" />
           <EntitySet Name="Tbl_Payment" EntityType="ESLModel.Tbl_Payment" />
           <EntitySet Name="Tbl_Question" EntityType="ESLModel.Tbl_Question" />
           <EntitySet Name="Tbl_Region" EntityType="ESLModel.Tbl_Region" />
           <EntitySet Name="Tbl_Response" EntityType="ESLModel.Tbl_Response" />
           <EntitySet Name="Tbl_Role" EntityType="ESLModel.Tbl_Role" />
-          <EntitySet Name="Tbl_SubCourse" EntityType="ESLModel.Tbl_SubCourse" />
+          <EntitySet Name="Tbl_SubExam" EntityType="ESLModel.Tbl_SubExam" />
           <EntitySet Name="Tbl_SubMenu" EntityType="ESLModel.Tbl_SubMenu" />
+          <EntitySet Name="Tbl_Tag" EntityType="ESLModel.Tbl_Tag" />
           <EntitySet Name="Tbl_User" EntityType="ESLModel.Tbl_User" />
           <EntitySet Name="Tbl_UserExam" EntityType="ESLModel.Tbl_UserExam" />
           <EntitySet Name="Tbl_UserExamAccess" EntityType="ESLModel.Tbl_UserExamAccess" />
@@ -1019,21 +1022,21 @@
             <End Role="Tbl_CodeGroup" EntitySet="Tbl_CodeGroup" />
             <End Role="Tbl_Code" EntitySet="Tbl_Code" />
           </AssociationSet>
-          <AssociationSet Name="FK_Tbl_Contract_Tbl_Code" Association="ESLModel.FK_Tbl_Contract_Tbl_Code">
-            <End Role="Tbl_Code" EntitySet="Tbl_Code" />
-            <End Role="Tbl_Contract" EntitySet="Tbl_Contract" />
-          </AssociationSet>
           <AssociationSet Name="FK_Tbl_Document_Tbl_Code" Association="ESLModel.FK_Tbl_Document_Tbl_Code">
             <End Role="Tbl_Code" EntitySet="Tbl_Code" />
             <End Role="Tbl_Document" EntitySet="Tbl_Document" />
           </AssociationSet>
-          <AssociationSet Name="FK_Tbl_NewsDocument_Tbl_Code" Association="ESLModel.FK_Tbl_NewsDocument_Tbl_Code">
+          <AssociationSet Name="FK_Tbl_ExamRemotely_Tbl_Code" Association="ESLModel.FK_Tbl_ExamRemotely_Tbl_Code">
             <End Role="Tbl_Code" EntitySet="Tbl_Code" />
-            <End Role="Tbl_NewsDocument" EntitySet="Tbl_NewsDocument" />
+            <End Role="Tbl_ExamRemotely" EntitySet="Tbl_ExamRemotely" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_Organization_Tbl_Code" Association="ESLModel.FK_Tbl_Organization_Tbl_Code">
             <End Role="Tbl_Code" EntitySet="Tbl_Code" />
             <End Role="Tbl_Organization" EntitySet="Tbl_Organization" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_PageDocuments_Tbl_Code" Association="ESLModel.FK_Tbl_PageDocuments_Tbl_Code">
+            <End Role="Tbl_Code" EntitySet="Tbl_Code" />
+            <End Role="Tbl_PageDocuments" EntitySet="Tbl_PageDocuments" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_Payment_Tbl_Code_StateCodeID" Association="ESLModel.FK_Tbl_Payment_Tbl_Code_StateCodeID">
             <End Role="Tbl_Code" EntitySet="Tbl_Code" />
@@ -1055,65 +1058,53 @@
             <End Role="Tbl_Code" EntitySet="Tbl_Code" />
             <End Role="Tbl_Question" EntitySet="Tbl_Question" />
           </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Region_Tbl_Code" Association="ESLModel.FK_Tbl_Region_Tbl_Code">
+            <End Role="Tbl_Code" EntitySet="Tbl_Code" />
+            <End Role="Tbl_Region" EntitySet="Tbl_Region" />
+          </AssociationSet>
           <AssociationSet Name="FK_Tbl_Response_Tbl_Code" Association="ESLModel.FK_Tbl_Response_Tbl_Code">
             <End Role="Tbl_Code" EntitySet="Tbl_Code" />
             <End Role="Tbl_Response" EntitySet="Tbl_Response" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Tbl_Contract_Tbl_Document" Association="ESLModel.FK_Tbl_Contract_Tbl_Document">
-            <End Role="Tbl_Document" EntitySet="Tbl_Document" />
-            <End Role="Tbl_Contract" EntitySet="Tbl_Contract" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Tbl_Course_Tbl_Document" Association="ESLModel.FK_Tbl_Course_Tbl_Document">
-            <End Role="Tbl_Document" EntitySet="Tbl_Document" />
-            <End Role="Tbl_Course" EntitySet="Tbl_Course" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Tbl_SubCourse_Tbl_Course" Association="ESLModel.FK_Tbl_SubCourse_Tbl_Course">
-            <End Role="Tbl_Course" EntitySet="Tbl_Course" />
-            <End Role="Tbl_SubCourse" EntitySet="Tbl_SubCourse" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Tbl_Gallery_Tbl_Document" Association="ESLModel.FK_Tbl_Gallery_Tbl_Document">
-            <End Role="Tbl_Document" EntitySet="Tbl_Document" />
-            <End Role="Tbl_Gallery" EntitySet="Tbl_Gallery" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_GalleryDocument_Tbl_Document" Association="ESLModel.FK_Tbl_GalleryDocument_Tbl_Document">
             <End Role="Tbl_Document" EntitySet="Tbl_Document" />
             <End Role="Tbl_GalleryDocument" EntitySet="Tbl_GalleryDocument" />
           </AssociationSet>
-          <AssociationSet Name="FK_Tbl_NewsDocument_Tbl_Document" Association="ESLModel.FK_Tbl_NewsDocument_Tbl_Document">
-            <End Role="Tbl_Document" EntitySet="Tbl_Document" />
-            <End Role="Tbl_NewsDocument" EntitySet="Tbl_NewsDocument" />
-          </AssociationSet>
           <AssociationSet Name="FK_Tbl_Organization_Tbl_Document" Association="ESLModel.FK_Tbl_Organization_Tbl_Document">
             <End Role="Tbl_Document" EntitySet="Tbl_Document" />
             <End Role="Tbl_Organization" EntitySet="Tbl_Organization" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_PageDocuments_Tbl_Document" Association="ESLModel.FK_Tbl_PageDocuments_Tbl_Document">
+            <End Role="Tbl_Document" EntitySet="Tbl_Document" />
+            <End Role="Tbl_PageDocuments" EntitySet="Tbl_PageDocuments" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_Payment_Tbl_Document" Association="ESLModel.FK_Tbl_Payment_Tbl_Document">
             <End Role="Tbl_Document" EntitySet="Tbl_Document" />
             <End Role="Tbl_Payment" EntitySet="Tbl_Payment" />
           </AssociationSet>
-          <AssociationSet Name="FK_Tbl_Region_Tbl_Document" Association="ESLModel.FK_Tbl_Region_Tbl_Document">
-            <End Role="Tbl_Document" EntitySet="Tbl_Document" />
-            <End Role="Tbl_Region" EntitySet="Tbl_Region" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Tbl_SubCourse_Tbl_Document" Association="ESLModel.FK_Tbl_SubCourse_Tbl_Document">
-            <End Role="Tbl_Document" EntitySet="Tbl_Document" />
-            <End Role="Tbl_SubCourse" EntitySet="Tbl_SubCourse" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Tbl_Question_Tbl_Exam" Association="ESLModel.FK_Tbl_Question_Tbl_Exam">
+          <AssociationSet Name="FK_Tbl_SubExam_Tbl_Exam" Association="ESLModel.FK_Tbl_SubExam_Tbl_Exam">
             <End Role="Tbl_Exam" EntitySet="Tbl_Exam" />
-            <End Role="Tbl_Question" EntitySet="Tbl_Question" />
+            <End Role="Tbl_SubExam" EntitySet="Tbl_SubExam" />
           </AssociationSet>
-          <AssociationSet Name="FK_Tbl_UserExam_Tbl_Exam" Association="ESLModel.FK_Tbl_UserExam_Tbl_Exam">
-            <End Role="Tbl_Exam" EntitySet="Tbl_Exam" />
-            <End Role="Tbl_UserExam" EntitySet="Tbl_UserExam" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Tbl_UserExamAccess_Tbl_Exam" Association="ESLModel.FK_Tbl_UserExamAccess_Tbl_Exam">
-            <End Role="Tbl_Exam" EntitySet="Tbl_Exam" />
-            <End Role="Tbl_UserExamAccess" EntitySet="Tbl_UserExamAccess" />
+          <AssociationSet Name="FK_Tbl_ExamInPerson_Tbl_SubExam" Association="ESLModel.FK_Tbl_ExamInPerson_Tbl_SubExam">
+            <End Role="Tbl_SubExam" EntitySet="Tbl_SubExam" />
+            <End Role="Tbl_ExamInPerson" EntitySet="Tbl_ExamInPerson" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_UserExamInPerson_Tbl_ExamInPerson" Association="ESLModel.FK_Tbl_UserExamInPerson_Tbl_ExamInPerson">
             <End Role="Tbl_ExamInPerson" EntitySet="Tbl_ExamInPerson" />
             <End Role="Tbl_UserExamInPerson" EntitySet="Tbl_UserExamInPerson" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Question_Tbl_ExamRemotely" Association="ESLModel.FK_Tbl_Question_Tbl_ExamRemotely">
+            <End Role="Tbl_ExamRemotely" EntitySet="Tbl_ExamRemotely" />
+            <End Role="Tbl_Question" EntitySet="Tbl_Question" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_UserExam_Tbl_ExamRemotely" Association="ESLModel.FK_Tbl_UserExam_Tbl_ExamRemotely">
+            <End Role="Tbl_ExamRemotely" EntitySet="Tbl_ExamRemotely" />
+            <End Role="Tbl_UserExam" EntitySet="Tbl_UserExam" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_UserExamAccess_Tbl_ExamRemotely" Association="ESLModel.FK_Tbl_UserExamAccess_Tbl_ExamRemotely">
+            <End Role="Tbl_ExamRemotely" EntitySet="Tbl_ExamRemotely" />
+            <End Role="Tbl_UserExamAccess" EntitySet="Tbl_UserExamAccess" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_GalleryDocument_Tbl_Gallery" Association="ESLModel.FK_Tbl_GalleryDocument_Tbl_Gallery">
             <End Role="Tbl_Gallery" EntitySet="Tbl_Gallery" />
@@ -1123,17 +1114,29 @@
             <End Role="Tbl_Menu" EntitySet="Tbl_Menu" />
             <End Role="Tbl_SubMenu" EntitySet="Tbl_SubMenu" />
           </AssociationSet>
-          <AssociationSet Name="FK_Tbl_News_Tbl_User" Association="ESLModel.FK_Tbl_News_Tbl_User">
-            <End Role="Tbl_User" EntitySet="Tbl_User" />
-            <End Role="Tbl_News" EntitySet="Tbl_News" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Tbl_NewsDocument_Tbl_News" Association="ESLModel.FK_Tbl_NewsDocument_Tbl_News">
-            <End Role="Tbl_News" EntitySet="Tbl_News" />
-            <End Role="Tbl_NewsDocument" EntitySet="Tbl_NewsDocument" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Tbl_Region_Tbl_Page" Association="ESLModel.FK_Tbl_Region_Tbl_Page">
+          <AssociationSet Name="FK_Tbl_Page_Tbl_PageCategory" Association="ESLModel.FK_Tbl_Page_Tbl_PageCategory">
+            <End Role="Tbl_PageCategory" EntitySet="Tbl_PageCategory" />
             <End Role="Tbl_Page" EntitySet="Tbl_Page" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Page_Tbl_Region" Association="ESLModel.FK_Tbl_Page_Tbl_Region">
             <End Role="Tbl_Region" EntitySet="Tbl_Region" />
+            <End Role="Tbl_Page" EntitySet="Tbl_Page" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Page_Tbl_User" Association="ESLModel.FK_Tbl_Page_Tbl_User">
+            <End Role="Tbl_User" EntitySet="Tbl_User" />
+            <End Role="Tbl_Page" EntitySet="Tbl_Page" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_PageDocuments_Tbl_Page" Association="ESLModel.FK_Tbl_PageDocuments_Tbl_Page">
+            <End Role="Tbl_Page" EntitySet="Tbl_Page" />
+            <End Role="Tbl_PageDocuments" EntitySet="Tbl_PageDocuments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_PageTags_Tbl_Page" Association="ESLModel.FK_Tbl_PageTags_Tbl_Page">
+            <End Role="Tbl_Page" EntitySet="Tbl_Page" />
+            <End Role="Tbl_PageTags" EntitySet="Tbl_PageTags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_PageTags_Tbl_Tag" Association="ESLModel.FK_Tbl_PageTags_Tbl_Tag">
+            <End Role="Tbl_Tag" EntitySet="Tbl_Tag" />
+            <End Role="Tbl_PageTags" EntitySet="Tbl_PageTags" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_Payment_Tbl_User" Association="ESLModel.FK_Tbl_Payment_Tbl_User">
             <End Role="Tbl_User" EntitySet="Tbl_User" />
@@ -1188,15 +1191,16 @@
           <Property Name="Code_Name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="Code_Display" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Tbl_CodeGroup" Relationship="ESLModel.FK_Tbl_Code_Tbl_CodeGroup" FromRole="Tbl_Code" ToRole="Tbl_CodeGroup" />
-          <NavigationProperty Name="Tbl_Contract" Relationship="ESLModel.FK_Tbl_Contract_Tbl_Code" FromRole="Tbl_Code" ToRole="Tbl_Contract" />
           <NavigationProperty Name="Tbl_Document" Relationship="ESLModel.FK_Tbl_Document_Tbl_Code" FromRole="Tbl_Code" ToRole="Tbl_Document" />
-          <NavigationProperty Name="Tbl_NewsDocument" Relationship="ESLModel.FK_Tbl_NewsDocument_Tbl_Code" FromRole="Tbl_Code" ToRole="Tbl_NewsDocument" />
+          <NavigationProperty Name="Tbl_ExamRemotely" Relationship="ESLModel.FK_Tbl_ExamRemotely_Tbl_Code" FromRole="Tbl_Code" ToRole="Tbl_ExamRemotely" />
           <NavigationProperty Name="Tbl_Organization" Relationship="ESLModel.FK_Tbl_Organization_Tbl_Code" FromRole="Tbl_Code" ToRole="Tbl_Organization" />
+          <NavigationProperty Name="Tbl_PageDocuments" Relationship="ESLModel.FK_Tbl_PageDocuments_Tbl_Code" FromRole="Tbl_Code" ToRole="Tbl_PageDocuments" />
           <NavigationProperty Name="Tbl_Payment" Relationship="ESLModel.FK_Tbl_Payment_Tbl_Code_StateCodeID" FromRole="Tbl_Code" ToRole="Tbl_Payment" />
           <NavigationProperty Name="Tbl_Payment1" Relationship="ESLModel.FK_Tbl_Payment_Tbl_Code_TypeCodeID" FromRole="Tbl_Code" ToRole="Tbl_Payment" />
           <NavigationProperty Name="Tbl_Payment2" Relationship="ESLModel.FK_Tbl_Payment_Tbl_Code_WayCodeID" FromRole="Tbl_Code" ToRole="Tbl_Payment" />
           <NavigationProperty Name="Tbl_Question" Relationship="ESLModel.FK_Tbl_Question_Tbl_Code_GroupCodeID" FromRole="Tbl_Code" ToRole="Tbl_Question" />
           <NavigationProperty Name="Tbl_Question1" Relationship="ESLModel.FK_Tbl_Question_Tbl_Code_TypeCodeID" FromRole="Tbl_Code" ToRole="Tbl_Question" />
+          <NavigationProperty Name="Tbl_Region" Relationship="ESLModel.FK_Tbl_Region_Tbl_Code" FromRole="Tbl_Code" ToRole="Tbl_Region" />
           <NavigationProperty Name="Tbl_Response" Relationship="ESLModel.FK_Tbl_Response_Tbl_Code" FromRole="Tbl_Code" ToRole="Tbl_Response" />
         </EntityType>
         <EntityType Name="Tbl_CodeGroup">
@@ -1209,38 +1213,6 @@
           <Property Name="CG_Display" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Tbl_Code" Relationship="ESLModel.FK_Tbl_Code_Tbl_CodeGroup" FromRole="Tbl_CodeGroup" ToRole="Tbl_Code" />
         </EntityType>
-        <EntityType Name="Tbl_Contract">
-          <Key>
-            <PropertyRef Name="Contract_ID" />
-          </Key>
-          <Property Name="Contract_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Contract_Guid" Type="Guid" Nullable="false" />
-          <Property Name="Contract_DocumentID" Type="Int32" Nullable="false" />
-          <Property Name="Contract_TypeCodeID" Type="Int32" Nullable="false" />
-          <Property Name="Contract_Title" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="Contract_Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Contract_CreationDate" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="Contract_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="Contract_IsDelete" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Tbl_Code" Relationship="ESLModel.FK_Tbl_Contract_Tbl_Code" FromRole="Tbl_Contract" ToRole="Tbl_Code" />
-          <NavigationProperty Name="Tbl_Document" Relationship="ESLModel.FK_Tbl_Contract_Tbl_Document" FromRole="Tbl_Contract" ToRole="Tbl_Document" />
-        </EntityType>
-        <EntityType Name="Tbl_Course">
-          <Key>
-            <PropertyRef Name="Course_ID" />
-          </Key>
-          <Property Name="Course_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Course_Guid" Type="Guid" Nullable="false" />
-          <Property Name="Course_DocumentID" Type="Int32" Nullable="false" />
-          <Property Name="Course_Title" Type="String" Nullable="false" MaxLength="512" FixedLength="false" Unicode="true" />
-          <Property Name="Course_Abstract" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Course_Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Course_CreationDate" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="Course_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="Course_IsDelete" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Tbl_Document" Relationship="ESLModel.FK_Tbl_Course_Tbl_Document" FromRole="Tbl_Course" ToRole="Tbl_Document" />
-          <NavigationProperty Name="Tbl_SubCourse" Relationship="ESLModel.FK_Tbl_SubCourse_Tbl_Course" FromRole="Tbl_Course" ToRole="Tbl_SubCourse" />
-        </EntityType>
         <EntityType Name="Tbl_Document">
           <Key>
             <PropertyRef Name="Document_ID" />
@@ -1250,15 +1222,10 @@
           <Property Name="Document_TypeCodeID" Type="Int32" Nullable="false" />
           <Property Name="Document_Path" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Tbl_Code" Relationship="ESLModel.FK_Tbl_Document_Tbl_Code" FromRole="Tbl_Document" ToRole="Tbl_Code" />
-          <NavigationProperty Name="Tbl_Contract" Relationship="ESLModel.FK_Tbl_Contract_Tbl_Document" FromRole="Tbl_Document" ToRole="Tbl_Contract" />
-          <NavigationProperty Name="Tbl_Course" Relationship="ESLModel.FK_Tbl_Course_Tbl_Document" FromRole="Tbl_Document" ToRole="Tbl_Course" />
-          <NavigationProperty Name="Tbl_Gallery" Relationship="ESLModel.FK_Tbl_Gallery_Tbl_Document" FromRole="Tbl_Document" ToRole="Tbl_Gallery" />
           <NavigationProperty Name="Tbl_GalleryDocument" Relationship="ESLModel.FK_Tbl_GalleryDocument_Tbl_Document" FromRole="Tbl_Document" ToRole="Tbl_GalleryDocument" />
-          <NavigationProperty Name="Tbl_NewsDocument" Relationship="ESLModel.FK_Tbl_NewsDocument_Tbl_Document" FromRole="Tbl_Document" ToRole="Tbl_NewsDocument" />
           <NavigationProperty Name="Tbl_Organization" Relationship="ESLModel.FK_Tbl_Organization_Tbl_Document" FromRole="Tbl_Document" ToRole="Tbl_Organization" />
+          <NavigationProperty Name="Tbl_PageDocuments" Relationship="ESLModel.FK_Tbl_PageDocuments_Tbl_Document" FromRole="Tbl_Document" ToRole="Tbl_PageDocuments" />
           <NavigationProperty Name="Tbl_Payment" Relationship="ESLModel.FK_Tbl_Payment_Tbl_Document" FromRole="Tbl_Document" ToRole="Tbl_Payment" />
-          <NavigationProperty Name="Tbl_Region" Relationship="ESLModel.FK_Tbl_Region_Tbl_Document" FromRole="Tbl_Document" ToRole="Tbl_Region" />
-          <NavigationProperty Name="Tbl_SubCourse" Relationship="ESLModel.FK_Tbl_SubCourse_Tbl_Document" FromRole="Tbl_Document" ToRole="Tbl_SubCourse" />
         </EntityType>
         <EntityType Name="Tbl_Exam">
           <Key>
@@ -1266,16 +1233,12 @@
           </Key>
           <Property Name="Exam_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Exam_Guid" Type="Guid" Nullable="false" />
-          <Property Name="Exam_GroupCodeID" Type="Int32" Nullable="false" />
-          <Property Name="Exam_Title" Type="String" Nullable="false" MaxLength="512" FixedLength="false" Unicode="true" />
-          <Property Name="Exam_Mark" Type="Int32" Nullable="false" />
-          <Property Name="Exam_PassMark" Type="Int32" Nullable="false" />
+          <Property Name="Exam_Title" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Exam_HasSubMenu" Type="Boolean" Nullable="false" />
           <Property Name="Exam_CreationDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="Exam_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="Exam_IsDelete" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Tbl_Question" Relationship="ESLModel.FK_Tbl_Question_Tbl_Exam" FromRole="Tbl_Exam" ToRole="Tbl_Question" />
-          <NavigationProperty Name="Tbl_UserExam" Relationship="ESLModel.FK_Tbl_UserExam_Tbl_Exam" FromRole="Tbl_Exam" ToRole="Tbl_UserExam" />
-          <NavigationProperty Name="Tbl_UserExamAccess" Relationship="ESLModel.FK_Tbl_UserExamAccess_Tbl_Exam" FromRole="Tbl_Exam" ToRole="Tbl_UserExamAccess" />
+          <NavigationProperty Name="Tbl_SubExam" Relationship="ESLModel.FK_Tbl_SubExam_Tbl_Exam" FromRole="Tbl_Exam" ToRole="Tbl_SubExam" />
         </EntityType>
         <EntityType Name="Tbl_ExamInPerson">
           <Key>
@@ -1283,17 +1246,38 @@
           </Key>
           <Property Name="EIP_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EIP_Guid" Type="Guid" Nullable="false" />
+          <Property Name="EIP_SEID" Type="Int32" Nullable="false" />
           <Property Name="EIP_Capacity" Type="Int32" Nullable="false" />
-          <Property Name="EIP_Title" Type="String" Nullable="false" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="EIP_Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="EIP_TotalMark" Type="Int32" Nullable="false" />
           <Property Name="EIP_PassMark" Type="Int32" Nullable="false" />
           <Property Name="EIP_Cost" Type="Int32" Nullable="false" />
           <Property Name="EIP_Location" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="EIP_Date" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="EIP_IsActive" Type="Boolean" Nullable="false" />
           <Property Name="EIP_CreationDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="EIP_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="EIP_IsDelete" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Tbl_SubExam" Relationship="ESLModel.FK_Tbl_ExamInPerson_Tbl_SubExam" FromRole="Tbl_ExamInPerson" ToRole="Tbl_SubExam" />
           <NavigationProperty Name="Tbl_UserExamInPerson" Relationship="ESLModel.FK_Tbl_UserExamInPerson_Tbl_ExamInPerson" FromRole="Tbl_ExamInPerson" ToRole="Tbl_UserExamInPerson" />
+        </EntityType>
+        <EntityType Name="Tbl_ExamRemotely">
+          <Key>
+            <PropertyRef Name="ER_ID" />
+          </Key>
+          <Property Name="ER_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ER_Guid" Type="Guid" Nullable="false" />
+          <Property Name="ER_GroupCodeID" Type="Int32" Nullable="false" />
+          <Property Name="ER_Title" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ER_Mark" Type="Int32" Nullable="false" />
+          <Property Name="ER_PassMark" Type="Int32" Nullable="false" />
+          <Property Name="ER_CreationDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="ER_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="ER_IsDelete" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Tbl_Code" Relationship="ESLModel.FK_Tbl_ExamRemotely_Tbl_Code" FromRole="Tbl_ExamRemotely" ToRole="Tbl_Code" />
+          <NavigationProperty Name="Tbl_Question" Relationship="ESLModel.FK_Tbl_Question_Tbl_ExamRemotely" FromRole="Tbl_ExamRemotely" ToRole="Tbl_Question" />
+          <NavigationProperty Name="Tbl_UserExam" Relationship="ESLModel.FK_Tbl_UserExam_Tbl_ExamRemotely" FromRole="Tbl_ExamRemotely" ToRole="Tbl_UserExam" />
+          <NavigationProperty Name="Tbl_UserExamAccess" Relationship="ESLModel.FK_Tbl_UserExamAccess_Tbl_ExamRemotely" FromRole="Tbl_ExamRemotely" ToRole="Tbl_UserExamAccess" />
         </EntityType>
         <EntityType Name="Tbl_Gallery">
           <Key>
@@ -1301,12 +1285,10 @@
           </Key>
           <Property Name="Gallery_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Gallery_Guid" Type="Guid" Nullable="false" />
-          <Property Name="Gallery_DocumentID" Type="Int32" Nullable="false" />
           <Property Name="Gallery_Title" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="Gallery_CreationDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="Gallery_HasAlbum" Type="Boolean" Nullable="false" />
           <Property Name="Gallery_IsDelete" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Tbl_Document" Relationship="ESLModel.FK_Tbl_Gallery_Tbl_Document" FromRole="Tbl_Gallery" ToRole="Tbl_Document" />
           <NavigationProperty Name="Tbl_GalleryDocument" Relationship="ESLModel.FK_Tbl_GalleryDocument_Tbl_Gallery" FromRole="Tbl_Gallery" ToRole="Tbl_GalleryDocument" />
         </EntityType>
         <EntityType Name="Tbl_GalleryDocument">
@@ -1319,6 +1301,7 @@
           <Property Name="GD_DocumentID" Type="Int32" Nullable="false" />
           <Property Name="GD_Title" Type="Int32" Nullable="false" />
           <Property Name="GD_CreationDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="GD_IsCover" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Tbl_Document" Relationship="ESLModel.FK_Tbl_GalleryDocument_Tbl_Document" FromRole="Tbl_GalleryDocument" ToRole="Tbl_Document" />
           <NavigationProperty Name="Tbl_Gallery" Relationship="ESLModel.FK_Tbl_GalleryDocument_Tbl_Gallery" FromRole="Tbl_GalleryDocument" ToRole="Tbl_Gallery" />
         </EntityType>
@@ -1333,36 +1316,6 @@
           <Property Name="Menu_Order" Type="Int32" Nullable="false" />
           <Property Name="Menu_HasSubMenu" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Tbl_SubMenu" Relationship="ESLModel.FK_Tbl_SubMenu_Menu" FromRole="Tbl_Menu" ToRole="Tbl_SubMenu" />
-        </EntityType>
-        <EntityType Name="Tbl_News">
-          <Key>
-            <PropertyRef Name="News_ID" />
-          </Key>
-          <Property Name="News_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="News_Guid" Type="Guid" Nullable="false" />
-          <Property Name="News_UserID" Type="Int32" Nullable="false" />
-          <Property Name="News_NDID" Type="Int32" Nullable="false" />
-          <Property Name="News_Title" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="News_Abstract" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="News_Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="News_CreateDate" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="News_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="News_IsDelete" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Tbl_User" Relationship="ESLModel.FK_Tbl_News_Tbl_User" FromRole="Tbl_News" ToRole="Tbl_User" />
-          <NavigationProperty Name="Tbl_NewsDocument" Relationship="ESLModel.FK_Tbl_NewsDocument_Tbl_News" FromRole="Tbl_News" ToRole="Tbl_NewsDocument" />
-        </EntityType>
-        <EntityType Name="Tbl_NewsDocument">
-          <Key>
-            <PropertyRef Name="ND_ID" />
-          </Key>
-          <Property Name="ND_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ND_Guid" Type="Guid" Nullable="false" />
-          <Property Name="ND_NewsID" Type="Int32" Nullable="false" />
-          <Property Name="ND_DocumentID" Type="Int32" Nullable="false" />
-          <Property Name="ND_TypeCodeID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Tbl_Code" Relationship="ESLModel.FK_Tbl_NewsDocument_Tbl_Code" FromRole="Tbl_NewsDocument" ToRole="Tbl_Code" />
-          <NavigationProperty Name="Tbl_Document" Relationship="ESLModel.FK_Tbl_NewsDocument_Tbl_Document" FromRole="Tbl_NewsDocument" ToRole="Tbl_Document" />
-          <NavigationProperty Name="Tbl_News" Relationship="ESLModel.FK_Tbl_NewsDocument_Tbl_News" FromRole="Tbl_NewsDocument" ToRole="Tbl_News" />
         </EntityType>
         <EntityType Name="Tbl_Organization">
           <Key>
@@ -1383,8 +1336,54 @@
           </Key>
           <Property Name="Page_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Page_Guid" Type="Guid" Nullable="false" />
-          <Property Name="Page_Name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Tbl_Region" Relationship="ESLModel.FK_Tbl_Region_Tbl_Page" FromRole="Tbl_Page" ToRole="Tbl_Region" />
+          <Property Name="Page_UserID" Type="Int32" Nullable="false" />
+          <Property Name="Page_RegionID" Type="Int32" Nullable="false" />
+          <Property Name="Page_PCID" Type="Int32" Nullable="false" />
+          <Property Name="Page_Titel" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Page_Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Page_IsDelete" Type="Int32" Nullable="false" />
+          <Property Name="Page_CreateDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="Page_Modify" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="Page_Abstract" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Tbl_PageCategory" Relationship="ESLModel.FK_Tbl_Page_Tbl_PageCategory" FromRole="Tbl_Page" ToRole="Tbl_PageCategory" />
+          <NavigationProperty Name="Tbl_Region" Relationship="ESLModel.FK_Tbl_Page_Tbl_Region" FromRole="Tbl_Page" ToRole="Tbl_Region" />
+          <NavigationProperty Name="Tbl_User" Relationship="ESLModel.FK_Tbl_Page_Tbl_User" FromRole="Tbl_Page" ToRole="Tbl_User" />
+          <NavigationProperty Name="Tbl_PageDocuments" Relationship="ESLModel.FK_Tbl_PageDocuments_Tbl_Page" FromRole="Tbl_Page" ToRole="Tbl_PageDocuments" />
+          <NavigationProperty Name="Tbl_PageTags" Relationship="ESLModel.FK_Tbl_PageTags_Tbl_Page" FromRole="Tbl_Page" ToRole="Tbl_PageTags" />
+        </EntityType>
+        <EntityType Name="Tbl_PageCategory">
+          <Key>
+            <PropertyRef Name="PC_ID" />
+          </Key>
+          <Property Name="PC_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PC_Guid" Type="Guid" Nullable="false" />
+          <Property Name="PC_Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PC_Display" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Tbl_Page" Relationship="ESLModel.FK_Tbl_Page_Tbl_PageCategory" FromRole="Tbl_PageCategory" ToRole="Tbl_Page" />
+        </EntityType>
+        <EntityType Name="Tbl_PageDocuments">
+          <Key>
+            <PropertyRef Name="PD_ID" />
+          </Key>
+          <Property Name="PD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PD_Guid" Type="Guid" Nullable="false" />
+          <Property Name="PD_TypeCodeID" Type="Int32" Nullable="false" />
+          <Property Name="PD_DocumentID" Type="Int32" Nullable="false" />
+          <Property Name="PD_PageID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Tbl_Code" Relationship="ESLModel.FK_Tbl_PageDocuments_Tbl_Code" FromRole="Tbl_PageDocuments" ToRole="Tbl_Code" />
+          <NavigationProperty Name="Tbl_Document" Relationship="ESLModel.FK_Tbl_PageDocuments_Tbl_Document" FromRole="Tbl_PageDocuments" ToRole="Tbl_Document" />
+          <NavigationProperty Name="Tbl_Page" Relationship="ESLModel.FK_Tbl_PageDocuments_Tbl_Page" FromRole="Tbl_PageDocuments" ToRole="Tbl_Page" />
+        </EntityType>
+        <EntityType Name="Tbl_PageTags">
+          <Key>
+            <PropertyRef Name="PT_ID" />
+          </Key>
+          <Property Name="PT_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PT_Guid" Type="Guid" Nullable="false" />
+          <Property Name="PT_TagID" Type="Int32" Nullable="false" />
+          <Property Name="PT_PageID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Tbl_Page" Relationship="ESLModel.FK_Tbl_PageTags_Tbl_Page" FromRole="Tbl_PageTags" ToRole="Tbl_Page" />
+          <NavigationProperty Name="Tbl_Tag" Relationship="ESLModel.FK_Tbl_PageTags_Tbl_Tag" FromRole="Tbl_PageTags" ToRole="Tbl_Tag" />
         </EntityType>
         <EntityType Name="Tbl_Payment">
           <Key>
@@ -1396,7 +1395,9 @@
           <Property Name="Payment_TypeCodeID" Type="Int32" Nullable="false" />
           <Property Name="Payment_WayCodeID" Type="Int32" Nullable="false" />
           <Property Name="Payment_StateCodeID" Type="Int32" Nullable="false" />
+          <Property Name="Payment_TitleCodeID" Type="Int32" Nullable="false" />
           <Property Name="Payment_Cost" Type="Int32" Nullable="false" />
+          <Property Name="Payment_RemaingWallet" Type="Int32" Nullable="false" />
           <Property Name="Payment_TrackingToken" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="Payment_DocumentID" Type="Int32" />
           <Property Name="Payment_CreateDate" Type="DateTime" Nullable="false" Precision="7" />
@@ -1414,7 +1415,7 @@
           </Key>
           <Property Name="Question_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Question_Guid" Type="Guid" Nullable="false" />
-          <Property Name="Question_ExamID" Type="Int32" Nullable="false" />
+          <Property Name="Question_ERID" Type="Int32" Nullable="false" />
           <Property Name="Question_GroupCodeID" Type="Int32" Nullable="false" />
           <Property Name="Question_ResponseID" Type="Int32" />
           <Property Name="Question_TypeCodeID" Type="Int32" Nullable="false" />
@@ -1426,7 +1427,7 @@
           <Property Name="Question_IsDelete" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Tbl_Code" Relationship="ESLModel.FK_Tbl_Question_Tbl_Code_GroupCodeID" FromRole="Tbl_Question" ToRole="Tbl_Code" />
           <NavigationProperty Name="Tbl_Code1" Relationship="ESLModel.FK_Tbl_Question_Tbl_Code_TypeCodeID" FromRole="Tbl_Question" ToRole="Tbl_Code" />
-          <NavigationProperty Name="Tbl_Exam" Relationship="ESLModel.FK_Tbl_Question_Tbl_Exam" FromRole="Tbl_Question" ToRole="Tbl_Exam" />
+          <NavigationProperty Name="Tbl_ExamRemotely" Relationship="ESLModel.FK_Tbl_Question_Tbl_ExamRemotely" FromRole="Tbl_Question" ToRole="Tbl_ExamRemotely" />
           <NavigationProperty Name="Tbl_Response" Relationship="ESLModel.FK_Tbl_Question_Tbl_Response" FromRole="Tbl_Question" ToRole="Tbl_Response" />
           <NavigationProperty Name="Tbl_Response1" Relationship="ESLModel.FK_Tbl_Response_Tbl_Question" FromRole="Tbl_Question" ToRole="Tbl_Response" />
         </EntityType>
@@ -1436,14 +1437,11 @@
           </Key>
           <Property Name="Region_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Region_Guid" Type="Guid" Nullable="false" />
-          <Property Name="Region_PageID" Type="Int32" Nullable="false" />
-          <Property Name="Region_DocumentID" Type="Int32" />
-          <Property Name="Region_Name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="Region_Title" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="Region_Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Region_HasDocument" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Tbl_Document" Relationship="ESLModel.FK_Tbl_Region_Tbl_Document" FromRole="Tbl_Region" ToRole="Tbl_Document" />
-          <NavigationProperty Name="Tbl_Page" Relationship="ESLModel.FK_Tbl_Region_Tbl_Page" FromRole="Tbl_Region" ToRole="Tbl_Page" />
+          <Property Name="Region_Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Region_Display" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Region_CodeID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Tbl_Code" Relationship="ESLModel.FK_Tbl_Region_Tbl_Code" FromRole="Tbl_Region" ToRole="Tbl_Code" />
+          <NavigationProperty Name="Tbl_Page" Relationship="ESLModel.FK_Tbl_Page_Tbl_Region" FromRole="Tbl_Region" ToRole="Tbl_Page" />
         </EntityType>
         <EntityType Name="Tbl_Response">
           <Key>
@@ -1470,22 +1468,19 @@
           <Property Name="Role_Display" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Tbl_User" Relationship="ESLModel.FK_Tbl_User_Tbl_Role" FromRole="Tbl_Role" ToRole="Tbl_User" />
         </EntityType>
-        <EntityType Name="Tbl_SubCourse">
+        <EntityType Name="Tbl_SubExam">
           <Key>
-            <PropertyRef Name="SC_ID" />
+            <PropertyRef Name="SE_ID" />
           </Key>
-          <Property Name="SC_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SC_Guid" Type="Guid" Nullable="false" />
-          <Property Name="SC_CourseID" Type="Int32" Nullable="false" />
-          <Property Name="SC_DocumentID" Type="Int32" Nullable="false" />
-          <Property Name="SC_Title" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="SC_Abstract" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="SC_Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="SC_CreationDate" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="SC_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="SC_IsDelete" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Tbl_Course" Relationship="ESLModel.FK_Tbl_SubCourse_Tbl_Course" FromRole="Tbl_SubCourse" ToRole="Tbl_Course" />
-          <NavigationProperty Name="Tbl_Document" Relationship="ESLModel.FK_Tbl_SubCourse_Tbl_Document" FromRole="Tbl_SubCourse" ToRole="Tbl_Document" />
+          <Property Name="SE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SE_Guid" Type="Guid" Nullable="false" />
+          <Property Name="SE_ExamID" Type="Int32" Nullable="false" />
+          <Property Name="SE_Title" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="SE_CreationDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="SE_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="SE_IsDelete" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Tbl_Exam" Relationship="ESLModel.FK_Tbl_SubExam_Tbl_Exam" FromRole="Tbl_SubExam" ToRole="Tbl_Exam" />
+          <NavigationProperty Name="Tbl_ExamInPerson" Relationship="ESLModel.FK_Tbl_ExamInPerson_Tbl_SubExam" FromRole="Tbl_SubExam" ToRole="Tbl_ExamInPerson" />
         </EntityType>
         <EntityType Name="Tbl_SubMenu">
           <Key>
@@ -1498,6 +1493,15 @@
           <Property Name="SM_Display" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="SM_Order" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Tbl_Menu" Relationship="ESLModel.FK_Tbl_SubMenu_Menu" FromRole="Tbl_SubMenu" ToRole="Tbl_Menu" />
+        </EntityType>
+        <EntityType Name="Tbl_Tag">
+          <Key>
+            <PropertyRef Name="Tag_ID" />
+          </Key>
+          <Property Name="Tag_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Tag_Guid" Type="Guid" Nullable="false" />
+          <Property Name="Tag_Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Tbl_PageTags" Relationship="ESLModel.FK_Tbl_PageTags_Tbl_Tag" FromRole="Tbl_Tag" ToRole="Tbl_PageTags" />
         </EntityType>
         <EntityType Name="Tbl_User">
           <Key>
@@ -1519,7 +1523,7 @@
           <Property Name="User_Credit" Type="Int32" Nullable="false" />
           <Property Name="User_IsBan" Type="Boolean" Nullable="false" />
           <Property Name="User_IsDelete" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Tbl_News" Relationship="ESLModel.FK_Tbl_News_Tbl_User" FromRole="Tbl_User" ToRole="Tbl_News" />
+          <NavigationProperty Name="Tbl_Page" Relationship="ESLModel.FK_Tbl_Page_Tbl_User" FromRole="Tbl_User" ToRole="Tbl_Page" />
           <NavigationProperty Name="Tbl_Payment" Relationship="ESLModel.FK_Tbl_Payment_Tbl_User" FromRole="Tbl_User" ToRole="Tbl_Payment" />
           <NavigationProperty Name="Tbl_Role" Relationship="ESLModel.FK_Tbl_User_Tbl_Role" FromRole="Tbl_User" ToRole="Tbl_Role" />
           <NavigationProperty Name="Tbl_UserExam" Relationship="ESLModel.FK_Tbl_UserExam_Tbl_User" FromRole="Tbl_User" ToRole="Tbl_UserExam" />
@@ -1534,11 +1538,11 @@
           <Property Name="UE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UE_Guid" Type="Guid" Nullable="false" />
           <Property Name="UE_UserID" Type="Int32" Nullable="false" />
-          <Property Name="UE_ExamID" Type="Int32" Nullable="false" />
+          <Property Name="UE_ERID" Type="Int32" Nullable="false" />
           <Property Name="UE_Mark" Type="Int32" Nullable="false" />
           <Property Name="UE_Date" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="UE_IsDelete" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Tbl_Exam" Relationship="ESLModel.FK_Tbl_UserExam_Tbl_Exam" FromRole="Tbl_UserExam" ToRole="Tbl_Exam" />
+          <NavigationProperty Name="Tbl_ExamRemotely" Relationship="ESLModel.FK_Tbl_UserExam_Tbl_ExamRemotely" FromRole="Tbl_UserExam" ToRole="Tbl_ExamRemotely" />
           <NavigationProperty Name="Tbl_User" Relationship="ESLModel.FK_Tbl_UserExam_Tbl_User" FromRole="Tbl_UserExam" ToRole="Tbl_User" />
         </EntityType>
         <EntityType Name="Tbl_UserExamAccess">
@@ -1548,11 +1552,11 @@
           <Property Name="UEA_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UEA_Guid" Type="Guid" Nullable="false" />
           <Property Name="UEA_UserID" Type="Int32" Nullable="false" />
-          <Property Name="UEA_ExamID" Type="Int32" Nullable="false" />
+          <Property Name="UEA_ERID" Type="Int32" Nullable="false" />
           <Property Name="UEA_Date" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="UEA_IsActive" Type="Boolean" Nullable="false" />
           <Property Name="UEA_IsDelete" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Tbl_Exam" Relationship="ESLModel.FK_Tbl_UserExamAccess_Tbl_Exam" FromRole="Tbl_UserExamAccess" ToRole="Tbl_Exam" />
+          <NavigationProperty Name="Tbl_ExamRemotely" Relationship="ESLModel.FK_Tbl_UserExamAccess_Tbl_ExamRemotely" FromRole="Tbl_UserExamAccess" ToRole="Tbl_ExamRemotely" />
           <NavigationProperty Name="Tbl_User" Relationship="ESLModel.FK_Tbl_UserExamAccess_Tbl_User" FromRole="Tbl_UserExamAccess" ToRole="Tbl_User" />
         </EntityType>
         <EntityType Name="Tbl_UserExamInPerson">
@@ -1597,18 +1601,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Tbl_Contract_Tbl_Code">
-          <End Type="ESLModel.Tbl_Code" Role="Tbl_Code" Multiplicity="1" />
-          <End Type="ESLModel.Tbl_Contract" Role="Tbl_Contract" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tbl_Code">
-              <PropertyRef Name="Code_ID" />
-            </Principal>
-            <Dependent Role="Tbl_Contract">
-              <PropertyRef Name="Contract_TypeCodeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Tbl_Document_Tbl_Code">
           <End Type="ESLModel.Tbl_Code" Role="Tbl_Code" Multiplicity="1" />
           <End Type="ESLModel.Tbl_Document" Role="Tbl_Document" Multiplicity="*" />
@@ -1621,15 +1613,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Tbl_NewsDocument_Tbl_Code">
+        <Association Name="FK_Tbl_ExamRemotely_Tbl_Code">
           <End Type="ESLModel.Tbl_Code" Role="Tbl_Code" Multiplicity="1" />
-          <End Type="ESLModel.Tbl_NewsDocument" Role="Tbl_NewsDocument" Multiplicity="*" />
+          <End Type="ESLModel.Tbl_ExamRemotely" Role="Tbl_ExamRemotely" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tbl_Code">
               <PropertyRef Name="Code_ID" />
             </Principal>
-            <Dependent Role="Tbl_NewsDocument">
-              <PropertyRef Name="ND_TypeCodeID" />
+            <Dependent Role="Tbl_ExamRemotely">
+              <PropertyRef Name="ER_GroupCodeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1642,6 +1634,18 @@
             </Principal>
             <Dependent Role="Tbl_Organization">
               <PropertyRef Name="Organization_TypeCodeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_PageDocuments_Tbl_Code">
+          <End Type="ESLModel.Tbl_Code" Role="Tbl_Code" Multiplicity="1" />
+          <End Type="ESLModel.Tbl_PageDocuments" Role="Tbl_PageDocuments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Code">
+              <PropertyRef Name="Code_ID" />
+            </Principal>
+            <Dependent Role="Tbl_PageDocuments">
+              <PropertyRef Name="PD_TypeCodeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1705,6 +1709,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Tbl_Region_Tbl_Code">
+          <End Type="ESLModel.Tbl_Code" Role="Tbl_Code" Multiplicity="1" />
+          <End Type="ESLModel.Tbl_Region" Role="Tbl_Region" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Code">
+              <PropertyRef Name="Code_ID" />
+            </Principal>
+            <Dependent Role="Tbl_Region">
+              <PropertyRef Name="Region_CodeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Tbl_Response_Tbl_Code">
           <End Type="ESLModel.Tbl_Code" Role="Tbl_Code" Multiplicity="1" />
           <End Type="ESLModel.Tbl_Response" Role="Tbl_Response" Multiplicity="*" />
@@ -1714,54 +1730,6 @@
             </Principal>
             <Dependent Role="Tbl_Response">
               <PropertyRef Name="Response_TypeCodeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Tbl_Contract_Tbl_Document">
-          <End Type="ESLModel.Tbl_Document" Role="Tbl_Document" Multiplicity="1" />
-          <End Type="ESLModel.Tbl_Contract" Role="Tbl_Contract" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tbl_Document">
-              <PropertyRef Name="Document_ID" />
-            </Principal>
-            <Dependent Role="Tbl_Contract">
-              <PropertyRef Name="Contract_DocumentID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Tbl_Course_Tbl_Document">
-          <End Type="ESLModel.Tbl_Document" Role="Tbl_Document" Multiplicity="1" />
-          <End Type="ESLModel.Tbl_Course" Role="Tbl_Course" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tbl_Document">
-              <PropertyRef Name="Document_ID" />
-            </Principal>
-            <Dependent Role="Tbl_Course">
-              <PropertyRef Name="Course_DocumentID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Tbl_SubCourse_Tbl_Course">
-          <End Type="ESLModel.Tbl_Course" Role="Tbl_Course" Multiplicity="1" />
-          <End Type="ESLModel.Tbl_SubCourse" Role="Tbl_SubCourse" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tbl_Course">
-              <PropertyRef Name="Course_ID" />
-            </Principal>
-            <Dependent Role="Tbl_SubCourse">
-              <PropertyRef Name="SC_CourseID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Tbl_Gallery_Tbl_Document">
-          <End Type="ESLModel.Tbl_Document" Role="Tbl_Document" Multiplicity="1" />
-          <End Type="ESLModel.Tbl_Gallery" Role="Tbl_Gallery" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tbl_Document">
-              <PropertyRef Name="Document_ID" />
-            </Principal>
-            <Dependent Role="Tbl_Gallery">
-              <PropertyRef Name="Gallery_DocumentID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1777,18 +1745,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Tbl_NewsDocument_Tbl_Document">
-          <End Type="ESLModel.Tbl_Document" Role="Tbl_Document" Multiplicity="1" />
-          <End Type="ESLModel.Tbl_NewsDocument" Role="Tbl_NewsDocument" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tbl_Document">
-              <PropertyRef Name="Document_ID" />
-            </Principal>
-            <Dependent Role="Tbl_NewsDocument">
-              <PropertyRef Name="ND_DocumentID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Tbl_Organization_Tbl_Document">
           <End Type="ESLModel.Tbl_Document" Role="Tbl_Document" Multiplicity="1" />
           <End Type="ESLModel.Tbl_Organization" Role="Tbl_Organization" Multiplicity="*" />
@@ -1798,6 +1754,18 @@
             </Principal>
             <Dependent Role="Tbl_Organization">
               <PropertyRef Name="Organization_DocumentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_PageDocuments_Tbl_Document">
+          <End Type="ESLModel.Tbl_Document" Role="Tbl_Document" Multiplicity="1" />
+          <End Type="ESLModel.Tbl_PageDocuments" Role="Tbl_PageDocuments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Document">
+              <PropertyRef Name="Document_ID" />
+            </Principal>
+            <Dependent Role="Tbl_PageDocuments">
+              <PropertyRef Name="PD_DocumentID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1813,63 +1781,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Tbl_Region_Tbl_Document">
-          <End Type="ESLModel.Tbl_Document" Role="Tbl_Document" Multiplicity="0..1" />
-          <End Type="ESLModel.Tbl_Region" Role="Tbl_Region" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tbl_Document">
-              <PropertyRef Name="Document_ID" />
-            </Principal>
-            <Dependent Role="Tbl_Region">
-              <PropertyRef Name="Region_DocumentID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Tbl_SubCourse_Tbl_Document">
-          <End Type="ESLModel.Tbl_Document" Role="Tbl_Document" Multiplicity="1" />
-          <End Type="ESLModel.Tbl_SubCourse" Role="Tbl_SubCourse" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tbl_Document">
-              <PropertyRef Name="Document_ID" />
-            </Principal>
-            <Dependent Role="Tbl_SubCourse">
-              <PropertyRef Name="SC_DocumentID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Tbl_Question_Tbl_Exam">
+        <Association Name="FK_Tbl_SubExam_Tbl_Exam">
           <End Type="ESLModel.Tbl_Exam" Role="Tbl_Exam" Multiplicity="1" />
-          <End Type="ESLModel.Tbl_Question" Role="Tbl_Question" Multiplicity="*" />
+          <End Type="ESLModel.Tbl_SubExam" Role="Tbl_SubExam" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tbl_Exam">
               <PropertyRef Name="Exam_ID" />
             </Principal>
-            <Dependent Role="Tbl_Question">
-              <PropertyRef Name="Question_ExamID" />
+            <Dependent Role="Tbl_SubExam">
+              <PropertyRef Name="SE_ExamID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Tbl_UserExam_Tbl_Exam">
-          <End Type="ESLModel.Tbl_Exam" Role="Tbl_Exam" Multiplicity="1" />
-          <End Type="ESLModel.Tbl_UserExam" Role="Tbl_UserExam" Multiplicity="*" />
+        <Association Name="FK_Tbl_ExamInPerson_Tbl_SubExam">
+          <End Type="ESLModel.Tbl_SubExam" Role="Tbl_SubExam" Multiplicity="1" />
+          <End Type="ESLModel.Tbl_ExamInPerson" Role="Tbl_ExamInPerson" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Tbl_Exam">
-              <PropertyRef Name="Exam_ID" />
+            <Principal Role="Tbl_SubExam">
+              <PropertyRef Name="SE_ID" />
             </Principal>
-            <Dependent Role="Tbl_UserExam">
-              <PropertyRef Name="UE_ExamID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Tbl_UserExamAccess_Tbl_Exam">
-          <End Type="ESLModel.Tbl_Exam" Role="Tbl_Exam" Multiplicity="1" />
-          <End Type="ESLModel.Tbl_UserExamAccess" Role="Tbl_UserExamAccess" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tbl_Exam">
-              <PropertyRef Name="Exam_ID" />
-            </Principal>
-            <Dependent Role="Tbl_UserExamAccess">
-              <PropertyRef Name="UEA_ExamID" />
+            <Dependent Role="Tbl_ExamInPerson">
+              <PropertyRef Name="EIP_SEID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1882,6 +1814,42 @@
             </Principal>
             <Dependent Role="Tbl_UserExamInPerson">
               <PropertyRef Name="UEIP_EIPID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_Question_Tbl_ExamRemotely">
+          <End Type="ESLModel.Tbl_ExamRemotely" Role="Tbl_ExamRemotely" Multiplicity="1" />
+          <End Type="ESLModel.Tbl_Question" Role="Tbl_Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_ExamRemotely">
+              <PropertyRef Name="ER_ID" />
+            </Principal>
+            <Dependent Role="Tbl_Question">
+              <PropertyRef Name="Question_ERID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_UserExam_Tbl_ExamRemotely">
+          <End Type="ESLModel.Tbl_ExamRemotely" Role="Tbl_ExamRemotely" Multiplicity="1" />
+          <End Type="ESLModel.Tbl_UserExam" Role="Tbl_UserExam" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_ExamRemotely">
+              <PropertyRef Name="ER_ID" />
+            </Principal>
+            <Dependent Role="Tbl_UserExam">
+              <PropertyRef Name="UE_ERID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_UserExamAccess_Tbl_ExamRemotely">
+          <End Type="ESLModel.Tbl_ExamRemotely" Role="Tbl_ExamRemotely" Multiplicity="1" />
+          <End Type="ESLModel.Tbl_UserExamAccess" Role="Tbl_UserExamAccess" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_ExamRemotely">
+              <PropertyRef Name="ER_ID" />
+            </Principal>
+            <Dependent Role="Tbl_UserExamAccess">
+              <PropertyRef Name="UEA_ERID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1909,39 +1877,75 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Tbl_News_Tbl_User">
+        <Association Name="FK_Tbl_Page_Tbl_PageCategory">
+          <End Type="ESLModel.Tbl_PageCategory" Role="Tbl_PageCategory" Multiplicity="1" />
+          <End Type="ESLModel.Tbl_Page" Role="Tbl_Page" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_PageCategory">
+              <PropertyRef Name="PC_ID" />
+            </Principal>
+            <Dependent Role="Tbl_Page">
+              <PropertyRef Name="Page_PCID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_Page_Tbl_Region">
+          <End Type="ESLModel.Tbl_Region" Role="Tbl_Region" Multiplicity="1" />
+          <End Type="ESLModel.Tbl_Page" Role="Tbl_Page" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Region">
+              <PropertyRef Name="Region_ID" />
+            </Principal>
+            <Dependent Role="Tbl_Page">
+              <PropertyRef Name="Page_RegionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_Page_Tbl_User">
           <End Type="ESLModel.Tbl_User" Role="Tbl_User" Multiplicity="1" />
-          <End Type="ESLModel.Tbl_News" Role="Tbl_News" Multiplicity="*" />
+          <End Type="ESLModel.Tbl_Page" Role="Tbl_Page" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tbl_User">
               <PropertyRef Name="User_ID" />
             </Principal>
-            <Dependent Role="Tbl_News">
-              <PropertyRef Name="News_UserID" />
+            <Dependent Role="Tbl_Page">
+              <PropertyRef Name="Page_UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Tbl_NewsDocument_Tbl_News">
-          <End Type="ESLModel.Tbl_News" Role="Tbl_News" Multiplicity="1" />
-          <End Type="ESLModel.Tbl_NewsDocument" Role="Tbl_NewsDocument" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tbl_News">
-              <PropertyRef Name="News_ID" />
-            </Principal>
-            <Dependent Role="Tbl_NewsDocument">
-              <PropertyRef Name="ND_NewsID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Tbl_Region_Tbl_Page">
+        <Association Name="FK_Tbl_PageDocuments_Tbl_Page">
           <End Type="ESLModel.Tbl_Page" Role="Tbl_Page" Multiplicity="1" />
-          <End Type="ESLModel.Tbl_Region" Role="Tbl_Region" Multiplicity="*" />
+          <End Type="ESLModel.Tbl_PageDocuments" Role="Tbl_PageDocuments" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tbl_Page">
               <PropertyRef Name="Page_ID" />
             </Principal>
-            <Dependent Role="Tbl_Region">
-              <PropertyRef Name="Region_PageID" />
+            <Dependent Role="Tbl_PageDocuments">
+              <PropertyRef Name="PD_PageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_PageTags_Tbl_Page">
+          <End Type="ESLModel.Tbl_Page" Role="Tbl_Page" Multiplicity="1" />
+          <End Type="ESLModel.Tbl_PageTags" Role="Tbl_PageTags" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Page">
+              <PropertyRef Name="Page_ID" />
+            </Principal>
+            <Dependent Role="Tbl_PageTags">
+              <PropertyRef Name="PT_PageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_PageTags_Tbl_Tag">
+          <End Type="ESLModel.Tbl_Tag" Role="Tbl_Tag" Multiplicity="1" />
+          <End Type="ESLModel.Tbl_PageTags" Role="Tbl_PageTags" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Tag">
+              <PropertyRef Name="Tag_ID" />
+            </Principal>
+            <Dependent Role="Tbl_PageTags">
+              <PropertyRef Name="PT_TagID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2079,36 +2083,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Tbl_Contract">
-            <EntityTypeMapping TypeName="ESLModel.Tbl_Contract">
-              <MappingFragment StoreEntitySet="Tbl_Contract">
-                <ScalarProperty Name="Contract_IsDelete" ColumnName="Contract_IsDelete" />
-                <ScalarProperty Name="Contract_ModifiedDate" ColumnName="Contract_ModifiedDate" />
-                <ScalarProperty Name="Contract_CreationDate" ColumnName="Contract_CreationDate" />
-                <ScalarProperty Name="Contract_Description" ColumnName="Contract_Description" />
-                <ScalarProperty Name="Contract_Title" ColumnName="Contract_Title" />
-                <ScalarProperty Name="Contract_TypeCodeID" ColumnName="Contract_TypeCodeID" />
-                <ScalarProperty Name="Contract_DocumentID" ColumnName="Contract_DocumentID" />
-                <ScalarProperty Name="Contract_Guid" ColumnName="Contract_Guid" />
-                <ScalarProperty Name="Contract_ID" ColumnName="Contract_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tbl_Course">
-            <EntityTypeMapping TypeName="ESLModel.Tbl_Course">
-              <MappingFragment StoreEntitySet="Tbl_Course">
-                <ScalarProperty Name="Course_IsDelete" ColumnName="Course_IsDelete" />
-                <ScalarProperty Name="Course_ModifiedDate" ColumnName="Course_ModifiedDate" />
-                <ScalarProperty Name="Course_CreationDate" ColumnName="Course_CreationDate" />
-                <ScalarProperty Name="Course_Description" ColumnName="Course_Description" />
-                <ScalarProperty Name="Course_Abstract" ColumnName="Course_Abstract" />
-                <ScalarProperty Name="Course_Title" ColumnName="Course_Title" />
-                <ScalarProperty Name="Course_DocumentID" ColumnName="Course_DocumentID" />
-                <ScalarProperty Name="Course_Guid" ColumnName="Course_Guid" />
-                <ScalarProperty Name="Course_ID" ColumnName="Course_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Tbl_Document">
             <EntityTypeMapping TypeName="ESLModel.Tbl_Document">
               <MappingFragment StoreEntitySet="Tbl_Document">
@@ -2125,10 +2099,8 @@
                 <ScalarProperty Name="Exam_IsDelete" ColumnName="Exam_IsDelete" />
                 <ScalarProperty Name="Exam_ModifiedDate" ColumnName="Exam_ModifiedDate" />
                 <ScalarProperty Name="Exam_CreationDate" ColumnName="Exam_CreationDate" />
-                <ScalarProperty Name="Exam_PassMark" ColumnName="Exam_PassMark" />
-                <ScalarProperty Name="Exam_Mark" ColumnName="Exam_Mark" />
+                <ScalarProperty Name="Exam_HasSubMenu" ColumnName="Exam_HasSubMenu" />
                 <ScalarProperty Name="Exam_Title" ColumnName="Exam_Title" />
-                <ScalarProperty Name="Exam_GroupCodeID" ColumnName="Exam_GroupCodeID" />
                 <ScalarProperty Name="Exam_Guid" ColumnName="Exam_Guid" />
                 <ScalarProperty Name="Exam_ID" ColumnName="Exam_ID" />
               </MappingFragment>
@@ -2141,14 +2113,31 @@
                 <ScalarProperty Name="EIP_ModifiedDate" ColumnName="EIP_ModifiedDate" />
                 <ScalarProperty Name="EIP_CreationDate" ColumnName="EIP_CreationDate" />
                 <ScalarProperty Name="EIP_IsActive" ColumnName="EIP_IsActive" />
+                <ScalarProperty Name="EIP_Date" ColumnName="EIP_Date" />
                 <ScalarProperty Name="EIP_Location" ColumnName="EIP_Location" />
                 <ScalarProperty Name="EIP_Cost" ColumnName="EIP_Cost" />
                 <ScalarProperty Name="EIP_PassMark" ColumnName="EIP_PassMark" />
                 <ScalarProperty Name="EIP_TotalMark" ColumnName="EIP_TotalMark" />
-                <ScalarProperty Name="EIP_Title" ColumnName="EIP_Title" />
+                <ScalarProperty Name="EIP_Description" ColumnName="EIP_Description" />
                 <ScalarProperty Name="EIP_Capacity" ColumnName="EIP_Capacity" />
+                <ScalarProperty Name="EIP_SEID" ColumnName="EIP_SEID" />
                 <ScalarProperty Name="EIP_Guid" ColumnName="EIP_Guid" />
                 <ScalarProperty Name="EIP_ID" ColumnName="EIP_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_ExamRemotely">
+            <EntityTypeMapping TypeName="ESLModel.Tbl_ExamRemotely">
+              <MappingFragment StoreEntitySet="Tbl_ExamRemotely">
+                <ScalarProperty Name="ER_IsDelete" ColumnName="ER_IsDelete" />
+                <ScalarProperty Name="ER_ModifiedDate" ColumnName="ER_ModifiedDate" />
+                <ScalarProperty Name="ER_CreationDate" ColumnName="ER_CreationDate" />
+                <ScalarProperty Name="ER_PassMark" ColumnName="ER_PassMark" />
+                <ScalarProperty Name="ER_Mark" ColumnName="ER_Mark" />
+                <ScalarProperty Name="ER_Title" ColumnName="ER_Title" />
+                <ScalarProperty Name="ER_GroupCodeID" ColumnName="ER_GroupCodeID" />
+                <ScalarProperty Name="ER_Guid" ColumnName="ER_Guid" />
+                <ScalarProperty Name="ER_ID" ColumnName="ER_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2159,7 +2148,6 @@
                 <ScalarProperty Name="Gallery_HasAlbum" ColumnName="Gallery_HasAlbum" />
                 <ScalarProperty Name="Gallery_CreationDate" ColumnName="Gallery_CreationDate" />
                 <ScalarProperty Name="Gallery_Title" ColumnName="Gallery_Title" />
-                <ScalarProperty Name="Gallery_DocumentID" ColumnName="Gallery_DocumentID" />
                 <ScalarProperty Name="Gallery_Guid" ColumnName="Gallery_Guid" />
                 <ScalarProperty Name="Gallery_ID" ColumnName="Gallery_ID" />
               </MappingFragment>
@@ -2168,6 +2156,7 @@
           <EntitySetMapping Name="Tbl_GalleryDocument">
             <EntityTypeMapping TypeName="ESLModel.Tbl_GalleryDocument">
               <MappingFragment StoreEntitySet="Tbl_GalleryDocument">
+                <ScalarProperty Name="GD_IsCover" ColumnName="GD_IsCover" />
                 <ScalarProperty Name="GD_CreationDate" ColumnName="GD_CreationDate" />
                 <ScalarProperty Name="GD_Title" ColumnName="GD_Title" />
                 <ScalarProperty Name="GD_DocumentID" ColumnName="GD_DocumentID" />
@@ -2189,33 +2178,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Tbl_News">
-            <EntityTypeMapping TypeName="ESLModel.Tbl_News">
-              <MappingFragment StoreEntitySet="Tbl_News">
-                <ScalarProperty Name="News_IsDelete" ColumnName="News_IsDelete" />
-                <ScalarProperty Name="News_ModifiedDate" ColumnName="News_ModifiedDate" />
-                <ScalarProperty Name="News_CreateDate" ColumnName="News_CreateDate" />
-                <ScalarProperty Name="News_Description" ColumnName="News_Description" />
-                <ScalarProperty Name="News_Abstract" ColumnName="News_Abstract" />
-                <ScalarProperty Name="News_Title" ColumnName="News_Title" />
-                <ScalarProperty Name="News_NDID" ColumnName="News_NDID" />
-                <ScalarProperty Name="News_UserID" ColumnName="News_UserID" />
-                <ScalarProperty Name="News_Guid" ColumnName="News_Guid" />
-                <ScalarProperty Name="News_ID" ColumnName="News_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tbl_NewsDocument">
-            <EntityTypeMapping TypeName="ESLModel.Tbl_NewsDocument">
-              <MappingFragment StoreEntitySet="Tbl_NewsDocument">
-                <ScalarProperty Name="ND_TypeCodeID" ColumnName="ND_TypeCodeID" />
-                <ScalarProperty Name="ND_DocumentID" ColumnName="ND_DocumentID" />
-                <ScalarProperty Name="ND_NewsID" ColumnName="ND_NewsID" />
-                <ScalarProperty Name="ND_Guid" ColumnName="ND_Guid" />
-                <ScalarProperty Name="ND_ID" ColumnName="ND_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Tbl_Organization">
             <EntityTypeMapping TypeName="ESLModel.Tbl_Organization">
               <MappingFragment StoreEntitySet="Tbl_Organization">
@@ -2231,9 +2193,48 @@
           <EntitySetMapping Name="Tbl_Page">
             <EntityTypeMapping TypeName="ESLModel.Tbl_Page">
               <MappingFragment StoreEntitySet="Tbl_Page">
-                <ScalarProperty Name="Page_Name" ColumnName="Page_Name" />
+                <ScalarProperty Name="Page_Abstract" ColumnName="Page_Abstract" />
+                <ScalarProperty Name="Page_Modify" ColumnName="Page_Modify" />
+                <ScalarProperty Name="Page_CreateDate" ColumnName="Page_CreateDate" />
+                <ScalarProperty Name="Page_IsDelete" ColumnName="Page_IsDelete" />
+                <ScalarProperty Name="Page_Description" ColumnName="Page_Description" />
+                <ScalarProperty Name="Page_Titel" ColumnName="Page_Titel" />
+                <ScalarProperty Name="Page_PCID" ColumnName="Page_PCID" />
+                <ScalarProperty Name="Page_RegionID" ColumnName="Page_RegionID" />
+                <ScalarProperty Name="Page_UserID" ColumnName="Page_UserID" />
                 <ScalarProperty Name="Page_Guid" ColumnName="Page_Guid" />
                 <ScalarProperty Name="Page_ID" ColumnName="Page_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_PageCategory">
+            <EntityTypeMapping TypeName="ESLModel.Tbl_PageCategory">
+              <MappingFragment StoreEntitySet="Tbl_PageCategory">
+                <ScalarProperty Name="PC_Display" ColumnName="PC_Display" />
+                <ScalarProperty Name="PC_Name" ColumnName="PC_Name" />
+                <ScalarProperty Name="PC_Guid" ColumnName="PC_Guid" />
+                <ScalarProperty Name="PC_ID" ColumnName="PC_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_PageDocuments">
+            <EntityTypeMapping TypeName="ESLModel.Tbl_PageDocuments">
+              <MappingFragment StoreEntitySet="Tbl_PageDocuments">
+                <ScalarProperty Name="PD_PageID" ColumnName="PD_PageID" />
+                <ScalarProperty Name="PD_DocumentID" ColumnName="PD_DocumentID" />
+                <ScalarProperty Name="PD_TypeCodeID" ColumnName="PD_TypeCodeID" />
+                <ScalarProperty Name="PD_Guid" ColumnName="PD_Guid" />
+                <ScalarProperty Name="PD_ID" ColumnName="PD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_PageTags">
+            <EntityTypeMapping TypeName="ESLModel.Tbl_PageTags">
+              <MappingFragment StoreEntitySet="Tbl_PageTags">
+                <ScalarProperty Name="PT_PageID" ColumnName="PT_PageID" />
+                <ScalarProperty Name="PT_TagID" ColumnName="PT_TagID" />
+                <ScalarProperty Name="PT_Guid" ColumnName="PT_Guid" />
+                <ScalarProperty Name="PT_ID" ColumnName="PT_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2245,7 +2246,9 @@
                 <ScalarProperty Name="Payment_CreateDate" ColumnName="Payment_CreateDate" />
                 <ScalarProperty Name="Payment_DocumentID" ColumnName="Payment_DocumentID" />
                 <ScalarProperty Name="Payment_TrackingToken" ColumnName="Payment_TrackingToken" />
+                <ScalarProperty Name="Payment_RemaingWallet" ColumnName="Payment_RemaingWallet" />
                 <ScalarProperty Name="Payment_Cost" ColumnName="Payment_Cost" />
+                <ScalarProperty Name="Payment_TitleCodeID" ColumnName="Payment_TitleCodeID" />
                 <ScalarProperty Name="Payment_StateCodeID" ColumnName="Payment_StateCodeID" />
                 <ScalarProperty Name="Payment_WayCodeID" ColumnName="Payment_WayCodeID" />
                 <ScalarProperty Name="Payment_TypeCodeID" ColumnName="Payment_TypeCodeID" />
@@ -2267,7 +2270,7 @@
                 <ScalarProperty Name="Question_TypeCodeID" ColumnName="Question_TypeCodeID" />
                 <ScalarProperty Name="Question_ResponseID" ColumnName="Question_ResponseID" />
                 <ScalarProperty Name="Question_GroupCodeID" ColumnName="Question_GroupCodeID" />
-                <ScalarProperty Name="Question_ExamID" ColumnName="Question_ExamID" />
+                <ScalarProperty Name="Question_ERID" ColumnName="Question_ERID" />
                 <ScalarProperty Name="Question_Guid" ColumnName="Question_Guid" />
                 <ScalarProperty Name="Question_ID" ColumnName="Question_ID" />
               </MappingFragment>
@@ -2276,12 +2279,9 @@
           <EntitySetMapping Name="Tbl_Region">
             <EntityTypeMapping TypeName="ESLModel.Tbl_Region">
               <MappingFragment StoreEntitySet="Tbl_Region">
-                <ScalarProperty Name="Region_HasDocument" ColumnName="Region_HasDocument" />
-                <ScalarProperty Name="Region_Description" ColumnName="Region_Description" />
-                <ScalarProperty Name="Region_Title" ColumnName="Region_Title" />
+                <ScalarProperty Name="Region_CodeID" ColumnName="Region_CodeID" />
+                <ScalarProperty Name="Region_Display" ColumnName="Region_Display" />
                 <ScalarProperty Name="Region_Name" ColumnName="Region_Name" />
-                <ScalarProperty Name="Region_DocumentID" ColumnName="Region_DocumentID" />
-                <ScalarProperty Name="Region_PageID" ColumnName="Region_PageID" />
                 <ScalarProperty Name="Region_Guid" ColumnName="Region_Guid" />
                 <ScalarProperty Name="Region_ID" ColumnName="Region_ID" />
               </MappingFragment>
@@ -2310,19 +2310,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Tbl_SubCourse">
-            <EntityTypeMapping TypeName="ESLModel.Tbl_SubCourse">
-              <MappingFragment StoreEntitySet="Tbl_SubCourse">
-                <ScalarProperty Name="SC_IsDelete" ColumnName="SC_IsDelete" />
-                <ScalarProperty Name="SC_ModifiedDate" ColumnName="SC_ModifiedDate" />
-                <ScalarProperty Name="SC_CreationDate" ColumnName="SC_CreationDate" />
-                <ScalarProperty Name="SC_Description" ColumnName="SC_Description" />
-                <ScalarProperty Name="SC_Abstract" ColumnName="SC_Abstract" />
-                <ScalarProperty Name="SC_Title" ColumnName="SC_Title" />
-                <ScalarProperty Name="SC_DocumentID" ColumnName="SC_DocumentID" />
-                <ScalarProperty Name="SC_CourseID" ColumnName="SC_CourseID" />
-                <ScalarProperty Name="SC_Guid" ColumnName="SC_Guid" />
-                <ScalarProperty Name="SC_ID" ColumnName="SC_ID" />
+          <EntitySetMapping Name="Tbl_SubExam">
+            <EntityTypeMapping TypeName="ESLModel.Tbl_SubExam">
+              <MappingFragment StoreEntitySet="Tbl_SubExam">
+                <ScalarProperty Name="SE_IsDelete" ColumnName="SE_IsDelete" />
+                <ScalarProperty Name="SE_ModifiedDate" ColumnName="SE_ModifiedDate" />
+                <ScalarProperty Name="SE_CreationDate" ColumnName="SE_CreationDate" />
+                <ScalarProperty Name="SE_Title" ColumnName="SE_Title" />
+                <ScalarProperty Name="SE_ExamID" ColumnName="SE_ExamID" />
+                <ScalarProperty Name="SE_Guid" ColumnName="SE_Guid" />
+                <ScalarProperty Name="SE_ID" ColumnName="SE_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2335,6 +2332,15 @@
                 <ScalarProperty Name="SM_MenuID" ColumnName="SM_MenuID" />
                 <ScalarProperty Name="SM_Guid" ColumnName="SM_Guid" />
                 <ScalarProperty Name="SM_ID" ColumnName="SM_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Tag">
+            <EntityTypeMapping TypeName="ESLModel.Tbl_Tag">
+              <MappingFragment StoreEntitySet="Tbl_Tag">
+                <ScalarProperty Name="Tag_Name" ColumnName="Tag_Name" />
+                <ScalarProperty Name="Tag_Guid" ColumnName="Tag_Guid" />
+                <ScalarProperty Name="Tag_ID" ColumnName="Tag_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2366,7 +2372,7 @@
                 <ScalarProperty Name="UE_IsDelete" ColumnName="UE_IsDelete" />
                 <ScalarProperty Name="UE_Date" ColumnName="UE_Date" />
                 <ScalarProperty Name="UE_Mark" ColumnName="UE_Mark" />
-                <ScalarProperty Name="UE_ExamID" ColumnName="UE_ExamID" />
+                <ScalarProperty Name="UE_ERID" ColumnName="UE_ERID" />
                 <ScalarProperty Name="UE_UserID" ColumnName="UE_UserID" />
                 <ScalarProperty Name="UE_Guid" ColumnName="UE_Guid" />
                 <ScalarProperty Name="UE_ID" ColumnName="UE_ID" />
@@ -2379,7 +2385,7 @@
                 <ScalarProperty Name="UEA_IsDelete" ColumnName="UEA_IsDelete" />
                 <ScalarProperty Name="UEA_IsActive" ColumnName="UEA_IsActive" />
                 <ScalarProperty Name="UEA_Date" ColumnName="UEA_Date" />
-                <ScalarProperty Name="UEA_ExamID" ColumnName="UEA_ExamID" />
+                <ScalarProperty Name="UEA_ERID" ColumnName="UEA_ERID" />
                 <ScalarProperty Name="UEA_UserID" ColumnName="UEA_UserID" />
                 <ScalarProperty Name="UEA_Guid" ColumnName="UEA_Guid" />
                 <ScalarProperty Name="UEA_ID" ColumnName="UEA_ID" />

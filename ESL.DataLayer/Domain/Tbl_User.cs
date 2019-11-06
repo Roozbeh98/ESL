@@ -17,7 +17,7 @@ namespace ESL.DataLayer.Domain
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Tbl_User()
         {
-            this.Tbl_News = new HashSet<Tbl_News>();
+            this.Tbl_Page = new HashSet<Tbl_Page>();
             this.Tbl_Payment = new HashSet<Tbl_Payment>();
             this.Tbl_UserExam = new HashSet<Tbl_UserExam>();
             this.Tbl_UserExamAccess = new HashSet<Tbl_UserExamAccess>();
@@ -43,7 +43,7 @@ namespace ESL.DataLayer.Domain
         public bool User_IsDelete { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tbl_News> Tbl_News { get; set; }
+        public virtual ICollection<Tbl_Page> Tbl_Page { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_Payment> Tbl_Payment { get; set; }
         public virtual Tbl_Role Tbl_Role { get; set; }

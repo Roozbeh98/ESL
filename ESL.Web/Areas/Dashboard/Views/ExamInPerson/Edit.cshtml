@@ -1,5 +1,8 @@
 ﻿@model ESL.Web.Areas.Dashboard.Models.ViewModels.Model_ExamInPersonEdit
+@using ESL.Services.BaseRepository
 
+
+<link href="~/Content/Plugins/jQuery.MdBootstrapPersianDateTimePicker/jquery.Bootstrap-PersianDateTimePicker.css" rel="stylesheet" />
 
 @using (Html.BeginForm())
 {
@@ -9,14 +12,27 @@
     <div class="modal-main">
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label" })
+            @Html.LabelFor(model => model.Exam, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownListFor(model => model.Exam, Rep_Exam.Get_AllExams(), new { @class = "form-control Select2_Normal" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SubExam, htmlAttributes: new { @class = "control-label" })
+
+            <select name="SubExam" id="SubExam" class="form-control Select2_Normal"></select>
+
+            @Html.ValidationMessageFor(model => model.SubExam, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label" })
 
             <div class="input-group">
                 <span class=" input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
             </div>
 
-            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
         </div>
 
         <div class="form-group">
@@ -84,3 +100,47 @@
 
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+<script src="~/Scripts/Plugins/jQuery.Select2/select2.js"></script>
+<script src="~/Scripts/Plugins/jQuery.Select2/i18n/fa.js"></script>
+
+<script src="~/Scripts/MyScripts/Select2_Config.js"></script>
+
+<script>
+
+    $("#Exam").on("change", function () {
+        var ExamID = document.getElementById("Exam").value;
+
+        $.ajax({
+            url: "/ExamInPerson/Get_SubExamList?ExamID=" + ExamID,
+            dataType: 'json',
+            type: 'post',
+            success: function (data) {
+                $("#SubExam").empty();
+                $.each(data, function (index, row) {
+                    $("#SubExam").append("<option value='" + row.id + "'>" + row.text + "</option>")
+                });
+            }
+        })
+    });
+
+    $("#Exam").ready(function () {
+        var ExamID = document.getElementById("Exam").value;
+
+        $.ajax({
+            url: "/ExamInPerson/Get_SubExamList?ExamID=" + ExamID,
+            dataType: 'json',
+            type: 'post',
+            success: function (data) {
+                $("#SubExam").empty();
+                $.each(data, function (index, row) {
+                    $("#SubExam").append("<option value='" + row.id + "'>" + row.text + "</option>")
+                });
+            }
+        })
+    });
+
+</script>
+
+<script src="~/Scripts/Plugins/jQuery.MdBootstrapPersianDateTimePicker/jalaali.js"></script>
+<script src="~/Scripts/Plugins/jQuery.MdBootstrapPersianDateTimePicker/jquery.Bootstrap-PersianDateTimePicker.js"></script>

@@ -20,7 +20,9 @@ namespace ESL.DataLayer.Domain
         public int Payment_TypeCodeID { get; set; }
         public int Payment_WayCodeID { get; set; }
         public int Payment_StateCodeID { get; set; }
+        public int Payment_TitleCodeID { get; set; }
         public int Payment_Cost { get; set; }
+        public int Payment_RemaingWallet { get; set; }
         public string Payment_TrackingToken { get; set; }
         public Nullable<int> Payment_DocumentID { get; set; }
         public System.DateTime Payment_CreateDate { get; set; }

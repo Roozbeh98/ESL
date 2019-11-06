@@ -22,17 +22,20 @@ namespace ESL.DataLayer.Domain
     
         public int EIP_ID { get; set; }
         public System.Guid EIP_Guid { get; set; }
+        public int EIP_SEID { get; set; }
         public int EIP_Capacity { get; set; }
-        public string EIP_Title { get; set; }
+        public string EIP_Description { get; set; }
         public int EIP_TotalMark { get; set; }
         public int EIP_PassMark { get; set; }
         public int EIP_Cost { get; set; }
         public string EIP_Location { get; set; }
+        public System.DateTime EIP_Date { get; set; }
         public bool EIP_IsActive { get; set; }
         public System.DateTime EIP_CreationDate { get; set; }
         public System.DateTime EIP_ModifiedDate { get; set; }
         public bool EIP_IsDelete { get; set; }
     
+        public virtual Tbl_SubExam Tbl_SubExam { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_UserExamInPerson> Tbl_UserExamInPerson { get; set; }
     }

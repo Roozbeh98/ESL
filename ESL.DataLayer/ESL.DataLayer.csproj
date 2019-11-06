@@ -98,12 +98,6 @@
     <Compile Include="Domain\Tbl_CodeGroup.cs">
       <DependentUpon>ESL.tt</DependentUpon>
     </Compile>
-    <Compile Include="Domain\Tbl_Contract.cs">
-      <DependentUpon>ESL.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Domain\Tbl_Course.cs">
-      <DependentUpon>ESL.tt</DependentUpon>
-    </Compile>
     <Compile Include="Domain\Tbl_Document.cs">
       <DependentUpon>ESL.tt</DependentUpon>
     </Compile>
@@ -111,6 +105,9 @@
       <DependentUpon>ESL.tt</DependentUpon>
     </Compile>
     <Compile Include="Domain\Tbl_ExamInPerson.cs">
+      <DependentUpon>ESL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Domain\Tbl_ExamRemotely.cs">
       <DependentUpon>ESL.tt</DependentUpon>
     </Compile>
     <Compile Include="Domain\Tbl_Gallery.cs">
@@ -122,16 +119,19 @@
     <Compile Include="Domain\Tbl_Menu.cs">
       <DependentUpon>ESL.tt</DependentUpon>
     </Compile>
-    <Compile Include="Domain\Tbl_News.cs">
-      <DependentUpon>ESL.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Domain\Tbl_NewsDocument.cs">
-      <DependentUpon>ESL.tt</DependentUpon>
-    </Compile>
     <Compile Include="Domain\Tbl_Organization.cs">
       <DependentUpon>ESL.tt</DependentUpon>
     </Compile>
     <Compile Include="Domain\Tbl_Page.cs">
+      <DependentUpon>ESL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Domain\Tbl_PageCategory.cs">
+      <DependentUpon>ESL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Domain\Tbl_PageDocuments.cs">
+      <DependentUpon>ESL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Domain\Tbl_PageTags.cs">
       <DependentUpon>ESL.tt</DependentUpon>
     </Compile>
     <Compile Include="Domain\Tbl_Payment.cs">
@@ -149,10 +149,13 @@
     <Compile Include="Domain\Tbl_Role.cs">
       <DependentUpon>ESL.tt</DependentUpon>
     </Compile>
-    <Compile Include="Domain\Tbl_SubCourse.cs">
+    <Compile Include="Domain\Tbl_SubExam.cs">
       <DependentUpon>ESL.tt</DependentUpon>
     </Compile>
     <Compile Include="Domain\Tbl_SubMenu.cs">
+      <DependentUpon>ESL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Domain\Tbl_Tag.cs">
       <DependentUpon>ESL.tt</DependentUpon>
     </Compile>
     <Compile Include="Domain\Tbl_User.cs">

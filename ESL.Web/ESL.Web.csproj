@@ -163,6 +163,7 @@
     <Content Include="Content\Plugins\Boostrap3\bootstrap.css" />
     <Content Include="Content\Plugins\Boostrap3\bootstrap.min.css" />
     <Content Include="Content\Plugins\Boostrap4\bootstrap.min.css" />
+    <Content Include="Content\Plugins\jQuery.MdBootstrapPersianDateTimePicker\jquery.Bootstrap-PersianDateTimePicker.css" />
     <Content Include="Content\Plugins\jQuery.Select2\search-magnifier-interface-symbol.svg" />
     <Content Include="Content\Plugins\jQuery.Select2\select2-bootstrap.css" />
     <Content Include="Content\Plugins\jQuery.Select2\select2.css" />
@@ -1280,6 +1281,8 @@
     <Content Include="Scripts\Plugins\jQuery.Filepond\filepond-plugin-file-encode.esm.min.js" />
     <Content Include="Scripts\Plugins\jQuery.Filepond\filepond-plugin-file-encode.js" />
     <Content Include="Scripts\Plugins\jQuery.Filepond\filepond-plugin-file-encode.min.js" />
+    <Content Include="Scripts\Plugins\jQuery.MdBootstrapPersianDateTimePicker\jalaali.js" />
+    <Content Include="Scripts\Plugins\jQuery.MdBootstrapPersianDateTimePicker\jquery.Bootstrap-PersianDateTimePicker.js" />
     <Content Include="Scripts\Plugins\jQuery.Select2\i18n\en.js" />
     <Content Include="Scripts\Plugins\jQuery.Select2\i18n\fa.js" />
     <Content Include="Scripts\Plugins\jQuery.Select2\select2.js" />
@@ -1354,7 +1357,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Attribute\CustomAuthorizeAttribute.cs" />
-    <Compile Include="Models\ViewModels\Model_Documents.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

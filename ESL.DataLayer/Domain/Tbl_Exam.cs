@@ -17,26 +17,18 @@ namespace ESL.DataLayer.Domain
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Tbl_Exam()
         {
-            this.Tbl_Question = new HashSet<Tbl_Question>();
-            this.Tbl_UserExam = new HashSet<Tbl_UserExam>();
-            this.Tbl_UserExamAccess = new HashSet<Tbl_UserExamAccess>();
+            this.Tbl_SubExam = new HashSet<Tbl_SubExam>();
         }
     
         public int Exam_ID { get; set; }
         public System.Guid Exam_Guid { get; set; }
-        public int Exam_GroupCodeID { get; set; }
         public string Exam_Title { get; set; }
-        public int Exam_Mark { get; set; }
-        public int Exam_PassMark { get; set; }
+        public bool Exam_HasSubMenu { get; set; }
         public System.DateTime Exam_CreationDate { get; set; }
         public System.DateTime Exam_ModifiedDate { get; set; }
         public bool Exam_IsDelete { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tbl_Question> Tbl_Question { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tbl_UserExam> Tbl_UserExam { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tbl_UserExamAccess> Tbl_UserExamAccess { get; set; }
+        public virtual ICollection<Tbl_SubExam> Tbl_SubExam { get; set; }
     }
 }

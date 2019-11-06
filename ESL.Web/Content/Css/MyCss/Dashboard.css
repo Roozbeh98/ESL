@@ -93,6 +93,20 @@ body {
 }
 
 /*********************************************** navbar ********************************************/
+
+#Date .table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: whitesmoke;
+}
+
+#Date .table-striped > tbody > tr:nth-of-type(even) {
+    background-color: white;
+}
+
+#Date a {
+    color: white;
+}
+
+/*********************************************** navbar ********************************************/
 .navbar-inverse {
     background-color: #222d32;
     height: 60px;
