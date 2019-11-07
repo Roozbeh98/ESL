@@ -26,6 +26,8 @@ namespace ESL.DataLayer.Domain
         }
     
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+        public virtual DbSet<Tbl_Class> Tbl_Class { get; set; }
+        public virtual DbSet<Tbl_ClassPlan> Tbl_ClassPlan { get; set; }
         public virtual DbSet<Tbl_Code> Tbl_Code { get; set; }
         public virtual DbSet<Tbl_CodeGroup> Tbl_CodeGroup { get; set; }
         public virtual DbSet<Tbl_Document> Tbl_Document { get; set; }
@@ -47,11 +49,14 @@ namespace ESL.DataLayer.Domain
         public virtual DbSet<Tbl_Role> Tbl_Role { get; set; }
         public virtual DbSet<Tbl_SubExam> Tbl_SubExam { get; set; }
         public virtual DbSet<Tbl_SubMenu> Tbl_SubMenu { get; set; }
+        public virtual DbSet<Tbl_SubWorkshop> Tbl_SubWorkshop { get; set; }
         public virtual DbSet<Tbl_Tag> Tbl_Tag { get; set; }
         public virtual DbSet<Tbl_User> Tbl_User { get; set; }
         public virtual DbSet<Tbl_UserExam> Tbl_UserExam { get; set; }
         public virtual DbSet<Tbl_UserExamAccess> Tbl_UserExamAccess { get; set; }
         public virtual DbSet<Tbl_UserExamInPerson> Tbl_UserExamInPerson { get; set; }
         public virtual DbSet<Tbl_Wallet> Tbl_Wallet { get; set; }
+        public virtual DbSet<Tbl_Workshop> Tbl_Workshop { get; set; }
+        public virtual DbSet<Tbl_WorkshopPlan> Tbl_WorkshopPlan { get; set; }
     }
 }

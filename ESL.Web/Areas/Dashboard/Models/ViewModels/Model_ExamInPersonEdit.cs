@@ -42,7 +42,7 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
         public int PassMark { get; set; }
 
-        [Display(Name = "تاریخ برگذاری")]
+        [Display(Name = "تاریخ برگزاری")]
         public DateTime Date { get; set; }
     }
 }

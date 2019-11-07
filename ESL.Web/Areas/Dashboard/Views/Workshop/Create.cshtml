@@ -1,0 +1,187 @@
+﻿@model ESL.Web.Areas.Dashboard.Models.ViewModels.Model_WorkshopCreate
+@using ESL.Services.BaseRepository
+
+@{
+    ViewBag.Title = "کارگاه جدید";
+    Layout = "~/Areas/Dashboard/Views/Shared/_Master.cshtml";
+}
+
+
+@section Styles {
+    <link href="~/Content/Plugins/jQuery.MdBootstrapPersianDateTimePicker/jquery.Bootstrap-PersianDateTimePicker.css" rel="stylesheet" />
+}
+
+<div class="panel panel-body panel-default  navigation">
+
+    <div class="pull-left">
+        <h4 class="navigation-title"><b>کارگاه جدید</b></h4>
+    </div>
+
+    <div class="pull-right">
+        <a href="@Url.Action("Index", "Workshop")"><i class="glyphicon glyphicon-arrow-left navigation-btn-icon"></i></a>
+    </div>
+
+</div>
+
+<div class="panel panel-default">
+
+    <div class="panel-body">
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="modal-main">
+
+                <div class="row" style="margin: 0 -30px;">
+
+                    <div class="col-md-6">
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Workshop, htmlAttributes: new { @class = "control-label" })
+                            @Html.DropDownListFor(model => model.Workshop, Rep_Workshop.Get_AllWorkshops(), new { @class = "form-control Select2_Normal" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.SubWorkshop, htmlAttributes: new { @class = "control-label" })
+
+                            <select name="SubWorkshop" id="SubWorkshop" class="form-control Select2_Normal"></select>
+
+                            @Html.ValidationMessageFor(model => model.SubWorkshop, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label" })
+
+                            <div class="input-group">
+                                <span class=" input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+
+                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Cost, htmlAttributes: new { @class = "control-label" })
+
+                            <div class="input-group">
+                                <span class=" input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                                @Html.EditorFor(model => model.Cost, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+
+                            @Html.ValidationMessageFor(model => model.Cost, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label" })
+                            <div id="Date" data-englishnumber="true" data-mddatetimepicker="true" data-inline="true" data-isgregorian="false" data-targetselector="#fromDate" data-enabletimepicker="true" style="border: solid 1px #ccc;"></div>
+                            <input type="hidden" name="Date" class="form-control" id="fromDate" placeholder="تاریخ" readonly />
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Location, htmlAttributes: new { @class = "control-label" })
+
+                            <div class="input-group">
+                                <span class=" input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                                @Html.EditorFor(model => model.Location, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+
+                            @Html.ValidationMessageFor(model => model.Location, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Capacity, htmlAttributes: new { @class = "control-label" })
+
+                            <div class="input-group">
+                                <span class=" input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                                @Html.EditorFor(model => model.Capacity, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+
+                            @Html.ValidationMessageFor(model => model.Capacity, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group material-switch-body">
+                            <label class="pull-left">وضعیت نمایش</label>
+                            <div class="material-switch pull-right">
+                                @Html.CheckBoxFor(model => model.Activeness, htmlAttributes: new { @class = "" })
+                                @Html.LabelFor(model => model.Activeness, htmlAttributes: new { @class = "text-hide", @style = "background-color: #5cb85c;" })
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div style="margin-top:20px;">
+                <button class="btn btn-danger modal-btn-Dual pull-left" type="button" data-dismiss="modal">انصراف</button>
+                <button class="btn btn-success modal-btn-Dual pull-right " type="submit" name="btn-Delete">تایید</button>
+            </div>
+        }
+
+    </div>
+
+</div>
+
+
+@section Scripts {
+
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+    <script src="~/Scripts/Plugins/jQuery.Select2/select2.js"></script>
+    <script src="~/Scripts/Plugins/jQuery.Select2/i18n/fa.js"></script>
+
+    <script src="~/Scripts/MyScripts/Select2_Config.js"></script>
+
+    <script>
+
+        $("#Workshop").on("change", function () {
+            var WorkshopID = document.getElementById("Workshop").value;
+
+            $.ajax({
+                url: "/Workshop/Get_SubWorkshopList?WorkshopID=" + WorkshopID,
+                dataType: 'json',
+                type: 'post',
+                success: function (data) {
+                    $("#SubWorkshop").empty();
+                    $.each(data, function (index, row) {
+                        $("#SubWorkshop").append("<option value='" + row.id + "'>" + row.text + "</option>")
+                    });
+                }
+            })
+        });
+
+        $("#Workshop").ready(function () {
+            var WorkshopID = document.getElementById("Workshop").value;
+
+            $.ajax({
+                url: "/Workshop/Get_SubWorkshopList?WorkshopID=" + WorkshopID,
+                dataType: 'json',
+                type: 'post',
+                success: function (data) {
+                    $("#SubWorkshop").empty();
+                    $.each(data, function (index, row) {
+                        $("#SubWorkshop").append("<option value='" + row.id + "'>" + row.text + "</option>")
+                    });
+                }
+            })
+        });
+
+    </script>
+
+    <script src="~/Scripts/Plugins/jQuery.MdBootstrapPersianDateTimePicker/jalaali.js"></script>
+    <script src="~/Scripts/Plugins/jQuery.MdBootstrapPersianDateTimePicker/jquery.Bootstrap-PersianDateTimePicker.js"></script>
+
+    <script>
+        $(function () {
+            $("input[type='hidden']:eq(2)").remove();
+        });
+    </script>
+
+}

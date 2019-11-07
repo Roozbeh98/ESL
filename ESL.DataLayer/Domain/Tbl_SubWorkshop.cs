@@ -12,23 +12,24 @@ namespace ESL.DataLayer.Domain
     using System;
     using System.Collections.Generic;
     
-    public partial class Tbl_Exam
+    public partial class Tbl_SubWorkshop
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Tbl_Exam()
+        public Tbl_SubWorkshop()
         {
-            this.Tbl_SubExam = new HashSet<Tbl_SubExam>();
+            this.Tbl_WorkshopPlan = new HashSet<Tbl_WorkshopPlan>();
         }
     
-        public int Exam_ID { get; set; }
-        public System.Guid Exam_Guid { get; set; }
-        public string Exam_Title { get; set; }
-        public bool Exam_HasSubExam { get; set; }
-        public System.DateTime Exam_CreationDate { get; set; }
-        public System.DateTime Exam_ModifiedDate { get; set; }
-        public bool Exam_IsDelete { get; set; }
+        public int SW_ID { get; set; }
+        public System.Guid SW_Guid { get; set; }
+        public int SW_WorkshopID { get; set; }
+        public string SW_Title { get; set; }
+        public System.DateTime SW_CreationDate { get; set; }
+        public System.DateTime SW_ModifiedDate { get; set; }
+        public bool SW_IsDelete { get; set; }
     
+        public virtual Tbl_Workshop Tbl_Workshop { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tbl_SubExam> Tbl_SubExam { get; set; }
+        public virtual ICollection<Tbl_WorkshopPlan> Tbl_WorkshopPlan { get; set; }
     }
 }

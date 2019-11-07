@@ -92,6 +92,12 @@
     <Compile Include="Domain\sysdiagram.cs">
       <DependentUpon>ESL.tt</DependentUpon>
     </Compile>
+    <Compile Include="Domain\Tbl_Class.cs">
+      <DependentUpon>ESL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Domain\Tbl_ClassPlan.cs">
+      <DependentUpon>ESL.tt</DependentUpon>
+    </Compile>
     <Compile Include="Domain\Tbl_Code.cs">
       <DependentUpon>ESL.tt</DependentUpon>
     </Compile>
@@ -155,6 +161,9 @@
     <Compile Include="Domain\Tbl_SubMenu.cs">
       <DependentUpon>ESL.tt</DependentUpon>
     </Compile>
+    <Compile Include="Domain\Tbl_SubWorkshop.cs">
+      <DependentUpon>ESL.tt</DependentUpon>
+    </Compile>
     <Compile Include="Domain\Tbl_Tag.cs">
       <DependentUpon>ESL.tt</DependentUpon>
     </Compile>
@@ -171,6 +180,12 @@
       <DependentUpon>ESL.tt</DependentUpon>
     </Compile>
     <Compile Include="Domain\Tbl_Wallet.cs">
+      <DependentUpon>ESL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Domain\Tbl_Workshop.cs">
+      <DependentUpon>ESL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Domain\Tbl_WorkshopPlan.cs">
       <DependentUpon>ESL.tt</DependentUpon>
     </Compile>
     <Compile Include="Enums\Enum.cs" />

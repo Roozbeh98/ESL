@@ -15,6 +15,36 @@
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
+        <EntityType Name="Tbl_Class">
+          <Key>
+            <PropertyRef Name="Class_ID" />
+          </Key>
+          <Property Name="Class_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Class_Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Class_Title" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Class_CreationDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="Class_ModfiedDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="Class_IsDelete" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tbl_ClassPlan">
+          <Key>
+            <PropertyRef Name="CP_ID" />
+          </Key>
+          <Property Name="CP_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CP_Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CP_ClassID" Type="int" Nullable="false" />
+          <Property Name="CP_Capacity" Type="int" Nullable="false" />
+          <Property Name="CP_Description" Type="ntext" Nullable="false" />
+          <Property Name="CP_Cost" Type="int" Nullable="false" />
+          <Property Name="CP_Location" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="CP_DateTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="CP_SessionsNum" Type="tinyint" Nullable="false" />
+          <Property Name="CP_SessionsLength" Type="tinyint" Nullable="false" />
+          <Property Name="CP_ExamDateTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="CP_CreationDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="CP_ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="CP_IsDelete" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="Tbl_Code">
           <Key>
             <PropertyRef Name="Code_ID" />
@@ -49,8 +79,8 @@
           </Key>
           <Property Name="Exam_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Exam_Guid" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Exam_Title" Type="nvarchar" MaxLength="256" Nullable="false" />
-          <Property Name="Exam_HasSubMenu" Type="bit" Nullable="false" />
+          <Property Name="Exam_Title" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Exam_HasSubExam" Type="bit" Nullable="false" />
           <Property Name="Exam_CreationDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="Exam_ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="Exam_IsDelete" Type="bit" Nullable="false" />
@@ -251,7 +281,7 @@
           <Property Name="SE_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SE_Guid" Type="uniqueidentifier" Nullable="false" />
           <Property Name="SE_ExamID" Type="int" Nullable="false" />
-          <Property Name="SE_Title" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="SE_Title" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="SE_CreationDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="SE_ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="SE_IsDelete" Type="bit" Nullable="false" />
@@ -266,6 +296,18 @@
           <Property Name="SM_Name" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="SM_Display" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="SM_Order" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tbl_SubWorkshop">
+          <Key>
+            <PropertyRef Name="SW_ID" />
+          </Key>
+          <Property Name="SW_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SW_Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="SW_WorkshopID" Type="int" Nullable="false" />
+          <Property Name="SW_Title" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="SW_CreationDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="SW_ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="SW_IsDelete" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Tbl_Tag">
           <Key>
@@ -347,6 +389,47 @@
           <Property Name="Wallet_CreationDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="Wallet_ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
+        <EntityType Name="Tbl_Workshop">
+          <Key>
+            <PropertyRef Name="Workshop_ID" />
+          </Key>
+          <Property Name="Workshop_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Workshop_Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Workshop_Title" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Workshop_HasSubWorkshop" Type="bit" Nullable="false" />
+          <Property Name="Workshop_CreationDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="Workshop_ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="Workshop_IsDelete" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tbl_WorkshopPlan">
+          <Key>
+            <PropertyRef Name="WP_ID" />
+          </Key>
+          <Property Name="WP_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WP_Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="WP_SWID" Type="int" Nullable="false" />
+          <Property Name="WP_Capacity" Type="int" Nullable="false" />
+          <Property Name="WP_Description" Type="ntext" Nullable="false" />
+          <Property Name="WP_Cost" Type="int" Nullable="false" />
+          <Property Name="WP_Location" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="WP_Date" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="WP_IsActive" Type="bit" Nullable="false" />
+          <Property Name="WP_CreationDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="WP_ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="WP_IsDelete" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Tbl_ClassPlan_Tbl_Class">
+          <End Role="Tbl_Class" Type="Self.Tbl_Class" Multiplicity="1" />
+          <End Role="Tbl_ClassPlan" Type="Self.Tbl_ClassPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Class">
+              <PropertyRef Name="Class_ID" />
+            </Principal>
+            <Dependent Role="Tbl_ClassPlan">
+              <PropertyRef Name="CP_ClassID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Tbl_Code_Tbl_CodeGroup">
           <End Role="Tbl_CodeGroup" Type="Self.Tbl_CodeGroup" Multiplicity="1" />
           <End Role="Tbl_Code" Type="Self.Tbl_Code" Multiplicity="*" />
@@ -707,6 +790,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Tbl_SubWorkshop_Tbl_Workshop">
+          <End Role="Tbl_Workshop" Type="Self.Tbl_Workshop" Multiplicity="1" />
+          <End Role="Tbl_SubWorkshop" Type="Self.Tbl_SubWorkshop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Workshop">
+              <PropertyRef Name="Workshop_ID" />
+            </Principal>
+            <Dependent Role="Tbl_SubWorkshop">
+              <PropertyRef Name="SW_WorkshopID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Tbl_User_Tbl_Role">
           <End Role="Tbl_Role" Type="Self.Tbl_Role" Multiplicity="1" />
           <End Role="Tbl_User" Type="Self.Tbl_User" Multiplicity="*" />
@@ -803,8 +898,22 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Tbl_WorkshopPlan_Tbl_SubWorkshop">
+          <End Role="Tbl_SubWorkshop" Type="Self.Tbl_SubWorkshop" Multiplicity="1" />
+          <End Role="Tbl_WorkshopPlan" Type="Self.Tbl_WorkshopPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_SubWorkshop">
+              <PropertyRef Name="SW_ID" />
+            </Principal>
+            <Dependent Role="Tbl_WorkshopPlan">
+              <PropertyRef Name="WP_SWID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="ESLModelStoreContainer">
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_Class" EntityType="Self.Tbl_Class" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_ClassPlan" EntityType="Self.Tbl_ClassPlan" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Code" EntityType="Self.Tbl_Code" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_CodeGroup" EntityType="Self.Tbl_CodeGroup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Document" EntityType="Self.Tbl_Document" Schema="dbo" store:Type="Tables" />
@@ -826,12 +935,19 @@
           <EntitySet Name="Tbl_Role" EntityType="Self.Tbl_Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_SubExam" EntityType="Self.Tbl_SubExam" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_SubMenu" EntityType="Self.Tbl_SubMenu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_SubWorkshop" EntityType="Self.Tbl_SubWorkshop" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Tag" EntityType="Self.Tbl_Tag" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_User" EntityType="Self.Tbl_User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_UserExam" EntityType="Self.Tbl_UserExam" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_UserExamAccess" EntityType="Self.Tbl_UserExamAccess" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_UserExamInPerson" EntityType="Self.Tbl_UserExamInPerson" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Wallet" EntityType="Self.Tbl_Wallet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_Workshop" EntityType="Self.Tbl_Workshop" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_WorkshopPlan" EntityType="Self.Tbl_WorkshopPlan" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Tbl_ClassPlan_Tbl_Class" Association="Self.FK_Tbl_ClassPlan_Tbl_Class">
+            <End Role="Tbl_Class" EntitySet="Tbl_Class" />
+            <End Role="Tbl_ClassPlan" EntitySet="Tbl_ClassPlan" />
+          </AssociationSet>
           <AssociationSet Name="FK_Tbl_Code_Tbl_CodeGroup" Association="Self.FK_Tbl_Code_Tbl_CodeGroup">
             <End Role="Tbl_CodeGroup" EntitySet="Tbl_CodeGroup" />
             <End Role="Tbl_Code" EntitySet="Tbl_Code" />
@@ -952,6 +1068,10 @@
             <End Role="Tbl_Menu" EntitySet="Tbl_Menu" />
             <End Role="Tbl_SubMenu" EntitySet="Tbl_SubMenu" />
           </AssociationSet>
+          <AssociationSet Name="FK_Tbl_SubWorkshop_Tbl_Workshop" Association="Self.FK_Tbl_SubWorkshop_Tbl_Workshop">
+            <End Role="Tbl_Workshop" EntitySet="Tbl_Workshop" />
+            <End Role="Tbl_SubWorkshop" EntitySet="Tbl_SubWorkshop" />
+          </AssociationSet>
           <AssociationSet Name="FK_Tbl_User_Tbl_Role" Association="Self.FK_Tbl_User_Tbl_Role">
             <End Role="Tbl_Role" EntitySet="Tbl_Role" />
             <End Role="Tbl_User" EntitySet="Tbl_User" />
@@ -984,6 +1104,10 @@
             <End Role="Tbl_User" EntitySet="Tbl_User" />
             <End Role="Tbl_Wallet" EntitySet="Tbl_Wallet" />
           </AssociationSet>
+          <AssociationSet Name="FK_Tbl_WorkshopPlan_Tbl_SubWorkshop" Association="Self.FK_Tbl_WorkshopPlan_Tbl_SubWorkshop">
+            <End Role="Tbl_SubWorkshop" EntitySet="Tbl_SubWorkshop" />
+            <End Role="Tbl_WorkshopPlan" EntitySet="Tbl_WorkshopPlan" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -991,6 +1115,8 @@
       <Schema Namespace="ESLModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="ESLEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="sysdiagrams" EntityType="ESLModel.sysdiagram" />
+          <EntitySet Name="Tbl_Class" EntityType="ESLModel.Tbl_Class" />
+          <EntitySet Name="Tbl_ClassPlan" EntityType="ESLModel.Tbl_ClassPlan" />
           <EntitySet Name="Tbl_Code" EntityType="ESLModel.Tbl_Code" />
           <EntitySet Name="Tbl_CodeGroup" EntityType="ESLModel.Tbl_CodeGroup" />
           <EntitySet Name="Tbl_Document" EntityType="ESLModel.Tbl_Document" />
@@ -1012,12 +1138,19 @@
           <EntitySet Name="Tbl_Role" EntityType="ESLModel.Tbl_Role" />
           <EntitySet Name="Tbl_SubExam" EntityType="ESLModel.Tbl_SubExam" />
           <EntitySet Name="Tbl_SubMenu" EntityType="ESLModel.Tbl_SubMenu" />
+          <EntitySet Name="Tbl_SubWorkshop" EntityType="ESLModel.Tbl_SubWorkshop" />
           <EntitySet Name="Tbl_Tag" EntityType="ESLModel.Tbl_Tag" />
           <EntitySet Name="Tbl_User" EntityType="ESLModel.Tbl_User" />
           <EntitySet Name="Tbl_UserExam" EntityType="ESLModel.Tbl_UserExam" />
           <EntitySet Name="Tbl_UserExamAccess" EntityType="ESLModel.Tbl_UserExamAccess" />
           <EntitySet Name="Tbl_UserExamInPerson" EntityType="ESLModel.Tbl_UserExamInPerson" />
           <EntitySet Name="Tbl_Wallet" EntityType="ESLModel.Tbl_Wallet" />
+          <EntitySet Name="Tbl_Workshop" EntityType="ESLModel.Tbl_Workshop" />
+          <EntitySet Name="Tbl_WorkshopPlan" EntityType="ESLModel.Tbl_WorkshopPlan" />
+          <AssociationSet Name="FK_Tbl_ClassPlan_Tbl_Class" Association="ESLModel.FK_Tbl_ClassPlan_Tbl_Class">
+            <End Role="Tbl_Class" EntitySet="Tbl_Class" />
+            <End Role="Tbl_ClassPlan" EntitySet="Tbl_ClassPlan" />
+          </AssociationSet>
           <AssociationSet Name="FK_Tbl_Code_Tbl_CodeGroup" Association="ESLModel.FK_Tbl_Code_Tbl_CodeGroup">
             <End Role="Tbl_CodeGroup" EntitySet="Tbl_CodeGroup" />
             <End Role="Tbl_Code" EntitySet="Tbl_Code" />
@@ -1154,6 +1287,14 @@
             <End Role="Tbl_Role" EntitySet="Tbl_Role" />
             <End Role="Tbl_User" EntitySet="Tbl_User" />
           </AssociationSet>
+          <AssociationSet Name="FK_Tbl_SubWorkshop_Tbl_Workshop" Association="ESLModel.FK_Tbl_SubWorkshop_Tbl_Workshop">
+            <End Role="Tbl_Workshop" EntitySet="Tbl_Workshop" />
+            <End Role="Tbl_SubWorkshop" EntitySet="Tbl_SubWorkshop" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_WorkshopPlan_Tbl_SubWorkshop" Association="ESLModel.FK_Tbl_WorkshopPlan_Tbl_SubWorkshop">
+            <End Role="Tbl_SubWorkshop" EntitySet="Tbl_SubWorkshop" />
+            <End Role="Tbl_WorkshopPlan" EntitySet="Tbl_WorkshopPlan" />
+          </AssociationSet>
           <AssociationSet Name="FK_Tbl_UserExam_Tbl_User" Association="ESLModel.FK_Tbl_UserExam_Tbl_User">
             <End Role="Tbl_User" EntitySet="Tbl_User" />
             <End Role="Tbl_UserExam" EntitySet="Tbl_UserExam" />
@@ -1180,6 +1321,38 @@
           <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Tbl_Class">
+          <Key>
+            <PropertyRef Name="Class_ID" />
+          </Key>
+          <Property Name="Class_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Class_Guid" Type="Guid" Nullable="false" />
+          <Property Name="Class_Title" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Class_CreationDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="Class_ModfiedDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="Class_IsDelete" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Tbl_ClassPlan" Relationship="ESLModel.FK_Tbl_ClassPlan_Tbl_Class" FromRole="Tbl_Class" ToRole="Tbl_ClassPlan" />
+        </EntityType>
+        <EntityType Name="Tbl_ClassPlan">
+          <Key>
+            <PropertyRef Name="CP_ID" />
+          </Key>
+          <Property Name="CP_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CP_Guid" Type="Guid" Nullable="false" />
+          <Property Name="CP_ClassID" Type="Int32" Nullable="false" />
+          <Property Name="CP_Capacity" Type="Int32" Nullable="false" />
+          <Property Name="CP_Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CP_Cost" Type="Int32" Nullable="false" />
+          <Property Name="CP_Location" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CP_DateTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="CP_SessionsNum" Type="Byte" Nullable="false" />
+          <Property Name="CP_SessionsLength" Type="Byte" Nullable="false" />
+          <Property Name="CP_ExamDateTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="CP_CreationDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="CP_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="CP_IsDelete" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Tbl_Class" Relationship="ESLModel.FK_Tbl_ClassPlan_Tbl_Class" FromRole="Tbl_ClassPlan" ToRole="Tbl_Class" />
         </EntityType>
         <EntityType Name="Tbl_Code">
           <Key>
@@ -1233,8 +1406,8 @@
           </Key>
           <Property Name="Exam_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Exam_Guid" Type="Guid" Nullable="false" />
-          <Property Name="Exam_Title" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="Exam_HasSubMenu" Type="Boolean" Nullable="false" />
+          <Property Name="Exam_Title" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Exam_HasSubExam" Type="Boolean" Nullable="false" />
           <Property Name="Exam_CreationDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="Exam_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="Exam_IsDelete" Type="Boolean" Nullable="false" />
@@ -1475,7 +1648,7 @@
           <Property Name="SE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="SE_Guid" Type="Guid" Nullable="false" />
           <Property Name="SE_ExamID" Type="Int32" Nullable="false" />
-          <Property Name="SE_Title" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="SE_Title" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="SE_CreationDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="SE_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="SE_IsDelete" Type="Boolean" Nullable="false" />
@@ -1493,6 +1666,20 @@
           <Property Name="SM_Display" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="SM_Order" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Tbl_Menu" Relationship="ESLModel.FK_Tbl_SubMenu_Menu" FromRole="Tbl_SubMenu" ToRole="Tbl_Menu" />
+        </EntityType>
+        <EntityType Name="Tbl_SubWorkshop">
+          <Key>
+            <PropertyRef Name="SW_ID" />
+          </Key>
+          <Property Name="SW_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SW_Guid" Type="Guid" Nullable="false" />
+          <Property Name="SW_WorkshopID" Type="Int32" Nullable="false" />
+          <Property Name="SW_Title" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="SW_CreationDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="SW_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="SW_IsDelete" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Tbl_Workshop" Relationship="ESLModel.FK_Tbl_SubWorkshop_Tbl_Workshop" FromRole="Tbl_SubWorkshop" ToRole="Tbl_Workshop" />
+          <NavigationProperty Name="Tbl_WorkshopPlan" Relationship="ESLModel.FK_Tbl_WorkshopPlan_Tbl_SubWorkshop" FromRole="Tbl_SubWorkshop" ToRole="Tbl_WorkshopPlan" />
         </EntityType>
         <EntityType Name="Tbl_Tag">
           <Key>
@@ -1589,6 +1776,49 @@
           <Property Name="Wallet_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
           <NavigationProperty Name="Tbl_User" Relationship="ESLModel.FK_Tbl_Wallet_Tbl_User" FromRole="Tbl_Wallet" ToRole="Tbl_User" />
         </EntityType>
+        <EntityType Name="Tbl_Workshop">
+          <Key>
+            <PropertyRef Name="Workshop_ID" />
+          </Key>
+          <Property Name="Workshop_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Workshop_Guid" Type="Guid" Nullable="false" />
+          <Property Name="Workshop_Title" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Workshop_HasSubWorkshop" Type="Boolean" Nullable="false" />
+          <Property Name="Workshop_CreationDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="Workshop_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="Workshop_IsDelete" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Tbl_SubWorkshop" Relationship="ESLModel.FK_Tbl_SubWorkshop_Tbl_Workshop" FromRole="Tbl_Workshop" ToRole="Tbl_SubWorkshop" />
+        </EntityType>
+        <EntityType Name="Tbl_WorkshopPlan">
+          <Key>
+            <PropertyRef Name="WP_ID" />
+          </Key>
+          <Property Name="WP_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WP_Guid" Type="Guid" Nullable="false" />
+          <Property Name="WP_SWID" Type="Int32" Nullable="false" />
+          <Property Name="WP_Capacity" Type="Int32" Nullable="false" />
+          <Property Name="WP_Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="WP_Cost" Type="Int32" Nullable="false" />
+          <Property Name="WP_Location" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="WP_Date" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="WP_IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="WP_CreationDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="WP_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="WP_IsDelete" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Tbl_SubWorkshop" Relationship="ESLModel.FK_Tbl_WorkshopPlan_Tbl_SubWorkshop" FromRole="Tbl_WorkshopPlan" ToRole="Tbl_SubWorkshop" />
+        </EntityType>
+        <Association Name="FK_Tbl_ClassPlan_Tbl_Class">
+          <End Type="ESLModel.Tbl_Class" Role="Tbl_Class" Multiplicity="1" />
+          <End Type="ESLModel.Tbl_ClassPlan" Role="Tbl_ClassPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Class">
+              <PropertyRef Name="Class_ID" />
+            </Principal>
+            <Dependent Role="Tbl_ClassPlan">
+              <PropertyRef Name="CP_ClassID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Tbl_Code_Tbl_CodeGroup">
           <End Type="ESLModel.Tbl_CodeGroup" Role="Tbl_CodeGroup" Multiplicity="1" />
           <End Type="ESLModel.Tbl_Code" Role="Tbl_Code" Multiplicity="*" />
@@ -1997,6 +2227,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Tbl_SubWorkshop_Tbl_Workshop">
+          <End Type="ESLModel.Tbl_Workshop" Role="Tbl_Workshop" Multiplicity="1" />
+          <End Type="ESLModel.Tbl_SubWorkshop" Role="Tbl_SubWorkshop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Workshop">
+              <PropertyRef Name="Workshop_ID" />
+            </Principal>
+            <Dependent Role="Tbl_SubWorkshop">
+              <PropertyRef Name="SW_WorkshopID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_WorkshopPlan_Tbl_SubWorkshop">
+          <End Type="ESLModel.Tbl_SubWorkshop" Role="Tbl_SubWorkshop" Multiplicity="1" />
+          <End Type="ESLModel.Tbl_WorkshopPlan" Role="Tbl_WorkshopPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_SubWorkshop">
+              <PropertyRef Name="SW_ID" />
+            </Principal>
+            <Dependent Role="Tbl_WorkshopPlan">
+              <PropertyRef Name="WP_SWID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Tbl_UserExam_Tbl_User">
           <End Type="ESLModel.Tbl_User" Role="Tbl_User" Multiplicity="1" />
           <End Type="ESLModel.Tbl_UserExam" Role="Tbl_UserExam" Multiplicity="*" />
@@ -2062,6 +2316,38 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Class">
+            <EntityTypeMapping TypeName="ESLModel.Tbl_Class">
+              <MappingFragment StoreEntitySet="Tbl_Class">
+                <ScalarProperty Name="Class_IsDelete" ColumnName="Class_IsDelete" />
+                <ScalarProperty Name="Class_ModfiedDate" ColumnName="Class_ModfiedDate" />
+                <ScalarProperty Name="Class_CreationDate" ColumnName="Class_CreationDate" />
+                <ScalarProperty Name="Class_Title" ColumnName="Class_Title" />
+                <ScalarProperty Name="Class_Guid" ColumnName="Class_Guid" />
+                <ScalarProperty Name="Class_ID" ColumnName="Class_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_ClassPlan">
+            <EntityTypeMapping TypeName="ESLModel.Tbl_ClassPlan">
+              <MappingFragment StoreEntitySet="Tbl_ClassPlan">
+                <ScalarProperty Name="CP_IsDelete" ColumnName="CP_IsDelete" />
+                <ScalarProperty Name="CP_ModifiedDate" ColumnName="CP_ModifiedDate" />
+                <ScalarProperty Name="CP_CreationDate" ColumnName="CP_CreationDate" />
+                <ScalarProperty Name="CP_ExamDateTime" ColumnName="CP_ExamDateTime" />
+                <ScalarProperty Name="CP_SessionsLength" ColumnName="CP_SessionsLength" />
+                <ScalarProperty Name="CP_SessionsNum" ColumnName="CP_SessionsNum" />
+                <ScalarProperty Name="CP_DateTime" ColumnName="CP_DateTime" />
+                <ScalarProperty Name="CP_Location" ColumnName="CP_Location" />
+                <ScalarProperty Name="CP_Cost" ColumnName="CP_Cost" />
+                <ScalarProperty Name="CP_Description" ColumnName="CP_Description" />
+                <ScalarProperty Name="CP_Capacity" ColumnName="CP_Capacity" />
+                <ScalarProperty Name="CP_ClassID" ColumnName="CP_ClassID" />
+                <ScalarProperty Name="CP_Guid" ColumnName="CP_Guid" />
+                <ScalarProperty Name="CP_ID" ColumnName="CP_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Tbl_Code">
             <EntityTypeMapping TypeName="ESLModel.Tbl_Code">
               <MappingFragment StoreEntitySet="Tbl_Code">
@@ -2099,7 +2385,7 @@
                 <ScalarProperty Name="Exam_IsDelete" ColumnName="Exam_IsDelete" />
                 <ScalarProperty Name="Exam_ModifiedDate" ColumnName="Exam_ModifiedDate" />
                 <ScalarProperty Name="Exam_CreationDate" ColumnName="Exam_CreationDate" />
-                <ScalarProperty Name="Exam_HasSubMenu" ColumnName="Exam_HasSubMenu" />
+                <ScalarProperty Name="Exam_HasSubExam" ColumnName="Exam_HasSubExam" />
                 <ScalarProperty Name="Exam_Title" ColumnName="Exam_Title" />
                 <ScalarProperty Name="Exam_Guid" ColumnName="Exam_Guid" />
                 <ScalarProperty Name="Exam_ID" ColumnName="Exam_ID" />
@@ -2335,6 +2621,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_SubWorkshop">
+            <EntityTypeMapping TypeName="ESLModel.Tbl_SubWorkshop">
+              <MappingFragment StoreEntitySet="Tbl_SubWorkshop">
+                <ScalarProperty Name="SW_IsDelete" ColumnName="SW_IsDelete" />
+                <ScalarProperty Name="SW_ModifiedDate" ColumnName="SW_ModifiedDate" />
+                <ScalarProperty Name="SW_CreationDate" ColumnName="SW_CreationDate" />
+                <ScalarProperty Name="SW_Title" ColumnName="SW_Title" />
+                <ScalarProperty Name="SW_WorkshopID" ColumnName="SW_WorkshopID" />
+                <ScalarProperty Name="SW_Guid" ColumnName="SW_Guid" />
+                <ScalarProperty Name="SW_ID" ColumnName="SW_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Tbl_Tag">
             <EntityTypeMapping TypeName="ESLModel.Tbl_Tag">
               <MappingFragment StoreEntitySet="Tbl_Tag">
@@ -2418,6 +2717,37 @@
                 <ScalarProperty Name="Wallet_UserID" ColumnName="Wallet_UserID" />
                 <ScalarProperty Name="Wallet_Guid" ColumnName="Wallet_Guid" />
                 <ScalarProperty Name="Wallet_ID" ColumnName="Wallet_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Workshop">
+            <EntityTypeMapping TypeName="ESLModel.Tbl_Workshop">
+              <MappingFragment StoreEntitySet="Tbl_Workshop">
+                <ScalarProperty Name="Workshop_IsDelete" ColumnName="Workshop_IsDelete" />
+                <ScalarProperty Name="Workshop_ModifiedDate" ColumnName="Workshop_ModifiedDate" />
+                <ScalarProperty Name="Workshop_CreationDate" ColumnName="Workshop_CreationDate" />
+                <ScalarProperty Name="Workshop_HasSubWorkshop" ColumnName="Workshop_HasSubWorkshop" />
+                <ScalarProperty Name="Workshop_Title" ColumnName="Workshop_Title" />
+                <ScalarProperty Name="Workshop_Guid" ColumnName="Workshop_Guid" />
+                <ScalarProperty Name="Workshop_ID" ColumnName="Workshop_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_WorkshopPlan">
+            <EntityTypeMapping TypeName="ESLModel.Tbl_WorkshopPlan">
+              <MappingFragment StoreEntitySet="Tbl_WorkshopPlan">
+                <ScalarProperty Name="WP_IsDelete" ColumnName="WP_IsDelete" />
+                <ScalarProperty Name="WP_ModifiedDate" ColumnName="WP_ModifiedDate" />
+                <ScalarProperty Name="WP_CreationDate" ColumnName="WP_CreationDate" />
+                <ScalarProperty Name="WP_IsActive" ColumnName="WP_IsActive" />
+                <ScalarProperty Name="WP_Date" ColumnName="WP_Date" />
+                <ScalarProperty Name="WP_Location" ColumnName="WP_Location" />
+                <ScalarProperty Name="WP_Cost" ColumnName="WP_Cost" />
+                <ScalarProperty Name="WP_Description" ColumnName="WP_Description" />
+                <ScalarProperty Name="WP_Capacity" ColumnName="WP_Capacity" />
+                <ScalarProperty Name="WP_SWID" ColumnName="WP_SWID" />
+                <ScalarProperty Name="WP_Guid" ColumnName="WP_Guid" />
+                <ScalarProperty Name="WP_ID" ColumnName="WP_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
