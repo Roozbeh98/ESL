@@ -21,10 +21,11 @@ namespace ESL.DataLayer.Domain
         public string CP_Description { get; set; }
         public int CP_Cost { get; set; }
         public string CP_Location { get; set; }
-        public System.DateTime CP_DateTime { get; set; }
-        public byte CP_SessionsNum { get; set; }
-        public byte CP_SessionsLength { get; set; }
-        public System.DateTime CP_ExamDateTime { get; set; }
+        public System.TimeSpan CP_Time { get; set; }
+        public int CP_SessionsNum { get; set; }
+        public int CP_SessionsLength { get; set; }
+        public System.DateTime CP_ExamDate { get; set; }
+        public bool CP_IsActive { get; set; }
         public System.DateTime CP_CreationDate { get; set; }
         public System.DateTime CP_ModifiedDate { get; set; }
         public bool CP_IsDelete { get; set; }

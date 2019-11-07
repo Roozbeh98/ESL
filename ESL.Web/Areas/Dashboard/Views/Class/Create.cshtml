@@ -1,8 +1,8 @@
-﻿@model ESL.Web.Areas.Dashboard.Models.ViewModels.Model_ExamInPersonCreate
+﻿@model ESL.Web.Areas.Dashboard.Models.ViewModels.Model_ClassCreate
 @using ESL.Services.BaseRepository
 
 @{
-    ViewBag.Title = "آزمون جدید";
+    ViewBag.Title = "کلاس جدید";
     Layout = "~/Areas/Dashboard/Views/Shared/_Master.cshtml";
 }
 
@@ -14,11 +14,11 @@
 <div class="panel panel-body panel-default  navigation">
 
     <div class="pull-left">
-        <h4 class="navigation-title"><b>آزمون جدید</b></h4>
+        <h4 class="navigation-title"><b>کلاس جدید</b></h4>
     </div>
 
     <div class="pull-right">
-        <a href="@Url.Action("Index", "ExamInPerson")"><i class="glyphicon glyphicon-arrow-left navigation-btn-icon"></i></a>
+        <a href="@Url.Action("Index", "Class")"><i class="glyphicon glyphicon-arrow-left navigation-btn-icon"></i></a>
     </div>
 
 </div>
@@ -38,16 +38,8 @@
                     <div class="col-md-6">
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.Exam, htmlAttributes: new { @class = "control-label" })
-                            @Html.DropDownListFor(model => model.Exam, Rep_Exam.Get_AllExams(), new { @class = "form-control Select2_Normal" })
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.SubExam, htmlAttributes: new { @class = "control-label" })
-
-                            <select name="SubExam" id="SubExam" class="form-control Select2_Normal"></select>
-
-                            @Html.ValidationMessageFor(model => model.SubExam, "", new { @class = "text-danger" })
+                            @Html.LabelFor(model => model.Class, htmlAttributes: new { @class = "control-label" })
+                            @Html.DropDownListFor(model => model.Class, Rep_Class.Get_AllClasses(), new { @class = "form-control Select2_Normal" })
                         </div>
 
                         <div class="form-group">
@@ -73,14 +65,47 @@
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label" })
-                            <div id="Date" data-englishnumber="true" data-mddatetimepicker="true" data-inline="true" data-isgregorian="false" data-targetselector="#fromDate" data-enabletimepicker="true" style="border: solid 1px #ccc;"></div>
-                            <input type="hidden" name="Date" class="form-control" id="fromDate" placeholder="تاریخ" readonly />
+                            @Html.LabelFor(model => model.SessionsNum, htmlAttributes: new { @class = "control-label" })
+
+                            <div class="input-group">
+                                <span class=" input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                                @Html.EditorFor(model => model.SessionsNum, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+
+                            @Html.ValidationMessageFor(model => model.SessionsNum, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Time, htmlAttributes: new { @class = "control-label" })
+
+                            <div class="input-group">
+                                <span class=" input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                                @Html.EditorFor(model => model.Time, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+
+                            @Html.ValidationMessageFor(model => model.Time, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.SessionsLength, htmlAttributes: new { @class = "control-label" })
+
+                            <div class="input-group">
+                                <span class=" input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                                @Html.EditorFor(model => model.SessionsLength, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+
+                            @Html.ValidationMessageFor(model => model.SessionsLength, "", new { @class = "text-danger" })
                         </div>
 
                     </div>
 
                     <div class="col-md-6">
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ExamDate, htmlAttributes: new { @class = "control-label" })
+                            <div id="Date" data-englishnumber="true" data-mddatetimepicker="true" data-inline="true" data-isgregorian="false" data-targetselector="#fromDate" data-enabletimepicker="true" style="border: solid 1px #ccc;"></div>
+                            <input type="hidden" name="Date" class="form-control" id="fromDate" placeholder="تاریخ" readonly />
+                        </div>
 
                         <div class="form-group">
                             @Html.LabelFor(model => model.Location, htmlAttributes: new { @class = "control-label" })
@@ -102,28 +127,6 @@
                             </div>
 
                             @Html.ValidationMessageFor(model => model.Capacity, "", new { @class = "text-danger" })
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.TotalMark, htmlAttributes: new { @class = "control-label" })
-
-                            <div class="input-group">
-                                <span class=" input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-                                @Html.EditorFor(model => model.TotalMark, new { htmlAttributes = new { @class = "form-control" } })
-                            </div>
-
-                            @Html.ValidationMessageFor(model => model.TotalMark, "", new { @class = "text-danger" })
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.PassMark, htmlAttributes: new { @class = "control-label" })
-
-                            <div class="input-group">
-                                <span class=" input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-                                @Html.EditorFor(model => model.PassMark, new { htmlAttributes = new { @class = "form-control" } })
-                            </div>
-
-                            @Html.ValidationMessageFor(model => model.PassMark, "", new { @class = "text-danger" })
                         </div>
 
                         <div class="form-group material-switch-body">
@@ -160,42 +163,6 @@
     <script src="~/Scripts/Plugins/jQuery.Select2/i18n/fa.js"></script>
 
     <script src="~/Scripts/MyScripts/Select2_Config.js"></script>
-
-    <script>
-
-        $("#Exam").on("change", function () {
-            var ExamID = document.getElementById("Exam").value;
-
-            $.ajax({
-                url: "/ExamInPerson/Get_SubExamList?ExamID=" + ExamID,
-                dataType: 'json',
-                type: 'post',
-                success: function (data) {
-                    $("#SubExam").empty();
-                    $.each(data, function (index, row) {
-                        $("#SubExam").append("<option value='" + row.id + "'>" + row.text + "</option>")
-                    });
-                }
-            })
-        });
-
-        $("#Exam").ready(function () {
-            var ExamID = document.getElementById("Exam").value;
-
-            $.ajax({
-                url: "/ExamInPerson/Get_SubExamList?ExamID=" + ExamID,
-                dataType: 'json',
-                type: 'post',
-                success: function (data) {
-                    $("#SubExam").empty();
-                    $.each(data, function (index, row) {
-                        $("#SubExam").append("<option value='" + row.id + "'>" + row.text + "</option>")
-                    });
-                }
-            })
-        });
-
-    </script>
 
     <script src="~/Scripts/Plugins/jQuery.MdBootstrapPersianDateTimePicker/jalaali.js"></script>
     <script src="~/Scripts/Plugins/jQuery.MdBootstrapPersianDateTimePicker/jquery.Bootstrap-PersianDateTimePicker.js"></script>

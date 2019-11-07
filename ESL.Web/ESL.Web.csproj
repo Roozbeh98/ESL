@@ -249,6 +249,8 @@
     <Content Include="Areas\Dashboard\Views\Wallet\Index.cshtml" />
     <Content Include="Areas\Dashboard\Views\Workshop\Index.cshtml" />
     <Content Include="Areas\Dashboard\Views\Workshop\Create.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Class\Index.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Class\Create.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -1311,6 +1313,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Dashboard\Controllers\AccountController.cs" />
+    <Compile Include="Areas\Dashboard\Controllers\ClassController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\ExamInPersonController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\MessageController.cs" />
@@ -1324,6 +1327,8 @@
     <Compile Include="Areas\Dashboard\Controllers\WalletController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\WorkshopController.cs" />
     <Compile Include="Areas\Dashboard\DashboardAreaRegistration.cs" />
+    <Compile Include="Areas\Dashboard\Models\ViewModels\Model_Class.cs" />
+    <Compile Include="Areas\Dashboard\Models\ViewModels\Model_ClassCreate.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_ExamInPersonSetActiveness.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_MessageModal.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_Exam.cs" />

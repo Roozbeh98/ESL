@@ -1,8 +1,8 @@
-﻿@model IEnumerable<ESL.Web.Areas.Dashboard.Models.ViewModels.Model_ExamsInPerson>
+﻿@model IEnumerable<ESL.Web.Areas.Dashboard.Models.ViewModels.Model_Class>
 @using ESL.Common.Plugins
 
 @{
-    ViewBag.Title = "لیست آزمون های حضوری";
+    ViewBag.Title = "لیست کلاس ها";
     Layout = "~/Areas/Dashboard/Views/Shared/_Master.cshtml";
 }
 
@@ -10,11 +10,11 @@
 <div class="panel panel-body panel-default  navigation">
 
     <div class="pull-left">
-        <h4 class="navigation-title"><b>لیست آزمون های حضوری</b></h4>
+        <h4 class="navigation-title"><b>لیست کلاس ها</b></h4>
     </div>
 
     <div class="pull-right">
-        <a href="@Url.Action("Create", "ExamInPerson", new { @area = "Dashboard" })"><i class="glyphicon glyphicon-plus navigation-btn-icon"></i></a>
+        <a href="@Url.Action("Create", "Class" , new { area = "Dashboard" })"><i class="glyphicon glyphicon-plus navigation-btn-icon"></i></a>
     </div>
 
 </div>
@@ -28,16 +28,17 @@
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">@Html.DisplayNameFor(model => model.Exam)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Class)</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.Description)</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.Cost)</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.Location)</th>
-                    <th scope="col">@Html.DisplayNameFor(model => model.Activeness)</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.Capacity)</th>
-                    <th scope="col">@Html.DisplayNameFor(model => model.TotalMark)</th>
-                    <th scope="col">@Html.DisplayNameFor(model => model.PassMark)</th>
-                    <th scope="col">@Html.DisplayNameFor(model => model.Date)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Time)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.SessionsNum)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.SessionsLength)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.ExamDate)</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.CreationDate)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Activeness)</th>
                     <th scope="col" data-orderable="false">کنترل</th>
                 </tr>
             </thead>
@@ -54,7 +55,7 @@
                     <tr>
                         <td scope="row">@x</td>
                         <td scope="row">
-                            <span> @Html.DisplayFor(modelItem => item.Exam) </span>
+                            <span> @Html.DisplayFor(modelItem => item.Class) </span>
                         </td>
                         <td scope="row">
                             <span> @Html.DisplayFor(modelItem => item.Description) </span>
@@ -66,22 +67,25 @@
                             <span> @Html.DisplayFor(modelItem => item.Location) </span>
                         </td>
                         <td scope="row">
-                            <span> @(item.Activeness ? "فعال" : "غیر فعال") </span>
-                        </td>
-                        <td scope="row">
                             <span> @Html.DisplayFor(modelItem => item.Capacity) </span>
                         </td>
                         <td scope="row">
-                            <span> @Html.DisplayFor(modelItem => item.TotalMark) </span>
+                            <span> @Html.DisplayFor(modelItem => item.Time) </span>
                         </td>
                         <td scope="row">
-                            <span> @Html.DisplayFor(modelItem => item.PassMark) </span>
+                            <span> @Html.DisplayFor(modelItem => item.SessionsNum) </span>
                         </td>
                         <td scope="row">
-                            <span> @PersianDateExtensionMethods.ToPeString(item.Date, "yyyy/MM/dd HH:mm") </span>
+                            <span> @Html.DisplayFor(modelItem => item.SessionsLength) </span>
+                        </td>
+                        <td scope="row">
+                            <span> @PersianDateExtensionMethods.ToPeString(item.ExamDate, "yyyy/MM/dd HH:mm") </span>
                         </td>
                         <td scope="row">
                             <span> @PersianDateExtensionMethods.ToPeString(item.CreationDate, "yyyy/MM/dd") </span>
+                        </td>
+                        <td scope="row">
+                            <span> @(item.Activeness ? "فعال" : "غیر فعال") </span>
                         </td>
                         <td scope="row">
                             <a class="btn btn-primary btn-sm glyphicon glyphicon-ok" href="javascript:void(0)" onclick="SetActiveness(@item.ID)"> </a>
@@ -114,18 +118,6 @@
             }).done(function (result) {
                 $('#myModal').modal('show');
                 $('#myModalLabel').html('حدف آزمون');
-                $('#myModalBody').html(result);
-            });
-        }
-
-        function Create() {
-            $.ajax({
-                url: "/Dashboard/ExamInPerson/Create",
-                type: "Get",
-                data: {}
-            }).done(function (result) {
-                $('#myModal').modal('show');
-                $('#myModalLabel').html('افزودن آزمون');
                 $('#myModalBody').html(result);
             });
         }

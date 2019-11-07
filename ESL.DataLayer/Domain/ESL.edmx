@@ -37,10 +37,11 @@
           <Property Name="CP_Description" Type="ntext" Nullable="false" />
           <Property Name="CP_Cost" Type="int" Nullable="false" />
           <Property Name="CP_Location" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="CP_DateTime" Type="datetime2" Precision="7" Nullable="false" />
-          <Property Name="CP_SessionsNum" Type="tinyint" Nullable="false" />
-          <Property Name="CP_SessionsLength" Type="tinyint" Nullable="false" />
-          <Property Name="CP_ExamDateTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="CP_Time" Type="time" Precision="7" Nullable="false" />
+          <Property Name="CP_SessionsNum" Type="int" Nullable="false" />
+          <Property Name="CP_SessionsLength" Type="int" Nullable="false" />
+          <Property Name="CP_ExamDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="CP_IsActive" Type="bit" Nullable="false" />
           <Property Name="CP_CreationDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="CP_ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="CP_IsDelete" Type="bit" Nullable="false" />
@@ -1345,10 +1346,11 @@
           <Property Name="CP_Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CP_Cost" Type="Int32" Nullable="false" />
           <Property Name="CP_Location" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="CP_DateTime" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="CP_SessionsNum" Type="Byte" Nullable="false" />
-          <Property Name="CP_SessionsLength" Type="Byte" Nullable="false" />
-          <Property Name="CP_ExamDateTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="CP_Time" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="CP_SessionsNum" Type="Int32" Nullable="false" />
+          <Property Name="CP_SessionsLength" Type="Int32" Nullable="false" />
+          <Property Name="CP_ExamDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="CP_IsActive" Type="Boolean" Nullable="false" />
           <Property Name="CP_CreationDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="CP_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="CP_IsDelete" Type="Boolean" Nullable="false" />
@@ -2334,10 +2336,11 @@
                 <ScalarProperty Name="CP_IsDelete" ColumnName="CP_IsDelete" />
                 <ScalarProperty Name="CP_ModifiedDate" ColumnName="CP_ModifiedDate" />
                 <ScalarProperty Name="CP_CreationDate" ColumnName="CP_CreationDate" />
-                <ScalarProperty Name="CP_ExamDateTime" ColumnName="CP_ExamDateTime" />
+                <ScalarProperty Name="CP_IsActive" ColumnName="CP_IsActive" />
+                <ScalarProperty Name="CP_ExamDate" ColumnName="CP_ExamDate" />
                 <ScalarProperty Name="CP_SessionsLength" ColumnName="CP_SessionsLength" />
                 <ScalarProperty Name="CP_SessionsNum" ColumnName="CP_SessionsNum" />
-                <ScalarProperty Name="CP_DateTime" ColumnName="CP_DateTime" />
+                <ScalarProperty Name="CP_Time" ColumnName="CP_Time" />
                 <ScalarProperty Name="CP_Location" ColumnName="CP_Location" />
                 <ScalarProperty Name="CP_Cost" ColumnName="CP_Cost" />
                 <ScalarProperty Name="CP_Description" ColumnName="CP_Description" />

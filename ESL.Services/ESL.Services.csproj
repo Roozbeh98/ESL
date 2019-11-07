@@ -72,6 +72,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseRepository\Rep_Class.cs" />
     <Compile Include="BaseRepository\Rep_CodeGroup.cs" />
     <Compile Include="BaseRepository\Rep_Exam.cs" />
     <Compile Include="BaseRepository\Rep_User.cs" />

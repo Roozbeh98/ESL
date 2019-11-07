@@ -39,7 +39,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
         public ActionResult Create()
         {
-            return PartialView();
+            return View();
         }
 
         [HttpPost]
@@ -59,6 +59,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     EIP_TotalMark = model.TotalMark,
                     EIP_PassMark = model.PassMark,
                     EIP_Date = DateConverter.ToGeorgianDateTime(model.Date),
+                    EIP_IsActive = model.Activeness,
                     EIP_CreationDate = DateTime.Now,
                     EIP_ModifiedDate = DateTime.Now,
                 };
