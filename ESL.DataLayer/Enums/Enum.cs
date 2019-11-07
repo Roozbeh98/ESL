@@ -32,4 +32,9 @@ namespace ESL.Web
         Decrease,
         NoAction
     }
+
+    public enum SMSTemplate
+    {
+        VerifyAccount = 1
+    }
 }

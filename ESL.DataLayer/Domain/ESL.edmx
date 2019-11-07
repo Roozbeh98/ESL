@@ -275,6 +275,78 @@
           <Property Name="Role_Name" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Role_Display" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
+        <EntityType Name="Tbl_SMSProviderConfiguration">
+          <Key>
+            <PropertyRef Name="SPC_ID" />
+          </Key>
+          <Property Name="SPC_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SPC_Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="SPC_Username" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="SPC_Password" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="SPC_ApiKey" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="SPC_CreationDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="SPC_ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="SPC_IsDelete" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tbl_SMSProviderNumber">
+          <Key>
+            <PropertyRef Name="SPN_ID" />
+          </Key>
+          <Property Name="SPN_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SPN_Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="SPN_SPCID" Type="int" Nullable="false" />
+          <Property Name="SPN_Number" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="SPN_CreationDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="SPN_ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="SPN_IsDelete" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tbl_SMSResponse">
+          <Key>
+            <PropertyRef Name="SMS_ID" />
+          </Key>
+          <Property Name="SMS_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SMS_Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="SMS_STID" Type="int" Nullable="false" />
+          <Property Name="SMS_Status" Type="int" Nullable="false" />
+          <Property Name="SMS_StatusText" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="SMS_MessageID" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="SMS_Message" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="SMS_Sender" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="SMS_Receptor" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="SMS_Date" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="SMS_Cost" Type="int" Nullable="false" />
+          <Property Name="SMS_CreationDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="SMS_ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="SMS_IsDelete" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tbl_SMSSetting">
+          <Key>
+            <PropertyRef Name="SS_ID" />
+          </Key>
+          <Property Name="SS_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SS_Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="SS_SPCID" Type="int" Nullable="false" />
+          <Property Name="SS_STID" Type="int" Nullable="false" />
+          <Property Name="SS_CreationDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="SS_ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="SS_IsDelete" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tbl_SMSTemplate">
+          <Key>
+            <PropertyRef Name="ST_ID" />
+          </Key>
+          <Property Name="ST_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ST_Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ST_Name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ST_Receptor" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ST_Body" Type="nvarchar(max)" />
+          <Property Name="ST_Token" Type="nvarchar" MaxLength="128" />
+          <Property Name="ST_Token2" Type="nvarchar" MaxLength="128" />
+          <Property Name="ST_Token3" Type="nvarchar" MaxLength="128" />
+          <Property Name="ST_CreationDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="ST_ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="ST_IsDelete" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="Tbl_SubExam">
           <Key>
             <PropertyRef Name="SE_ID" />
@@ -767,6 +839,54 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Tbl_SMSProviderNumber_Tbl_SMSProviderConfiguration">
+          <End Role="Tbl_SMSProviderConfiguration" Type="Self.Tbl_SMSProviderConfiguration" Multiplicity="1" />
+          <End Role="Tbl_SMSProviderNumber" Type="Self.Tbl_SMSProviderNumber" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_SMSProviderConfiguration">
+              <PropertyRef Name="SPC_ID" />
+            </Principal>
+            <Dependent Role="Tbl_SMSProviderNumber">
+              <PropertyRef Name="SPN_SPCID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_SMSResponse_Tbl_SMSTemplate">
+          <End Role="Tbl_SMSTemplate" Type="Self.Tbl_SMSTemplate" Multiplicity="1" />
+          <End Role="Tbl_SMSResponse" Type="Self.Tbl_SMSResponse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_SMSTemplate">
+              <PropertyRef Name="ST_ID" />
+            </Principal>
+            <Dependent Role="Tbl_SMSResponse">
+              <PropertyRef Name="SMS_STID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_SMSSetting_Tbl_SMSProviderConfiguration">
+          <End Role="Tbl_SMSProviderConfiguration" Type="Self.Tbl_SMSProviderConfiguration" Multiplicity="1" />
+          <End Role="Tbl_SMSSetting" Type="Self.Tbl_SMSSetting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_SMSProviderConfiguration">
+              <PropertyRef Name="SPC_ID" />
+            </Principal>
+            <Dependent Role="Tbl_SMSSetting">
+              <PropertyRef Name="SS_SPCID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_SMSSetting_Tbl_SMSTemplate">
+          <End Role="Tbl_SMSTemplate" Type="Self.Tbl_SMSTemplate" Multiplicity="1" />
+          <End Role="Tbl_SMSSetting" Type="Self.Tbl_SMSSetting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_SMSTemplate">
+              <PropertyRef Name="ST_ID" />
+            </Principal>
+            <Dependent Role="Tbl_SMSSetting">
+              <PropertyRef Name="SS_STID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Tbl_SubExam_Tbl_Exam">
           <End Role="Tbl_Exam" Type="Self.Tbl_Exam" Multiplicity="1" />
           <End Role="Tbl_SubExam" Type="Self.Tbl_SubExam" Multiplicity="*" />
@@ -934,6 +1054,11 @@
           <EntitySet Name="Tbl_Region" EntityType="Self.Tbl_Region" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Response" EntityType="Self.Tbl_Response" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Role" EntityType="Self.Tbl_Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_SMSProviderConfiguration" EntityType="Self.Tbl_SMSProviderConfiguration" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_SMSProviderNumber" EntityType="Self.Tbl_SMSProviderNumber" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_SMSResponse" EntityType="Self.Tbl_SMSResponse" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_SMSSetting" EntityType="Self.Tbl_SMSSetting" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_SMSTemplate" EntityType="Self.Tbl_SMSTemplate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_SubExam" EntityType="Self.Tbl_SubExam" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_SubMenu" EntityType="Self.Tbl_SubMenu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_SubWorkshop" EntityType="Self.Tbl_SubWorkshop" Schema="dbo" store:Type="Tables" />
@@ -1061,6 +1186,22 @@
             <End Role="Tbl_Question" EntitySet="Tbl_Question" />
             <End Role="Tbl_Response" EntitySet="Tbl_Response" />
           </AssociationSet>
+          <AssociationSet Name="FK_Tbl_SMSProviderNumber_Tbl_SMSProviderConfiguration" Association="Self.FK_Tbl_SMSProviderNumber_Tbl_SMSProviderConfiguration">
+            <End Role="Tbl_SMSProviderConfiguration" EntitySet="Tbl_SMSProviderConfiguration" />
+            <End Role="Tbl_SMSProviderNumber" EntitySet="Tbl_SMSProviderNumber" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_SMSResponse_Tbl_SMSTemplate" Association="Self.FK_Tbl_SMSResponse_Tbl_SMSTemplate">
+            <End Role="Tbl_SMSTemplate" EntitySet="Tbl_SMSTemplate" />
+            <End Role="Tbl_SMSResponse" EntitySet="Tbl_SMSResponse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_SMSSetting_Tbl_SMSProviderConfiguration" Association="Self.FK_Tbl_SMSSetting_Tbl_SMSProviderConfiguration">
+            <End Role="Tbl_SMSProviderConfiguration" EntitySet="Tbl_SMSProviderConfiguration" />
+            <End Role="Tbl_SMSSetting" EntitySet="Tbl_SMSSetting" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_SMSSetting_Tbl_SMSTemplate" Association="Self.FK_Tbl_SMSSetting_Tbl_SMSTemplate">
+            <End Role="Tbl_SMSTemplate" EntitySet="Tbl_SMSTemplate" />
+            <End Role="Tbl_SMSSetting" EntitySet="Tbl_SMSSetting" />
+          </AssociationSet>
           <AssociationSet Name="FK_Tbl_SubExam_Tbl_Exam" Association="Self.FK_Tbl_SubExam_Tbl_Exam">
             <End Role="Tbl_Exam" EntitySet="Tbl_Exam" />
             <End Role="Tbl_SubExam" EntitySet="Tbl_SubExam" />
@@ -1137,6 +1278,11 @@
           <EntitySet Name="Tbl_Region" EntityType="ESLModel.Tbl_Region" />
           <EntitySet Name="Tbl_Response" EntityType="ESLModel.Tbl_Response" />
           <EntitySet Name="Tbl_Role" EntityType="ESLModel.Tbl_Role" />
+          <EntitySet Name="Tbl_SMSProviderConfiguration" EntityType="ESLModel.Tbl_SMSProviderConfiguration" />
+          <EntitySet Name="Tbl_SMSProviderNumber" EntityType="ESLModel.Tbl_SMSProviderNumber" />
+          <EntitySet Name="Tbl_SMSResponse" EntityType="ESLModel.Tbl_SMSResponse" />
+          <EntitySet Name="Tbl_SMSSetting" EntityType="ESLModel.Tbl_SMSSetting" />
+          <EntitySet Name="Tbl_SMSTemplate" EntityType="ESLModel.Tbl_SMSTemplate" />
           <EntitySet Name="Tbl_SubExam" EntityType="ESLModel.Tbl_SubExam" />
           <EntitySet Name="Tbl_SubMenu" EntityType="ESLModel.Tbl_SubMenu" />
           <EntitySet Name="Tbl_SubWorkshop" EntityType="ESLModel.Tbl_SubWorkshop" />
@@ -1287,6 +1433,22 @@
           <AssociationSet Name="FK_Tbl_User_Tbl_Role" Association="ESLModel.FK_Tbl_User_Tbl_Role">
             <End Role="Tbl_Role" EntitySet="Tbl_Role" />
             <End Role="Tbl_User" EntitySet="Tbl_User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_SMSProviderNumber_Tbl_SMSProviderConfiguration" Association="ESLModel.FK_Tbl_SMSProviderNumber_Tbl_SMSProviderConfiguration">
+            <End Role="Tbl_SMSProviderConfiguration" EntitySet="Tbl_SMSProviderConfiguration" />
+            <End Role="Tbl_SMSProviderNumber" EntitySet="Tbl_SMSProviderNumber" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_SMSSetting_Tbl_SMSProviderConfiguration" Association="ESLModel.FK_Tbl_SMSSetting_Tbl_SMSProviderConfiguration">
+            <End Role="Tbl_SMSProviderConfiguration" EntitySet="Tbl_SMSProviderConfiguration" />
+            <End Role="Tbl_SMSSetting" EntitySet="Tbl_SMSSetting" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_SMSResponse_Tbl_SMSTemplate" Association="ESLModel.FK_Tbl_SMSResponse_Tbl_SMSTemplate">
+            <End Role="Tbl_SMSTemplate" EntitySet="Tbl_SMSTemplate" />
+            <End Role="Tbl_SMSResponse" EntitySet="Tbl_SMSResponse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_SMSSetting_Tbl_SMSTemplate" Association="ESLModel.FK_Tbl_SMSSetting_Tbl_SMSTemplate">
+            <End Role="Tbl_SMSTemplate" EntitySet="Tbl_SMSTemplate" />
+            <End Role="Tbl_SMSSetting" EntitySet="Tbl_SMSSetting" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_SubWorkshop_Tbl_Workshop" Association="ESLModel.FK_Tbl_SubWorkshop_Tbl_Workshop">
             <End Role="Tbl_Workshop" EntitySet="Tbl_Workshop" />
@@ -1642,6 +1804,86 @@
           <Property Name="Role_Name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="Role_Display" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Tbl_User" Relationship="ESLModel.FK_Tbl_User_Tbl_Role" FromRole="Tbl_Role" ToRole="Tbl_User" />
+        </EntityType>
+        <EntityType Name="Tbl_SMSProviderConfiguration">
+          <Key>
+            <PropertyRef Name="SPC_ID" />
+          </Key>
+          <Property Name="SPC_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SPC_Guid" Type="Guid" Nullable="false" />
+          <Property Name="SPC_Username" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="SPC_Password" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="SPC_ApiKey" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="SPC_CreationDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="SPC_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="SPC_IsDelete" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Tbl_SMSProviderNumber" Relationship="ESLModel.FK_Tbl_SMSProviderNumber_Tbl_SMSProviderConfiguration" FromRole="Tbl_SMSProviderConfiguration" ToRole="Tbl_SMSProviderNumber" />
+          <NavigationProperty Name="Tbl_SMSSetting" Relationship="ESLModel.FK_Tbl_SMSSetting_Tbl_SMSProviderConfiguration" FromRole="Tbl_SMSProviderConfiguration" ToRole="Tbl_SMSSetting" />
+        </EntityType>
+        <EntityType Name="Tbl_SMSProviderNumber">
+          <Key>
+            <PropertyRef Name="SPN_ID" />
+          </Key>
+          <Property Name="SPN_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SPN_Guid" Type="Guid" Nullable="false" />
+          <Property Name="SPN_SPCID" Type="Int32" Nullable="false" />
+          <Property Name="SPN_Number" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="SPN_CreationDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="SPN_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="SPN_IsDelete" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Tbl_SMSProviderConfiguration" Relationship="ESLModel.FK_Tbl_SMSProviderNumber_Tbl_SMSProviderConfiguration" FromRole="Tbl_SMSProviderNumber" ToRole="Tbl_SMSProviderConfiguration" />
+        </EntityType>
+        <EntityType Name="Tbl_SMSResponse">
+          <Key>
+            <PropertyRef Name="SMS_ID" />
+          </Key>
+          <Property Name="SMS_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SMS_Guid" Type="Guid" Nullable="false" />
+          <Property Name="SMS_STID" Type="Int32" Nullable="false" />
+          <Property Name="SMS_Status" Type="Int32" Nullable="false" />
+          <Property Name="SMS_StatusText" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SMS_MessageID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="SMS_Message" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SMS_Sender" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="SMS_Receptor" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="SMS_Date" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="SMS_Cost" Type="Int32" Nullable="false" />
+          <Property Name="SMS_CreationDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="SMS_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="SMS_IsDelete" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Tbl_SMSTemplate" Relationship="ESLModel.FK_Tbl_SMSResponse_Tbl_SMSTemplate" FromRole="Tbl_SMSResponse" ToRole="Tbl_SMSTemplate" />
+        </EntityType>
+        <EntityType Name="Tbl_SMSSetting">
+          <Key>
+            <PropertyRef Name="SS_ID" />
+          </Key>
+          <Property Name="SS_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SS_Guid" Type="Guid" Nullable="false" />
+          <Property Name="SS_SPCID" Type="Int32" Nullable="false" />
+          <Property Name="SS_STID" Type="Int32" Nullable="false" />
+          <Property Name="SS_CreationDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="SS_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="SS_IsDelete" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Tbl_SMSProviderConfiguration" Relationship="ESLModel.FK_Tbl_SMSSetting_Tbl_SMSProviderConfiguration" FromRole="Tbl_SMSSetting" ToRole="Tbl_SMSProviderConfiguration" />
+          <NavigationProperty Name="Tbl_SMSTemplate" Relationship="ESLModel.FK_Tbl_SMSSetting_Tbl_SMSTemplate" FromRole="Tbl_SMSSetting" ToRole="Tbl_SMSTemplate" />
+        </EntityType>
+        <EntityType Name="Tbl_SMSTemplate">
+          <Key>
+            <PropertyRef Name="ST_ID" />
+          </Key>
+          <Property Name="ST_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ST_Guid" Type="Guid" Nullable="false" />
+          <Property Name="ST_Name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ST_Receptor" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ST_Body" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ST_Token" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ST_Token2" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ST_Token3" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ST_CreationDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="ST_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="ST_IsDelete" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Tbl_SMSResponse" Relationship="ESLModel.FK_Tbl_SMSResponse_Tbl_SMSTemplate" FromRole="Tbl_SMSTemplate" ToRole="Tbl_SMSResponse" />
+          <NavigationProperty Name="Tbl_SMSSetting" Relationship="ESLModel.FK_Tbl_SMSSetting_Tbl_SMSTemplate" FromRole="Tbl_SMSTemplate" ToRole="Tbl_SMSSetting" />
         </EntityType>
         <EntityType Name="Tbl_SubExam">
           <Key>
@@ -2229,6 +2471,54 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Tbl_SMSProviderNumber_Tbl_SMSProviderConfiguration">
+          <End Type="ESLModel.Tbl_SMSProviderConfiguration" Role="Tbl_SMSProviderConfiguration" Multiplicity="1" />
+          <End Type="ESLModel.Tbl_SMSProviderNumber" Role="Tbl_SMSProviderNumber" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_SMSProviderConfiguration">
+              <PropertyRef Name="SPC_ID" />
+            </Principal>
+            <Dependent Role="Tbl_SMSProviderNumber">
+              <PropertyRef Name="SPN_SPCID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_SMSSetting_Tbl_SMSProviderConfiguration">
+          <End Type="ESLModel.Tbl_SMSProviderConfiguration" Role="Tbl_SMSProviderConfiguration" Multiplicity="1" />
+          <End Type="ESLModel.Tbl_SMSSetting" Role="Tbl_SMSSetting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_SMSProviderConfiguration">
+              <PropertyRef Name="SPC_ID" />
+            </Principal>
+            <Dependent Role="Tbl_SMSSetting">
+              <PropertyRef Name="SS_SPCID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_SMSResponse_Tbl_SMSTemplate">
+          <End Type="ESLModel.Tbl_SMSTemplate" Role="Tbl_SMSTemplate" Multiplicity="1" />
+          <End Type="ESLModel.Tbl_SMSResponse" Role="Tbl_SMSResponse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_SMSTemplate">
+              <PropertyRef Name="ST_ID" />
+            </Principal>
+            <Dependent Role="Tbl_SMSResponse">
+              <PropertyRef Name="SMS_STID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_SMSSetting_Tbl_SMSTemplate">
+          <End Type="ESLModel.Tbl_SMSTemplate" Role="Tbl_SMSTemplate" Multiplicity="1" />
+          <End Type="ESLModel.Tbl_SMSSetting" Role="Tbl_SMSSetting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_SMSTemplate">
+              <PropertyRef Name="ST_ID" />
+            </Principal>
+            <Dependent Role="Tbl_SMSSetting">
+              <PropertyRef Name="SS_STID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Tbl_SubWorkshop_Tbl_Workshop">
           <End Type="ESLModel.Tbl_Workshop" Role="Tbl_Workshop" Multiplicity="1" />
           <End Type="ESLModel.Tbl_SubWorkshop" Role="Tbl_SubWorkshop" Multiplicity="*" />
@@ -2596,6 +2886,83 @@
                 <ScalarProperty Name="Role_Name" ColumnName="Role_Name" />
                 <ScalarProperty Name="Role_Guid" ColumnName="Role_Guid" />
                 <ScalarProperty Name="Role_ID" ColumnName="Role_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_SMSProviderConfiguration">
+            <EntityTypeMapping TypeName="ESLModel.Tbl_SMSProviderConfiguration">
+              <MappingFragment StoreEntitySet="Tbl_SMSProviderConfiguration">
+                <ScalarProperty Name="SPC_IsDelete" ColumnName="SPC_IsDelete" />
+                <ScalarProperty Name="SPC_ModifiedDate" ColumnName="SPC_ModifiedDate" />
+                <ScalarProperty Name="SPC_CreationDate" ColumnName="SPC_CreationDate" />
+                <ScalarProperty Name="SPC_ApiKey" ColumnName="SPC_ApiKey" />
+                <ScalarProperty Name="SPC_Password" ColumnName="SPC_Password" />
+                <ScalarProperty Name="SPC_Username" ColumnName="SPC_Username" />
+                <ScalarProperty Name="SPC_Guid" ColumnName="SPC_Guid" />
+                <ScalarProperty Name="SPC_ID" ColumnName="SPC_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_SMSProviderNumber">
+            <EntityTypeMapping TypeName="ESLModel.Tbl_SMSProviderNumber">
+              <MappingFragment StoreEntitySet="Tbl_SMSProviderNumber">
+                <ScalarProperty Name="SPN_IsDelete" ColumnName="SPN_IsDelete" />
+                <ScalarProperty Name="SPN_ModifiedDate" ColumnName="SPN_ModifiedDate" />
+                <ScalarProperty Name="SPN_CreationDate" ColumnName="SPN_CreationDate" />
+                <ScalarProperty Name="SPN_Number" ColumnName="SPN_Number" />
+                <ScalarProperty Name="SPN_SPCID" ColumnName="SPN_SPCID" />
+                <ScalarProperty Name="SPN_Guid" ColumnName="SPN_Guid" />
+                <ScalarProperty Name="SPN_ID" ColumnName="SPN_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_SMSResponse">
+            <EntityTypeMapping TypeName="ESLModel.Tbl_SMSResponse">
+              <MappingFragment StoreEntitySet="Tbl_SMSResponse">
+                <ScalarProperty Name="SMS_IsDelete" ColumnName="SMS_IsDelete" />
+                <ScalarProperty Name="SMS_ModifiedDate" ColumnName="SMS_ModifiedDate" />
+                <ScalarProperty Name="SMS_CreationDate" ColumnName="SMS_CreationDate" />
+                <ScalarProperty Name="SMS_Cost" ColumnName="SMS_Cost" />
+                <ScalarProperty Name="SMS_Date" ColumnName="SMS_Date" />
+                <ScalarProperty Name="SMS_Receptor" ColumnName="SMS_Receptor" />
+                <ScalarProperty Name="SMS_Sender" ColumnName="SMS_Sender" />
+                <ScalarProperty Name="SMS_Message" ColumnName="SMS_Message" />
+                <ScalarProperty Name="SMS_MessageID" ColumnName="SMS_MessageID" />
+                <ScalarProperty Name="SMS_StatusText" ColumnName="SMS_StatusText" />
+                <ScalarProperty Name="SMS_Status" ColumnName="SMS_Status" />
+                <ScalarProperty Name="SMS_STID" ColumnName="SMS_STID" />
+                <ScalarProperty Name="SMS_Guid" ColumnName="SMS_Guid" />
+                <ScalarProperty Name="SMS_ID" ColumnName="SMS_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_SMSSetting">
+            <EntityTypeMapping TypeName="ESLModel.Tbl_SMSSetting">
+              <MappingFragment StoreEntitySet="Tbl_SMSSetting">
+                <ScalarProperty Name="SS_IsDelete" ColumnName="SS_IsDelete" />
+                <ScalarProperty Name="SS_ModifiedDate" ColumnName="SS_ModifiedDate" />
+                <ScalarProperty Name="SS_CreationDate" ColumnName="SS_CreationDate" />
+                <ScalarProperty Name="SS_STID" ColumnName="SS_STID" />
+                <ScalarProperty Name="SS_SPCID" ColumnName="SS_SPCID" />
+                <ScalarProperty Name="SS_Guid" ColumnName="SS_Guid" />
+                <ScalarProperty Name="SS_ID" ColumnName="SS_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_SMSTemplate">
+            <EntityTypeMapping TypeName="ESLModel.Tbl_SMSTemplate">
+              <MappingFragment StoreEntitySet="Tbl_SMSTemplate">
+                <ScalarProperty Name="ST_IsDelete" ColumnName="ST_IsDelete" />
+                <ScalarProperty Name="ST_ModifiedDate" ColumnName="ST_ModifiedDate" />
+                <ScalarProperty Name="ST_CreationDate" ColumnName="ST_CreationDate" />
+                <ScalarProperty Name="ST_Token3" ColumnName="ST_Token3" />
+                <ScalarProperty Name="ST_Token2" ColumnName="ST_Token2" />
+                <ScalarProperty Name="ST_Token" ColumnName="ST_Token" />
+                <ScalarProperty Name="ST_Body" ColumnName="ST_Body" />
+                <ScalarProperty Name="ST_Receptor" ColumnName="ST_Receptor" />
+                <ScalarProperty Name="ST_Name" ColumnName="ST_Name" />
+                <ScalarProperty Name="ST_Guid" ColumnName="ST_Guid" />
+                <ScalarProperty Name="ST_ID" ColumnName="ST_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

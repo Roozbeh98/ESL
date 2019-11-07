@@ -47,6 +47,11 @@ namespace ESL.DataLayer.Domain
         public virtual DbSet<Tbl_Region> Tbl_Region { get; set; }
         public virtual DbSet<Tbl_Response> Tbl_Response { get; set; }
         public virtual DbSet<Tbl_Role> Tbl_Role { get; set; }
+        public virtual DbSet<Tbl_SMSProviderConfiguration> Tbl_SMSProviderConfiguration { get; set; }
+        public virtual DbSet<Tbl_SMSProviderNumber> Tbl_SMSProviderNumber { get; set; }
+        public virtual DbSet<Tbl_SMSResponse> Tbl_SMSResponse { get; set; }
+        public virtual DbSet<Tbl_SMSSetting> Tbl_SMSSetting { get; set; }
+        public virtual DbSet<Tbl_SMSTemplate> Tbl_SMSTemplate { get; set; }
         public virtual DbSet<Tbl_SubExam> Tbl_SubExam { get; set; }
         public virtual DbSet<Tbl_SubMenu> Tbl_SubMenu { get; set; }
         public virtual DbSet<Tbl_SubWorkshop> Tbl_SubWorkshop { get; set; }
