@@ -250,7 +250,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
             if (q != null)
             {
-                Model_ExamInPersonSetActiveness model = new Model_ExamInPersonSetActiveness()
+                Model_SetActiveness model = new Model_SetActiveness()
                 {
                     ID = id,
                     Activeness = q.EIP_IsActive
@@ -264,7 +264,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult SetActiveness(Model_ExamInPersonSetActiveness model)
+        public ActionResult SetActiveness(Model_SetActiveness model)
         {
             if (ModelState.IsValid)
             {

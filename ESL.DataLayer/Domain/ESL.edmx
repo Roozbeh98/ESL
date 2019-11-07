@@ -408,6 +408,19 @@
           <Property Name="User_IsBan" Type="bit" Nullable="false" />
           <Property Name="User_IsDelete" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="Tbl_UserClass">
+          <Key>
+            <PropertyRef Name="UC_ID" />
+          </Key>
+          <Property Name="UC_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UC_Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UC_UserID" Type="int" Nullable="false" />
+          <Property Name="UC_CPID" Type="int" Nullable="false" />
+          <Property Name="UC_PaymentID" Type="int" />
+          <Property Name="UC_CreationDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="UC_ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="UC_IsDelete" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="Tbl_UserExam">
           <Key>
             <PropertyRef Name="UE_ID" />
@@ -447,6 +460,20 @@
           <Property Name="UEIP_CreationDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="UEIP_ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="UEIP_IsDelete" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tbl_UserWorkshop">
+          <Key>
+            <PropertyRef Name="UW_ID" />
+          </Key>
+          <Property Name="UW_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UW_Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UW_UserID" Type="int" Nullable="false" />
+          <Property Name="UW_WPID" Type="int" Nullable="false" />
+          <Property Name="UW_PaymentID" Type="int" />
+          <Property Name="UW_IsPresent" Type="bit" Nullable="false" />
+          <Property Name="UW_CreationDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="UW_ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="UW_IsDelete" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Tbl_Wallet">
           <Key>
@@ -920,6 +947,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Tbl_UserClass_Tbl_ClassPlan">
+          <End Role="Tbl_ClassPlan" Type="Self.Tbl_ClassPlan" Multiplicity="1" />
+          <End Role="Tbl_UserClass" Type="Self.Tbl_UserClass" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_ClassPlan">
+              <PropertyRef Name="CP_ID" />
+            </Principal>
+            <Dependent Role="Tbl_UserClass">
+              <PropertyRef Name="UC_CPID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_UserClass_Tbl_User">
+          <End Role="Tbl_User" Type="Self.Tbl_User" Multiplicity="1" />
+          <End Role="Tbl_UserClass" Type="Self.Tbl_UserClass" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_User">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="Tbl_UserClass">
+              <PropertyRef Name="UC_UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Tbl_UserExam_Tbl_ExamRemotely">
           <End Role="Tbl_ExamRemotely" Type="Self.Tbl_ExamRemotely" Multiplicity="1" />
           <End Role="Tbl_UserExam" Type="Self.Tbl_UserExam" Multiplicity="*" />
@@ -992,6 +1043,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Tbl_UserWorkshop_Tbl_User">
+          <End Role="Tbl_User" Type="Self.Tbl_User" Multiplicity="1" />
+          <End Role="Tbl_UserWorkshop" Type="Self.Tbl_UserWorkshop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_User">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="Tbl_UserWorkshop">
+              <PropertyRef Name="UW_UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_UserWorkshop_Tbl_WorkshopPlan">
+          <End Role="Tbl_WorkshopPlan" Type="Self.Tbl_WorkshopPlan" Multiplicity="1" />
+          <End Role="Tbl_UserWorkshop" Type="Self.Tbl_UserWorkshop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_WorkshopPlan">
+              <PropertyRef Name="WP_ID" />
+            </Principal>
+            <Dependent Role="Tbl_UserWorkshop">
+              <PropertyRef Name="UW_WPID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Tbl_Wallet_Tbl_User">
           <End Role="Tbl_User" Type="Self.Tbl_User" Multiplicity="1" />
           <End Role="Tbl_Wallet" Type="Self.Tbl_Wallet" Multiplicity="*" />
@@ -1049,9 +1124,11 @@
           <EntitySet Name="Tbl_SubWorkshop" EntityType="Self.Tbl_SubWorkshop" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Tag" EntityType="Self.Tbl_Tag" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_User" EntityType="Self.Tbl_User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_UserClass" EntityType="Self.Tbl_UserClass" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_UserExam" EntityType="Self.Tbl_UserExam" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_UserExamAccess" EntityType="Self.Tbl_UserExamAccess" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_UserExamInPerson" EntityType="Self.Tbl_UserExamInPerson" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_UserWorkshop" EntityType="Self.Tbl_UserWorkshop" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Wallet" EntityType="Self.Tbl_Wallet" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Workshop" EntityType="Self.Tbl_Workshop" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_WorkshopPlan" EntityType="Self.Tbl_WorkshopPlan" Schema="dbo" store:Type="Tables" />
@@ -1199,6 +1276,14 @@
             <End Role="Tbl_Role" EntitySet="Tbl_Role" />
             <End Role="Tbl_User" EntitySet="Tbl_User" />
           </AssociationSet>
+          <AssociationSet Name="FK_Tbl_UserClass_Tbl_ClassPlan" Association="Self.FK_Tbl_UserClass_Tbl_ClassPlan">
+            <End Role="Tbl_ClassPlan" EntitySet="Tbl_ClassPlan" />
+            <End Role="Tbl_UserClass" EntitySet="Tbl_UserClass" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_UserClass_Tbl_User" Association="Self.FK_Tbl_UserClass_Tbl_User">
+            <End Role="Tbl_User" EntitySet="Tbl_User" />
+            <End Role="Tbl_UserClass" EntitySet="Tbl_UserClass" />
+          </AssociationSet>
           <AssociationSet Name="FK_Tbl_UserExam_Tbl_ExamRemotely" Association="Self.FK_Tbl_UserExam_Tbl_ExamRemotely">
             <End Role="Tbl_ExamRemotely" EntitySet="Tbl_ExamRemotely" />
             <End Role="Tbl_UserExam" EntitySet="Tbl_UserExam" />
@@ -1222,6 +1307,14 @@
           <AssociationSet Name="FK_Tbl_UserExamInPerson_Tbl_User" Association="Self.FK_Tbl_UserExamInPerson_Tbl_User">
             <End Role="Tbl_User" EntitySet="Tbl_User" />
             <End Role="Tbl_UserExamInPerson" EntitySet="Tbl_UserExamInPerson" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_UserWorkshop_Tbl_User" Association="Self.FK_Tbl_UserWorkshop_Tbl_User">
+            <End Role="Tbl_User" EntitySet="Tbl_User" />
+            <End Role="Tbl_UserWorkshop" EntitySet="Tbl_UserWorkshop" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_UserWorkshop_Tbl_WorkshopPlan" Association="Self.FK_Tbl_UserWorkshop_Tbl_WorkshopPlan">
+            <End Role="Tbl_WorkshopPlan" EntitySet="Tbl_WorkshopPlan" />
+            <End Role="Tbl_UserWorkshop" EntitySet="Tbl_UserWorkshop" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_Wallet_Tbl_User" Association="Self.FK_Tbl_Wallet_Tbl_User">
             <End Role="Tbl_User" EntitySet="Tbl_User" />
@@ -1269,15 +1362,21 @@
           <EntitySet Name="Tbl_SubWorkshop" EntityType="ESLModel.Tbl_SubWorkshop" />
           <EntitySet Name="Tbl_Tag" EntityType="ESLModel.Tbl_Tag" />
           <EntitySet Name="Tbl_User" EntityType="ESLModel.Tbl_User" />
+          <EntitySet Name="Tbl_UserClass" EntityType="ESLModel.Tbl_UserClass" />
           <EntitySet Name="Tbl_UserExam" EntityType="ESLModel.Tbl_UserExam" />
           <EntitySet Name="Tbl_UserExamAccess" EntityType="ESLModel.Tbl_UserExamAccess" />
           <EntitySet Name="Tbl_UserExamInPerson" EntityType="ESLModel.Tbl_UserExamInPerson" />
+          <EntitySet Name="Tbl_UserWorkshop" EntityType="ESLModel.Tbl_UserWorkshop" />
           <EntitySet Name="Tbl_Wallet" EntityType="ESLModel.Tbl_Wallet" />
           <EntitySet Name="Tbl_Workshop" EntityType="ESLModel.Tbl_Workshop" />
           <EntitySet Name="Tbl_WorkshopPlan" EntityType="ESLModel.Tbl_WorkshopPlan" />
           <AssociationSet Name="FK_Tbl_ClassPlan_Tbl_Class" Association="ESLModel.FK_Tbl_ClassPlan_Tbl_Class">
             <End Role="Tbl_Class" EntitySet="Tbl_Class" />
             <End Role="Tbl_ClassPlan" EntitySet="Tbl_ClassPlan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_UserClass_Tbl_ClassPlan" Association="ESLModel.FK_Tbl_UserClass_Tbl_ClassPlan">
+            <End Role="Tbl_ClassPlan" EntitySet="Tbl_ClassPlan" />
+            <End Role="Tbl_UserClass" EntitySet="Tbl_UserClass" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_Code_Tbl_CodeGroup" Association="ESLModel.FK_Tbl_Code_Tbl_CodeGroup">
             <End Role="Tbl_CodeGroup" EntitySet="Tbl_CodeGroup" />
@@ -1435,6 +1534,10 @@
             <End Role="Tbl_SubWorkshop" EntitySet="Tbl_SubWorkshop" />
             <End Role="Tbl_WorkshopPlan" EntitySet="Tbl_WorkshopPlan" />
           </AssociationSet>
+          <AssociationSet Name="FK_Tbl_UserClass_Tbl_User" Association="ESLModel.FK_Tbl_UserClass_Tbl_User">
+            <End Role="Tbl_User" EntitySet="Tbl_User" />
+            <End Role="Tbl_UserClass" EntitySet="Tbl_UserClass" />
+          </AssociationSet>
           <AssociationSet Name="FK_Tbl_UserExam_Tbl_User" Association="ESLModel.FK_Tbl_UserExam_Tbl_User">
             <End Role="Tbl_User" EntitySet="Tbl_User" />
             <End Role="Tbl_UserExam" EntitySet="Tbl_UserExam" />
@@ -1447,9 +1550,17 @@
             <End Role="Tbl_User" EntitySet="Tbl_User" />
             <End Role="Tbl_UserExamInPerson" EntitySet="Tbl_UserExamInPerson" />
           </AssociationSet>
+          <AssociationSet Name="FK_Tbl_UserWorkshop_Tbl_User" Association="ESLModel.FK_Tbl_UserWorkshop_Tbl_User">
+            <End Role="Tbl_User" EntitySet="Tbl_User" />
+            <End Role="Tbl_UserWorkshop" EntitySet="Tbl_UserWorkshop" />
+          </AssociationSet>
           <AssociationSet Name="FK_Tbl_Wallet_Tbl_User" Association="ESLModel.FK_Tbl_Wallet_Tbl_User">
             <End Role="Tbl_User" EntitySet="Tbl_User" />
             <End Role="Tbl_Wallet" EntitySet="Tbl_Wallet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_UserWorkshop_Tbl_WorkshopPlan" Association="ESLModel.FK_Tbl_UserWorkshop_Tbl_WorkshopPlan">
+            <End Role="Tbl_WorkshopPlan" EntitySet="Tbl_WorkshopPlan" />
+            <End Role="Tbl_UserWorkshop" EntitySet="Tbl_UserWorkshop" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="sysdiagram">
@@ -1494,6 +1605,7 @@
           <Property Name="CP_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="CP_IsDelete" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Tbl_Class" Relationship="ESLModel.FK_Tbl_ClassPlan_Tbl_Class" FromRole="Tbl_ClassPlan" ToRole="Tbl_Class" />
+          <NavigationProperty Name="Tbl_UserClass" Relationship="ESLModel.FK_Tbl_UserClass_Tbl_ClassPlan" FromRole="Tbl_ClassPlan" ToRole="Tbl_UserClass" />
         </EntityType>
         <EntityType Name="Tbl_Code">
           <Key>
@@ -1929,10 +2041,27 @@
           <NavigationProperty Name="Tbl_Page" Relationship="ESLModel.FK_Tbl_Page_Tbl_User" FromRole="Tbl_User" ToRole="Tbl_Page" />
           <NavigationProperty Name="Tbl_Payment" Relationship="ESLModel.FK_Tbl_Payment_Tbl_User" FromRole="Tbl_User" ToRole="Tbl_Payment" />
           <NavigationProperty Name="Tbl_Role" Relationship="ESLModel.FK_Tbl_User_Tbl_Role" FromRole="Tbl_User" ToRole="Tbl_Role" />
+          <NavigationProperty Name="Tbl_UserClass" Relationship="ESLModel.FK_Tbl_UserClass_Tbl_User" FromRole="Tbl_User" ToRole="Tbl_UserClass" />
           <NavigationProperty Name="Tbl_UserExam" Relationship="ESLModel.FK_Tbl_UserExam_Tbl_User" FromRole="Tbl_User" ToRole="Tbl_UserExam" />
           <NavigationProperty Name="Tbl_UserExamAccess" Relationship="ESLModel.FK_Tbl_UserExamAccess_Tbl_User" FromRole="Tbl_User" ToRole="Tbl_UserExamAccess" />
           <NavigationProperty Name="Tbl_UserExamInPerson" Relationship="ESLModel.FK_Tbl_UserExamInPerson_Tbl_User" FromRole="Tbl_User" ToRole="Tbl_UserExamInPerson" />
+          <NavigationProperty Name="Tbl_UserWorkshop" Relationship="ESLModel.FK_Tbl_UserWorkshop_Tbl_User" FromRole="Tbl_User" ToRole="Tbl_UserWorkshop" />
           <NavigationProperty Name="Tbl_Wallet" Relationship="ESLModel.FK_Tbl_Wallet_Tbl_User" FromRole="Tbl_User" ToRole="Tbl_Wallet" />
+        </EntityType>
+        <EntityType Name="Tbl_UserClass">
+          <Key>
+            <PropertyRef Name="UC_ID" />
+          </Key>
+          <Property Name="UC_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UC_Guid" Type="Guid" Nullable="false" />
+          <Property Name="UC_UserID" Type="Int32" Nullable="false" />
+          <Property Name="UC_CPID" Type="Int32" Nullable="false" />
+          <Property Name="UC_PaymentID" Type="Int32" />
+          <Property Name="UC_CreationDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="UC_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="UC_IsDelete" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Tbl_ClassPlan" Relationship="ESLModel.FK_Tbl_UserClass_Tbl_ClassPlan" FromRole="Tbl_UserClass" ToRole="Tbl_ClassPlan" />
+          <NavigationProperty Name="Tbl_User" Relationship="ESLModel.FK_Tbl_UserClass_Tbl_User" FromRole="Tbl_UserClass" ToRole="Tbl_User" />
         </EntityType>
         <EntityType Name="Tbl_UserExam">
           <Key>
@@ -1980,6 +2109,22 @@
           <NavigationProperty Name="Tbl_ExamInPerson" Relationship="ESLModel.FK_Tbl_UserExamInPerson_Tbl_ExamInPerson" FromRole="Tbl_UserExamInPerson" ToRole="Tbl_ExamInPerson" />
           <NavigationProperty Name="Tbl_User" Relationship="ESLModel.FK_Tbl_UserExamInPerson_Tbl_User" FromRole="Tbl_UserExamInPerson" ToRole="Tbl_User" />
         </EntityType>
+        <EntityType Name="Tbl_UserWorkshop">
+          <Key>
+            <PropertyRef Name="UW_ID" />
+          </Key>
+          <Property Name="UW_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UW_Guid" Type="Guid" Nullable="false" />
+          <Property Name="UW_UserID" Type="Int32" Nullable="false" />
+          <Property Name="UW_WPID" Type="Int32" Nullable="false" />
+          <Property Name="UW_PaymentID" Type="Int32" />
+          <Property Name="UW_IsPresent" Type="Boolean" Nullable="false" />
+          <Property Name="UW_CreationDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="UW_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="UW_IsDelete" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Tbl_User" Relationship="ESLModel.FK_Tbl_UserWorkshop_Tbl_User" FromRole="Tbl_UserWorkshop" ToRole="Tbl_User" />
+          <NavigationProperty Name="Tbl_WorkshopPlan" Relationship="ESLModel.FK_Tbl_UserWorkshop_Tbl_WorkshopPlan" FromRole="Tbl_UserWorkshop" ToRole="Tbl_WorkshopPlan" />
+        </EntityType>
         <EntityType Name="Tbl_Wallet">
           <Key>
             <PropertyRef Name="Wallet_ID" />
@@ -2022,6 +2167,7 @@
           <Property Name="WP_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="WP_IsDelete" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Tbl_SubWorkshop" Relationship="ESLModel.FK_Tbl_WorkshopPlan_Tbl_SubWorkshop" FromRole="Tbl_WorkshopPlan" ToRole="Tbl_SubWorkshop" />
+          <NavigationProperty Name="Tbl_UserWorkshop" Relationship="ESLModel.FK_Tbl_UserWorkshop_Tbl_WorkshopPlan" FromRole="Tbl_WorkshopPlan" ToRole="Tbl_UserWorkshop" />
         </EntityType>
         <Association Name="FK_Tbl_ClassPlan_Tbl_Class">
           <End Type="ESLModel.Tbl_Class" Role="Tbl_Class" Multiplicity="1" />
@@ -2032,6 +2178,18 @@
             </Principal>
             <Dependent Role="Tbl_ClassPlan">
               <PropertyRef Name="CP_ClassID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_UserClass_Tbl_ClassPlan">
+          <End Type="ESLModel.Tbl_ClassPlan" Role="Tbl_ClassPlan" Multiplicity="1" />
+          <End Type="ESLModel.Tbl_UserClass" Role="Tbl_UserClass" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_ClassPlan">
+              <PropertyRef Name="CP_ID" />
+            </Principal>
+            <Dependent Role="Tbl_UserClass">
+              <PropertyRef Name="UC_CPID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2503,6 +2661,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Tbl_UserClass_Tbl_User">
+          <End Type="ESLModel.Tbl_User" Role="Tbl_User" Multiplicity="1" />
+          <End Type="ESLModel.Tbl_UserClass" Role="Tbl_UserClass" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_User">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="Tbl_UserClass">
+              <PropertyRef Name="UC_UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Tbl_UserExam_Tbl_User">
           <End Type="ESLModel.Tbl_User" Role="Tbl_User" Multiplicity="1" />
           <End Type="ESLModel.Tbl_UserExam" Role="Tbl_UserExam" Multiplicity="*" />
@@ -2539,6 +2709,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Tbl_UserWorkshop_Tbl_User">
+          <End Type="ESLModel.Tbl_User" Role="Tbl_User" Multiplicity="1" />
+          <End Type="ESLModel.Tbl_UserWorkshop" Role="Tbl_UserWorkshop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_User">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="Tbl_UserWorkshop">
+              <PropertyRef Name="UW_UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Tbl_Wallet_Tbl_User">
           <End Type="ESLModel.Tbl_User" Role="Tbl_User" Multiplicity="1" />
           <End Type="ESLModel.Tbl_Wallet" Role="Tbl_Wallet" Multiplicity="*" />
@@ -2548,6 +2730,18 @@
             </Principal>
             <Dependent Role="Tbl_Wallet">
               <PropertyRef Name="Wallet_UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_UserWorkshop_Tbl_WorkshopPlan">
+          <End Type="ESLModel.Tbl_WorkshopPlan" Role="Tbl_WorkshopPlan" Multiplicity="1" />
+          <End Type="ESLModel.Tbl_UserWorkshop" Role="Tbl_UserWorkshop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_WorkshopPlan">
+              <PropertyRef Name="WP_ID" />
+            </Principal>
+            <Dependent Role="Tbl_UserWorkshop">
+              <PropertyRef Name="UW_WPID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2992,6 +3186,20 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_UserClass">
+            <EntityTypeMapping TypeName="ESLModel.Tbl_UserClass">
+              <MappingFragment StoreEntitySet="Tbl_UserClass">
+                <ScalarProperty Name="UC_IsDelete" ColumnName="UC_IsDelete" />
+                <ScalarProperty Name="UC_ModifiedDate" ColumnName="UC_ModifiedDate" />
+                <ScalarProperty Name="UC_CreationDate" ColumnName="UC_CreationDate" />
+                <ScalarProperty Name="UC_PaymentID" ColumnName="UC_PaymentID" />
+                <ScalarProperty Name="UC_CPID" ColumnName="UC_CPID" />
+                <ScalarProperty Name="UC_UserID" ColumnName="UC_UserID" />
+                <ScalarProperty Name="UC_Guid" ColumnName="UC_Guid" />
+                <ScalarProperty Name="UC_ID" ColumnName="UC_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Tbl_UserExam">
             <EntityTypeMapping TypeName="ESLModel.Tbl_UserExam">
               <MappingFragment StoreEntitySet="Tbl_UserExam">
@@ -3032,6 +3240,21 @@
                 <ScalarProperty Name="UEIP_UserID" ColumnName="UEIP_UserID" />
                 <ScalarProperty Name="UEIP_Guid" ColumnName="UEIP_Guid" />
                 <ScalarProperty Name="UEIP_ID" ColumnName="UEIP_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_UserWorkshop">
+            <EntityTypeMapping TypeName="ESLModel.Tbl_UserWorkshop">
+              <MappingFragment StoreEntitySet="Tbl_UserWorkshop">
+                <ScalarProperty Name="UW_IsDelete" ColumnName="UW_IsDelete" />
+                <ScalarProperty Name="UW_ModifiedDate" ColumnName="UW_ModifiedDate" />
+                <ScalarProperty Name="UW_CreationDate" ColumnName="UW_CreationDate" />
+                <ScalarProperty Name="UW_IsPresent" ColumnName="UW_IsPresent" />
+                <ScalarProperty Name="UW_PaymentID" ColumnName="UW_PaymentID" />
+                <ScalarProperty Name="UW_WPID" ColumnName="UW_WPID" />
+                <ScalarProperty Name="UW_UserID" ColumnName="UW_UserID" />
+                <ScalarProperty Name="UW_Guid" ColumnName="UW_Guid" />
+                <ScalarProperty Name="UW_ID" ColumnName="UW_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

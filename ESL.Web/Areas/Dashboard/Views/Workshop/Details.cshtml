@@ -1,0 +1,144 @@
+﻿@model IEnumerable<ESL.Web.Areas.Dashboard.Models.ViewModels.Model_UserWorkshop>
+
+@using ESL.Common.Plugins
+
+@{
+    ViewBag.Title = "لیست افراد حاضر در کارگاه";
+    Layout = "~/Areas/Dashboard/Views/Shared/_Master.cshtml";
+}
+
+
+<div class="panel panel-body panel-default  navigation">
+
+    <div class="pull-left">
+        <h4 class="navigation-title"><b>لیست افراد حاضر در کارگاه</b></h4>
+    </div>
+
+    <div class="pull-right">
+        <a href="javascript:void(0)" onclick="Create(@ViewBag.WorkshopID)"><i class="glyphicon glyphicon-plus navigation-btn-icon"></i></a>
+    </div>
+
+</div>
+
+<div class="panel panel-default">
+
+    <div class="panel-body table-body" style="overflow-x:auto;">
+
+        <table id="DateTable" class="table  table-bordered table-striped table-secondary" style="width:100%;">
+
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.User)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.IsPresent)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.CreationDate)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.IsDelete)</th>
+                    <th scope="col" data-orderable="false">کنترل</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @{
+                    int x = 0;
+                }
+
+                @foreach (var item in Model)
+                {
+                    x++;
+
+                    <tr>
+                        <td scope="row">@x</td>
+                        <td scope="row">
+                            <span> @Html.DisplayFor(modelItem => item.User) </span>
+                        </td>
+                        <td scope="row">
+                            <span>@(item.IsPresent ? "حاضر" : "غایب")</span>
+                        </td>
+                        <td scope="row">
+                            <span> @PersianDateExtensionMethods.ToPeString(item.CreationDate, "yyyy/MM/dd") </span>
+                        </td>
+                        <td scope="row">
+                            <span>@(item.IsDelete ? "لغو" : "تایید شده")</span>
+                        </td>
+                        <td scope="row">
+                            @if (!item.IsDelete)
+                            {
+                                <a class="btn btn-success btn-sm glyphicon glyphicon-user" href="javascript:void(0)" onclick="UnRegister(@item.ID)"> </a>
+                                <a class="btn btn-primary btn-sm glyphicon glyphicon-ok" href="javascript:void(0)" onclick="SetPresence(@item.ID)"> </a>
+                            }
+                            else
+                            {
+                                <a class="btn btn-danger btn-sm glyphicon glyphicon-user" href="javascript:void(0)" onclick="Register(@item.ID)"> </a>
+                            }
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+@Html.Partial("_Modal")
+
+
+@section Scripts {
+
+    <script>
+
+        function Create(id) {
+            $.ajax({
+                url: "/Dashboard/UserWorkshop/Create/" + id,
+                type: "Get",
+                data: {}
+            }).done(function (result) {
+                $('#myModal').modal('show');
+                $('#myModalLabel').html('ثبت نام');
+                $('#myModalBody').html(result);
+            });
+        }
+
+        function UnRegister(id) {
+            $.ajax({
+                url: "/Dashboard/UserWorkshop/UnRegister/" + id,
+                type: "Get",
+                data: {}
+            }).done(function (result) {
+                $('#myModal').modal('show');
+                $('#myModalLabel').html('لغو ثبت نام');
+                $('#myModalBody').html(result);
+            });
+        }
+
+        function Register(id) {
+            $.ajax({
+                url: "/Dashboard/UserWorkshop/Register/" + id,
+                type: "Get",
+                data: {}
+            }).done(function (result) {
+                $('#myModal').modal('show');
+                $('#myModalLabel').html('لغو ثبت نام');
+                $('#myModalBody').html(result);
+            });
+        }
+
+        function SetPresence(id) {
+            $.ajax({
+                url: "/Dashboard/UserWorkshop/SetPresence/" + id,
+                type: "Get",
+                data: {}
+            }).done(function (result) {
+                $('#myModal').modal('show');
+                $('#myModalLabel').html('تغییر وضعیت حضور');
+                $('#myModalBody').html(result);
+            });
+        }
+
+    </script>
+
+}

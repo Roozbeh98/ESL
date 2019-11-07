@@ -19,9 +19,11 @@ namespace ESL.DataLayer.Domain
         {
             this.Tbl_Page = new HashSet<Tbl_Page>();
             this.Tbl_Payment = new HashSet<Tbl_Payment>();
+            this.Tbl_UserClass = new HashSet<Tbl_UserClass>();
             this.Tbl_UserExam = new HashSet<Tbl_UserExam>();
             this.Tbl_UserExamAccess = new HashSet<Tbl_UserExamAccess>();
             this.Tbl_UserExamInPerson = new HashSet<Tbl_UserExamInPerson>();
+            this.Tbl_UserWorkshop = new HashSet<Tbl_UserWorkshop>();
             this.Tbl_Wallet = new HashSet<Tbl_Wallet>();
         }
     
@@ -48,11 +50,15 @@ namespace ESL.DataLayer.Domain
         public virtual ICollection<Tbl_Payment> Tbl_Payment { get; set; }
         public virtual Tbl_Role Tbl_Role { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tbl_UserClass> Tbl_UserClass { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_UserExam> Tbl_UserExam { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_UserExamAccess> Tbl_UserExamAccess { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_UserExamInPerson> Tbl_UserExamInPerson { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tbl_UserWorkshop> Tbl_UserWorkshop { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_Wallet> Tbl_Wallet { get; set; }
     }

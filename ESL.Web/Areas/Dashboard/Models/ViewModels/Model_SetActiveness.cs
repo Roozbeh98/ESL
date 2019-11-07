@@ -6,7 +6,7 @@ using System.Web;
 
 namespace ESL.Web.Areas.Dashboard.Models.ViewModels
 {
-    public class Model_ExamInPersonSetActiveness
+    public class Model_SetActiveness
     {
         [Display(Name = "شناسه")]
         public int ID { get; set; }

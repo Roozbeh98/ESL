@@ -14,6 +14,12 @@ namespace ESL.DataLayer.Domain
     
     public partial class Tbl_WorkshopPlan
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Tbl_WorkshopPlan()
+        {
+            this.Tbl_UserWorkshop = new HashSet<Tbl_UserWorkshop>();
+        }
+    
         public int WP_ID { get; set; }
         public System.Guid WP_Guid { get; set; }
         public int WP_SWID { get; set; }
@@ -28,5 +34,7 @@ namespace ESL.DataLayer.Domain
         public bool WP_IsDelete { get; set; }
     
         public virtual Tbl_SubWorkshop Tbl_SubWorkshop { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tbl_UserWorkshop> Tbl_UserWorkshop { get; set; }
     }
 }

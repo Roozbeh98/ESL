@@ -32,12 +32,12 @@
                     <th scope="col">@Html.DisplayNameFor(model => model.Description)</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.Cost)</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.Location)</th>
-                    <th scope="col">@Html.DisplayNameFor(model => model.Activeness)</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.Capacity)</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.TotalMark)</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.PassMark)</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.Date)</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.CreationDate)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Activeness)</th>
                     <th scope="col" data-orderable="false">کنترل</th>
                 </tr>
             </thead>
@@ -66,9 +66,6 @@
                             <span> @Html.DisplayFor(modelItem => item.Location) </span>
                         </td>
                         <td scope="row">
-                            <span> @(item.Activeness ? "فعال" : "غیر فعال") </span>
-                        </td>
-                        <td scope="row">
                             <span> @Html.DisplayFor(modelItem => item.Capacity) </span>
                         </td>
                         <td scope="row">
@@ -82,6 +79,9 @@
                         </td>
                         <td scope="row">
                             <span> @PersianDateExtensionMethods.ToPeString(item.CreationDate, "yyyy/MM/dd") </span>
+                        </td>
+                        <td scope="row">
+                            <span> @(item.Activeness ? "فعال" : "غیر فعال") </span>
                         </td>
                         <td scope="row">
                             <a class="btn btn-primary btn-sm glyphicon glyphicon-ok" href="javascript:void(0)" onclick="SetActiveness(@item.ID)"> </a>
