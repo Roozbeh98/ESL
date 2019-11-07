@@ -306,11 +306,13 @@
           </Key>
           <Property Name="SMS_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SMS_Guid" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="SMS_STID" Type="int" Nullable="false" />
           <Property Name="SMS_Status" Type="int" Nullable="false" />
           <Property Name="SMS_StatusText" Type="nvarchar(max)" Nullable="false" />
           <Property Name="SMS_MessageID" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="SMS_Message" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="SMS_Token" Type="nvarchar" MaxLength="128" />
+          <Property Name="SMS_Token1" Type="nvarchar" MaxLength="128" />
+          <Property Name="SMS_Token2" Type="nvarchar" MaxLength="128" />
           <Property Name="SMS_Sender" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="SMS_Receptor" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="SMS_Date" Type="datetime2" Precision="7" Nullable="false" />
@@ -338,11 +340,6 @@
           <Property Name="ST_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ST_Guid" Type="uniqueidentifier" Nullable="false" />
           <Property Name="ST_Name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="ST_Receptor" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="ST_Body" Type="nvarchar(max)" />
-          <Property Name="ST_Token" Type="nvarchar" MaxLength="128" />
-          <Property Name="ST_Token2" Type="nvarchar" MaxLength="128" />
-          <Property Name="ST_Token3" Type="nvarchar" MaxLength="128" />
           <Property Name="ST_CreationDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="ST_ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="ST_IsDelete" Type="bit" Nullable="false" />
@@ -851,18 +848,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Tbl_SMSResponse_Tbl_SMSTemplate">
-          <End Role="Tbl_SMSTemplate" Type="Self.Tbl_SMSTemplate" Multiplicity="1" />
-          <End Role="Tbl_SMSResponse" Type="Self.Tbl_SMSResponse" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tbl_SMSTemplate">
-              <PropertyRef Name="ST_ID" />
-            </Principal>
-            <Dependent Role="Tbl_SMSResponse">
-              <PropertyRef Name="SMS_STID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Tbl_SMSSetting_Tbl_SMSProviderConfiguration">
           <End Role="Tbl_SMSProviderConfiguration" Type="Self.Tbl_SMSProviderConfiguration" Multiplicity="1" />
           <End Role="Tbl_SMSSetting" Type="Self.Tbl_SMSSetting" Multiplicity="*" />
@@ -1190,10 +1175,6 @@
             <End Role="Tbl_SMSProviderConfiguration" EntitySet="Tbl_SMSProviderConfiguration" />
             <End Role="Tbl_SMSProviderNumber" EntitySet="Tbl_SMSProviderNumber" />
           </AssociationSet>
-          <AssociationSet Name="FK_Tbl_SMSResponse_Tbl_SMSTemplate" Association="Self.FK_Tbl_SMSResponse_Tbl_SMSTemplate">
-            <End Role="Tbl_SMSTemplate" EntitySet="Tbl_SMSTemplate" />
-            <End Role="Tbl_SMSResponse" EntitySet="Tbl_SMSResponse" />
-          </AssociationSet>
           <AssociationSet Name="FK_Tbl_SMSSetting_Tbl_SMSProviderConfiguration" Association="Self.FK_Tbl_SMSSetting_Tbl_SMSProviderConfiguration">
             <End Role="Tbl_SMSProviderConfiguration" EntitySet="Tbl_SMSProviderConfiguration" />
             <End Role="Tbl_SMSSetting" EntitySet="Tbl_SMSSetting" />
@@ -1441,10 +1422,6 @@
           <AssociationSet Name="FK_Tbl_SMSSetting_Tbl_SMSProviderConfiguration" Association="ESLModel.FK_Tbl_SMSSetting_Tbl_SMSProviderConfiguration">
             <End Role="Tbl_SMSProviderConfiguration" EntitySet="Tbl_SMSProviderConfiguration" />
             <End Role="Tbl_SMSSetting" EntitySet="Tbl_SMSSetting" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Tbl_SMSResponse_Tbl_SMSTemplate" Association="ESLModel.FK_Tbl_SMSResponse_Tbl_SMSTemplate">
-            <End Role="Tbl_SMSTemplate" EntitySet="Tbl_SMSTemplate" />
-            <End Role="Tbl_SMSResponse" EntitySet="Tbl_SMSResponse" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_SMSSetting_Tbl_SMSTemplate" Association="ESLModel.FK_Tbl_SMSSetting_Tbl_SMSTemplate">
             <End Role="Tbl_SMSTemplate" EntitySet="Tbl_SMSTemplate" />
@@ -1839,11 +1816,13 @@
           </Key>
           <Property Name="SMS_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="SMS_Guid" Type="Guid" Nullable="false" />
-          <Property Name="SMS_STID" Type="Int32" Nullable="false" />
           <Property Name="SMS_Status" Type="Int32" Nullable="false" />
           <Property Name="SMS_StatusText" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="SMS_MessageID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="SMS_Message" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SMS_Token" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="SMS_Token1" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="SMS_Token2" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="SMS_Sender" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="SMS_Receptor" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="SMS_Date" Type="DateTime" Nullable="false" Precision="7" />
@@ -1851,7 +1830,6 @@
           <Property Name="SMS_CreationDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="SMS_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="SMS_IsDelete" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Tbl_SMSTemplate" Relationship="ESLModel.FK_Tbl_SMSResponse_Tbl_SMSTemplate" FromRole="Tbl_SMSResponse" ToRole="Tbl_SMSTemplate" />
         </EntityType>
         <EntityType Name="Tbl_SMSSetting">
           <Key>
@@ -1874,15 +1852,9 @@
           <Property Name="ST_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ST_Guid" Type="Guid" Nullable="false" />
           <Property Name="ST_Name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="ST_Receptor" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="ST_Body" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ST_Token" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="ST_Token2" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="ST_Token3" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="ST_CreationDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="ST_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="ST_IsDelete" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Tbl_SMSResponse" Relationship="ESLModel.FK_Tbl_SMSResponse_Tbl_SMSTemplate" FromRole="Tbl_SMSTemplate" ToRole="Tbl_SMSResponse" />
           <NavigationProperty Name="Tbl_SMSSetting" Relationship="ESLModel.FK_Tbl_SMSSetting_Tbl_SMSTemplate" FromRole="Tbl_SMSTemplate" ToRole="Tbl_SMSSetting" />
         </EntityType>
         <EntityType Name="Tbl_SubExam">
@@ -2495,18 +2467,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Tbl_SMSResponse_Tbl_SMSTemplate">
-          <End Type="ESLModel.Tbl_SMSTemplate" Role="Tbl_SMSTemplate" Multiplicity="1" />
-          <End Type="ESLModel.Tbl_SMSResponse" Role="Tbl_SMSResponse" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tbl_SMSTemplate">
-              <PropertyRef Name="ST_ID" />
-            </Principal>
-            <Dependent Role="Tbl_SMSResponse">
-              <PropertyRef Name="SMS_STID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Tbl_SMSSetting_Tbl_SMSTemplate">
           <End Type="ESLModel.Tbl_SMSTemplate" Role="Tbl_SMSTemplate" Multiplicity="1" />
           <End Type="ESLModel.Tbl_SMSSetting" Role="Tbl_SMSSetting" Multiplicity="*" />
@@ -2926,11 +2886,13 @@
                 <ScalarProperty Name="SMS_Date" ColumnName="SMS_Date" />
                 <ScalarProperty Name="SMS_Receptor" ColumnName="SMS_Receptor" />
                 <ScalarProperty Name="SMS_Sender" ColumnName="SMS_Sender" />
+                <ScalarProperty Name="SMS_Token2" ColumnName="SMS_Token2" />
+                <ScalarProperty Name="SMS_Token1" ColumnName="SMS_Token1" />
+                <ScalarProperty Name="SMS_Token" ColumnName="SMS_Token" />
                 <ScalarProperty Name="SMS_Message" ColumnName="SMS_Message" />
                 <ScalarProperty Name="SMS_MessageID" ColumnName="SMS_MessageID" />
                 <ScalarProperty Name="SMS_StatusText" ColumnName="SMS_StatusText" />
                 <ScalarProperty Name="SMS_Status" ColumnName="SMS_Status" />
-                <ScalarProperty Name="SMS_STID" ColumnName="SMS_STID" />
                 <ScalarProperty Name="SMS_Guid" ColumnName="SMS_Guid" />
                 <ScalarProperty Name="SMS_ID" ColumnName="SMS_ID" />
               </MappingFragment>
@@ -2955,11 +2917,6 @@
                 <ScalarProperty Name="ST_IsDelete" ColumnName="ST_IsDelete" />
                 <ScalarProperty Name="ST_ModifiedDate" ColumnName="ST_ModifiedDate" />
                 <ScalarProperty Name="ST_CreationDate" ColumnName="ST_CreationDate" />
-                <ScalarProperty Name="ST_Token3" ColumnName="ST_Token3" />
-                <ScalarProperty Name="ST_Token2" ColumnName="ST_Token2" />
-                <ScalarProperty Name="ST_Token" ColumnName="ST_Token" />
-                <ScalarProperty Name="ST_Body" ColumnName="ST_Body" />
-                <ScalarProperty Name="ST_Receptor" ColumnName="ST_Receptor" />
                 <ScalarProperty Name="ST_Name" ColumnName="ST_Name" />
                 <ScalarProperty Name="ST_Guid" ColumnName="ST_Guid" />
                 <ScalarProperty Name="ST_ID" ColumnName="ST_ID" />

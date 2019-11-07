@@ -16,11 +16,13 @@ namespace ESL.DataLayer.Domain
     {
         public int SMS_ID { get; set; }
         public System.Guid SMS_Guid { get; set; }
-        public int SMS_STID { get; set; }
         public int SMS_Status { get; set; }
         public string SMS_StatusText { get; set; }
         public string SMS_MessageID { get; set; }
         public string SMS_Message { get; set; }
+        public string SMS_Token { get; set; }
+        public string SMS_Token1 { get; set; }
+        public string SMS_Token2 { get; set; }
         public string SMS_Sender { get; set; }
         public string SMS_Receptor { get; set; }
         public System.DateTime SMS_Date { get; set; }
@@ -28,7 +30,5 @@ namespace ESL.DataLayer.Domain
         public System.DateTime SMS_CreationDate { get; set; }
         public System.DateTime SMS_ModifiedDate { get; set; }
         public bool SMS_IsDelete { get; set; }
-    
-        public virtual Tbl_SMSTemplate Tbl_SMSTemplate { get; set; }
     }
 }

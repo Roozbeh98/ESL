@@ -94,6 +94,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ESL.Common\ESL.Common.csproj">
+      <Project>{069dc7d9-c1fb-4719-82cc-dbb45b7dd00c}</Project>
+      <Name>ESL.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ESL.DataLayer\ESL.DataLayer.csproj">
       <Project>{84737d8d-72c6-4a0c-8c36-d9773e965135}</Project>
       <Name>ESL.DataLayer</Name>

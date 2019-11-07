@@ -9,6 +9,7 @@ using System.Web.Security;
 using ESL.DataLayer.Domain;
 using ESL.Web.Areas.Dashboard.Models.ViewModels;
 using ESL.Services.BaseRepository;
+using ESL.Services.Services;
 
 namespace ESL.Web.Areas.Dashboard.Controllers
 {
@@ -142,6 +143,8 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             _Wallet.Tbl_User = _User;
 
             db.Tbl_Wallet.Add(_Wallet);
+
+            new SMSPortal().SendServiceable("09227204305", "تست", "12345", "", SMSTemplate.VerifyAccount);
 
             if (Convert.ToBoolean(db.SaveChanges() > 0))
             {
