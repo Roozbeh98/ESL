@@ -2,7 +2,7 @@
 @using ESL.Common.Plugins
 
 @{
-    ViewBag.Title = "لیست پرداختی ها";
+    ViewBag.Title = "لیست تراکنش ها";
     Layout = "~/Areas/Dashboard/Views/Shared/_Master.cshtml";
 }
 
@@ -10,7 +10,7 @@
 <div class="panel panel-body panel-default  navigation">
 
     <div class="pull-left">
-        <h4 class="navigation-title"><b>لیست پرداختی ها</b></h4>
+        <h4 class="navigation-title"><b>لیست تراکنش ها</b></h4>
     </div>
 
     <div class="pull-right">
@@ -29,9 +29,10 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.User)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Title)</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.Type)</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.Way)</th>
-                    <th scope="col">@Html.DisplayNameFor(model => model.State)</th>
+                    <th scope="col"> @Html.DisplayNameFor(model => model.Description)</th>
                     <th scope="col"> @Html.DisplayNameFor(model => model.Cost)</th>
                     <th scope="col"> @Html.DisplayNameFor(model => model.TrackingToken)</th>
                     <th scope="col"> @Html.DisplayNameFor(model => model.Document)</th>
@@ -55,13 +56,16 @@
                             <span> @Html.DisplayFor(modelItem => item.User) </span>
                         </td>
                         <td scope="row">
+                            <span> @Html.DisplayFor(modelItem => item.Title) </span>
+                        </td>
+                        <td scope="row">
                             <span> @Html.DisplayFor(modelItem => item.Type) </span>
                         </td>
                         <td scope="row">
                             <span> @Html.DisplayFor(modelItem => item.Way) </span>
                         </td>
                         <td scope="row">
-                            <span> @Html.DisplayFor(modelItem => item.State) </span>
+                            <span> @Html.DisplayFor(modelItem => item.Description) </span>
                         </td>
                         <td scope="row">
                             <span> @Html.DisplayFor(modelItem => item.Cost) </span>
@@ -106,7 +110,7 @@
                 data: {}
             }).done(function (result) {
                 $('#myModal').modal('show');
-                $('#myModalLabel').html('تغییر وضعیت پرداخت');
+                $('#myModalLabel').html('تغییر نوع تراکنش');
                 $('#myModalBody').html(result);
             });
         }
@@ -118,7 +122,7 @@
                 data: {}
             }).done(function (result) {
                 $('#myModal').modal('show');
-                $('#myModalLabel').html('حدف پرداخت');
+                $('#myModalLabel').html('حدف تراکنش');
                 $('#myModalBody').html(result);
             });
         }

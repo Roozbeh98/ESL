@@ -23,9 +23,10 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             {
                 ID = x.Payment_ID,
                 User = x.Tbl_User.User_FirstName + " " + x.Tbl_User.User_lastName,
+                Title = x.Tbl_Code.Code_Display,
                 Type = x.Tbl_Code1.Code_Display,
                 Way = x.Tbl_Code2.Code_Display,
-                State = x.Tbl_Code.Code_Display,
+                Description = x.Payment_Description,
                 Cost = x.Payment_Cost,
                 TrackingToken = x.Payment_TrackingToken,
                 Document = x.Tbl_Document.Document_Path,
@@ -42,9 +43,10 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             {
                 ID = x.Payment_ID,
                 User = x.Tbl_User.User_FirstName + " " + x.Tbl_User.User_lastName,
+                Title = x.Tbl_Code.Code_Display,
                 Type = x.Tbl_Code1.Code_Display,
                 Way = x.Tbl_Code2.Code_Display,
-                State = x.Tbl_Code.Code_Display,
+                Description = x.Payment_Description,
                 Cost = x.Payment_Cost,
                 TrackingToken = x.Payment_TrackingToken,
                 Document = x.Tbl_Document.Document_Path,
@@ -120,9 +122,10 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                 {
                     Payment_Guid = Guid.NewGuid(),
                     Payment_UserID = new Rep_User().Get_UserIDWithGUID(model.User),
-                    Payment_TypeCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Type),
+                    Payment_TitleCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Title),
                     Payment_WayCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Way),
-                    Payment_StateCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(model.State),
+                    Payment_TypeCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Type),
+                    Payment_Description = model.Description,
                     Payment_Cost = model.Cost,
                     Payment_TrackingToken = model.TrackingToken,
                     Payment_CreateDate = DateTime.Now
@@ -135,7 +138,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                 db.Tbl_Payment.Add(q);
 
-                if (new Rep_Wallet().Set_Credit(new Rep_Wallet().Get_WalletGUIDWithUserGUID(model.User), model.Type, model.Cost, model.State))
+                if (new Rep_Wallet().Set_Credit(new Rep_Wallet().Get_WalletGUIDWithUserGUID(model.User), model.Type, model.Cost, model.Title))
                 {
                     if (Convert.ToBoolean(db.SaveChanges() > 0))
                     {
@@ -167,9 +170,8 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                 {
                     ID = q.Payment_ID,
                     User = q.Tbl_User.User_Guid,
-                    Type = q.Tbl_Code1.Code_Guid,
+                    Type = q.Tbl_Code.Code_Guid,
                     Way = q.Tbl_Code2.Code_Guid,
-                    State = q.Tbl_Code.Code_Guid,
                     Cost = q.Payment_Cost,
                     TrackingToken = q.Payment_TrackingToken
                 };
@@ -243,7 +245,6 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     q.Payment_UserID = new Rep_User().Get_UserIDWithGUID(model.User);
                     q.Payment_TypeCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Type);
                     q.Payment_WayCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Way);
-                    q.Payment_StateCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(model.State);
                     q.Payment_Cost = model.Cost;
                     q.Payment_TrackingToken = model.TrackingToken;
 
@@ -294,7 +295,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                 {
                     model.ID = id.Value;
                     model.Name = exam.Payment_TrackingToken;
-                    model.Description = "آیا از حذف پرداخت مورد نظر اطمینان دارید ؟";
+                    model.Description = "آیا از حذف تراکنش مورد نظر اطمینان دارید ؟";
 
                     return PartialView(model);
                 }
@@ -343,16 +344,16 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
-        public ActionResult ChangeState(int id)
+        public ActionResult ChangeType(int id)
         {
             var q = db.Tbl_Payment.Where(x => x.Payment_ID == id).SingleOrDefault();
 
             if (q != null)
             {
-                Model_PaymentChangeState model = new Model_PaymentChangeState()
+                Model_PaymentChangeType model = new Model_PaymentChangeType()
                 {
                     ID = id,
-                    State = q.Tbl_Code.Code_Guid
+                    Type = q.Tbl_Code.Code_Guid
                 };
 
                 return PartialView(model);
@@ -363,7 +364,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ChangeState(Model_PaymentChangeState model)
+        public ActionResult ChangeState(Model_PaymentChangeType model)
         {
             if (ModelState.IsValid)
             {
@@ -371,7 +372,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                 if (q != null)
                 {
-                    q.Payment_StateCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(model.State);
+                    q.Payment_TypeCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Type);
 
                     db.Entry(q).State = EntityState.Modified;
 

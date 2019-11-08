@@ -13,17 +13,21 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
         public Guid User { get; set; }
 
-        [Display(Name = "نوع پرداخت")]
+        [Display(Name = "عنوان تراکنش")]
+        [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
+        public Guid Title { get; set; }
+
+        [Display(Name = "نوع تراکنش")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
         public Guid Type { get; set; }
 
-        [Display(Name = "روش پرداخت")]
+        [Display(Name = "روش تراکنش")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
         public Guid Way { get; set; }
 
-        [Display(Name = "وضعیت پرداخت")]
+        [Display(Name = "توضیحات")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
-        public Guid State { get; set; }
+        public string Description { get; set; }
 
         [Display(Name = "بها")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
@@ -32,6 +36,5 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
         [Display(Name = "کد رهگیری")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
         public string TrackingToken { get; set; }
-
     }
 }

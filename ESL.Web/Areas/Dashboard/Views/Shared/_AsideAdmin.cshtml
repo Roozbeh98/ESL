@@ -126,14 +126,14 @@
                 <li>
                     <a href="@Url.Action("Index", "Payment")">
                         <i class="glyphicon glyphicon-book"></i>
-                        لیست پرداختی ها
+                        لیست تراکنش ها
                     </a>
                 </li>
 
                 <li>
                     <a href="@Url.Action("Suspended", "Payment")">
                         <i class="glyphicon glyphicon-book"></i>
-                        لیست پرداختی ها تایید نشده
+                        لیست تراکنش های تایید نشده
                     </a>
                 </li>
 
@@ -187,6 +187,13 @@
             <a href="@Url.Action("Index", "Class", new { area = "Dashboard" })">
                 <i class="glyphicon glyphicon-book"></i>
                 کلاس ها
+            </a>
+        </li>
+
+        <li>
+            <a href="@Url.Action("Index", "Presence", new { area = "Dashboard" })">
+                <i class="glyphicon glyphicon-book"></i>
+                حضور غیاب
             </a>
         </li>
 

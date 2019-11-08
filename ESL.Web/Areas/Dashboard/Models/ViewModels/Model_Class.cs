@@ -14,11 +14,14 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
         [Display(Name = "عنوان")]
         public string Class { get; set; }
 
+        [Display(Name = "نوع کلاس")]
+        public string Type { get; set; }
+
         [Display(Name = "توضیحات")]
         public string Description { get; set; }
 
         [Display(Name = "بها")]
-        public int Cost { get; set; }
+        public int CostPerSession { get; set; }
 
         [DataType(DataType.MultilineText)]
         [Display(Name = "مکان")]
@@ -32,9 +35,6 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
 
         [Display(Name = "ساعت برگزاری")]
         public TimeSpan Time { get; set; }
-
-        [Display(Name = "تعداد جلسات")]
-        public int SessionsNum { get; set; }
 
         [Display(Name = "طول هر جلسه")]
         public int SessionsLength { get; set; }

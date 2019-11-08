@@ -43,6 +43,7 @@ namespace ESL.DataLayer.Domain
         public virtual DbSet<Tbl_PageDocuments> Tbl_PageDocuments { get; set; }
         public virtual DbSet<Tbl_PageTags> Tbl_PageTags { get; set; }
         public virtual DbSet<Tbl_Payment> Tbl_Payment { get; set; }
+        public virtual DbSet<Tbl_Presence> Tbl_Presence { get; set; }
         public virtual DbSet<Tbl_Question> Tbl_Question { get; set; }
         public virtual DbSet<Tbl_Region> Tbl_Region { get; set; }
         public virtual DbSet<Tbl_Response> Tbl_Response { get; set; }

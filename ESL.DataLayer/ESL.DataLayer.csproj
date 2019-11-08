@@ -143,6 +143,9 @@
     <Compile Include="Domain\Tbl_Payment.cs">
       <DependentUpon>ESL.tt</DependentUpon>
     </Compile>
+    <Compile Include="Domain\Tbl_Presence.cs">
+      <DependentUpon>ESL.tt</DependentUpon>
+    </Compile>
     <Compile Include="Domain\Tbl_Question.cs">
       <DependentUpon>ESL.tt</DependentUpon>
     </Compile>

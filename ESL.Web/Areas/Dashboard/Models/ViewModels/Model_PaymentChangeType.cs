@@ -6,14 +6,14 @@ using System.Web;
 
 namespace ESL.Web.Areas.Dashboard.Models.ViewModels
 {
-    public class Model_PaymentChangeState
+    public class Model_PaymentChangeType
     {
         [Display(Name = "شناسه")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
         public int ID { get; set; }
 
-        [Display(Name = "وضعیت پرداخت")]
+        [Display(Name = "نوع تراکنش")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
-        public Guid State { get; set; }
+        public Guid Type { get; set; }
     }
 }

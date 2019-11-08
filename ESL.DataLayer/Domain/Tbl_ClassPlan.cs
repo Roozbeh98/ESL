@@ -17,19 +17,20 @@ namespace ESL.DataLayer.Domain
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Tbl_ClassPlan()
         {
+            this.Tbl_Presence = new HashSet<Tbl_Presence>();
             this.Tbl_UserClass = new HashSet<Tbl_UserClass>();
         }
     
         public int CP_ID { get; set; }
         public System.Guid CP_Guid { get; set; }
         public int CP_ClassID { get; set; }
+        public int CP_TypeCodeID { get; set; }
         public int CP_Capacity { get; set; }
         public string CP_Description { get; set; }
-        public int CP_Cost { get; set; }
+        public int CP_CostPerSession { get; set; }
         public string CP_Location { get; set; }
         public System.TimeSpan CP_Time { get; set; }
-        public int CP_SessionsNum { get; set; }
-        public int CP_SessionsLength { get; set; }
+        public double CP_SessionsLength { get; set; }
         public System.DateTime CP_ExamDate { get; set; }
         public bool CP_IsActive { get; set; }
         public System.DateTime CP_CreationDate { get; set; }
@@ -37,6 +38,9 @@ namespace ESL.DataLayer.Domain
         public bool CP_IsDelete { get; set; }
     
         public virtual Tbl_Class Tbl_Class { get; set; }
+        public virtual Tbl_Code Tbl_Code { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tbl_Presence> Tbl_Presence { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_UserClass> Tbl_UserClass { get; set; }
     }

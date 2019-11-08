@@ -19,6 +19,7 @@ namespace ESL.DataLayer.Domain
         {
             this.Tbl_Page = new HashSet<Tbl_Page>();
             this.Tbl_Payment = new HashSet<Tbl_Payment>();
+            this.Tbl_Presence = new HashSet<Tbl_Presence>();
             this.Tbl_UserClass = new HashSet<Tbl_UserClass>();
             this.Tbl_UserExam = new HashSet<Tbl_UserExam>();
             this.Tbl_UserExamAccess = new HashSet<Tbl_UserExamAccess>();
@@ -48,6 +49,8 @@ namespace ESL.DataLayer.Domain
         public virtual ICollection<Tbl_Page> Tbl_Page { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_Payment> Tbl_Payment { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tbl_Presence> Tbl_Presence { get; set; }
         public virtual Tbl_Role Tbl_Role { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_UserClass> Tbl_UserClass { get; set; }

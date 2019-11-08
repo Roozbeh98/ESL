@@ -19,11 +19,24 @@ namespace ESL.Web
         QuestionGroup = 4,
         QuestionType = 5,
         QuestionOption = 6,
-        PaymentType = 8,
+        PaymentType = 10,
         PaymentWay = 9,
-        PaymentState = 10,
         DocumentType = 11,
-        UploadFolder = 12
+        UploadFolder = 12,
+        PaymentTitle = 15,
+        ClassType = 17
+    }
+
+    public enum CodeID
+    {
+        WaitForAcceptance = 24,
+        Paid = 25,
+        ReturnToAccount = 26,
+        ReturnToBankAccount = 52,
+        Suspended = 53,
+
+        Charge = 44,
+        Discharge = 51
     }
 
     public enum WalletAction

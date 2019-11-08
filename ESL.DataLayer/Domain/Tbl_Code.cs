@@ -17,6 +17,7 @@ namespace ESL.DataLayer.Domain
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Tbl_Code()
         {
+            this.Tbl_ClassPlan = new HashSet<Tbl_ClassPlan>();
             this.Tbl_Document = new HashSet<Tbl_Document>();
             this.Tbl_ExamRemotely = new HashSet<Tbl_ExamRemotely>();
             this.Tbl_Organization = new HashSet<Tbl_Organization>();
@@ -35,7 +36,10 @@ namespace ESL.DataLayer.Domain
         public int Code_CGID { get; set; }
         public string Code_Name { get; set; }
         public string Code_Display { get; set; }
+        public bool Code_IsActive { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tbl_ClassPlan> Tbl_ClassPlan { get; set; }
         public virtual Tbl_CodeGroup Tbl_CodeGroup { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_Document> Tbl_Document { get; set; }

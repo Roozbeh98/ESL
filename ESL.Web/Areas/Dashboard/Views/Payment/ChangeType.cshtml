@@ -10,8 +10,8 @@
     <div class="modal-main">
 
         <div class="form-group">
-            @Html.LabelFor(model => model.State, htmlAttributes: new { @class = "control-label" })
-            @Html.DropDownListFor(model => model.State, Rep_CodeGroup.Get_AllCodesWithGroupWithGUID(CodeGroup.PaymentState), new { @class = "form-control Select2_Normal" })
+            @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownListFor(model => model.Type, Rep_CodeGroup.Get_AllCodesWithGroupWithGUID(CodeGroup.PaymentType), new { @class = "form-control Select2_Normal" })
         </div>
 
     </div>

@@ -242,7 +242,7 @@
     <Content Include="Areas\Dashboard\Views\Payment\Index.cshtml" />
     <Content Include="Areas\Dashboard\Views\Payment\Suspended.cshtml" />
     <Content Include="Areas\Dashboard\Views\Payment\Create.cshtml" />
-    <Content Include="Areas\Dashboard\Views\Payment\ChangeState.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Payment\ChangeType.cshtml" />
     <Content Include="Areas\Dashboard\Views\Payment\Edit.cshtml" />
     <Content Include="Areas\Dashboard\Views\Payment\Delete.cshtml" />
     <Content Include="Areas\Dashboard\Views\ExamInPerson\SetActiveness.cshtml" />
@@ -264,6 +264,8 @@
     <Content Include="Areas\Dashboard\Views\UserClass\Create.cshtml" />
     <Content Include="Areas\Dashboard\Views\UserClass\UnRegister.cshtml" />
     <Content Include="Areas\Dashboard\Views\UserClass\Register.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Presence\Index.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Presence\Details.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -1332,6 +1334,7 @@
     <Compile Include="Areas\Dashboard\Controllers\MessageController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\PageController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\PaymentController.cs" />
+    <Compile Include="Areas\Dashboard\Controllers\PresenceController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\SettingController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\ExamController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\UploadController.cs" />
@@ -1351,7 +1354,7 @@
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_ExamsInPerson.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_Login.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_Payment.cs" />
-    <Compile Include="Areas\Dashboard\Models\ViewModels\Model_PaymentChangeState.cs" />
+    <Compile Include="Areas\Dashboard\Models\ViewModels\Model_PaymentChangeType.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_PaymentCreate.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_PaymentEdit.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_QuestionCreate.cs" />
@@ -1360,6 +1363,8 @@
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_Question.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_UserClass.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_UserClassCreate.cs" />
+    <Compile Include="Areas\Dashboard\Models\ViewModels\Model_UserClasses.cs" />
+    <Compile Include="Areas\Dashboard\Models\ViewModels\Model_UserClassPresence.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_UserExamInPersonCreate.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_UserExamInPersonSetMark.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_UserExamInPersonSetPresence.cs" />

@@ -15,17 +15,21 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
         public string User { get; set; }
 
-        [Display(Name = "نوع پرداخت")]
+        [Display(Name = "عنوان تراکنش")]
+        [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
+        public string Title { get; set; }
+
+        [Display(Name = "نوع تراکنش")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
         public string Type { get; set; }
 
-        [Display(Name = "روش پرداخت")]
+        [Display(Name = "روش تراکنش")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
         public string Way { get; set; }
 
-        [Display(Name = "وضعیت پرداخت")]
+        [Display(Name = "توضیحات")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
-        public string State { get; set; }
+        public string Description { get; set; }
 
         [Display(Name = "بها")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]

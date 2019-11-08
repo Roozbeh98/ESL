@@ -14,14 +14,21 @@ namespace ESL.DataLayer.Domain
     
     public partial class Tbl_Payment
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Tbl_Payment()
+        {
+            this.Tbl_Presence = new HashSet<Tbl_Presence>();
+        }
+    
         public int Payment_ID { get; set; }
         public System.Guid Payment_Guid { get; set; }
         public int Payment_UserID { get; set; }
-        public int Payment_TypeCodeID { get; set; }
-        public int Payment_WayCodeID { get; set; }
-        public int Payment_StateCodeID { get; set; }
         public int Payment_TitleCodeID { get; set; }
+        public int Payment_WayCodeID { get; set; }
+        public int Payment_TypeCodeID { get; set; }
+        public string Payment_Description { get; set; }
         public int Payment_Cost { get; set; }
+        public int Payment_Discount { get; set; }
         public int Payment_RemaingWallet { get; set; }
         public string Payment_TrackingToken { get; set; }
         public Nullable<int> Payment_DocumentID { get; set; }
@@ -34,5 +41,7 @@ namespace ESL.DataLayer.Domain
         public virtual Tbl_Code Tbl_Code2 { get; set; }
         public virtual Tbl_Document Tbl_Document { get; set; }
         public virtual Tbl_User Tbl_User { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tbl_Presence> Tbl_Presence { get; set; }
     }
 }

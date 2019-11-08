@@ -2,7 +2,7 @@
 @using ESL.Services.BaseRepository
 
 @{
-    ViewBag.Title = "ویرایش پرداخت";
+    ViewBag.Title = "ویرایش تراکنش";
     Layout = "~/Areas/Dashboard/Views/Shared/_Master.cshtml";
 }
 
@@ -10,7 +10,7 @@
 <div class="panel panel-body panel-default  navigation">
 
     <div class="pull-left">
-        <h4 class="navigation-title"><b>ویرایش پرداخت</b></h4>
+        <h4 class="navigation-title"><b>ویرایش تراکنش</b></h4>
     </div>
 
     <div class="pull-right">
@@ -39,6 +39,11 @@
                         </div>
 
                         <div class="form-group">
+                            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label" })
+                            @Html.DropDownListFor(model => model.Title, Rep_CodeGroup.Get_AllCodesWithGroupWithGUID(CodeGroup.PaymentTitle), new { @class = "form-control Select2_Normal" })
+                        </div>
+
+                        <div class="form-group">
                             @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label" })
                             @Html.DropDownListFor(model => model.Type, Rep_CodeGroup.Get_AllCodesWithGroupWithGUID(CodeGroup.PaymentType), new { @class = "form-control Select2_Normal" })
                         </div>
@@ -46,11 +51,6 @@
                         <div class="form-group">
                             @Html.LabelFor(model => model.Way, htmlAttributes: new { @class = "control-label" })
                             @Html.DropDownListFor(model => model.Way, Rep_CodeGroup.Get_AllCodesWithGroupWithGUID(CodeGroup.PaymentWay), new { @class = "form-control Select2_Normal" })
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.State, htmlAttributes: new { @class = "control-label" })
-                            @Html.DropDownListFor(model => model.State, Rep_CodeGroup.Get_AllCodesWithGroupWithGUID(CodeGroup.PaymentState), new { @class = "form-control Select2_Normal" })
                         </div>
 
                     </div>

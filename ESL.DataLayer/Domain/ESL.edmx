@@ -33,13 +33,13 @@
           <Property Name="CP_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CP_Guid" Type="uniqueidentifier" Nullable="false" />
           <Property Name="CP_ClassID" Type="int" Nullable="false" />
+          <Property Name="CP_TypeCodeID" Type="int" Nullable="false" />
           <Property Name="CP_Capacity" Type="int" Nullable="false" />
           <Property Name="CP_Description" Type="ntext" Nullable="false" />
-          <Property Name="CP_Cost" Type="int" Nullable="false" />
+          <Property Name="CP_CostPerSession" Type="int" Nullable="false" />
           <Property Name="CP_Location" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="CP_Time" Type="time" Precision="7" Nullable="false" />
-          <Property Name="CP_SessionsNum" Type="int" Nullable="false" />
-          <Property Name="CP_SessionsLength" Type="int" Nullable="false" />
+          <Property Name="CP_SessionsLength" Type="float" Nullable="false" />
           <Property Name="CP_ExamDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="CP_IsActive" Type="bit" Nullable="false" />
           <Property Name="CP_CreationDate" Type="datetime2" Precision="7" Nullable="false" />
@@ -55,6 +55,7 @@
           <Property Name="Code_CGID" Type="int" Nullable="false" />
           <Property Name="Code_Name" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Code_Display" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Code_IsActive" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Tbl_CodeGroup">
           <Key>
@@ -215,17 +216,32 @@
           <Property Name="Payment_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Payment_Guid" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Payment_UserID" Type="int" Nullable="false" />
-          <Property Name="Payment_TypeCodeID" Type="int" Nullable="false" />
-          <Property Name="Payment_WayCodeID" Type="int" Nullable="false" />
-          <Property Name="Payment_StateCodeID" Type="int" Nullable="false" />
           <Property Name="Payment_TitleCodeID" Type="int" Nullable="false" />
+          <Property Name="Payment_WayCodeID" Type="int" Nullable="false" />
+          <Property Name="Payment_TypeCodeID" Type="int" Nullable="false" />
+          <Property Name="Payment_Description" Type="ntext" Nullable="false" />
           <Property Name="Payment_Cost" Type="int" Nullable="false" />
+          <Property Name="Payment_Discount" Type="int" Nullable="false" />
           <Property Name="Payment_RemaingWallet" Type="int" Nullable="false" />
           <Property Name="Payment_TrackingToken" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Payment_DocumentID" Type="int" />
           <Property Name="Payment_CreateDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="Payment_ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="Payment_IsDelete" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tbl_Presence">
+          <Key>
+            <PropertyRef Name="Presence_ID" />
+          </Key>
+          <Property Name="Presence_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Presence_Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Presence_UserID" Type="int" Nullable="false" />
+          <Property Name="Presence_CPID" Type="int" Nullable="false" />
+          <Property Name="Presence_PaymentID" Type="int" Nullable="false" />
+          <Property Name="Presence_IsPresent" Type="bit" Nullable="false" />
+          <Property Name="Presence_CreationDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="Presence_ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="Presence_IsDelete" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Tbl_Question">
           <Key>
@@ -527,6 +543,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Tbl_ClassPlan_Tbl_Code">
+          <End Role="Tbl_Code" Type="Self.Tbl_Code" Multiplicity="1" />
+          <End Role="Tbl_ClassPlan" Type="Self.Tbl_ClassPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Code">
+              <PropertyRef Name="Code_ID" />
+            </Principal>
+            <Dependent Role="Tbl_ClassPlan">
+              <PropertyRef Name="CP_TypeCodeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Tbl_Code_Tbl_CodeGroup">
           <End Role="Tbl_CodeGroup" Type="Self.Tbl_CodeGroup" Multiplicity="1" />
           <End Role="Tbl_Code" Type="Self.Tbl_Code" Multiplicity="*" />
@@ -719,7 +747,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Tbl_Payment_Tbl_Code_StateCodeID">
+        <Association Name="FK_Tbl_Payment_Tbl_Code_TitleCodeID">
           <End Role="Tbl_Code" Type="Self.Tbl_Code" Multiplicity="1" />
           <End Role="Tbl_Payment" Type="Self.Tbl_Payment" Multiplicity="*" />
           <ReferentialConstraint>
@@ -727,7 +755,7 @@
               <PropertyRef Name="Code_ID" />
             </Principal>
             <Dependent Role="Tbl_Payment">
-              <PropertyRef Name="Payment_StateCodeID" />
+              <PropertyRef Name="Payment_TitleCodeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -776,6 +804,42 @@
             </Principal>
             <Dependent Role="Tbl_Payment">
               <PropertyRef Name="Payment_UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_Presence_Tbl_ClassPlan">
+          <End Role="Tbl_ClassPlan" Type="Self.Tbl_ClassPlan" Multiplicity="1" />
+          <End Role="Tbl_Presence" Type="Self.Tbl_Presence" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_ClassPlan">
+              <PropertyRef Name="CP_ID" />
+            </Principal>
+            <Dependent Role="Tbl_Presence">
+              <PropertyRef Name="Presence_CPID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_Presence_Tbl_Payment">
+          <End Role="Tbl_Payment" Type="Self.Tbl_Payment" Multiplicity="1" />
+          <End Role="Tbl_Presence" Type="Self.Tbl_Presence" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Payment">
+              <PropertyRef Name="Payment_ID" />
+            </Principal>
+            <Dependent Role="Tbl_Presence">
+              <PropertyRef Name="Presence_PaymentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_Presence_Tbl_User">
+          <End Role="Tbl_User" Type="Self.Tbl_User" Multiplicity="1" />
+          <End Role="Tbl_Presence" Type="Self.Tbl_Presence" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_User">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="Tbl_Presence">
+              <PropertyRef Name="Presence_UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1110,6 +1174,7 @@
           <EntitySet Name="Tbl_PageDocuments" EntityType="Self.Tbl_PageDocuments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_PageTags" EntityType="Self.Tbl_PageTags" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Payment" EntityType="Self.Tbl_Payment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_Presence" EntityType="Self.Tbl_Presence" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Question" EntityType="Self.Tbl_Question" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Region" EntityType="Self.Tbl_Region" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Response" EntityType="Self.Tbl_Response" Schema="dbo" store:Type="Tables" />
@@ -1134,6 +1199,10 @@
           <EntitySet Name="Tbl_WorkshopPlan" EntityType="Self.Tbl_WorkshopPlan" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Tbl_ClassPlan_Tbl_Class" Association="Self.FK_Tbl_ClassPlan_Tbl_Class">
             <End Role="Tbl_Class" EntitySet="Tbl_Class" />
+            <End Role="Tbl_ClassPlan" EntitySet="Tbl_ClassPlan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_ClassPlan_Tbl_Code" Association="Self.FK_Tbl_ClassPlan_Tbl_Code">
+            <End Role="Tbl_Code" EntitySet="Tbl_Code" />
             <End Role="Tbl_ClassPlan" EntitySet="Tbl_ClassPlan" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_Code_Tbl_CodeGroup" Association="Self.FK_Tbl_Code_Tbl_CodeGroup">
@@ -1200,7 +1269,7 @@
             <End Role="Tbl_Tag" EntitySet="Tbl_Tag" />
             <End Role="Tbl_PageTags" EntitySet="Tbl_PageTags" />
           </AssociationSet>
-          <AssociationSet Name="FK_Tbl_Payment_Tbl_Code_StateCodeID" Association="Self.FK_Tbl_Payment_Tbl_Code_StateCodeID">
+          <AssociationSet Name="FK_Tbl_Payment_Tbl_Code_TitleCodeID" Association="Self.FK_Tbl_Payment_Tbl_Code_TitleCodeID">
             <End Role="Tbl_Code" EntitySet="Tbl_Code" />
             <End Role="Tbl_Payment" EntitySet="Tbl_Payment" />
           </AssociationSet>
@@ -1219,6 +1288,18 @@
           <AssociationSet Name="FK_Tbl_Payment_Tbl_User" Association="Self.FK_Tbl_Payment_Tbl_User">
             <End Role="Tbl_User" EntitySet="Tbl_User" />
             <End Role="Tbl_Payment" EntitySet="Tbl_Payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Presence_Tbl_ClassPlan" Association="Self.FK_Tbl_Presence_Tbl_ClassPlan">
+            <End Role="Tbl_ClassPlan" EntitySet="Tbl_ClassPlan" />
+            <End Role="Tbl_Presence" EntitySet="Tbl_Presence" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Presence_Tbl_Payment" Association="Self.FK_Tbl_Presence_Tbl_Payment">
+            <End Role="Tbl_Payment" EntitySet="Tbl_Payment" />
+            <End Role="Tbl_Presence" EntitySet="Tbl_Presence" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Presence_Tbl_User" Association="Self.FK_Tbl_Presence_Tbl_User">
+            <End Role="Tbl_User" EntitySet="Tbl_User" />
+            <End Role="Tbl_Presence" EntitySet="Tbl_Presence" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_Question_Tbl_Code_GroupCodeID" Association="Self.FK_Tbl_Question_Tbl_Code_GroupCodeID">
             <End Role="Tbl_Code" EntitySet="Tbl_Code" />
@@ -1348,6 +1429,7 @@
           <EntitySet Name="Tbl_PageDocuments" EntityType="ESLModel.Tbl_PageDocuments" />
           <EntitySet Name="Tbl_PageTags" EntityType="ESLModel.Tbl_PageTags" />
           <EntitySet Name="Tbl_Payment" EntityType="ESLModel.Tbl_Payment" />
+          <EntitySet Name="Tbl_Presence" EntityType="ESLModel.Tbl_Presence" />
           <EntitySet Name="Tbl_Question" EntityType="ESLModel.Tbl_Question" />
           <EntitySet Name="Tbl_Region" EntityType="ESLModel.Tbl_Region" />
           <EntitySet Name="Tbl_Response" EntityType="ESLModel.Tbl_Response" />
@@ -1374,6 +1456,14 @@
             <End Role="Tbl_Class" EntitySet="Tbl_Class" />
             <End Role="Tbl_ClassPlan" EntitySet="Tbl_ClassPlan" />
           </AssociationSet>
+          <AssociationSet Name="FK_Tbl_ClassPlan_Tbl_Code" Association="ESLModel.FK_Tbl_ClassPlan_Tbl_Code">
+            <End Role="Tbl_Code" EntitySet="Tbl_Code" />
+            <End Role="Tbl_ClassPlan" EntitySet="Tbl_ClassPlan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Presence_Tbl_ClassPlan" Association="ESLModel.FK_Tbl_Presence_Tbl_ClassPlan">
+            <End Role="Tbl_ClassPlan" EntitySet="Tbl_ClassPlan" />
+            <End Role="Tbl_Presence" EntitySet="Tbl_Presence" />
+          </AssociationSet>
           <AssociationSet Name="FK_Tbl_UserClass_Tbl_ClassPlan" Association="ESLModel.FK_Tbl_UserClass_Tbl_ClassPlan">
             <End Role="Tbl_ClassPlan" EntitySet="Tbl_ClassPlan" />
             <End Role="Tbl_UserClass" EntitySet="Tbl_UserClass" />
@@ -1398,7 +1488,7 @@
             <End Role="Tbl_Code" EntitySet="Tbl_Code" />
             <End Role="Tbl_PageDocuments" EntitySet="Tbl_PageDocuments" />
           </AssociationSet>
-          <AssociationSet Name="FK_Tbl_Payment_Tbl_Code_StateCodeID" Association="ESLModel.FK_Tbl_Payment_Tbl_Code_StateCodeID">
+          <AssociationSet Name="FK_Tbl_Payment_Tbl_Code_TitleCodeID" Association="ESLModel.FK_Tbl_Payment_Tbl_Code_TitleCodeID">
             <End Role="Tbl_Code" EntitySet="Tbl_Code" />
             <End Role="Tbl_Payment" EntitySet="Tbl_Payment" />
           </AssociationSet>
@@ -1502,6 +1592,14 @@
             <End Role="Tbl_User" EntitySet="Tbl_User" />
             <End Role="Tbl_Payment" EntitySet="Tbl_Payment" />
           </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Presence_Tbl_Payment" Association="ESLModel.FK_Tbl_Presence_Tbl_Payment">
+            <End Role="Tbl_Payment" EntitySet="Tbl_Payment" />
+            <End Role="Tbl_Presence" EntitySet="Tbl_Presence" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Presence_Tbl_User" Association="ESLModel.FK_Tbl_Presence_Tbl_User">
+            <End Role="Tbl_User" EntitySet="Tbl_User" />
+            <End Role="Tbl_Presence" EntitySet="Tbl_Presence" />
+          </AssociationSet>
           <AssociationSet Name="FK_Tbl_Question_Tbl_Response" Association="ESLModel.FK_Tbl_Question_Tbl_Response">
             <End Role="Tbl_Response" EntitySet="Tbl_Response" />
             <End Role="Tbl_Question" EntitySet="Tbl_Question" />
@@ -1592,19 +1690,21 @@
           <Property Name="CP_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CP_Guid" Type="Guid" Nullable="false" />
           <Property Name="CP_ClassID" Type="Int32" Nullable="false" />
+          <Property Name="CP_TypeCodeID" Type="Int32" Nullable="false" />
           <Property Name="CP_Capacity" Type="Int32" Nullable="false" />
           <Property Name="CP_Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CP_Cost" Type="Int32" Nullable="false" />
+          <Property Name="CP_CostPerSession" Type="Int32" Nullable="false" />
           <Property Name="CP_Location" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="CP_Time" Type="Time" Nullable="false" Precision="7" />
-          <Property Name="CP_SessionsNum" Type="Int32" Nullable="false" />
-          <Property Name="CP_SessionsLength" Type="Int32" Nullable="false" />
+          <Property Name="CP_SessionsLength" Type="Double" Nullable="false" />
           <Property Name="CP_ExamDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="CP_IsActive" Type="Boolean" Nullable="false" />
           <Property Name="CP_CreationDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="CP_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="CP_IsDelete" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Tbl_Class" Relationship="ESLModel.FK_Tbl_ClassPlan_Tbl_Class" FromRole="Tbl_ClassPlan" ToRole="Tbl_Class" />
+          <NavigationProperty Name="Tbl_Code" Relationship="ESLModel.FK_Tbl_ClassPlan_Tbl_Code" FromRole="Tbl_ClassPlan" ToRole="Tbl_Code" />
+          <NavigationProperty Name="Tbl_Presence" Relationship="ESLModel.FK_Tbl_Presence_Tbl_ClassPlan" FromRole="Tbl_ClassPlan" ToRole="Tbl_Presence" />
           <NavigationProperty Name="Tbl_UserClass" Relationship="ESLModel.FK_Tbl_UserClass_Tbl_ClassPlan" FromRole="Tbl_ClassPlan" ToRole="Tbl_UserClass" />
         </EntityType>
         <EntityType Name="Tbl_Code">
@@ -1616,12 +1716,14 @@
           <Property Name="Code_CGID" Type="Int32" Nullable="false" />
           <Property Name="Code_Name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="Code_Display" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Code_IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Tbl_ClassPlan" Relationship="ESLModel.FK_Tbl_ClassPlan_Tbl_Code" FromRole="Tbl_Code" ToRole="Tbl_ClassPlan" />
           <NavigationProperty Name="Tbl_CodeGroup" Relationship="ESLModel.FK_Tbl_Code_Tbl_CodeGroup" FromRole="Tbl_Code" ToRole="Tbl_CodeGroup" />
           <NavigationProperty Name="Tbl_Document" Relationship="ESLModel.FK_Tbl_Document_Tbl_Code" FromRole="Tbl_Code" ToRole="Tbl_Document" />
           <NavigationProperty Name="Tbl_ExamRemotely" Relationship="ESLModel.FK_Tbl_ExamRemotely_Tbl_Code" FromRole="Tbl_Code" ToRole="Tbl_ExamRemotely" />
           <NavigationProperty Name="Tbl_Organization" Relationship="ESLModel.FK_Tbl_Organization_Tbl_Code" FromRole="Tbl_Code" ToRole="Tbl_Organization" />
           <NavigationProperty Name="Tbl_PageDocuments" Relationship="ESLModel.FK_Tbl_PageDocuments_Tbl_Code" FromRole="Tbl_Code" ToRole="Tbl_PageDocuments" />
-          <NavigationProperty Name="Tbl_Payment" Relationship="ESLModel.FK_Tbl_Payment_Tbl_Code_StateCodeID" FromRole="Tbl_Code" ToRole="Tbl_Payment" />
+          <NavigationProperty Name="Tbl_Payment" Relationship="ESLModel.FK_Tbl_Payment_Tbl_Code_TitleCodeID" FromRole="Tbl_Code" ToRole="Tbl_Payment" />
           <NavigationProperty Name="Tbl_Payment1" Relationship="ESLModel.FK_Tbl_Payment_Tbl_Code_TypeCodeID" FromRole="Tbl_Code" ToRole="Tbl_Payment" />
           <NavigationProperty Name="Tbl_Payment2" Relationship="ESLModel.FK_Tbl_Payment_Tbl_Code_WayCodeID" FromRole="Tbl_Code" ToRole="Tbl_Payment" />
           <NavigationProperty Name="Tbl_Question" Relationship="ESLModel.FK_Tbl_Question_Tbl_Code_GroupCodeID" FromRole="Tbl_Code" ToRole="Tbl_Question" />
@@ -1818,22 +1920,41 @@
           <Property Name="Payment_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Payment_Guid" Type="Guid" Nullable="false" />
           <Property Name="Payment_UserID" Type="Int32" Nullable="false" />
-          <Property Name="Payment_TypeCodeID" Type="Int32" Nullable="false" />
-          <Property Name="Payment_WayCodeID" Type="Int32" Nullable="false" />
-          <Property Name="Payment_StateCodeID" Type="Int32" Nullable="false" />
           <Property Name="Payment_TitleCodeID" Type="Int32" Nullable="false" />
+          <Property Name="Payment_WayCodeID" Type="Int32" Nullable="false" />
+          <Property Name="Payment_TypeCodeID" Type="Int32" Nullable="false" />
+          <Property Name="Payment_Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Payment_Cost" Type="Int32" Nullable="false" />
+          <Property Name="Payment_Discount" Type="Int32" Nullable="false" />
           <Property Name="Payment_RemaingWallet" Type="Int32" Nullable="false" />
           <Property Name="Payment_TrackingToken" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="Payment_DocumentID" Type="Int32" />
           <Property Name="Payment_CreateDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="Payment_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="Payment_IsDelete" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Tbl_Code" Relationship="ESLModel.FK_Tbl_Payment_Tbl_Code_StateCodeID" FromRole="Tbl_Payment" ToRole="Tbl_Code" />
+          <NavigationProperty Name="Tbl_Code" Relationship="ESLModel.FK_Tbl_Payment_Tbl_Code_TitleCodeID" FromRole="Tbl_Payment" ToRole="Tbl_Code" />
           <NavigationProperty Name="Tbl_Code1" Relationship="ESLModel.FK_Tbl_Payment_Tbl_Code_TypeCodeID" FromRole="Tbl_Payment" ToRole="Tbl_Code" />
           <NavigationProperty Name="Tbl_Code2" Relationship="ESLModel.FK_Tbl_Payment_Tbl_Code_WayCodeID" FromRole="Tbl_Payment" ToRole="Tbl_Code" />
           <NavigationProperty Name="Tbl_Document" Relationship="ESLModel.FK_Tbl_Payment_Tbl_Document" FromRole="Tbl_Payment" ToRole="Tbl_Document" />
           <NavigationProperty Name="Tbl_User" Relationship="ESLModel.FK_Tbl_Payment_Tbl_User" FromRole="Tbl_Payment" ToRole="Tbl_User" />
+          <NavigationProperty Name="Tbl_Presence" Relationship="ESLModel.FK_Tbl_Presence_Tbl_Payment" FromRole="Tbl_Payment" ToRole="Tbl_Presence" />
+        </EntityType>
+        <EntityType Name="Tbl_Presence">
+          <Key>
+            <PropertyRef Name="Presence_ID" />
+          </Key>
+          <Property Name="Presence_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Presence_Guid" Type="Guid" Nullable="false" />
+          <Property Name="Presence_UserID" Type="Int32" Nullable="false" />
+          <Property Name="Presence_CPID" Type="Int32" Nullable="false" />
+          <Property Name="Presence_PaymentID" Type="Int32" Nullable="false" />
+          <Property Name="Presence_IsPresent" Type="Boolean" Nullable="false" />
+          <Property Name="Presence_CreationDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="Presence_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="Presence_IsDelete" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Tbl_ClassPlan" Relationship="ESLModel.FK_Tbl_Presence_Tbl_ClassPlan" FromRole="Tbl_Presence" ToRole="Tbl_ClassPlan" />
+          <NavigationProperty Name="Tbl_Payment" Relationship="ESLModel.FK_Tbl_Presence_Tbl_Payment" FromRole="Tbl_Presence" ToRole="Tbl_Payment" />
+          <NavigationProperty Name="Tbl_User" Relationship="ESLModel.FK_Tbl_Presence_Tbl_User" FromRole="Tbl_Presence" ToRole="Tbl_User" />
         </EntityType>
         <EntityType Name="Tbl_Question">
           <Key>
@@ -2040,6 +2161,7 @@
           <Property Name="User_IsDelete" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Tbl_Page" Relationship="ESLModel.FK_Tbl_Page_Tbl_User" FromRole="Tbl_User" ToRole="Tbl_Page" />
           <NavigationProperty Name="Tbl_Payment" Relationship="ESLModel.FK_Tbl_Payment_Tbl_User" FromRole="Tbl_User" ToRole="Tbl_Payment" />
+          <NavigationProperty Name="Tbl_Presence" Relationship="ESLModel.FK_Tbl_Presence_Tbl_User" FromRole="Tbl_User" ToRole="Tbl_Presence" />
           <NavigationProperty Name="Tbl_Role" Relationship="ESLModel.FK_Tbl_User_Tbl_Role" FromRole="Tbl_User" ToRole="Tbl_Role" />
           <NavigationProperty Name="Tbl_UserClass" Relationship="ESLModel.FK_Tbl_UserClass_Tbl_User" FromRole="Tbl_User" ToRole="Tbl_UserClass" />
           <NavigationProperty Name="Tbl_UserExam" Relationship="ESLModel.FK_Tbl_UserExam_Tbl_User" FromRole="Tbl_User" ToRole="Tbl_UserExam" />
@@ -2181,6 +2303,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Tbl_ClassPlan_Tbl_Code">
+          <End Type="ESLModel.Tbl_Code" Role="Tbl_Code" Multiplicity="1" />
+          <End Type="ESLModel.Tbl_ClassPlan" Role="Tbl_ClassPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Code">
+              <PropertyRef Name="Code_ID" />
+            </Principal>
+            <Dependent Role="Tbl_ClassPlan">
+              <PropertyRef Name="CP_TypeCodeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_Presence_Tbl_ClassPlan">
+          <End Type="ESLModel.Tbl_ClassPlan" Role="Tbl_ClassPlan" Multiplicity="1" />
+          <End Type="ESLModel.Tbl_Presence" Role="Tbl_Presence" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_ClassPlan">
+              <PropertyRef Name="CP_ID" />
+            </Principal>
+            <Dependent Role="Tbl_Presence">
+              <PropertyRef Name="Presence_CPID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Tbl_UserClass_Tbl_ClassPlan">
           <End Type="ESLModel.Tbl_ClassPlan" Role="Tbl_ClassPlan" Multiplicity="1" />
           <End Type="ESLModel.Tbl_UserClass" Role="Tbl_UserClass" Multiplicity="*" />
@@ -2253,7 +2399,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Tbl_Payment_Tbl_Code_StateCodeID">
+        <Association Name="FK_Tbl_Payment_Tbl_Code_TitleCodeID">
           <End Type="ESLModel.Tbl_Code" Role="Tbl_Code" Multiplicity="1" />
           <End Type="ESLModel.Tbl_Payment" Role="Tbl_Payment" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2261,7 +2407,7 @@
               <PropertyRef Name="Code_ID" />
             </Principal>
             <Dependent Role="Tbl_Payment">
-              <PropertyRef Name="Payment_StateCodeID" />
+              <PropertyRef Name="Payment_TitleCodeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2565,6 +2711,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Tbl_Presence_Tbl_Payment">
+          <End Type="ESLModel.Tbl_Payment" Role="Tbl_Payment" Multiplicity="1" />
+          <End Type="ESLModel.Tbl_Presence" Role="Tbl_Presence" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Payment">
+              <PropertyRef Name="Payment_ID" />
+            </Principal>
+            <Dependent Role="Tbl_Presence">
+              <PropertyRef Name="Presence_PaymentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_Presence_Tbl_User">
+          <End Type="ESLModel.Tbl_User" Role="Tbl_User" Multiplicity="1" />
+          <End Type="ESLModel.Tbl_Presence" Role="Tbl_Presence" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_User">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="Tbl_Presence">
+              <PropertyRef Name="Presence_UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Tbl_Question_Tbl_Response">
           <End Type="ESLModel.Tbl_Response" Role="Tbl_Response" Multiplicity="0..1" />
           <End Type="ESLModel.Tbl_Question" Role="Tbl_Question" Multiplicity="*" />
@@ -2783,12 +2953,12 @@
                 <ScalarProperty Name="CP_IsActive" ColumnName="CP_IsActive" />
                 <ScalarProperty Name="CP_ExamDate" ColumnName="CP_ExamDate" />
                 <ScalarProperty Name="CP_SessionsLength" ColumnName="CP_SessionsLength" />
-                <ScalarProperty Name="CP_SessionsNum" ColumnName="CP_SessionsNum" />
                 <ScalarProperty Name="CP_Time" ColumnName="CP_Time" />
                 <ScalarProperty Name="CP_Location" ColumnName="CP_Location" />
-                <ScalarProperty Name="CP_Cost" ColumnName="CP_Cost" />
+                <ScalarProperty Name="CP_CostPerSession" ColumnName="CP_CostPerSession" />
                 <ScalarProperty Name="CP_Description" ColumnName="CP_Description" />
                 <ScalarProperty Name="CP_Capacity" ColumnName="CP_Capacity" />
+                <ScalarProperty Name="CP_TypeCodeID" ColumnName="CP_TypeCodeID" />
                 <ScalarProperty Name="CP_ClassID" ColumnName="CP_ClassID" />
                 <ScalarProperty Name="CP_Guid" ColumnName="CP_Guid" />
                 <ScalarProperty Name="CP_ID" ColumnName="CP_ID" />
@@ -2798,6 +2968,7 @@
           <EntitySetMapping Name="Tbl_Code">
             <EntityTypeMapping TypeName="ESLModel.Tbl_Code">
               <MappingFragment StoreEntitySet="Tbl_Code">
+                <ScalarProperty Name="Code_IsActive" ColumnName="Code_IsActive" />
                 <ScalarProperty Name="Code_Display" ColumnName="Code_Display" />
                 <ScalarProperty Name="Code_Name" ColumnName="Code_Name" />
                 <ScalarProperty Name="Code_CGID" ColumnName="Code_CGID" />
@@ -2980,14 +3151,30 @@
                 <ScalarProperty Name="Payment_DocumentID" ColumnName="Payment_DocumentID" />
                 <ScalarProperty Name="Payment_TrackingToken" ColumnName="Payment_TrackingToken" />
                 <ScalarProperty Name="Payment_RemaingWallet" ColumnName="Payment_RemaingWallet" />
+                <ScalarProperty Name="Payment_Discount" ColumnName="Payment_Discount" />
                 <ScalarProperty Name="Payment_Cost" ColumnName="Payment_Cost" />
-                <ScalarProperty Name="Payment_TitleCodeID" ColumnName="Payment_TitleCodeID" />
-                <ScalarProperty Name="Payment_StateCodeID" ColumnName="Payment_StateCodeID" />
-                <ScalarProperty Name="Payment_WayCodeID" ColumnName="Payment_WayCodeID" />
+                <ScalarProperty Name="Payment_Description" ColumnName="Payment_Description" />
                 <ScalarProperty Name="Payment_TypeCodeID" ColumnName="Payment_TypeCodeID" />
+                <ScalarProperty Name="Payment_WayCodeID" ColumnName="Payment_WayCodeID" />
+                <ScalarProperty Name="Payment_TitleCodeID" ColumnName="Payment_TitleCodeID" />
                 <ScalarProperty Name="Payment_UserID" ColumnName="Payment_UserID" />
                 <ScalarProperty Name="Payment_Guid" ColumnName="Payment_Guid" />
                 <ScalarProperty Name="Payment_ID" ColumnName="Payment_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Presence">
+            <EntityTypeMapping TypeName="ESLModel.Tbl_Presence">
+              <MappingFragment StoreEntitySet="Tbl_Presence">
+                <ScalarProperty Name="Presence_IsDelete" ColumnName="Presence_IsDelete" />
+                <ScalarProperty Name="Presence_ModifiedDate" ColumnName="Presence_ModifiedDate" />
+                <ScalarProperty Name="Presence_CreationDate" ColumnName="Presence_CreationDate" />
+                <ScalarProperty Name="Presence_IsPresent" ColumnName="Presence_IsPresent" />
+                <ScalarProperty Name="Presence_PaymentID" ColumnName="Presence_PaymentID" />
+                <ScalarProperty Name="Presence_CPID" ColumnName="Presence_CPID" />
+                <ScalarProperty Name="Presence_UserID" ColumnName="Presence_UserID" />
+                <ScalarProperty Name="Presence_Guid" ColumnName="Presence_Guid" />
+                <ScalarProperty Name="Presence_ID" ColumnName="Presence_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

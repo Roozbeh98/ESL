@@ -1,5 +1,6 @@
 ﻿using ESL.Common.Plugins;
 using ESL.DataLayer.Domain;
+using ESL.Services.BaseRepository;
 using ESL.Web.Areas.Dashboard.Models.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -22,13 +23,13 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             {
                 ID = x.CP_ID,
                 Class = x.Tbl_Class.Class_Title,
+                Type = x.Tbl_Code.Code_Display,
                 Description = x.CP_Description,
-                Cost = x.CP_Cost,
+                CostPerSession = x.CP_CostPerSession,
                 Location = x.CP_Location,
                 Activeness = x.CP_IsActive,
                 Capacity = x.CP_Capacity,
                 Time = x.CP_Time,
-                SessionsNum = x.CP_Capacity,
                 SessionsLength = x.CP_Capacity,
                 ExamDate = x.CP_ExamDate,
                 CreationDate = x.CP_CreationDate
@@ -53,12 +54,12 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                 {
                     CP_Guid = Guid.NewGuid(),
                     CP_ClassID = db.Tbl_Class.Where(x => x.Class_Guid.ToString() == model.Class).SingleOrDefault().Class_ID,
+                    CP_TypeCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Type),
                     CP_Description = model.Description,
-                    CP_Cost = model.Cost,
+                    CP_CostPerSession = model.CostPerSession,
                     CP_Location = model.Location,
                     CP_Capacity = model.Capacity,
                     CP_Time = model.Time,
-                    CP_SessionsNum = model.SessionsNum,
                     CP_SessionsLength = model.SessionsLength,
                     CP_ExamDate = DateConverter.ToGeorgianDateTime(model.ExamDate),
                     CP_IsActive = model.Activeness,

@@ -13,19 +13,19 @@ namespace ESL.Services.BaseRepository
     {
         private ESLEntities db = new ESLEntities();
 
-        public bool Set_Credit(Guid wallet, Guid type, int cost, Guid state)
+        public bool Set_Credit(Guid wallet, Guid type, int cost, Guid title)
         {
             Tbl_Wallet _Wallet = db.Tbl_Wallet.Where(x => x.Wallet_Guid == wallet).SingleOrDefault();
 
             //switch (Rep_CodeGroup.Get_CodeNameWithGUID(state))
             //{
             //    case "Paid":
-            //        _Wallet.Wallet_Credit = Rep_CodeGroup.Get_CodeNameWithGUID(type) == "Crediting" ? _Wallet.Wallet_Credit + cost : _Wallet.Wallet_Credit - cost;
+            //        _Wallet.Wallet_Credit = Rep_CodeGroup.Get_CodeNameWithGUID(type) == "Crediting -> Enum" ? _Wallet.Wallet_Credit + cost : _Wallet.Wallet_Credit - cost;
             //        break;
 
             //    case "Suspended":
             //    case "ReturnToAccount":
-            //        _Wallet.Wallet_Credit = Rep_CodeGroup.Get_CodeNameWithGUID(type) == "Crediting" ? _Wallet.Wallet_Credit + cost : _Wallet.Wallet_Credit - cost;
+            //        _Wallet.Wallet_Credit = Rep_CodeGroup.Get_CodeNameWithGUID(type) == "Crediting -> Enum" ? _Wallet.Wallet_Credit + cost : _Wallet.Wallet_Credit - cost;
             //        break;
 
             //    default:
@@ -49,6 +49,7 @@ namespace ESL.Services.BaseRepository
 
         public WalletAction Get_WalletAction(string current, string next)
         {
+            // enum
             if (current == next)
             {
                 return WalletAction.NoAction;
