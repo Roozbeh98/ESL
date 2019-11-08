@@ -8,7 +8,7 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
 {
     public class Model_UserClasses
     {
-        [Display(Name = "شناسه")]
+        [Display(Name = "شناسه کلاس")]
         public int ID { get; set; }
 
         [Display(Name = "کاربر")]

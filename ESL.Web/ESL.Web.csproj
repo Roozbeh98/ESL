@@ -266,6 +266,9 @@
     <Content Include="Areas\Dashboard\Views\UserClass\Register.cshtml" />
     <Content Include="Areas\Dashboard\Views\Presence\Index.cshtml" />
     <Content Include="Areas\Dashboard\Views\Presence\Details.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Presence\Create.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Presence\SetPresence.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Presence\Delete.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -1365,6 +1368,7 @@
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_UserClassCreate.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_UserClasses.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_UserClassPresence.cs" />
+    <Compile Include="Areas\Dashboard\Models\ViewModels\Model_UserClassPresenceCreate.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_UserExamInPersonCreate.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_UserExamInPersonSetMark.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_UserExamInPersonSetPresence.cs" />

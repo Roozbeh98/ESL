@@ -29,6 +29,7 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.Class)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Type)</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.Description)</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.CostPerSession)</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.Location)</th>
@@ -55,6 +56,9 @@
                         <td scope="row">@x</td>
                         <td scope="row">
                             <span> @Html.DisplayFor(modelItem => item.Class) </span>
+                        </td>
+                        <td scope="row">
+                            <span> @Html.DisplayFor(modelItem => item.Type) </span>
                         </td>
                         <td scope="row">
                             <span> @Html.DisplayFor(modelItem => item.Description) </span>

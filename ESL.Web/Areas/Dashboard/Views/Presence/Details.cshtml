@@ -3,6 +3,7 @@
 @using ESL.Common.Plugins
 
 @{
+    ViewBag.Title = "لیست حضور";
     Layout = "~/Areas/Dashboard/Views/Shared/_Master.cshtml";
 }
 
@@ -14,7 +15,7 @@
     </div>
 
     <div class="pull-right">
-        <a href="javascript:void(0)" onclick="Create(@ViewBag.UserClassID)"><i class="glyphicon glyphicon-plus navigation-btn-icon"></i></a>
+        <a href="javascript:void(0)" onclick="Create()"><i class="glyphicon glyphicon-plus navigation-btn-icon"></i></a>
     </div>
 
 </div>
@@ -62,6 +63,7 @@
                         </td>
                         <td scope="row">
                             <a class="btn btn-primary btn-sm glyphicon glyphicon-ok" href="javascript:void(0)" onclick="SetPresence(@item.ID)"> </a>
+                            <a class="btn btn-danger btn-sm glyphicon glyphicon-trash" href="javascript:void(0)" onclick="Delete(@item.ID)"> </a>
                         </td>
                     </tr>
                 }
@@ -89,31 +91,19 @@
                 data: {}
             }).done(function (result) {
                 $('#myModal').modal('show');
-                $('#myModalLabel').html('ثبت نام');
+                $('#myModalLabel').html('ثبت حضور جدید');
                 $('#myModalBody').html(result);
             });
         }
 
-        function UnRegister(id) {
+        function Delete(id) {
             $.ajax({
-                url: "/Dashboard/Presence/UnRegister/" + id,
+                url: "/Dashboard/Presence/Delete/" + id,
                 type: "Get",
                 data: {}
             }).done(function (result) {
                 $('#myModal').modal('show');
-                $('#myModalLabel').html('لغو ثبت نام');
-                $('#myModalBody').html(result);
-            });
-        }
-
-        function Register(id) {
-            $.ajax({
-                url: "/Dashboard/Presence/Register/" + id,
-                type: "Get",
-                data: {}
-            }).done(function (result) {
-                $('#myModal').modal('show');
-                $('#myModalLabel').html('ثبت نام مجدد');
+                $('#myModalLabel').html('حذف حضور');
                 $('#myModalBody').html(result);
             });
         }

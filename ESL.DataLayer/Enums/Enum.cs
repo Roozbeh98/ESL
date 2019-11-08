@@ -27,15 +27,30 @@ namespace ESL.Web
         ClassType = 17
     }
 
-    public enum CodeID
+    public enum PaymentType
     {
         WaitForAcceptance = 24,
         Paid = 25,
         ReturnToAccount = 26,
         ReturnToBankAccount = 52,
-        Suspended = 53,
+        Suspended = 53
+    }
 
+    public enum PaymentWay
+    {
+        Internet = 20,
+        InPerson = 21,
+        DepositToAccount = 22,
+        DepositToCard = 23
+    }
+
+    public enum PaymentTitle
+    {
         Charge = 44,
+        Workshop = 45,
+        Presence = 46,
+        Absence = 47,
+        Exam = 48,
         Discharge = 51
     }
 

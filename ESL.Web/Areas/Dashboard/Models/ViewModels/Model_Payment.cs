@@ -35,6 +35,14 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
         public int Cost { get; set; }
 
+        [Display(Name = "تخفیف")]
+        [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
+        public int Discount { get; set; }
+
+        [Display(Name = "باقی مانده اعتبار")]
+        [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
+        public int RemaingWallet { get; set; }
+
         [Display(Name = "کد رهگیری")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
         public string TrackingToken { get; set; }

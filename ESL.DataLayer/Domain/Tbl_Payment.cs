@@ -17,7 +17,7 @@ namespace ESL.DataLayer.Domain
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Tbl_Payment()
         {
-            this.Tbl_Presence = new HashSet<Tbl_Presence>();
+            this.Tbl_UserClassPresence = new HashSet<Tbl_UserClassPresence>();
         }
     
         public int Payment_ID { get; set; }
@@ -42,6 +42,6 @@ namespace ESL.DataLayer.Domain
         public virtual Tbl_Document Tbl_Document { get; set; }
         public virtual Tbl_User Tbl_User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tbl_Presence> Tbl_Presence { get; set; }
+        public virtual ICollection<Tbl_UserClassPresence> Tbl_UserClassPresence { get; set; }
     }
 }

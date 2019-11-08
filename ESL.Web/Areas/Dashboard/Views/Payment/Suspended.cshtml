@@ -34,6 +34,8 @@
                     <th scope="col">@Html.DisplayNameFor(model => model.Way)</th>
                     <th scope="col"> @Html.DisplayNameFor(model => model.Description)</th>
                     <th scope="col"> @Html.DisplayNameFor(model => model.Cost)</th>
+                    <th scope="col"> @Html.DisplayNameFor(model => model.Discount)</th>
+                    <th scope="col"> @Html.DisplayNameFor(model => model.RemaingWallet)</th>
                     <th scope="col"> @Html.DisplayNameFor(model => model.TrackingToken)</th>
                     <th scope="col"> @Html.DisplayNameFor(model => model.Document)</th>
                     <th scope="col"> @Html.DisplayNameFor(model => model.CreateDate)</th>
@@ -69,6 +71,12 @@
                         </td>
                         <td scope="row">
                             <span> @Html.DisplayFor(modelItem => item.Cost) </span>
+                        </td>
+                         <td scope="row">
+                            <span> @Html.DisplayFor(modelItem => item.Discount) </span>
+                        </td>
+                        <td scope="row">
+                            <span> @Html.DisplayFor(modelItem => item.RemaingWallet) </span>
                         </td>
                         <td scope="row">
                             <span> @Html.DisplayFor(modelItem => item.TrackingToken) </span>

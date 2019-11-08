@@ -14,6 +14,12 @@ namespace ESL.DataLayer.Domain
     
     public partial class Tbl_UserClass
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Tbl_UserClass()
+        {
+            this.Tbl_UserClassPresence = new HashSet<Tbl_UserClassPresence>();
+        }
+    
         public int UC_ID { get; set; }
         public System.Guid UC_Guid { get; set; }
         public int UC_UserID { get; set; }
@@ -25,5 +31,7 @@ namespace ESL.DataLayer.Domain
     
         public virtual Tbl_ClassPlan Tbl_ClassPlan { get; set; }
         public virtual Tbl_User Tbl_User { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tbl_UserClassPresence> Tbl_UserClassPresence { get; set; }
     }
 }

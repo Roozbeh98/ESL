@@ -1,0 +1,32 @@
+﻿@model ESL.Web.Areas.Dashboard.Models.ViewModels.Model_SetActiveness
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.ID)
+
+    <div class="modal-main">
+
+        <div class="form-group material-switch-body">
+            <label class="pull-left">وضعیت حضور</label>
+            <div class="material-switch pull-right">
+                @Html.CheckBoxFor(model => model.Activeness, htmlAttributes: new { @class = "" })
+                @Html.LabelFor(model => model.Activeness, htmlAttributes: new { @class = "label-success" })
+            </div>
+        </div>
+
+    </div>
+
+    <div style="margin-top:20px;">
+        <button class="btn btn-danger modal-btn-Dual pull-left" type="button" data-dismiss="modal">انصراف</button>
+        <button class="btn btn-success modal-btn-Dual pull-right " type="submit" name="btn-Delete">تایید</button>
+    </div>
+}
+
+
+<script>
+    $(function () {
+        $("input[type='hidden']:eq(2)").remove();
+    });
+</script>

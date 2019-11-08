@@ -20,7 +20,7 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
         [Display(Name = "وضعیت حضور")]
         public bool Presence { get; set; }
 
-        [Display(Name = "تاریخ ایجاد")]
+        [Display(Name = "تاریخ")]
         public DateTime CreationDate { get; set; }
     }
 }

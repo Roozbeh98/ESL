@@ -28,6 +28,8 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                 Way = x.Tbl_Code2.Code_Display,
                 Description = x.Payment_Description,
                 Cost = x.Payment_Cost,
+                Discount = x.Payment_Discount,
+                RemaingWallet = x.Payment_RemaingWallet,
                 TrackingToken = x.Payment_TrackingToken,
                 Document = x.Tbl_Document.Document_Path,
                 CreateDate = x.Payment_CreateDate
@@ -48,6 +50,8 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                 Way = x.Tbl_Code2.Code_Display,
                 Description = x.Payment_Description,
                 Cost = x.Payment_Cost,
+                Discount = x.Payment_Discount,
+                RemaingWallet = x.Payment_RemaingWallet,
                 TrackingToken = x.Payment_TrackingToken,
                 Document = x.Tbl_Document.Document_Path,
                 CreateDate = x.Payment_CreateDate
@@ -127,6 +131,8 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     Payment_TypeCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Type),
                     Payment_Description = model.Description,
                     Payment_Cost = model.Cost,
+                    //Payment_Discount = ,
+                    //Payment_RemaingWallet = ,
                     Payment_TrackingToken = model.TrackingToken,
                     Payment_CreateDate = DateTime.Now
                 };
@@ -246,6 +252,8 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     q.Payment_TypeCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Type);
                     q.Payment_WayCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Way);
                     q.Payment_Cost = model.Cost;
+                    //Payment_Discount = ,
+                    //Payment_RemaingWallet = ,
                     q.Payment_TrackingToken = model.TrackingToken;
 
                     q.Payment_ModifiedDate = DateTime.Now;
