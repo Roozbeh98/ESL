@@ -44,5 +44,9 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
 
         [Display(Name = "تاریخ برگزاری")]
         public DateTime Date { get; set; }
+
+        [Display(Name = "وضعیت نمایش")]
+        [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
+        public bool Activeness { get; set; }
     }
 }

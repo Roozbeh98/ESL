@@ -2,19 +2,18 @@
 body {
     font-family: Iransans;
     background-color: whitesmoke;
- 
 }
 
 
 .modal {
-    color:whitesmoke;
+    color: whitesmoke;
 }
 
 .modal-content {
     top: 15vh;
     border-radius: 0px;
     background-color: #222D32;
-    padding-bottom:34px;
+    padding-bottom: 34px;
 }
 
 .modal-btn-singel {
@@ -58,20 +57,20 @@ body {
 .modal-main {
     padding-left: 15px;
     padding-right: 15px;
-    font-size:12px;
+    font-size: 12px;
 }
 
 /*********************************************** Config ********************************************/
 
 .Main-Config {
-    margin-top:70px;
+    margin-top: 70px;
     display: flex;
     flex-wrap: wrap;
 }
 
 .aside-Config {
-    width:270px;
-    margin-right:15px;   
+    width: 270px;
+    margin-right: 15px;
 }
 
 .section-Config {
@@ -246,7 +245,6 @@ body {
 /*********************************************** Aside *********************************************/
 .aside-panel {
     background-color: #222d32;
-
 }
 
     .aside-panel a {
@@ -289,6 +287,7 @@ body {
 .navigation {
     margin-bottom: 15px;
 }
+
 .navigation-title {
     margin-top: 5px;
     margin-bottom: 0px;
@@ -305,37 +304,44 @@ body {
 
 
 /*********************************************** Form **********************************************/
-.esl-btn{
-    border-radius:0px;
+.esl-btn {
+    border-radius: 0px;
 }
+
 .esl-btn-success {
     background: #3ecf8e;
     color: #fff;
 }
+
     .esl-btn-success:hover {
         background: #35996c;
         color: #fff;
     }
+
 .esl-btn-s {
     padding: 0px;
     font-size: 14px;
     font-weight: bold;
 }
+
 .esl-btn-sm {
     padding: 5px;
     font-size: 14px;
     font-weight: bold;
 }
+
 .esl-btn-L {
     padding: 10px;
     font-size: 14px;
     font-weight: bold;
 }
+
 .esl-btn-LX {
     padding: 15px;
     font-size: 14px;
     font-weight: bold;
 }
+
 .esl-btn-LXX {
     padding: 20px;
     font-size: 14px;
@@ -343,16 +349,27 @@ body {
 }
 
 /****************************************** Login/Register *****************************************/
-.login {
-    color:#3ecf8e;
+
+#login h3,
+#signup h3 {
+    display: inline-block;
+    width: 100%;
 }
+
+.login {
+    color: #3ecf8e;
+}
+
 .Login-img {
-    padding:15px;
+    padding: 15px;
 }
 
 .Login-btn-group {
     list-style: none;
     padding: 0;
+    display: table;
+    width: 100%;
+    margin: 15px 0;
 }
 
     .Login-btn-group :after {
@@ -369,7 +386,7 @@ body {
         background: rgba(160, 179, 176, .25);
         color: #3ecf8e;
         font-size: 14px;
-        font-weight:bold;
+        font-weight: bold;
         float: left;
         width: 50%;
         text-align: center;
@@ -392,23 +409,25 @@ body {
 }
 
 
-    .login-items > .form-group > input {
-        font-size: 14px;
-        display: block;
-        width: 100%;
-        padding: 5px 10px;
-        background: none;
-        background-image: none;
-        border: 1px solid #a0b3b0;
-        color: #fff;
-        border-radius: 0;
-        transition: border-color 0.25s ease, box-shadow 0.25s ease;
-    }
+.login-items > .form-group > input:not([type = "checkbox"]) {
+    font-size: 14px;
+    display: block;
+    width: 100%;
+    padding: 5px 10px;
+    background: none;
+    background-image: none;
+    border: 1px solid #a0b3b0;
+    color: #fff;
+    border-radius: 0;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    outline: 0;
+    border-color: #1ab188;
+}
 
-    .login-items > .form-group > input {
-        outline: 0;
-        border-color: #1ab188;
-    }
+.login-items > .form-group > input[type = "checkbox"] {
+    float: right;
+    margin-left: 10px;
+}
 
 .Login-btn-gender label {
     display: block;
@@ -435,6 +454,7 @@ body {
         background: #3ecf8e;
         color: #fff;
     }
+
 /*********************************************** Setting **********************************************/
 .setting-panel {
     min-height: 495px;

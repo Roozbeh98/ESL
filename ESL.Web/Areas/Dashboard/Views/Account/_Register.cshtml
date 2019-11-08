@@ -41,10 +41,20 @@
                 <div class="Login-btn-gender" data-toggle="buttons">
                     @foreach (var item in Rep_CodeGroup.Get_AllCodesWithGroupWithGUID(CodeGroup.Gender))
                     {
-                        <label class=" btn ">
-                            @Html.RadioButtonFor(model => model.Gender, item.Value, new { htmlAttributes = new { @class = "form-control" } })
-                            @item.Text
-                        </label>
+                        if (item.Text == "مرد")
+                        {
+                            <label class="btn active">
+                                @Html.RadioButtonFor(model => model.Gender, item.Value, new { htmlAttributes = new { @class = "form-control" } })
+                                @item.Text
+                            </label>
+                        }
+                        else
+                        {
+                            <label class="btn">
+                                @Html.RadioButtonFor(model => model.Gender, item.Value, new { htmlAttributes = new { @class = "form-control" } })
+                                @item.Text
+                            </label>
+                        }
                     }
                 </div>
 

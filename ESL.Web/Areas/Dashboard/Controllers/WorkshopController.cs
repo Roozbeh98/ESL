@@ -150,7 +150,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             {
                 var q = db.Tbl_UserWorkshop.Where(x => x.UW_WPID == id).Select(x => new Model_UserWorkshop
                 {
-                    ID = x.UW_WPID,
+                    ID = x.UW_ID,
                     User = x.Tbl_User.User_FirstName + " " + x.Tbl_User.User_lastName,
                     IsPresent = x.UW_IsPresent,
                     CreationDate = x.UW_CreationDate,

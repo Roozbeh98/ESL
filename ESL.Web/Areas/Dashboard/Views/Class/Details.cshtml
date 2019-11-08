@@ -61,7 +61,6 @@
                             @if (!item.IsDelete)
                             {
                                 <a class="btn btn-success btn-sm glyphicon glyphicon-user" href="javascript:void(0)" onclick="UnRegister(@item.ID)"> </a>
-                                <a class="btn btn-primary btn-sm glyphicon glyphicon-ok" href="javascript:void(0)" onclick="SetPresence(@item.ID)"> </a>
                             }
                             else
                             {
@@ -118,7 +117,7 @@
                 data: {}
             }).done(function (result) {
                 $('#myModal').modal('show');
-                $('#myModalLabel').html('لغو ثبت نام');
+                $('#myModalLabel').html('ثبت نام مجدد');
                 $('#myModalBody').html(result);
             });
         }

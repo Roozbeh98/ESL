@@ -397,5 +397,16 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
+        public JsonResult Get_Users(string searchTerm)
+        {
+            var q = db.Tbl_User.Where(a => a.User_IsDelete == false && a.User_RoleID == 1).Select(a => new { id = a.User_Guid, text = a.User_FirstName + " " + a.User_lastName });
+
+            if (searchTerm != null)
+            {
+                q = q.Where(a => a.text.Contains(searchTerm)).Select(a => new { id = a.id, text = a.text });
+            }
+
+            return Json(q, JsonRequestBehavior.AllowGet);
+        }
     }
 }

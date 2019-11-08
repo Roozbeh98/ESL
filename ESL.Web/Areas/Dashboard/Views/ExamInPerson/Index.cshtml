@@ -86,7 +86,7 @@
                         <td scope="row">
                             <a class="btn btn-primary btn-sm glyphicon glyphicon-ok" href="javascript:void(0)" onclick="SetActiveness(@item.ID)"> </a>
                             <a class="btn btn-info btn-sm glyphicon glyphicon-list" href="@Url.Action("Details", "ExamInPerson", new { area = "Dashboard", id = item.ID })"> </a>
-                            <a class="btn btn-warning btn-sm glyphicon glyphicon-pencil" href="javascript:void(0)" onclick="Edit(@item.ID)"> </a>
+                            <a class="btn btn-warning btn-sm glyphicon glyphicon-pencil" href="@Url.Action("Edit", "ExamInPerson", new { area = "Dashboard", id = item.ID })"> </a>
                             <a class="btn btn-danger btn-sm glyphicon glyphicon-trash" href="javascript:void(0)" onclick="Delete(@item.ID)"> </a>
                         </td>
                     </tr>
@@ -126,18 +126,6 @@
             }).done(function (result) {
                 $('#myModal').modal('show');
                 $('#myModalLabel').html('افزودن آزمون');
-                $('#myModalBody').html(result);
-            });
-        }
-
-        function Edit(id) {
-            $.ajax({
-                url: "/Dashboard/ExamInPerson/Edit/" + id,
-                type: "Get",
-                data: {}
-            }).done(function (result) {
-                $('#myModal').modal('show');
-                $('#myModalLabel').html('ویرایش آزمون');
                 $('#myModalBody').html(result);
             });
         }

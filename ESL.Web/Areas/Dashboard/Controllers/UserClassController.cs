@@ -1,5 +1,5 @@
-﻿using ESL.Common.Plugins;
-using ESL.DataLayer.Domain;
+﻿using ESL.DataLayer.Domain;
+using ESL.Services.BaseRepository;
 using ESL.Web.Areas.Dashboard.Models.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -11,62 +11,36 @@ using System.Web.Mvc;
 
 namespace ESL.Web.Areas.Dashboard.Controllers
 {
-    [Authorize(Roles = "Admin")]
-    public class ClassController : Controller
+    public class UserClassController : Controller
     {
         private ESLEntities db = new ESLEntities();
 
-        public ActionResult Index()
+        public ActionResult Create(int id)
         {
-            var q = db.Tbl_ClassPlan.Where(x => x.CP_IsDelete == false).Select(x => new Model_Class
+            Model_UserClassCreate model = new Model_UserClassCreate()
             {
-                ID = x.CP_ID,
-                Class = x.Tbl_Class.Class_Title,
-                Description = x.CP_Description,
-                Cost = x.CP_Cost,
-                Location = x.CP_Location,
-                Activeness = x.CP_IsActive,
-                Capacity = x.CP_Capacity,
-                Time = x.CP_Time,
-                SessionsNum = x.CP_Capacity,
-                SessionsLength = x.CP_Capacity,
-                ExamDate = x.CP_ExamDate,
-                CreationDate = x.CP_CreationDate
+                ClassID = id
+            };
 
-            }).ToList();
-
-            return View(q);
-        }
-
-        public ActionResult Create()
-        {
-            return View();
+            return PartialView(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Model_ClassCreate model)
+        public ActionResult Create(Model_UserClassCreate model)
         {
             if (ModelState.IsValid)
             {
-                Tbl_ClassPlan q = new Tbl_ClassPlan
+                Tbl_UserClass q = new Tbl_UserClass
                 {
-                    CP_Guid = Guid.NewGuid(),
-                    CP_ClassID = db.Tbl_Class.Where(x => x.Class_Guid.ToString() == model.Class).SingleOrDefault().Class_ID,
-                    CP_Description = model.Description,
-                    CP_Cost = model.Cost,
-                    CP_Location = model.Location,
-                    CP_Capacity = model.Capacity,
-                    CP_Time = model.Time,
-                    CP_SessionsNum = model.SessionsNum,
-                    CP_SessionsLength = model.SessionsLength,
-                    CP_ExamDate = DateConverter.ToGeorgianDateTime(model.ExamDate),
-                    CP_IsActive = model.Activeness,
-                    CP_CreationDate = DateTime.Now,
-                    CP_ModifiedDate = DateTime.Now,
+                    UC_Guid = Guid.NewGuid(),
+                    UC_UserID = new Rep_User().Get_UserIDWithGUID(model.UserGuid),
+                    UC_CPID = model.ClassID,
+                    UC_CreationDate = DateTime.Now,
+                    UC_ModifiedDate = DateTime.Now
                 };
 
-                db.Tbl_ClassPlan.Add(q);
+                db.Tbl_UserClass.Add(q);
 
                 if (Convert.ToBoolean(db.SaveChanges() > 0))
                 {
@@ -74,7 +48,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     TempData["TosterType"] = TosterType.Maseage;
                     TempData["TosterMassage"] = "عملیات با موفقیت انجام شده";
 
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Details", "Class", new { area = "Dashboard", id = model.ClassID });
                 }
                 else
                 {
@@ -82,26 +56,26 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     TempData["TosterType"] = TosterType.Maseage;
                     TempData["TosterMassage"] = "عملیات با موفقیت انجام نشده";
 
-                    return View();
+                    return RedirectToAction("Details", "Class", new { area = "Dashboard", id = model.ClassID });
                 }
             }
 
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
-        public ActionResult Delete(int? id)
+        public ActionResult UnRegister(int? id)
         {
             if (id != null)
             {
                 Model_MessageModal model = new Model_MessageModal();
 
-                var q = db.Tbl_ClassPlan.Where(x => x.CP_ID == id).SingleOrDefault();
+                var q = db.Tbl_UserClass.Where(x => x.UC_ID == id).SingleOrDefault();
 
                 if (q != null)
                 {
                     model.ID = id.Value;
-                    model.Name = q.CP_Description;
-                    model.Description = "آیا از حذف کلاس مورد نظر اطمینان دارید ؟";
+                    model.Name = q.Tbl_User.User_FirstName + " " + q.Tbl_User.User_lastName;
+                    model.Description = $"آیا از لغو ثبت نام کاربر { model.Name } اطمینان دارید ؟";
 
                     return PartialView(model);
                 }
@@ -116,15 +90,15 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(Model_MessageModal model)
+        public ActionResult UnRegister(Model_MessageModal model)
         {
             if (ModelState.IsValid)
             {
-                var q = db.Tbl_ClassPlan.Where(x => x.CP_ID == model.ID).SingleOrDefault();
+                var q = db.Tbl_UserClass.Where(x => x.UC_ID == model.ID).SingleOrDefault();
 
                 if (q != null)
                 {
-                    q.CP_IsDelete = true;
+                    q.UC_IsDelete = true;
 
                     db.Entry(q).State = EntityState.Modified;
 
@@ -134,7 +108,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                         TempData["TosterType"] = TosterType.Maseage;
                         TempData["TosterMassage"] = "عملیات با موفقیت انجام شده";
 
-                        return RedirectToAction("Index");
+                        return RedirectToAction("Details", "Class", new { area = "Dashboard", id = db.Tbl_UserClass.Where(x => x.UC_ID == model.ID).SingleOrDefault().UC_CPID });
                     }
                     else
                     {
@@ -150,40 +124,26 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
-        public ActionResult Details(int? id)
+        public ActionResult Register(int? id)
         {
-            if (id.HasValue && db.Tbl_ClassPlan.Any(x => x.CP_ID == id))
+            if (id != null)
             {
-                var q = db.Tbl_UserClass.Where(x => x.UC_CPID == id).Select(x => new Model_UserClass
+                Model_MessageModal model = new Model_MessageModal();
+
+                var q = db.Tbl_UserClass.Where(x => x.UC_ID == id).SingleOrDefault();
+
+                if (q != null)
                 {
-                    ID = x.UC_ID,
-                    User = x.Tbl_User.User_FirstName + " " + x.Tbl_User.User_lastName,
-                    CreationDate = x.UC_CreationDate,
-                    IsDelete = x.UC_IsDelete,
+                    model.ID = id.Value;
+                    model.Name = q.Tbl_User.User_FirstName + " " + q.Tbl_User.User_lastName;
+                    model.Description = $"آیا از ثبت نام مجدد کاربر { model.Name } اطمینان دارید ؟";
 
-                }).ToList();
-
-                ViewBag.ClassID = id;
-
-                return View(q);
-            }
-
-            return HttpNotFound();
-        }
-
-        public ActionResult SetActiveness(int id)
-        {
-            var q = db.Tbl_ClassPlan.Where(x => x.CP_ID == id).SingleOrDefault();
-
-            if (q != null)
-            {
-                Model_SetActiveness model = new Model_SetActiveness()
+                    return PartialView(model);
+                }
+                else
                 {
-                    ID = id,
-                    Activeness = q.CP_IsActive
-                };
-
-                return PartialView(model);
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
             }
 
             return HttpNotFound();
@@ -191,15 +151,15 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult SetActiveness(Model_SetActiveness model)
+        public ActionResult Register(Model_MessageModal model)
         {
             if (ModelState.IsValid)
             {
-                var q = db.Tbl_ClassPlan.Where(x => x.CP_ID == model.ID).SingleOrDefault();
+                var q = db.Tbl_UserClass.Where(x => x.UC_ID == model.ID).SingleOrDefault();
 
                 if (q != null)
                 {
-                    q.CP_IsActive = model.Activeness;
+                    q.UC_IsDelete = false;
 
                     db.Entry(q).State = EntityState.Modified;
 
@@ -209,7 +169,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                         TempData["TosterType"] = TosterType.Maseage;
                         TempData["TosterMassage"] = "عملیات با موفقیت انجام شده";
 
-                        return RedirectToAction("Index", "Class", new { area = "Dashboard" });
+                        return RedirectToAction("Details", "Class", new { area = "Dashboard", id = db.Tbl_UserClass.Where(x => x.UC_ID == model.ID).SingleOrDefault().UC_CPID });
                     }
                     else
                     {
@@ -223,6 +183,18 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             }
 
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        }
+
+        public JsonResult Get_Users(string searchTerm)
+        {
+            var q = db.Tbl_User.Where(a => a.User_IsDelete == false && a.User_RoleID == 1).Select(a => new { id = a.User_Guid, text = a.User_FirstName + " " + a.User_lastName });
+
+            if (searchTerm != null)
+            {
+                q = q.Where(a => a.text.Contains(searchTerm)).Select(a => new { id = a.id, text = a.text });
+            }
+
+            return Json(q, JsonRequestBehavior.AllowGet);
         }
     }
 }

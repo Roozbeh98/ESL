@@ -1,0 +1,59 @@
+﻿@model ESL.Web.Areas.Dashboard.Models.ViewModels.Model_UserWorkshopCreate
+@using ESL.Services.BaseRepository
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.WorkshopID)
+
+    <div class="modal-main">
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserGuid, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownListFor(model => model.UserGuid, new List<SelectListItem>() { new SelectListItem() { Value = "", Text = "لطفا کاربر مورد نظر را انتخاب کنید ..." } }, new { @class = "form-control Select2_Normal" })
+        </div>
+
+    </div>
+
+    <div style="margin-top:20px;">
+        <button class="btn btn-danger modal-btn-Dual pull-left" type="button" data-dismiss="modal">انصراف</button>
+        <button class="btn btn-success modal-btn-Dual pull-right " type="submit" name="btn-Delete">تایید</button>
+    </div>
+}
+
+
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+<script src="~/Scripts/Plugins/jQuery.Select2/select2.js"></script>
+<script src="~/Scripts/Plugins/jQuery.Select2/i18n/fa.js"></script>
+
+<script src="~/Scripts/MyScripts/Select2_Config.js"></script>
+
+<script>
+     $(document).ready(function () {
+        $("#UserGuid").select2({
+            theme: "bootstrap",
+            language: "fa",
+            dir: "rtl",
+            tokenSeparators: [',', ' '],
+            minimumResultsForSearch: 6,
+            placeholder: 'انتخاب کنید',
+            ajax: {
+                url: '/UserWorkshop/Get_Users',
+                dataType: "json",
+                data: function (params) {
+                    return {
+                        searchTerm: params.term
+                    };
+                },
+                processResults: function (data, params) {
+                    return {
+                        results: data
+                    };
+                }
+            }
+        });
+    });
+</script>

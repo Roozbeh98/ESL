@@ -104,10 +104,11 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     Capacity = q.EIP_Capacity,
                     TotalMark = q.EIP_TotalMark,
                     PassMark = q.EIP_PassMark,
+                    Activeness = q.EIP_IsActive,
                     Date = q.EIP_Date
                 };
 
-                return PartialView(model);
+                return View(model);
             }
 
             return HttpNotFound();
@@ -128,6 +129,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     q.EIP_Capacity = model.Capacity;
                     q.EIP_TotalMark = model.TotalMark;
                     q.EIP_PassMark = model.PassMark;
+                    q.EIP_IsActive = model.Activeness;
 
                     q.EIP_ModifiedDate = DateTime.Now;
 
