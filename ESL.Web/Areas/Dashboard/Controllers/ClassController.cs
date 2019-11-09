@@ -31,7 +31,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                 Capacity = x.CP_Capacity,
                 Time = x.CP_Time,
                 SessionsLength = x.CP_Capacity,
-                ExamDate = x.CP_ExamDate,
+                StartDate = x.CP_StartDate,
                 CreationDate = x.CP_CreationDate
 
             }).ToList();
@@ -61,7 +61,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     CP_Capacity = model.Capacity,
                     CP_Time = model.Time,
                     CP_SessionsLength = model.SessionsLength,
-                    CP_ExamDate = DateConverter.ToGeorgianDateTime(model.ExamDate),
+                    CP_StartDate = DateConverter.ToGeorgianDateTime(model.StartDate),
                     CP_IsActive = model.Activeness,
                     CP_CreationDate = DateTime.Now,
                     CP_ModifiedDate = DateTime.Now,

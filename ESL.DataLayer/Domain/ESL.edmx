@@ -40,7 +40,7 @@
           <Property Name="CP_Location" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="CP_Time" Type="time" Precision="7" Nullable="false" />
           <Property Name="CP_SessionsLength" Type="float" Nullable="false" />
-          <Property Name="CP_ExamDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="CP_StartDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="CP_IsActive" Type="bit" Nullable="false" />
           <Property Name="CP_CreationDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="CP_ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
@@ -1677,7 +1677,7 @@
           <Property Name="CP_Location" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="CP_Time" Type="Time" Nullable="false" Precision="7" />
           <Property Name="CP_SessionsLength" Type="Double" Nullable="false" />
-          <Property Name="CP_ExamDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="CP_StartDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="CP_IsActive" Type="Boolean" Nullable="false" />
           <Property Name="CP_CreationDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="CP_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
@@ -2917,7 +2917,7 @@
                 <ScalarProperty Name="CP_ModifiedDate" ColumnName="CP_ModifiedDate" />
                 <ScalarProperty Name="CP_CreationDate" ColumnName="CP_CreationDate" />
                 <ScalarProperty Name="CP_IsActive" ColumnName="CP_IsActive" />
-                <ScalarProperty Name="CP_ExamDate" ColumnName="CP_ExamDate" />
+                <ScalarProperty Name="CP_StartDate" ColumnName="CP_StartDate" />
                 <ScalarProperty Name="CP_SessionsLength" ColumnName="CP_SessionsLength" />
                 <ScalarProperty Name="CP_Time" ColumnName="CP_Time" />
                 <ScalarProperty Name="CP_Location" ColumnName="CP_Location" />

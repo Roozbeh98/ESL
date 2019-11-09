@@ -144,7 +144,10 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
             db.Tbl_Wallet.Add(_Wallet);
 
-            new SMSPortal().SendServiceable("09227204305", "تست", "12345", "", SMSTemplate.VerifyAccount);
+            if (new SMSPortal().SendServiceable(model.Mobile, model.Name + " " + model.Family, "", "", SMSTemplate.Register) == -1)
+            {
+                // sth went wrong!
+            };
 
             if (Convert.ToBoolean(db.SaveChanges() > 0))
             {

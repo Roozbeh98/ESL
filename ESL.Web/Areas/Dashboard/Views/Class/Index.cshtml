@@ -36,7 +36,7 @@
                     <th scope="col">@Html.DisplayNameFor(model => model.Capacity)</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.Time)</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.SessionsLength)</th>
-                    <th scope="col">@Html.DisplayNameFor(model => model.ExamDate)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.StartDate)</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.CreationDate)</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.Activeness)</th>
                     <th scope="col" data-orderable="false">کنترل</th>
@@ -79,7 +79,7 @@
                             <span> @Html.DisplayFor(modelItem => item.SessionsLength) </span>
                         </td>
                         <td scope="row">
-                            <span> @PersianDateExtensionMethods.ToPeString(item.ExamDate, "yyyy/MM/dd HH:mm") </span>
+                            <span> @PersianDateExtensionMethods.ToPeString(item.StartDate, "yyyy/MM/dd HH:mm") </span>
                         </td>
                         <td scope="row">
                             <span> @PersianDateExtensionMethods.ToPeString(item.CreationDate, "yyyy/MM/dd") </span>

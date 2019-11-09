@@ -36,7 +36,7 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
         [Display(Name = "طول هر جلسه")]
         public float SessionsLength { get; set; }
 
-        [Display(Name = "تاریخ امتحان")]
-        public string ExamDate { get; set; }
+        [Display(Name = "تاریخ آغاز")]
+        public string StartDate { get; set; }
     }
 }

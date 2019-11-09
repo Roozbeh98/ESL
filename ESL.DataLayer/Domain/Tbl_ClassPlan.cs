@@ -30,7 +30,7 @@ namespace ESL.DataLayer.Domain
         public string CP_Location { get; set; }
         public System.TimeSpan CP_Time { get; set; }
         public double CP_SessionsLength { get; set; }
-        public System.DateTime CP_ExamDate { get; set; }
+        public System.DateTime CP_StartDate { get; set; }
         public bool CP_IsActive { get; set; }
         public System.DateTime CP_CreationDate { get; set; }
         public System.DateTime CP_ModifiedDate { get; set; }

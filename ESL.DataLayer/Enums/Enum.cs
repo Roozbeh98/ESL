@@ -63,6 +63,15 @@ namespace ESL.Web
 
     public enum SMSTemplate
     {
-        VerifyAccount = 1
+        Verify = 1,
+        Register = 2,
+        Birthday = 3,
+        Card = 4,
+        Charge = 5,
+        Class = 6,
+        Exam = 7,
+        Success = 8,
+        Welcome = 9,
+        Workshop = 10
     }
 }
