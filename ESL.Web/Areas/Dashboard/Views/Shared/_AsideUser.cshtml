@@ -1,14 +1,13 @@
 ﻿
 <ul class="navbar nav aside-panel">
+
     <li>
         <img src="~/Content/Images/abstract-user-flat-3.png" alt="Logo" class="img-responsive img-rounded img-logo" style="height:200px;">
-        <!--</div>-->
-        <a href="@Url.Action("index","Dashboard" , new {  aria="Dashboard"})">
+        <a href="@Url.Action("Index", "Dashboard" , new { area = "Dashboard" })">
             <i class="glyphicon glyphicon-dashboard  "></i>
             داشبورد
         </a>
     </li>
-
 
     <li data-toggle="collapse" data-target="#sub-menu-message">
 
@@ -26,6 +25,7 @@
                     ارسال پیام
                 </a>
             </li>
+
             <li>
                 <a href="@Url.Action("Index", "Exam")">
                     <i class="glyphicon glyphicon-book"></i>
@@ -39,6 +39,7 @@
                     لیست پیام های دریافتی
                 </a>
             </li>
+
             <li>
                 <a href="@Url.Action("Index", "ExamInPerson")">
                     <i class="glyphicon glyphicon-book"></i>
@@ -54,7 +55,7 @@
 
         <a href="javascript:void(0)">
             <i class="glyphicon glyphicon-book"></i>
-            مالی
+            کیف پول
             <i class="glyphicon glyphicon-chevron-right pull-right"></i>
         </a>
 
@@ -63,14 +64,14 @@
             <li>
                 <a href="@Url.Action("Index", "Payment")">
                     <i class="glyphicon glyphicon-book"></i>
-                    لیست پرداختی ها
+                    لیست تراکنش ها
                 </a>
             </li>
 
             <li>
                 <a href="@Url.Action("Suspended", "Payment")">
                     <i class="glyphicon glyphicon-book"></i>
-                    لیست پرداختی ها تایید نشده
+                    لیست تراکنش های تایید نشده
                 </a>
             </li>
 
@@ -89,7 +90,7 @@
 
         <a href="javascript:void(0)">
             <i class="glyphicon glyphicon-book"></i>
-            مدیرت آزمون ها
+            آزمون ها
             <i class="glyphicon glyphicon-chevron-right pull-right"></i>
         </a>
 
@@ -113,15 +114,32 @@
 
     </li>
 
+    <li>
+        <a href="@Url.Action("Index", "Workshop", new { area = "Dashboard" })">
+            <i class="glyphicon glyphicon-book"></i>
+            کارگاه ها
+        </a>
+    </li>
 
     <li>
-        <a href="@Url.Action("Setting","Setting")">
+        <a href="@Url.Action("Index", "Class", new { area = "Dashboard" })">
+            <i class="glyphicon glyphicon-book"></i>
+            کلاس ها
+        </a>
+    </li>
+
+    <li>
+        <a href="@Url.Action("Index", "Presence", new { area = "Dashboard" })">
+            <i class="glyphicon glyphicon-book"></i>
+            حضور غیاب
+        </a>
+    </li>
+
+    <li>
+        <a href="@Url.Action("Setting", "Setting")">
             <i class="glyphicon glyphicon-book"></i>
             تنظیمات سامانه
         </a>
-
     </li>
 
-
 </ul>
-
