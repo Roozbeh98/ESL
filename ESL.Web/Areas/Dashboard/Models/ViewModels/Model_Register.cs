@@ -13,34 +13,45 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
         [StringLength(100, ErrorMessage = "مقدار وارد شده بیش 100 کارکتراست")]
         public string Name { get; set; }
+
         [Display(Name = "نام خانوادگی")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
         [StringLength(100, ErrorMessage = "مقدار وارد شده بیش 100 کارکتراست")]
         public string Family { get; set; }
+
         [Display(Name = "کد ملی")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
         [MaxLength(10, ErrorMessage = "کدملی نامعتبر")]
         [MinLength(10, ErrorMessage = "کدملی نامعتبر")]
         public string IdentityNumber { get; set; }
+
+        [Display(Name = "تاریخ")]
+        [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
+        public string CreateDate { get; set; }
+
         [Display(Name = "جنسیت")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
         [StringLength(100, ErrorMessage = "مقدار وارد شده بیش 100 کارکتراست")]
         public string Gender { get; set; }
+
         [Display(Name = "موبایل")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
         [StringLength(11, ErrorMessage = "مقدار وارد شده بیش 11 کارکتراست")]
         public string Mobile { get; set; }
+
         [Display(Name = "ایمیل")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
         [StringLength(200, ErrorMessage = "مقدار وارد شده بیش 200 کارکتراست")]
         [EmailAddress(ErrorMessage = "ایمیل را به درستی وارد نمایید")]
         //[Remote("EmailValid", "Account", HttpMethod = "Post", ErrorMessage = "این ایمیل قبلا ثبت شده است")]
         public string Email { get; set; }
+
         [Display(Name = "رمز عبور")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
         [StringLength(100, ErrorMessage = "مقدار وارد شده بیش 100 کارکتراست")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
+
         //  [Remote("PasswordMatch", "Account", HttpMethod = "Post",ErrorMessage ="پسورد ها برابر نیست")]
         [Display(Name = "تکرار رمز عبور")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
