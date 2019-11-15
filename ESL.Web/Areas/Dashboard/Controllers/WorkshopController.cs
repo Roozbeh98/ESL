@@ -11,11 +11,102 @@ using System.Web.Mvc;
 
 namespace ESL.Web.Areas.Dashboard.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, Student")]
     public class WorkshopController : Controller
     {
         private ESLEntities db = new ESLEntities();
 
+        [Authorize(Roles = "Student")]
+        public ActionResult List()
+        {
+            var _User = db.Tbl_User.Where(x => x.User_IsDelete == false && x.User_Mobile == User.Identity.Name).SingleOrDefault();
+
+            if (_User != null)
+            {
+                var q = db.Tbl_UserWorkshop.Where(x => x.UW_IsDelete == false && x.UW_UserID == _User.User_ID).Select(x => new Model_UserWorkshops
+                {
+                    ID = x.UW_ID,
+                    User = _User.User_FirstName + " " + _User.User_lastName,
+                    Workshop = x.Tbl_WorkshopPlan.Tbl_SubWorkshop.Tbl_Workshop.Workshop_Title,
+                    SubWorkshop = x.Tbl_WorkshopPlan.Tbl_SubWorkshop.SW_Title,
+                    Location = x.Tbl_WorkshopPlan.WP_Location,
+                    Date = x.Tbl_WorkshopPlan.WP_Date,
+                    Cost = x.Tbl_WorkshopPlan.WP_Cost,
+                    CreationDate = x.UW_CreationDate,
+                    //RegisterationState = 
+
+                }).ToList();
+
+                return View(q);
+            }
+
+            return HttpNotFound();
+        }
+
+        [Authorize(Roles = "Student")]
+        public ActionResult UnRegister(int? id)
+        {
+            if (id != null)
+            {
+                Model_MessageModal model = new Model_MessageModal();
+
+                var q = db.Tbl_UserWorkshop.Where(x => x.UW_ID == id).SingleOrDefault();
+
+                if (q != null)
+                {
+                    model.ID = id.Value;
+                    model.Name = q.Tbl_User.User_FirstName + " " + q.Tbl_User.User_lastName;
+                    model.Description = "آیا از لغو ثبت نام اطمینان دارید ؟";
+
+                    return PartialView(model);
+                }
+                else
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+            }
+
+            return HttpNotFound();
+        }
+
+        [Authorize(Roles = "Student")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UnRegister(Model_MessageModal model)
+        {
+            if (ModelState.IsValid)
+            {
+                var q = db.Tbl_UserWorkshop.Where(x => x.UW_ID == model.ID).SingleOrDefault();
+
+                if (q != null)
+                {
+                    q.UW_IsDelete = true;
+
+                    db.Entry(q).State = EntityState.Modified;
+
+                    if (Convert.ToBoolean(db.SaveChanges() > 0))
+                    {
+                        TempData["TosterState"] = "success";
+                        TempData["TosterType"] = TosterType.Maseage;
+                        TempData["TosterMassage"] = "عملیات با موفقیت انجام شده";
+
+                        return RedirectToAction("List", "Workshop");
+                    }
+                    else
+                    {
+                        TempData["TosterState"] = "error";
+                        TempData["TosterType"] = TosterType.Maseage;
+                        TempData["TosterMassage"] = "عملیات با موفقیت انجام نشده";
+
+                        return HttpNotFound();
+                    }
+                }
+            }
+
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        }
+
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             var q = db.Tbl_WorkshopPlan.Where(x => x.WP_IsDelete == false).Select(x => new Model_Workshop
@@ -35,11 +126,13 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             return View(q);
         }
 
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             return View();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Model_WorkshopCreate model)
@@ -83,6 +176,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id != null)
@@ -108,6 +202,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             return HttpNotFound();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(Model_MessageModal model)
@@ -144,6 +239,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
+        [Authorize(Roles = "Admin")]
         public ActionResult Details(int? id)
         {
             if (id.HasValue && db.Tbl_WorkshopPlan.Any(x => x.WP_ID == id))
@@ -166,6 +262,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             return HttpNotFound();
         }
 
+        [Authorize(Roles = "Admin")]
         public ActionResult SetActiveness(int id)
         {
             var q = db.Tbl_WorkshopPlan.Where(x => x.WP_ID == id).SingleOrDefault();
@@ -184,6 +281,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             return HttpNotFound();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult SetActiveness(Model_SetActiveness model)
@@ -220,6 +318,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
+        [Authorize(Roles = "Admin")]
         public JsonResult Get_WorkshopList(string searchTerm)
         {
             var q = db.Tbl_Workshop.ToList();
@@ -234,6 +333,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             return Json(md, JsonRequestBehavior.AllowGet);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public JsonResult Get_SubWorkshopList(string WorkshopID)
         {
