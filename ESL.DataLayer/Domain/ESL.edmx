@@ -406,6 +406,7 @@
           <Property Name="User_lastName" Type="nvarchar" MaxLength="128" />
           <Property Name="User_IdentityNumber" Type="nvarchar" MaxLength="128" />
           <Property Name="User_Mobile" Type="nvarchar" MaxLength="128" />
+          <Property Name="User_Birthday" Type="date" />
           <Property Name="User_Credit" Type="int" Nullable="false" />
           <Property Name="User_IsBan" Type="bit" Nullable="false" />
           <Property Name="User_IsDelete" Type="bit" Nullable="false" />
@@ -2118,6 +2119,7 @@
           <Property Name="User_lastName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="User_IdentityNumber" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="User_Mobile" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="User_Birthday" Type="DateTime" Precision="0" />
           <Property Name="User_Credit" Type="Int32" Nullable="false" />
           <Property Name="User_IsBan" Type="Boolean" Nullable="false" />
           <Property Name="User_IsDelete" Type="Boolean" Nullable="false" />
@@ -3308,6 +3310,7 @@
                 <ScalarProperty Name="User_IsDelete" ColumnName="User_IsDelete" />
                 <ScalarProperty Name="User_IsBan" ColumnName="User_IsBan" />
                 <ScalarProperty Name="User_Credit" ColumnName="User_Credit" />
+                <ScalarProperty Name="User_Birthday" ColumnName="User_Birthday" />
                 <ScalarProperty Name="User_Mobile" ColumnName="User_Mobile" />
                 <ScalarProperty Name="User_IdentityNumber" ColumnName="User_IdentityNumber" />
                 <ScalarProperty Name="User_lastName" ColumnName="User_lastName" />

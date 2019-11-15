@@ -424,6 +424,21 @@ body {
     border-color: #1ab188;
 }
 
+.login-items > .form-group > .time > input:not([type = "checkbox"]) {
+    font-size: 14px;
+    display: block;
+    width: 100%;
+    padding: 5px 10px;
+    background: none;
+    background-image: none;
+    border: 1px solid #a0b3b0;
+    color: #fff;
+    border-radius: 0;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    outline: 0;
+    border-color: #1ab188;
+}
+
 .login-items > .form-group > input[type = "checkbox"] {
     float: right;
     margin-left: 10px;

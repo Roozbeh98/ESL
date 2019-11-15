@@ -25,9 +25,24 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
         [MinLength(10, ErrorMessage = "کدملی نامعتبر")]
         public string IdentityNumber { get; set; }
 
-        [Display(Name = "تاریخ")]
+        [Display(Name = "تاریخ تولد")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
-        public string CreateDate { get; set; }
+        [Range(1,31, ErrorMessage = "نامعتبر")]
+        [MaxLength(2, ErrorMessage = "نامعتبر")]
+        public string Day { get; set; }
+
+        [Display(Name = " ")]
+        [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
+        [Range(1, 12, ErrorMessage = "نامعتبر")]
+        [MaxLength(2, ErrorMessage = "نامعتبر")]
+        public string month { get; set; }
+
+        [Display(Name = " ")]
+        [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
+        [Range(1300, 1400, ErrorMessage = "نامعتبر")]
+        [MinLength(4, ErrorMessage = "نامعتبر")]
+        [MaxLength(4, ErrorMessage = "نامعتبر")]
+        public string Year { get; set; }
 
         [Display(Name = "جنسیت")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]

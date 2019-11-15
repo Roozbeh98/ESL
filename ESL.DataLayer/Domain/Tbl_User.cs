@@ -40,6 +40,7 @@ namespace ESL.DataLayer.Domain
         public string User_lastName { get; set; }
         public string User_IdentityNumber { get; set; }
         public string User_Mobile { get; set; }
+        public Nullable<System.DateTime> User_Birthday { get; set; }
         public int User_Credit { get; set; }
         public bool User_IsBan { get; set; }
         public bool User_IsDelete { get; set; }
