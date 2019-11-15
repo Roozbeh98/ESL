@@ -9,6 +9,13 @@
         </a>
     </li>
 
+    <li>
+        <a href="@Url.Action("Index", "Purchase", new { area = "Dashboard" })">
+            <i class="glyphicon glyphicon-book"></i>
+            خرید
+        </a>
+    </li>
+
     <li data-toggle="collapse" data-target="#sub-menu-message">
 
         <a href="#">
@@ -23,13 +30,6 @@
                 <a href="@Url.Action("Index", "Exam")">
                     <i class="glyphicon glyphicon-book"></i>
                     ارسال پیام
-                </a>
-            </li>
-
-            <li>
-                <a href="@Url.Action("Index", "Exam")">
-                    <i class="glyphicon glyphicon-book"></i>
-                    ارسال پیام گروهی
                 </a>
             </li>
 
@@ -75,13 +75,6 @@
                 </a>
             </li>
 
-            <li>
-                <a href="@Url.Action("Index", "Wallet")">
-                    <i class="glyphicon glyphicon-book"></i>
-                    اعتبار کاربران
-                </a>
-            </li>
-
         </ul>
 
     </li>
@@ -115,30 +108,16 @@
     </li>
 
     <li>
-        <a href="@Url.Action("Index", "Workshop", new { area = "Dashboard" })">
+        <a href="@Url.Action("List", "Workshop", new { area = "Dashboard" })">
             <i class="glyphicon glyphicon-book"></i>
             کارگاه ها
         </a>
     </li>
 
     <li>
-        <a href="@Url.Action("Index", "Class", new { area = "Dashboard" })">
+        <a href="@Url.Action("List", "Class", new { area = "Dashboard" })">
             <i class="glyphicon glyphicon-book"></i>
             کلاس ها
-        </a>
-    </li>
-
-    <li>
-        <a href="@Url.Action("Index", "Presence", new { area = "Dashboard" })">
-            <i class="glyphicon glyphicon-book"></i>
-            حضور غیاب
-        </a>
-    </li>
-
-    <li>
-        <a href="@Url.Action("Setting", "Setting")">
-            <i class="glyphicon glyphicon-book"></i>
-            تنظیمات سامانه
         </a>
     </li>
 

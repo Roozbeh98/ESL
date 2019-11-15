@@ -38,7 +38,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         {
             if (id.HasValue && db.Tbl_UserClass.Any(x => x.UC_ID == id))
             {
-                var p = db.Tbl_UserClass.Where(x => x.UC_ID == id).SingleOrDefault();
+                var p = db.Tbl_UserClass.Where(x => x.UC_IsDelete == false && x.UC_ID == id).SingleOrDefault();
 
                 var q = db.Tbl_UserClassPresence.Where(x => x.UCP_IsDelete == false && x.Tbl_UserClass.UC_UserID == p.UC_UserID && x.Tbl_UserClass.UC_CPID == p.UC_CPID && x.Tbl_UserClass.Tbl_ClassPlan.CP_TypeCodeID == p.Tbl_ClassPlan.CP_TypeCodeID && x.Tbl_UserClass.Tbl_ClassPlan.CP_Location == p.Tbl_ClassPlan.CP_Location && x.Tbl_UserClass.Tbl_ClassPlan.CP_Time == p.Tbl_ClassPlan.CP_Time).Select(x => new Model_UserClassPresence
                 {
@@ -50,7 +50,6 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                 }).ToList();
 
-                TempData["UserID"] = p.UC_UserID;
                 TempData["UserClassID"] = id;
 
                 return View(q);
@@ -70,31 +69,31 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         {
             if (ModelState.IsValid)
             {
-                int _userId = (int)TempData["UserID"];
-                int _userClassId = (int)TempData["UserClassID"];
+                int _UserClassID = (int)TempData["UserClassID"];
 
-                int _credit = db.Tbl_Wallet.Where(x => x.Wallet_UserID == _userId).SingleOrDefault().Wallet_Credit;
-                int _cost = db.Tbl_ClassPlan.Where(x => x.CP_ID == _userClassId).SingleOrDefault().CP_CostPerSession;
+                var _UserClass = db.Tbl_UserClass.Where(x => x.UC_IsDelete == false && x.UC_ID == _UserClassID).SingleOrDefault();
+
+                int _Credit = db.Tbl_Wallet.Where(x => x.Wallet_UserID == _UserClass.UC_UserID).SingleOrDefault().Wallet_Credit;
 
                 Tbl_Payment q = new Tbl_Payment()
                 {
                     Payment_Guid = Guid.NewGuid(),
-                    Payment_UserID = _userId,
+                    Payment_UserID = _UserClass.UC_UserID,
                     Payment_TitleCodeID = (int)PaymentTitle.Presence,
                     Payment_WayCodeID = (int)PaymentWay.InPerson,
                     Payment_TypeCodeID = (int)PaymentType.Paid,
-                    Payment_Cost = _cost,
+                    Payment_Cost = _UserClass.Tbl_ClassPlan.CP_CostPerSession,
                     Payment_Discount = model.Discount,
-                    Payment_RemaingWallet = _credit - _cost + model.Discount,
-                    Payment_TrackingToken = "esl-" + new Random().Next(100000, 999999).ToString(),
+                    Payment_RemaingWallet = _Credit - _UserClass.Tbl_ClassPlan.CP_CostPerSession + model.Discount,
+                    Payment_TrackingToken = "ESL-" + new Random().Next(100000, 999999).ToString(),
                     Payment_CreateDate = DateTime.Now,
                     Payment_ModifiedDate = DateTime.Now
                 };
-                
+
                 Tbl_UserClassPresence p = new Tbl_UserClassPresence
                 {
                     UCP_Guid = Guid.NewGuid(),
-                    UCP_UCID = _userClassId,
+                    UCP_UCID = _UserClassID,
                     UCP_IsPresent = model.Presence,
                     UCP_Date = DateConverter.ToGeorgianDateTime(model.Date),
                     UCP_CreationDate = DateTime.Now,
@@ -112,7 +111,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     TempData["TosterType"] = TosterType.Maseage;
                     TempData["TosterMassage"] = "عملیات با موفقیت انجام شده";
 
-                    return RedirectToAction("Details", new { id = _userClassId });
+                    return RedirectToAction("Details", new { id = _UserClassID });
                 }
                 else
                 {
@@ -120,7 +119,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     TempData["TosterType"] = TosterType.Maseage;
                     TempData["TosterMassage"] = "عملیات با موفقیت انجام نشده";
 
-                    return RedirectToAction("Details", new { id = _userClassId });
+                    return RedirectToAction("Details", new { id = _UserClassID });
                 }
             }
 

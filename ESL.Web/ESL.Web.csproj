@@ -269,6 +269,12 @@
     <Content Include="Areas\Dashboard\Views\Presence\Create.cshtml" />
     <Content Include="Areas\Dashboard\Views\Presence\SetPresence.cshtml" />
     <Content Include="Areas\Dashboard\Views\Presence\Delete.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Class\List.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Class\Info.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Workshop\List.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Workshop\UnRegister.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Purchase\Index.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Purchase\Pay.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -1338,6 +1344,7 @@
     <Compile Include="Areas\Dashboard\Controllers\PageController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\PaymentController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\PresenceController.cs" />
+    <Compile Include="Areas\Dashboard\Controllers\PurchaseController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\SettingController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\ExamController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\UploadController.cs" />
@@ -1360,6 +1367,7 @@
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_PaymentChangeType.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_PaymentCreate.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_PaymentEdit.cs" />
+    <Compile Include="Areas\Dashboard\Models\ViewModels\Model_Purchase.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_QuestionCreate.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_Questions.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_Register.cs" />
@@ -1376,6 +1384,7 @@
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_UsersExamInPerson.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_UserWorkshop.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_UserWorkshopCreate.cs" />
+    <Compile Include="Areas\Dashboard\Models\ViewModels\Model_UserWorkshops.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_UserWorkshopSetPresence.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_Wallet.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_WalletCreate.cs" />

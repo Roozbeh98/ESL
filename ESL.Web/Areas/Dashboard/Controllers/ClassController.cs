@@ -12,11 +12,63 @@ using System.Web.Mvc;
 
 namespace ESL.Web.Areas.Dashboard.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, Student")]
     public class ClassController : Controller
     {
         private ESLEntities db = new ESLEntities();
 
+        [Authorize(Roles = "Student")]
+        public ActionResult List()
+        {
+            var _User = db.Tbl_User.Where(x => x.User_IsDelete == false && x.User_Mobile == User.Identity.Name).SingleOrDefault();
+
+            if (_User != null)
+            {
+                var q = db.Tbl_UserClass.Where(x => x.UC_IsDelete == false && x.UC_UserID == _User.User_ID).Select(x => new Model_UserClasses
+                {
+                    ID = x.UC_ID,
+                    User = x.Tbl_User.User_FirstName + " " + x.Tbl_User.User_lastName,
+                    Class = x.Tbl_ClassPlan.Tbl_Class.Class_Title,
+                    Type = x.Tbl_ClassPlan.Tbl_Code.Code_Display,
+                    Location = x.Tbl_ClassPlan.CP_Location,
+                    Time = x.Tbl_ClassPlan.CP_Time,
+                    CreationDate = x.UC_CreationDate
+
+                }).ToList();
+
+                return View(q);
+            }
+
+            return HttpNotFound();
+        }
+
+        [Authorize(Roles = "Student")]
+        public ActionResult Info(int? id)
+        {
+            if (id.HasValue && db.Tbl_UserClass.Any(x => x.UC_ID == id))
+            {
+                var p = db.Tbl_UserClass.Where(x => x.UC_ID == id).SingleOrDefault();
+
+                var q = db.Tbl_UserClassPresence.Where(x => x.UCP_IsDelete == false && x.Tbl_UserClass.UC_UserID == p.UC_UserID && x.Tbl_UserClass.UC_CPID == p.UC_CPID && x.Tbl_UserClass.Tbl_ClassPlan.CP_TypeCodeID == p.Tbl_ClassPlan.CP_TypeCodeID && x.Tbl_UserClass.Tbl_ClassPlan.CP_Location == p.Tbl_ClassPlan.CP_Location && x.Tbl_UserClass.Tbl_ClassPlan.CP_Time == p.Tbl_ClassPlan.CP_Time).Select(x => new Model_UserClassPresence
+                {
+                    ID = x.UCP_ID,
+                    Cost = x.Tbl_Payment.Payment_Cost,
+                    Discount = x.Tbl_Payment.Payment_Discount,
+                    Presence = x.UCP_IsPresent,
+                    CreationDate = x.UCP_CreationDate
+
+                }).ToList();
+
+                TempData["UserID"] = p.UC_UserID;
+                TempData["UserClassID"] = id;
+
+                return View(q);
+            }
+
+            return HttpNotFound();
+        }
+
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             var q = db.Tbl_ClassPlan.Where(x => x.CP_IsDelete == false).Select(x => new Model_Class
@@ -39,11 +91,13 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             return View(q);
         }
 
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             return View();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Model_ClassCreate model)
@@ -90,6 +144,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id != null)
@@ -115,6 +170,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             return HttpNotFound();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(Model_MessageModal model)
@@ -151,6 +207,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
+        [Authorize(Roles = "Admin")]
         public ActionResult Details(int? id)
         {
             if (id.HasValue && db.Tbl_ClassPlan.Any(x => x.CP_ID == id))
@@ -172,6 +229,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             return HttpNotFound();
         }
 
+        [Authorize(Roles = "Admin")]
         public ActionResult SetActiveness(int id)
         {
             var q = db.Tbl_ClassPlan.Where(x => x.CP_ID == id).SingleOrDefault();
@@ -190,6 +248,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             return HttpNotFound();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult SetActiveness(Model_SetActiveness model)
