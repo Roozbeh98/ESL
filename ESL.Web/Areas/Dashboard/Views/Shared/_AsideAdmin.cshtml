@@ -1,208 +1,208 @@
 ﻿
-    <ul class="navbar nav aside-panel">
-        <li>
-            <img src="~/Content/Images/abstract-user-flat-3.png" alt="Logo" class="img-responsive img-rounded img-logo" style="height:200px;">
-            <!--</div>-->
-            <a href="@Url.Action("index","Dashboard" , new {  aria="Dashboard"})">
-                <i class="glyphicon glyphicon-dashboard  "></i>
-                داشبورد
-            </a>
-        </li>
+<ul class="navbar nav aside-panel">
 
+    <li>
+        <img src="~/Content/Images/abstract-user-flat-3.png" alt="Logo" class="img-responsive img-rounded img-logo" style="height:200px;">
+        <a href="@Url.Action("Index", "Dashboard" , new { area = "Dashboard" })">
+            <i class="glyphicon glyphicon-dashboard  "></i>
+            داشبورد
+        </a>
+    </li>
 
-        <li data-toggle="collapse" data-target="#sub-menu-site">
+    <li data-toggle="collapse" data-target="#sub-menu-site">
 
-            <a href="#">
-                <i class="glyphicon glyphicon-book"></i>
-                مدیرت سایت
-                <i class="glyphicon glyphicon-chevron-right pull-right gly-rotate-90"></i>
+        <a href="#">
+            <i class="glyphicon glyphicon-book"></i>
+            مدیرت سایت
+            <i class="glyphicon glyphicon-chevron-right pull-right gly-rotate-90"></i>
+        </a>
 
-            </a>
+        <ul class="collapse nav aside-sub-panel " id="sub-menu-site">
 
-            <ul class="collapse nav aside-sub-panel " id="sub-menu-site">
-                <li>
-                    <a href="#">
-                        <i class="glyphicon glyphicon-book"></i>
-                        صفحه اصلی
-                    </a>
-                </li>
+            <li>
+                <a href="#">
+                    <i class="glyphicon glyphicon-book"></i>
+                    صفحه اصلی
+                </a>
+            </li>
 
-                <li>
-                    <a href="#">
-                        <i class="glyphicon glyphicon-book"></i>
-                        درباره ما
-                    </a>
-                </li>
+            <li>
+                <a href="#">
+                    <i class="glyphicon glyphicon-book"></i>
+                    درباره ما
+                </a>
+            </li>
 
-                <li>
-                    <a href="#">
-                        <i class="glyphicon glyphicon-book"></i>
-                        ارتباط با ما
-                    </a>
-                </li>
+            <li>
+                <a href="#">
+                    <i class="glyphicon glyphicon-book"></i>
+                    ارتباط با ما
+                </a>
+            </li>
 
-                <li>
-                    <a href="#">
-                        <i class="glyphicon glyphicon-book"></i>
-                        آرشیو اخبار
-                    </a>
-                </li>
+            <li>
+                <a href="#">
+                    <i class="glyphicon glyphicon-book"></i>
+                    آرشیو اخبار
+                </a>
+            </li>
 
-                <li>
-                    <a href="#">
-                        <i class="glyphicon glyphicon-book"></i>
-                        دروه های آموزشی
-                    </a>
-                </li>
+            <li>
+                <a href="#">
+                    <i class="glyphicon glyphicon-book"></i>
+                    دروه های آموزشی
+                </a>
+            </li>
 
-                <li>
-                    <a href="#">
-                        <i class="glyphicon glyphicon-book"></i>
-                        گالری تصاویر
-                    </a>
-                </li>
+            <li>
+                <a href="#">
+                    <i class="glyphicon glyphicon-book"></i>
+                    گالری تصاویر
+                </a>
+            </li>
 
-                <li>
-                    <a href="#">
-                        <i class="glyphicon glyphicon-book"></i>
-                        مشتریان ما
-                    </a>
-                </li>
+            <li>
+                <a href="#">
+                    <i class="glyphicon glyphicon-book"></i>
+                    مشتریان ما
+                </a>
+            </li>
 
-            </ul>
+        </ul>
 
-        </li>
+    </li>
 
-        <li data-toggle="collapse" data-target="#sub-menu-message">
+    <li data-toggle="collapse" data-target="#sub-menu-message">
 
-            <a href="#">
-                <i class="glyphicon glyphicon-book"></i>
-                پیام ها
-                <i class="glyphicon glyphicon-chevron-right pull-right"></i>
-            </a>
+        <a href="#">
+            <i class="glyphicon glyphicon-book"></i>
+            پیام ها
+            <i class="glyphicon glyphicon-chevron-right pull-right"></i>
+        </a>
 
-            <ul class="collapse nav aside-sub-panel" id="sub-menu-message">
+        <ul class="collapse nav aside-sub-panel" id="sub-menu-message">
 
-                <li>
-                    <a href="@Url.Action("Index", "Exam")">
-                        <i class="glyphicon glyphicon-book"></i>
-                        ارسال پیام
-                    </a>
-                </li>
-                <li>
-                    <a href="@Url.Action("Index", "Exam")">
-                        <i class="glyphicon glyphicon-book"></i>
-                        ارسال پیام گروهی
-                    </a>
-                </li>
+            <li>
+                <a href="@Url.Action("Index", "Exam")">
+                    <i class="glyphicon glyphicon-book"></i>
+                    ارسال پیام
+                </a>
+            </li>
 
-                <li>
-                    <a href="@Url.Action("Index", "ExamInPerson")">
-                        <i class="glyphicon glyphicon-book"></i>
-                        لیست پیام های دریافتی
-                    </a>
-                </li>
-                <li>
-                    <a href="@Url.Action("Index", "ExamInPerson")">
-                        <i class="glyphicon glyphicon-book"></i>
-                        لیست پیام های ارسالی
-                    </a>
-                </li>
+            <li>
+                <a href="@Url.Action("Index", "Exam")">
+                    <i class="glyphicon glyphicon-book"></i>
+                    ارسال پیام گروهی
+                </a>
+            </li>
 
-            </ul>
+            <li>
+                <a href="@Url.Action("Index", "ExamInPerson")">
+                    <i class="glyphicon glyphicon-book"></i>
+                    لیست پیام های دریافتی
+                </a>
+            </li>
 
-        </li>
+            <li>
+                <a href="@Url.Action("Index", "ExamInPerson")">
+                    <i class="glyphicon glyphicon-book"></i>
+                    لیست پیام های ارسالی
+                </a>
+            </li>
 
-        <li data-toggle="collapse" data-target="#sub-menu-pay">
+        </ul>
 
-            <a href="javascript:void(0)">
-                <i class="glyphicon glyphicon-book"></i>
-                مالی
-                <i class="glyphicon glyphicon-chevron-right pull-right"></i>
-            </a>
+    </li>
 
-            <ul class="collapse nav aside-sub-panel" id="sub-menu-pay">
+    <li data-toggle="collapse" data-target="#sub-menu-pay">
 
-                <li>
-                    <a href="@Url.Action("Index", "Payment")">
-                        <i class="glyphicon glyphicon-book"></i>
-                        لیست تراکنش ها
-                    </a>
-                </li>
+        <a href="javascript:void(0)">
+            <i class="glyphicon glyphicon-book"></i>
+            مالی
+            <i class="glyphicon glyphicon-chevron-right pull-right"></i>
+        </a>
 
-                <li>
-                    <a href="@Url.Action("Suspended", "Payment")">
-                        <i class="glyphicon glyphicon-book"></i>
-                        لیست تراکنش های تایید نشده
-                    </a>
-                </li>
+        <ul class="collapse nav aside-sub-panel" id="sub-menu-pay">
 
-                <li>
-                    <a href="@Url.Action("Index", "Wallet")">
-                        <i class="glyphicon glyphicon-book"></i>
-                        اعتبار کاربران
-                    </a>
-                </li>
+            <li>
+                <a href="@Url.Action("Index", "Payment")">
+                    <i class="glyphicon glyphicon-book"></i>
+                    لیست تراکنش ها
+                </a>
+            </li>
 
-            </ul>
+            <li>
+                <a href="@Url.Action("Suspended", "Payment")">
+                    <i class="glyphicon glyphicon-book"></i>
+                    لیست تراکنش های تایید نشده
+                </a>
+            </li>
 
-        </li>
+            <li>
+                <a href="@Url.Action("Index", "Wallet")">
+                    <i class="glyphicon glyphicon-book"></i>
+                    اعتبار کاربران
+                </a>
+            </li>
 
-        <li data-toggle="collapse" data-target="#sub-menu-exam">
+        </ul>
 
-            <a href="javascript:void(0)">
-                <i class="glyphicon glyphicon-book"></i>
-                آزمون ها
-                <i class="glyphicon glyphicon-chevron-right pull-right"></i>
-            </a>
+    </li>
 
-            <ul class="collapse nav aside-sub-panel" id="sub-menu-exam">
+    <li data-toggle="collapse" data-target="#sub-menu-exam">
 
-                <li>
-                    <a href="@Url.Action("Index", "Exam")">
-                        <i class="glyphicon glyphicon-book"></i>
-                        آزمون های غیر حضوری
-                    </a>
-                </li>
+        <a href="javascript:void(0)">
+            <i class="glyphicon glyphicon-book"></i>
+            آزمون ها
+            <i class="glyphicon glyphicon-chevron-right pull-right"></i>
+        </a>
 
-                <li>
-                    <a href="@Url.Action("Index", "ExamInPerson")">
-                        <i class="glyphicon glyphicon-book"></i>
-                        آزمون های حضوری
-                    </a>
-                </li>
+        <ul class="collapse nav aside-sub-panel" id="sub-menu-exam">
 
-            </ul>
+            <li>
+                <a href="@Url.Action("Index", "Exam")">
+                    <i class="glyphicon glyphicon-book"></i>
+                    آزمون های غیر حضوری
+                </a>
+            </li>
 
-        </li>
+            <li>
+                <a href="@Url.Action("Index", "ExamInPerson")">
+                    <i class="glyphicon glyphicon-book"></i>
+                    آزمون های حضوری
+                </a>
+            </li>
 
-        <li>
-            <a href="@Url.Action("Index", "Workshop", new { area = "Dashboard" })">
-                <i class="glyphicon glyphicon-book"></i>
-                کارگاه ها
-            </a>
-        </li>
+        </ul>
 
-        <li>
-            <a href="@Url.Action("Index", "Class", new { area = "Dashboard" })">
-                <i class="glyphicon glyphicon-book"></i>
-                کلاس ها
-            </a>
-        </li>
+    </li>
 
-        <li>
-            <a href="@Url.Action("Index", "Presence", new { area = "Dashboard" })">
-                <i class="glyphicon glyphicon-book"></i>
-                حضور غیاب
-            </a>
-        </li>
+    <li>
+        <a href="@Url.Action("Index", "Workshop", new { area = "Dashboard" })">
+            <i class="glyphicon glyphicon-book"></i>
+            کارگاه ها
+        </a>
+    </li>
 
-        <li>
-            <a href="@Url.Action("Setting","Setting")">
-                <i class="glyphicon glyphicon-book"></i>
-                تنظیمات سامانه
-            </a>
-        </li>
+    <li>
+        <a href="@Url.Action("Index", "Class", new { area = "Dashboard" })">
+            <i class="glyphicon glyphicon-book"></i>
+            کلاس ها
+        </a>
+    </li>
 
-    </ul>
+    <li>
+        <a href="@Url.Action("Index", "Presence", new { area = "Dashboard" })">
+            <i class="glyphicon glyphicon-book"></i>
+            حضور غیاب
+        </a>
+    </li>
 
+    <li>
+        <a href="@Url.Action("Index", "Setting")">
+            <i class="glyphicon glyphicon-book"></i>
+            تنظیمات سامانه
+        </a>
+    </li>
+
+</ul>

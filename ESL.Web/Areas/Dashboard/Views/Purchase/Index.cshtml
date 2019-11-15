@@ -1,0 +1,144 @@
+﻿@model IEnumerable<ESL.Web.Areas.Dashboard.Models.ViewModels.Model_Purchase>
+@using ESL.Common.Plugins
+
+@{
+    ViewBag.Title = "فروشگاه";
+    Layout = "~/Areas/Dashboard/Views/Shared/_Master.cshtml";
+}
+
+
+<div class="panel panel-body panel-default navigation">
+
+    <div class="pull-left">
+        <h4 class="navigation-title"><b>فروشگاه</b></h4>
+    </div>
+
+</div>
+
+<div class="row">
+
+    <div class="box">
+
+        @foreach (var item in Model)
+        {
+            switch ((ProductType)item.Type)
+            {
+                case ProductType.Workshop:
+
+                    <div class="card card-price">
+                        <div class="card-img">
+                            <div class="type" style="background-color: darkcyan;">
+                                <h6>کارگاه</h6>
+                            </div>
+                            <div class="card-caption">
+                                <span class="h2">@item.Name</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <ul class="details">
+                                <li>@item.Description</li>
+                            </ul>
+                            <table class="table">
+                                <tr><td>نوع کارگاه</td><td class="note">@item.SubName</td></tr>
+                                <tr><td>ظرفیت</td><td class="note">150 @item.Capacity</td></tr>
+                                <tr><td>مکان برگزاری</td><td class="note">@item.Location</td></tr>
+                                <tr><td>تاریخ برگزاری</td><td class="note">@PersianDateExtensionMethods.ToPeString(item.Date, "yyyy/MM/dd")</td></tr>
+                            </table>
+                            <a href="javascript:void(0)" onclick="Pay(@item.ID, @((int)ProductType.Workshop))" class="btn esl-btn-success btn-lg btn-block buy-now">@item.Cost<span>تومان</span></a>
+                        </div>
+                    </div>
+
+                    break;
+
+                case ProductType.Class:
+
+                    <div class="card card-price">
+                        <div class="card-img">
+                            <div class="type" style="background-color: darkmagenta;">
+                                <h6>کلاس</h6>
+                            </div>
+                            <div class="card-caption">
+                                <span class="h2">@item.Name</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <ul class="details">
+                                <li>@item.Description</li>
+                            </ul>
+                            <table class="table">
+                                <tr><td>زمان شروع</td><td class="note">@item.Time</td></tr>
+                                <tr><td>ظرفیت</td><td class="note">150 @item.Capacity</td></tr>
+                                <tr><td>مکان برگزاری</td><td class="note">@item.Location</td></tr>
+                                <tr><td>زمان برگزاری</td><td class="note">@PersianDateExtensionMethods.ToPeString(item.Date, "yyyy/MM/dd HH:mm")</td></tr>
+                            </table>
+                            <a href="javascript:void(0)" onclick="Pay(@item.ID, @((int)ProductType.Class))" class="btn esl-btn-success btn-lg btn-block buy-now">@item.Cost<span>تومان</span></a>
+                        </div>
+                    </div>
+
+                    break;
+
+                case ProductType.ExamInPerson:
+
+                    <div class="card card-price">
+                        <div class="card-img">
+                            <div class="type" style="background-color: darkred;">
+                                <h6>آزمون</h6>
+                            </div>
+                            <div class="card-caption">
+                                <span class="h2">@item.Name</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <ul class="details">
+                                <li>@item.Description</li>
+                            </ul>
+                            <table class="table">
+                                <tr><td>زیر گروه</td><td class="note">@item.SubName</td></tr>
+                                <tr><td>ظرفیت</td><td class="note">150 @item.Capacity</td></tr>
+                                <tr><td>مکان برگزاری</td><td class="note">@item.Location</td></tr>
+                                <tr><td>نمره کل</td><td class="note">@item.TotalMark</td></tr>
+                                <tr><td>حداقل نمره قبولی</td><td class="note">@item.PassMark</td></tr>
+                                <tr><td>زمان برگزاری</td><td class="note">@PersianDateExtensionMethods.ToPeString(item.Date, "yyyy/MM/dd")</td></tr>
+                            </table>
+                            <a href="javascript:void(0)" onclick="Pay(@item.ID, @((int)ProductType.ExamInPerson))" class="btn esl-btn-success btn-lg btn-block buy-now">@item.Cost<span>تومان</span></a>
+                        </div>
+                    </div>
+
+                    break;
+
+                case ProductType.ExamRemotely:
+
+
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+    </div>
+
+</div>
+
+@Html.Partial("_Modal")
+
+
+@section Scripts {
+
+    <script>
+
+        function Pay(id, type) {
+            $.ajax({
+                url: "/Dashboard/Purchase/Pay/?id=" + id + "&type=" + type,
+                type: "Get",
+                data: {}
+            }).done(function (result) {
+                $('#myModal').modal('show');
+                $('#myModalLabel').html('خرید');
+                $('#myModalBody').html(result);
+            });
+        }
+
+    </script>
+
+}

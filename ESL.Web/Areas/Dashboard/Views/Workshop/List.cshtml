@@ -1,23 +1,23 @@
-﻿@model IEnumerable<ESL.Web.Areas.Dashboard.Models.ViewModels.Model_UserClasses>
+﻿@model IEnumerable<ESL.Web.Areas.Dashboard.Models.ViewModels.Model_UserWorkshops>
 @using ESL.Common.Plugins
 
 @{
-    ViewBag.Title = "حضور غیاب";
+    ViewBag.Title = "کارگاه ها";
     Layout = "~/Areas/Dashboard/Views/Shared/_Master.cshtml";
 }
 
 
-<div class="panel panel-body panel-default  navigation">
+<div class="panel panel-body panel-default navigation">
 
     <div class="pull-left">
-        <h4 class="navigation-title"><b>لیست افراد ثبت نام شده در کلاس ها</b></h4>
+        <h4 class="navigation-title"><b>لیست کارگاه های ثبت نام شده</b></h4>
     </div>
 
 </div>
 
 <div class="panel panel-default">
 
-    <div class="panel-body table-body" style="overflow-x:auto;">
+    <div class="panel-body table-body" style="overflow-x: auto;">
 
         <table id="DateTable" class="table table-bordered table-striped table-secondary" style="width:100%;">
 
@@ -25,10 +25,11 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.User)</th>
-                    <th scope="col">@Html.DisplayNameFor(model => model.Class)</th>
-                    <th scope="col">@Html.DisplayNameFor(model => model.Type)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Workshop)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.SubWorkshop)</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.Location)</th>
-                    <th scope="col">@Html.DisplayNameFor(model => model.Time)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Date)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Cost)</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.CreationDate)</th>
                     <th scope="col" data-orderable="false">کنترل</th>
                 </tr>
@@ -50,22 +51,25 @@
                             <span> @Html.DisplayFor(modelItem => item.User) </span>
                         </td>
                         <td scope="row">
-                            <span> @Html.DisplayFor(modelItem => item.Class) </span>
+                            <span> @Html.DisplayFor(modelItem => item.Workshop) </span>
                         </td>
                         <td scope="row">
-                            <span> @Html.DisplayFor(modelItem => item.Type) </span>
+                            <span> @Html.DisplayFor(modelItem => item.SubWorkshop) </span>
                         </td>
                         <td scope="row">
                             <span> @Html.DisplayFor(modelItem => item.Location) </span>
                         </td>
                         <td scope="row">
-                            <span> @Html.DisplayFor(modelItem => item.Time) </span>
+                            <span> @PersianDateExtensionMethods.ToPeString(item.Date, "yyyy/MM/dd HH:mm") </span>
+                        </td>
+                        <td scope="row">
+                            <span> @Html.DisplayFor(modelItem => item.Cost) </span>
                         </td>
                         <td scope="row">
                             <span> @PersianDateExtensionMethods.ToPeString(item.CreationDate, "yyyy/MM/dd") </span>
                         </td>
                         <td scope="row">
-                            <a class="btn btn-info btn-sm glyphicon glyphicon-list" href="@Url.Action("Details", "Presence", new { area = "Dashboard", id = item.ID })"> </a>
+                            <a class="btn btn-danger btn-sm glyphicon glyphicon-trash" href="javascript:void(0)" onclick="UnRegister(@item.ID)"> </a>
                         </td>
                     </tr>
                 }
@@ -80,3 +84,21 @@
 
 
 @Html.Partial("_Modal")
+
+@section Modal {
+    <script>
+
+        function UnRegister(id) {
+            $.ajax({
+                url: "/Dashboard/Workshop/UnRegister/" + id,
+                type: "Get",
+                data: {}
+            }).done(function (result) {
+                $('#myModal').modal('show');
+                $('#myModalLabel').html('حدف آزمون');
+                $('#myModalBody').html(result);
+            });
+        }
+
+    </script>
+}

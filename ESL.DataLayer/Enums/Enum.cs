@@ -6,6 +6,12 @@ using System.Threading.Tasks;
 
 namespace ESL.Web
 {
+    public enum Role
+    {
+        Student = 1,
+        Admin = 2
+    }
+
     public enum TosterType
     {
         JustTitel,
@@ -73,5 +79,13 @@ namespace ESL.Web
         Success = 8,
         Welcome = 9,
         Workshop = 10
+    }
+
+    public enum ProductType
+    {
+        ExamInPerson,
+        ExamRemotely,
+        Workshop,
+        Class
     }
 }
