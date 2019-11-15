@@ -138,16 +138,23 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
             db.Tbl_User.Add(_User);
 
-            Tbl_Wallet _Wallet = new Tbl_Wallet();
-            _Wallet.Wallet_Guid = Guid.NewGuid();
-            _Wallet.Tbl_User = _User;
+            Tbl_Wallet _Wallet = new Tbl_Wallet()
+            {
+                Wallet_Guid = Guid.NewGuid(),
+                Wallet_CreationDate = DateTime.Now,
+                Wallet_ModifiedDate = DateTime.Now,
+                Tbl_User = _User
+            };
 
             db.Tbl_Wallet.Add(_Wallet);
 
-            if (new SMSPortal().SendServiceable(model.Mobile, model.Name + " " + model.Family, "", "", SMSTemplate.Register) == -1)
-            {
-                // sth went wrong!
-            };
+            //string test = new SMSPortal().SendServiceable(model.Mobile, "0", DateTime.Now.ToString("yyyy/MM/dd"), "0", SMSTemplate.Success);
+            string test = new SMSPortal().SendServiceable(model.Mobile, model.Name + " " + model.Family, "", "", SMSTemplate.Register);
+
+            //if (test == -1)
+            //{
+            //    // sth went wrong!
+            //};
 
             if (Convert.ToBoolean(db.SaveChanges() > 0))
             {

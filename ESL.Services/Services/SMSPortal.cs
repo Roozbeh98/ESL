@@ -91,7 +91,7 @@ namespace ESL.Services.Services
             return false;
         }
 
-        public int SendServiceable(string receptor, string token, string token2, string token3, SMSTemplate template)
+        public string SendServiceable(string receptor, string token, string token2, string token3, SMSTemplate template)
         {
             try
             {
@@ -100,20 +100,16 @@ namespace ESL.Services.Services
 
                 InsertIntoDB(result, token, token2, token3);
 
-                return result.Status;
+                return result.StatusText;
             }
             catch (ApiException ex)
             {
-                // در صورتی که خروجی وب سرویس 200 نباشد این خطارخ می دهد.
-                Console.Write("Message : " + ex.Message);
+                return ex.Message;
             }
             catch (HttpException ex)
             {
-                // در زمانی که مشکلی در برقرای ارتباط با وب سرویس وجود داشته باشد این خطا رخ می دهد
-                Console.Write("Message : " + ex.Message);
+                return ex.Message;
             }
-
-            return -1;
         }
 
         public int SendAdvertising(string sender, string receptor, string message)

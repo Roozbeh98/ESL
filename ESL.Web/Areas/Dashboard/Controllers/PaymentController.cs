@@ -12,7 +12,7 @@ using System.Web.Mvc;
 
 namespace ESL.Web.Areas.Dashboard.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, Student")]
     public class PaymentController : Controller
     {
         private ESLEntities db = new ESLEntities();
@@ -72,7 +72,49 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         {
             if (ModelState.IsValid)
             {
-                Tbl_Document p = null;
+                Rep_Wallet _Wallet = new Rep_Wallet();
+                int _Credit = _Wallet.Get_WalletCreditWithUserGUID(model.User), _NewCredit/*, _CostAfterDiscount = model.Cost - model.Discount*/;
+                int _TitleCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Title);
+
+                switch ((PaymentTitle)_TitleCodeID)
+                {
+                    case PaymentTitle.Discharge:
+
+                        //if (_Credit + 50000 >= _CostAfterDiscount)
+                        //{
+                        //    TempData["TosterState"] = "error";
+                        //    TempData["TosterType"] = TosterType.Maseage;
+                        //    TempData["TosterMassage"] = "موجودی کیف پول کاربر مورد نظر کافی نمی باشد.";
+
+                        //    return View();
+                        //}
+
+                        _NewCredit = _Credit - model.Cost;
+
+                        break;
+
+                    case PaymentTitle.ReturnToAccount:
+                        _NewCredit = _Credit + model.Cost;
+                        break;
+
+                    case PaymentTitle.ReturnToBankAccount:
+                        _NewCredit = _Credit;
+                        break;
+
+                    case PaymentTitle.Charge:
+                        _NewCredit = _Credit + model.Cost;
+                        break;
+
+                    default:
+
+                        TempData["TosterState"] = "error";
+                        TempData["TosterType"] = TosterType.Maseage;
+                        TempData["TosterMassage"] = "عملیات با موفقیت انجام نشده";
+
+                        return View();
+                }
+
+                Tbl_Document _Document = null;
 
                 if (document != null)
                 {
@@ -112,49 +154,57 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                             break;
                     }
 
-                    p = new Tbl_Document
+                    _Document = new Tbl_Document
                     {
                         Document_Guid = Guid.NewGuid(),
                         Document_TypeCodeID = Rep_CodeGroup.Get_CodeIDWithName(filetype),
                         Document_Path = "Payment/" + document.FileName
                     };
 
-                    db.Tbl_Document.Add(p);
+                    db.Tbl_Document.Add(_Document);
                 }
 
-                Tbl_Payment q = new Tbl_Payment
+                int _UserID = new Rep_User().Get_UserIDWithGUID(model.User);
+
+                Tbl_Payment _Payment = new Tbl_Payment
                 {
                     Payment_Guid = Guid.NewGuid(),
-                    Payment_UserID = new Rep_User().Get_UserIDWithGUID(model.User),
-                    Payment_TitleCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Title),
+                    Payment_UserID = _UserID,
+                    Payment_TitleCodeID = _TitleCodeID,
                     Payment_WayCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Way),
-                    Payment_TypeCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Type),
+                    Payment_TypeCodeID = (int)PaymentType.Confirmed,
                     Payment_Description = model.Description,
                     Payment_Cost = model.Cost,
-                    //Payment_Discount = ,
-                    //Payment_RemaingWallet = ,
+                    Payment_RemaingWallet = _NewCredit,
+                    Payment_Discount = model.Discount,
                     Payment_TrackingToken = model.TrackingToken,
                     Payment_CreateDate = DateTime.Now
                 };
 
                 if (document != null)
                 {
-                    q.Tbl_Document = p;
+                    _Payment.Tbl_Document = _Document;
                 }
 
-                db.Tbl_Payment.Add(q);
+                db.Tbl_Payment.Add(_Payment);
 
-                if (new Rep_Wallet().Set_Credit(new Rep_Wallet().Get_WalletGUIDWithUserGUID(model.User), model.Type, model.Cost, model.Title))
+                if (_NewCredit != _Credit)
                 {
-                    if (Convert.ToBoolean(db.SaveChanges() > 0))
-                    {
-                        TempData["TosterState"] = "success";
-                        TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام شده";
+                    Tbl_Wallet w = db.Tbl_Wallet.Where(x => x.Wallet_UserID == _UserID).SingleOrDefault();
+                    w.Wallet_Credit = _NewCredit;
+                    w.Wallet_ModifiedDate = DateTime.Now;
 
-                        return RedirectToAction("Index");
-                    }
-                };
+                    db.Entry(w).State = EntityState.Modified;
+                }
+
+                if (Convert.ToBoolean(db.SaveChanges() > 0))
+                {
+                    TempData["TosterState"] = "success";
+                    TempData["TosterType"] = TosterType.Maseage;
+                    TempData["TosterMassage"] = "عملیات با موفقیت انجام شده";
+
+                    return RedirectToAction("Index");
+                }
 
                 TempData["TosterState"] = "error";
                 TempData["TosterType"] = TosterType.Maseage;
@@ -404,6 +454,12 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             }
 
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        }
+
+        [Authorize(Roles = "Student")]
+        public ActionResult ChargeWallet()
+        {
+            return View();
         }
 
         public JsonResult Get_Users(string searchTerm)

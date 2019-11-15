@@ -36,9 +36,8 @@ namespace ESL.Web
     public enum PaymentType
     {
         WaitForAcceptance = 24,
-        Paid = 25,
-        ReturnToAccount = 26,
-        ReturnToBankAccount = 52,
+        Confirmed = 25,
+        Rejected = 54,
         Suspended = 53
     }
 
@@ -57,7 +56,9 @@ namespace ESL.Web
         Presence = 46,
         Absence = 47,
         Exam = 48,
-        Discharge = 51
+        Discharge = 51,
+        ReturnToAccount = 26,
+        ReturnToBankAccount = 52
     }
 
     public enum WalletAction

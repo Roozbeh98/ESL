@@ -81,7 +81,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     Payment_UserID = _UserClass.UC_UserID,
                     Payment_TitleCodeID = (int)PaymentTitle.Presence,
                     Payment_WayCodeID = (int)PaymentWay.InPerson,
-                    Payment_TypeCodeID = (int)PaymentType.Paid,
+                    Payment_TypeCodeID = (int)PaymentType.Confirmed,
                     Payment_Cost = _UserClass.Tbl_ClassPlan.CP_CostPerSession,
                     Payment_Discount = model.Discount,
                     Payment_RemaingWallet = _Credit - _UserClass.Tbl_ClassPlan.CP_CostPerSession + model.Discount,

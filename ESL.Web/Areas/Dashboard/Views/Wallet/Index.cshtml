@@ -49,10 +49,10 @@
                             <span> @Html.DisplayFor(modelItem => item.Credit) </span>
                         </td>
                         <td scope="row">
-                            <span> @PersianDateExtensionMethods.ToPeString(item.CreationDate, "yyyy/MM/dd") </span>
+                            <span> @PersianDateExtensionMethods.ToPeString(item.CreationDate, "yyyy/MM/dd HH:mm") </span>
                         </td>
                         <td scope="row">
-                            <span> @PersianDateExtensionMethods.ToPeString(item.ModifiedDate, "yyyy/MM/dd") </span>
+                            <span> @PersianDateExtensionMethods.ToPeString(item.ModifiedDate, "yyyy/MM/dd HH:mm") </span>
                         </td>
                     </tr>
                 }
