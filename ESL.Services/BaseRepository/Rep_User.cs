@@ -27,6 +27,7 @@ namespace ESL.Services.BaseRepository
             if (q != null)
             {
                 Model_AccountInfo infoModel = new Model_AccountInfo();
+                infoModel.UserGuid = q.User_Guid;
                 infoModel.Name = q.User_FirstName + " " + q.User_lastName;
                 infoModel.Role = q.Tbl_Role.Role_Display;
                 return infoModel;
@@ -34,9 +35,7 @@ namespace ESL.Services.BaseRepository
             else
             {
                 return null;
-
             }
-
         }
 
         public int Get_UserIDWithGUID(Guid guid)

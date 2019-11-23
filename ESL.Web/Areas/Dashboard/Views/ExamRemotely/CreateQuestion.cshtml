@@ -1,0 +1,196 @@
+﻿@model ESL.Web.Areas.Dashboard.Models.ViewModels.Model_QuestionCreate
+@using ESL.Services.BaseRepository
+
+@{
+    ViewBag.Title = "طرح سوال";
+    Layout = "~/Areas/Dashboard/Views/Shared/_Master.cshtml";
+}
+
+
+@section Styles {
+
+    <script src="~/Scripts/Plugins/ckeditor/ckeditor.js"></script>
+    <script src="~/Scripts/Plugins/ckfinder/ckfinder.js"></script>
+
+    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css" rel="stylesheet" />
+    <link href="https://unpkg.com/filepond/dist/filepond.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/filepond-plugin-file-poster/dist/filepond-plugin-file-poster.css" rel="stylesheet">
+
+    <style>
+
+        .filepond--drop-label {
+            color: #4c4e53;
+        }
+
+        .filepond--label-action {
+            text-decoration-color: #babdc0;
+        }
+
+        .filepond--panel-root {
+            border-radius: 2em;
+            background-color: #edf0f4;
+            height: 1em;
+        }
+
+        .filepond--item-panel {
+            background-color: #595e68;
+        }
+
+        .filepond--drip-blob {
+            background-color: #7f8a9a;
+        }
+
+    </style>
+
+}
+
+
+<div class="panel panel-body panel-default  navigation">
+
+    <div class="pull-left">
+        <h4 class="navigation-title"><b>طرح سوال</b></h4>
+    </div>
+
+    <div class="pull-right">
+        <a href="@Url.Action("CreateQuestion", "ExamRemotely", new { id = Model.ExamID })"><i class="glyphicon glyphicon-plus navigation-btn-icon"></i></a>
+    </div>
+
+</div>
+
+<div class="panel panel-default">
+
+    <div class="panel-body">
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.ExamID)
+
+            <div class="row">
+
+                <div class="col-md-8">
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "" })
+                        <div class="input-group">
+                            @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control ckeditor" } })
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label " })
+                        @Html.DropDownListFor(model => model.Type, Rep_CodeGroup.Get_AllCodesWithGroupGUID(CodeGroup.QuestionType), new { @class = "form-control Select2_Normal" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Mark, htmlAttributes: new { @class = "control-label " })
+                        <div class="input-group">
+                            <span class=" input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                            @Html.EditorFor(model => model.Mark, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Mark, "", new { @class = "text-danger" })
+                    </div>
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Group, htmlAttributes: new { @class = "control-label " })
+                        @Html.DropDownListFor(model => model.Group, Rep_CodeGroup.Get_AllCodesWithGroupGUID(CodeGroup.QuestionGroup), new { @class = "form-control Select2_Normal" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Filepond1, htmlAttributes: new { @class = "control-label " })
+                        <input type="file" class="filepond" name="Filepond1" data-max-file-size="25MB">
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Filepond2, htmlAttributes: new { @class = "control-label " })
+                        <input type="file" class="filepond" name="Filepond2" data-max-file-size="25MB">
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Filepond3, htmlAttributes: new { @class = "control-label " })
+                        <input type="file" class="filepond" name="Filepond3" data-max-file-size="25MB">
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Filepond4, htmlAttributes: new { @class = "control-label " })
+                        <input type="file" class="filepond" name="Filepond4" data-max-file-size="25MB">
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Response, htmlAttributes: new { @class = "control-label " })
+                        @Html.DropDownListFor(model => model.Response, Rep_CodeGroup.Get_AllCodesWithGroupGUID(CodeGroup.QuestionOption), new { @class = "form-control Select2_Normal" })
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="" style="margin-top:20px;">
+                <button class="btn btn-danger modal-btn-Dual pull-left" type="button" data-dismiss="modal">انصراف</button>
+                <button class="btn btn-success modal-btn-Dual pull-right " type="submit" name="btn-Delete">تایید</button>
+            </div>
+        }
+
+    </div>
+
+</div>
+
+
+@section Scripts {
+
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/Plugins/jQuery.Select2/select2.js"></script>
+    <script src="~/Scripts/Plugins/jQuery.Select2/i18n/fa.js"></script>
+
+    <script src="~/Scripts/MyScripts/Select2_Config.js"></script>
+
+    <script src="https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.min.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.min.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.min.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.js"></script>
+    <script src="https://unpkg.com/filepond/dist/filepond.min.js"></script>
+
+    <script>
+
+        // We want to preview images, so we need to register the Image Preview plugin
+        FilePond.registerPlugin(
+
+            // encodes the file as base64 data
+            FilePondPluginFileEncode,
+
+            // validates the size of the file
+            FilePondPluginFileValidateSize,
+
+            // corrects mobile image orientation
+            FilePondPluginImageExifOrientation,
+
+            // previews dropped images
+            FilePondPluginImagePreview,
+        );
+
+        // Select the file input and use create() to turn it into a pond
+        for (var i = 0; i < 4; i++) {
+            FilePond.create(
+                document.querySelectorAll('.filepond')[i]
+            );
+        }
+        
+
+        FilePond.setOptions({
+                server: {
+                    process: '@Url.Action("SaveFile", "Upload")',
+                    revert: '@Url.Action("RevertFile", "Upload")'
+                }
+            });
+
+    </script>
+
+    @*<script src="~/Scripts/MyScripts/CKEditor_Config.js"></script>*@
+
+}

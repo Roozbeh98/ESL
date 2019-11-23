@@ -19,7 +19,7 @@ namespace ESL.DataLayer.Domain
         {
             this.Tbl_ClassPlan = new HashSet<Tbl_ClassPlan>();
             this.Tbl_Document = new HashSet<Tbl_Document>();
-            this.Tbl_ExamRemotely = new HashSet<Tbl_ExamRemotely>();
+            this.Tbl_ExamRemotelyPlan = new HashSet<Tbl_ExamRemotelyPlan>();
             this.Tbl_Organization = new HashSet<Tbl_Organization>();
             this.Tbl_PageDocuments = new HashSet<Tbl_PageDocuments>();
             this.Tbl_Payment = new HashSet<Tbl_Payment>();
@@ -44,7 +44,7 @@ namespace ESL.DataLayer.Domain
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_Document> Tbl_Document { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tbl_ExamRemotely> Tbl_ExamRemotely { get; set; }
+        public virtual ICollection<Tbl_ExamRemotelyPlan> Tbl_ExamRemotelyPlan { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_Organization> Tbl_Organization { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

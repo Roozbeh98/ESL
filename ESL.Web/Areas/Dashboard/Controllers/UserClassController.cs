@@ -17,7 +17,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
         public ActionResult Create(int id)
         {
-            Model_UserClassCreate model = new Model_UserClassCreate()
+            Model_UserClassPlanCreate model = new Model_UserClassPlanCreate()
             {
                 ClassID = id
             };
@@ -27,20 +27,20 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Model_UserClassCreate model)
+        public ActionResult Create(Model_UserClassPlanCreate model)
         {
             if (ModelState.IsValid)
             {
-                Tbl_UserClass q = new Tbl_UserClass
+                Tbl_UserClassPlan q = new Tbl_UserClassPlan
                 {
-                    UC_Guid = Guid.NewGuid(),
-                    UC_UserID = new Rep_User().Get_UserIDWithGUID(model.UserGuid),
-                    UC_CPID = model.ClassID,
-                    UC_CreationDate = DateTime.Now,
-                    UC_ModifiedDate = DateTime.Now
+                    UCP_Guid = Guid.NewGuid(),
+                    UCP_UserID = new Rep_User().Get_UserIDWithGUID(model.UserGuid),
+                    UCP_CPID = model.ClassID,
+                    UCP_CreationDate = DateTime.Now,
+                    UCP_ModifiedDate = DateTime.Now
                 };
 
-                db.Tbl_UserClass.Add(q);
+                db.Tbl_UserClassPlan.Add(q);
 
                 if (Convert.ToBoolean(db.SaveChanges() > 0))
                 {
@@ -69,7 +69,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             {
                 Model_MessageModal model = new Model_MessageModal();
 
-                var q = db.Tbl_UserClass.Where(x => x.UC_ID == id).SingleOrDefault();
+                var q = db.Tbl_UserClassPlan.Where(x => x.UCP_ID == id).SingleOrDefault();
 
                 if (q != null)
                 {
@@ -94,11 +94,11 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         {
             if (ModelState.IsValid)
             {
-                var q = db.Tbl_UserClass.Where(x => x.UC_ID == model.ID).SingleOrDefault();
+                var q = db.Tbl_UserClassPlan.Where(x => x.UCP_ID == model.ID).SingleOrDefault();
 
                 if (q != null)
                 {
-                    q.UC_IsDelete = true;
+                    q.UCP_IsDelete = true;
 
                     db.Entry(q).State = EntityState.Modified;
 
@@ -108,7 +108,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                         TempData["TosterType"] = TosterType.Maseage;
                         TempData["TosterMassage"] = "عملیات با موفقیت انجام شده";
 
-                        return RedirectToAction("Details", "Class", new { area = "Dashboard", id = db.Tbl_UserClass.Where(x => x.UC_ID == model.ID).SingleOrDefault().UC_CPID });
+                        return RedirectToAction("Details", "Class", new { area = "Dashboard", id = db.Tbl_UserClassPlan.Where(x => x.UCP_ID == model.ID).SingleOrDefault().UCP_CPID });
                     }
                     else
                     {
@@ -130,7 +130,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             {
                 Model_MessageModal model = new Model_MessageModal();
 
-                var q = db.Tbl_UserClass.Where(x => x.UC_ID == id).SingleOrDefault();
+                var q = db.Tbl_UserClassPlan.Where(x => x.UCP_ID == id).SingleOrDefault();
 
                 if (q != null)
                 {
@@ -155,11 +155,11 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         {
             if (ModelState.IsValid)
             {
-                var q = db.Tbl_UserClass.Where(x => x.UC_ID == model.ID).SingleOrDefault();
+                var q = db.Tbl_UserClassPlan.Where(x => x.UCP_ID == model.ID).SingleOrDefault();
 
                 if (q != null)
                 {
-                    q.UC_IsDelete = false;
+                    q.UCP_IsDelete = false;
 
                     db.Entry(q).State = EntityState.Modified;
 
@@ -169,7 +169,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                         TempData["TosterType"] = TosterType.Maseage;
                         TempData["TosterMassage"] = "عملیات با موفقیت انجام شده";
 
-                        return RedirectToAction("Details", "Class", new { area = "Dashboard", id = db.Tbl_UserClass.Where(x => x.UC_ID == model.ID).SingleOrDefault().UC_CPID });
+                        return RedirectToAction("Details", "Class", new { area = "Dashboard", id = db.Tbl_UserClassPlan.Where(x => x.UCP_ID == model.ID).SingleOrDefault().UCP_CPID });
                     }
                     else
                     {

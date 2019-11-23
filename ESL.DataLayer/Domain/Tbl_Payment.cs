@@ -17,15 +17,18 @@ namespace ESL.DataLayer.Domain
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Tbl_Payment()
         {
-            this.Tbl_UserClassPresence = new HashSet<Tbl_UserClassPresence>();
+            this.Tbl_UserClassPlanPresence = new HashSet<Tbl_UserClassPlanPresence>();
+            this.Tbl_UserClassPlan = new HashSet<Tbl_UserClassPlan>();
+            this.Tbl_UserExamInPersonPlan = new HashSet<Tbl_UserExamInPersonPlan>();
+            this.Tbl_UserWorkshopPlan = new HashSet<Tbl_UserWorkshopPlan>();
         }
     
         public int Payment_ID { get; set; }
         public System.Guid Payment_Guid { get; set; }
         public int Payment_UserID { get; set; }
         public int Payment_TitleCodeID { get; set; }
-        public int Payment_WayCodeID { get; set; }
-        public int Payment_TypeCodeID { get; set; }
+        public Nullable<int> Payment_WayCodeID { get; set; }
+        public int Payment_StateCodeID { get; set; }
         public string Payment_Description { get; set; }
         public int Payment_Cost { get; set; }
         public int Payment_Discount { get; set; }
@@ -42,6 +45,12 @@ namespace ESL.DataLayer.Domain
         public virtual Tbl_Document Tbl_Document { get; set; }
         public virtual Tbl_User Tbl_User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tbl_UserClassPresence> Tbl_UserClassPresence { get; set; }
+        public virtual ICollection<Tbl_UserClassPlanPresence> Tbl_UserClassPlanPresence { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tbl_UserClassPlan> Tbl_UserClassPlan { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tbl_UserExamInPersonPlan> Tbl_UserExamInPersonPlan { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tbl_UserWorkshopPlan> Tbl_UserWorkshopPlan { get; set; }
     }
 }

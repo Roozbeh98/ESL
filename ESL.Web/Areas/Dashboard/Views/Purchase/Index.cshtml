@@ -10,7 +10,7 @@
 <div class="panel panel-body panel-default navigation">
 
     <div class="pull-left">
-        <h4 class="navigation-title"><b>فروشگاه</b></h4>
+        <h4 class="navigation-title"><b>@ViewBag.Title</b></h4>
     </div>
 
 </div>
@@ -54,7 +54,7 @@
 
                     <div class="card card-price">
                         <div class="card-img">
-                            <div class="type" style="background-color: darkmagenta;">
+                            <div class="type" style="background-color: darkred;">
                                 <h6>کلاس</h6>
                             </div>
                             <div class="card-caption">
@@ -67,11 +67,11 @@
                             </ul>
                             <table class="table">
                                 <tr><td>زمان شروع</td><td class="note">@item.Time</td></tr>
-                                <tr><td>ظرفیت</td><td class="note">150 @item.Capacity</td></tr>
+                                <tr><td>ظرفیت</td><td class="note">@item.Capacity</td></tr>
                                 <tr><td>مکان برگزاری</td><td class="note">@item.Location</td></tr>
                                 <tr><td>زمان برگزاری</td><td class="note">@PersianDateExtensionMethods.ToPeString(item.Date, "yyyy/MM/dd HH:mm")</td></tr>
                             </table>
-                            <a href="javascript:void(0)" onclick="Pay(@item.ID, @((int)ProductType.Class))" class="btn esl-btn-success btn-lg btn-block buy-now">@item.Cost<span>تومان</span></a>
+                            <a href="javascript:void(0)" onclick="Pay(@item.ID, @((int)ProductType.Class))" class="btn esl-btn-success btn-lg btn-block buy-now"><span>جلسه ای&nbsp;&nbsp;</span>@item.Cost<span>&nbsp;&nbsp;تومان</span></a>
                         </div>
                     </div>
 
@@ -81,7 +81,7 @@
 
                     <div class="card card-price">
                         <div class="card-img">
-                            <div class="type" style="background-color: darkred;">
+                            <div class="type" style="background-color: darkslategray;">
                                 <h6>آزمون</h6>
                             </div>
                             <div class="card-caption">

@@ -17,7 +17,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
         public ActionResult Create(int id)
         {
-            Model_UserWorkshopCreate model = new Model_UserWorkshopCreate()
+            Model_UserWorkshopPlanCreate model = new Model_UserWorkshopPlanCreate()
             {
                 WorkshopID = id
             };
@@ -27,20 +27,20 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Model_UserWorkshopCreate model)
+        public ActionResult Create(Model_UserWorkshopPlanCreate model)
         {
             if (ModelState.IsValid)
             {
-                Tbl_UserWorkshop q = new Tbl_UserWorkshop
+                Tbl_UserWorkshopPlan q = new Tbl_UserWorkshopPlan
                 {
-                    UW_Guid = Guid.NewGuid(),
-                    UW_UserID = new Rep_User().Get_UserIDWithGUID(model.UserGuid),
-                    UW_WPID = model.WorkshopID,
-                    UW_CreationDate = DateTime.Now,
-                    UW_ModifiedDate = DateTime.Now
+                    UWP_Guid = Guid.NewGuid(),
+                    UWP_UserID = new Rep_User().Get_UserIDWithGUID(model.UserGuid),
+                    UWP_WPID = model.WorkshopID,
+                    UWP_CreationDate = DateTime.Now,
+                    UWP_ModifiedDate = DateTime.Now
                 };
 
-                db.Tbl_UserWorkshop.Add(q);
+                db.Tbl_UserWorkshopPlan.Add(q);
 
                 if (Convert.ToBoolean(db.SaveChanges() > 0))
                 {
@@ -65,14 +65,14 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
         public ActionResult SetPresence(int id)
         {
-            var q = db.Tbl_UserWorkshop.Where(x => x.UW_ID == id).SingleOrDefault();
+            var q = db.Tbl_UserWorkshopPlan.Where(x => x.UWP_ID == id).SingleOrDefault();
 
             if (q != null)
             {
-                Model_UserWorkshopSetPresence model = new Model_UserWorkshopSetPresence()
+                Model_UserWorkshopPlanSetPresence model = new Model_UserWorkshopPlanSetPresence()
                 {
                     ID = id,
-                    Presence = q.UW_IsPresent
+                    Presence = q.UWP_IsPresent
                 };
 
                 return PartialView(model);
@@ -83,15 +83,15 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult SetPresence(Model_UserWorkshopSetPresence model)
+        public ActionResult SetPresence(Model_UserWorkshopPlanSetPresence model)
         {
             if (ModelState.IsValid)
             {
-                var q = db.Tbl_UserWorkshop.Where(x => x.UW_ID == model.ID).SingleOrDefault();
+                var q = db.Tbl_UserWorkshopPlan.Where(x => x.UWP_ID == model.ID).SingleOrDefault();
 
                 if (q != null)
                 {
-                    q.UW_IsPresent = model.Presence;
+                    q.UWP_IsPresent = model.Presence;
 
                     db.Entry(q).State = EntityState.Modified;
 
@@ -101,7 +101,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                         TempData["TosterType"] = TosterType.Maseage;
                         TempData["TosterMassage"] = "عملیات با موفقیت انجام شده";
 
-                        return RedirectToAction("Details", "Workshop", new { area = "Dashboard", id = db.Tbl_UserWorkshop.Where(x => x.UW_ID == model.ID).SingleOrDefault().UW_WPID });
+                        return RedirectToAction("Details", "Workshop", new { area = "Dashboard", id = db.Tbl_UserWorkshopPlan.Where(x => x.UWP_ID == model.ID).SingleOrDefault().UWP_WPID });
                     }
                     else
                     {
@@ -123,7 +123,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             {
                 Model_MessageModal model = new Model_MessageModal();
 
-                var q = db.Tbl_UserWorkshop.Where(x => x.UW_ID == id).SingleOrDefault();
+                var q = db.Tbl_UserWorkshopPlan.Where(x => x.UWP_ID == id).SingleOrDefault();
 
                 if (q != null)
                 {
@@ -148,11 +148,11 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         {
             if (ModelState.IsValid)
             {
-                var q = db.Tbl_UserWorkshop.Where(x => x.UW_ID == model.ID).SingleOrDefault();
+                var q = db.Tbl_UserWorkshopPlan.Where(x => x.UWP_ID == model.ID).SingleOrDefault();
 
                 if (q != null)
                 {
-                    q.UW_IsDelete = true;
+                    q.UWP_IsDelete = true;
 
                     db.Entry(q).State = EntityState.Modified;
 
@@ -162,7 +162,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                         TempData["TosterType"] = TosterType.Maseage;
                         TempData["TosterMassage"] = "عملیات با موفقیت انجام شده";
 
-                        return RedirectToAction("Details", "Workshop", new { area = "Dashboard", id = db.Tbl_UserWorkshop.Where(x => x.UW_ID == model.ID).SingleOrDefault().UW_WPID });
+                        return RedirectToAction("Details", "Workshop", new { area = "Dashboard", id = db.Tbl_UserWorkshopPlan.Where(x => x.UWP_ID == model.ID).SingleOrDefault().UWP_WPID });
                     }
                     else
                     {
@@ -184,7 +184,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             {
                 Model_MessageModal model = new Model_MessageModal();
 
-                var q = db.Tbl_UserWorkshop.Where(x => x.UW_ID == id).SingleOrDefault();
+                var q = db.Tbl_UserWorkshopPlan.Where(x => x.UWP_ID == id).SingleOrDefault();
 
                 if (q != null)
                 {
@@ -209,11 +209,11 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         {
             if (ModelState.IsValid)
             {
-                var q = db.Tbl_UserWorkshop.Where(x => x.UW_ID == model.ID).SingleOrDefault();
+                var q = db.Tbl_UserWorkshopPlan.Where(x => x.UWP_ID == model.ID).SingleOrDefault();
 
                 if (q != null)
                 {
-                    q.UW_IsDelete = false;
+                    q.UWP_IsDelete = false;
 
                     db.Entry(q).State = EntityState.Modified;
 
@@ -223,7 +223,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                         TempData["TosterType"] = TosterType.Maseage;
                         TempData["TosterMassage"] = "عملیات با موفقیت انجام شده";
 
-                        return RedirectToAction("Details", "Workshop", new { area = "Dashboard", id = db.Tbl_UserWorkshop.Where(x => x.UW_ID == model.ID).SingleOrDefault().UW_WPID });
+                        return RedirectToAction("Details", "Workshop", new { area = "Dashboard", id = db.Tbl_UserWorkshopPlan.Where(x => x.UWP_ID == model.ID).SingleOrDefault().UWP_WPID });
                     }
                     else
                     {

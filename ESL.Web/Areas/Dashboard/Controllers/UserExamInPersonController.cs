@@ -18,7 +18,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
         public ActionResult Create(int id)
         {
-            Model_UserExamInPersonCreate model = new Model_UserExamInPersonCreate()
+            Model_UserExamInPersonPlanCreate model = new Model_UserExamInPersonPlanCreate()
             {
                 ExamID = id
             };
@@ -28,20 +28,20 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Model_UserExamInPersonCreate model)
+        public ActionResult Create(Model_UserExamInPersonPlanCreate model)
         {
             if (ModelState.IsValid)
             {
-                Tbl_UserExamInPerson q = new Tbl_UserExamInPerson
+                Tbl_UserExamInPersonPlan q = new Tbl_UserExamInPersonPlan
                 {
-                    UEIP_Guid = Guid.NewGuid(),
-                    UEIP_UserID = new Rep_User().Get_UserIDWithGUID(model.UserGuid),
-                    UEIP_EIPID = model.ExamID,
-                    UEIP_CreationDate = DateTime.Now,
-                    UEIP_ModifiedDate = DateTime.Now
+                    UEIPP_Guid = Guid.NewGuid(),
+                    UEIPP_UserID = new Rep_User().Get_UserIDWithGUID(model.UserGuid),
+                    UEIPP_EIPPID = model.ExamID,
+                    UEIPP_CreationDate = DateTime.Now,
+                    UEIPP_ModifiedDate = DateTime.Now
                 };
 
-                db.Tbl_UserExamInPerson.Add(q);
+                db.Tbl_UserExamInPersonPlan.Add(q);
 
                 if (Convert.ToBoolean(db.SaveChanges() > 0))
                 {
@@ -66,14 +66,14 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
         public ActionResult SetMark(int id)
         {
-            var q = db.Tbl_UserExamInPerson.Where(x => x.UEIP_ID == id).SingleOrDefault();
+            var q = db.Tbl_UserExamInPersonPlan.Where(x => x.UEIPP_ID == id).SingleOrDefault();
 
             if (q != null)
             {
-                Model_UserExamInPersonSetMark model = new Model_UserExamInPersonSetMark()
+                Model_UserExamInPersonPlanSetMark model = new Model_UserExamInPersonPlanSetMark()
                 {
                     ID = id,
-                    Mark = q.UEIP_Mark
+                    Mark = q.UEIPP_Mark
                 };
 
                 return PartialView(model);
@@ -84,15 +84,15 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult SetMark(Model_UserExamInPersonSetMark model)
+        public ActionResult SetMark(Model_UserExamInPersonPlanSetMark model)
         {
             if (ModelState.IsValid)
             {
-                var q = db.Tbl_UserExamInPerson.Where(x => x.UEIP_ID == model.ID).SingleOrDefault();
+                var q = db.Tbl_UserExamInPersonPlan.Where(x => x.UEIPP_ID == model.ID).SingleOrDefault();
 
                 if (q != null)
                 {
-                    q.UEIP_Mark = model.Mark;
+                    q.UEIPP_Mark = model.Mark;
 
                     db.Entry(q).State = EntityState.Modified;
 
@@ -102,7 +102,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                         TempData["TosterType"] = TosterType.Maseage;
                         TempData["TosterMassage"] = "عملیات با موفقیت انجام شده";
 
-                        return RedirectToAction("Details", "ExamInPerson", new { area = "Dashboard", id = db.Tbl_UserExamInPerson.Where(x => x.UEIP_ID == model.ID).SingleOrDefault().UEIP_EIPID });
+                        return RedirectToAction("Details", "ExamInPerson", new { area = "Dashboard", id = db.Tbl_UserExamInPersonPlan.Where(x => x.UEIPP_ID == model.ID).SingleOrDefault().UEIPP_EIPPID });
                     }
                     else
                     {
@@ -120,14 +120,14 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
         public ActionResult SetSeatNumber(int id)
         {
-            var q = db.Tbl_UserExamInPerson.Where(x => x.UEIP_ID == id).SingleOrDefault();
+            var q = db.Tbl_UserExamInPersonPlan.Where(x => x.UEIPP_ID == id).SingleOrDefault();
 
             if (q != null)
             {
-                Model_UserExamInPersonSetSeatNumber model = new Model_UserExamInPersonSetSeatNumber()
+                Model_UserExamInPersonPlanSetSeatNumber model = new Model_UserExamInPersonPlanSetSeatNumber()
                 {
                     ID = id,
-                    SeatNumber = q.UEIP_SeatNumber
+                    SeatNumber = q.UEIPP_SeatNumber
                 };
 
                 return PartialView(model);
@@ -138,15 +138,15 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult SetSeatNumber(Model_UserExamInPersonSetSeatNumber model)
+        public ActionResult SetSeatNumber(Model_UserExamInPersonPlanSetSeatNumber model)
         {
             if (ModelState.IsValid)
             {
-                var q = db.Tbl_UserExamInPerson.Where(x => x.UEIP_ID == model.ID).SingleOrDefault();
+                var q = db.Tbl_UserExamInPersonPlan.Where(x => x.UEIPP_ID == model.ID).SingleOrDefault();
 
                 if (q != null)
                 {
-                    q.UEIP_SeatNumber = model.SeatNumber;
+                    q.UEIPP_SeatNumber = model.SeatNumber;
 
                     db.Entry(q).State = EntityState.Modified;
 
@@ -156,7 +156,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                         TempData["TosterType"] = TosterType.Maseage;
                         TempData["TosterMassage"] = "عملیات با موفقیت انجام شده";
 
-                        return RedirectToAction("Details", "ExamInPerson", new { area = "Dashboard", id = db.Tbl_UserExamInPerson.Where(x => x.UEIP_ID == model.ID).SingleOrDefault().UEIP_EIPID });
+                        return RedirectToAction("Details", "ExamInPerson", new { area = "Dashboard", id = db.Tbl_UserExamInPersonPlan.Where(x => x.UEIPP_ID == model.ID).SingleOrDefault().UEIPP_EIPPID });
                     }
                     else
                     {
@@ -174,14 +174,14 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
         public ActionResult SetPresence(int id)
         {
-            var q = db.Tbl_UserExamInPerson.Where(x => x.UEIP_ID == id).SingleOrDefault();
+            var q = db.Tbl_UserExamInPersonPlan.Where(x => x.UEIPP_ID == id).SingleOrDefault();
 
             if (q != null)
             {
-                Model_UserExamInPersonSetPresence model = new Model_UserExamInPersonSetPresence()
+                Model_UserExamInPersonPlanSetPresence model = new Model_UserExamInPersonPlanSetPresence()
                 {
                     ID = id,
-                    Presence = q.UEIP_IsPresent
+                    Presence = q.UEIPP_IsPresent
                 };
 
                 return PartialView(model);
@@ -192,15 +192,15 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult SetPresence(Model_UserExamInPersonSetPresence model)
+        public ActionResult SetPresence(Model_UserExamInPersonPlanSetPresence model)
         {
             if (ModelState.IsValid)
             {
-                var q = db.Tbl_UserExamInPerson.Where(x => x.UEIP_ID == model.ID).SingleOrDefault();
+                var q = db.Tbl_UserExamInPersonPlan.Where(x => x.UEIPP_ID == model.ID).SingleOrDefault();
 
                 if (q != null)
                 {
-                    q.UEIP_IsPresent = model.Presence;
+                    q.UEIPP_IsPresent = model.Presence;
 
                     db.Entry(q).State = EntityState.Modified;
 
@@ -210,7 +210,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                         TempData["TosterType"] = TosterType.Maseage;
                         TempData["TosterMassage"] = "عملیات با موفقیت انجام شده";
 
-                        return RedirectToAction("Details", "ExamInPerson", new { area = "Dashboard", id = db.Tbl_UserExamInPerson.Where(x => x.UEIP_ID == model.ID).SingleOrDefault().UEIP_EIPID });
+                        return RedirectToAction("Details", "ExamInPerson", new { area = "Dashboard", id = db.Tbl_UserExamInPersonPlan.Where(x => x.UEIPP_ID == model.ID).SingleOrDefault().UEIPP_EIPPID });
                     }
                     else
                     {
@@ -232,7 +232,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             {
                 Model_MessageModal model = new Model_MessageModal();
 
-                var q = db.Tbl_UserExamInPerson.Where(x => x.UEIP_ID == id).SingleOrDefault();
+                var q = db.Tbl_UserExamInPersonPlan.Where(x => x.UEIPP_ID == id).SingleOrDefault();
 
                 if (q != null)
                 {
@@ -257,11 +257,11 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         {
             if (ModelState.IsValid)
             {
-                var q = db.Tbl_UserExamInPerson.Where(x => x.UEIP_ID == model.ID).SingleOrDefault();
+                var q = db.Tbl_UserExamInPersonPlan.Where(x => x.UEIPP_ID == model.ID).SingleOrDefault();
 
                 if (q != null)
                 {
-                    q.UEIP_IsDelete = true;
+                    q.UEIPP_IsDelete = true;
 
                     db.Entry(q).State = EntityState.Modified;
 
@@ -271,7 +271,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                         TempData["TosterType"] = TosterType.Maseage;
                         TempData["TosterMassage"] = "عملیات با موفقیت انجام شده";
 
-                        return RedirectToAction("Details", "ExamInPerson", new { area = "Dashboard", id = db.Tbl_UserExamInPerson.Where(x => x.UEIP_ID == model.ID).SingleOrDefault().UEIP_EIPID });
+                        return RedirectToAction("Details", "ExamInPerson", new { area = "Dashboard", id = db.Tbl_UserExamInPersonPlan.Where(x => x.UEIPP_ID == model.ID).SingleOrDefault().UEIPP_EIPPID });
                     }
                     else
                     {
@@ -293,7 +293,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             {
                 Model_MessageModal model = new Model_MessageModal();
 
-                var q = db.Tbl_UserExamInPerson.Where(x => x.UEIP_ID == id).SingleOrDefault();
+                var q = db.Tbl_UserExamInPersonPlan.Where(x => x.UEIPP_ID == id).SingleOrDefault();
 
                 if (q != null)
                 {
@@ -318,11 +318,11 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         {
             if (ModelState.IsValid)
             {
-                var q = db.Tbl_UserExamInPerson.Where(x => x.UEIP_ID == model.ID).SingleOrDefault();
+                var q = db.Tbl_UserExamInPersonPlan.Where(x => x.UEIPP_ID == model.ID).SingleOrDefault();
 
                 if (q != null)
                 {
-                    q.UEIP_IsDelete = false;
+                    q.UEIPP_IsDelete = false;
 
                     db.Entry(q).State = EntityState.Modified;
 
@@ -332,7 +332,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                         TempData["TosterType"] = TosterType.Maseage;
                         TempData["TosterMassage"] = "عملیات با موفقیت انجام شده";
 
-                        return RedirectToAction("Details", "ExamInPerson", new { area = "Dashboard", id = db.Tbl_UserExamInPerson.Where(x => x.UEIP_ID == model.ID).SingleOrDefault().UEIP_EIPID });
+                        return RedirectToAction("Details", "ExamInPerson", new { area = "Dashboard", id = db.Tbl_UserExamInPersonPlan.Where(x => x.UEIPP_ID == model.ID).SingleOrDefault().UEIPP_EIPPID });
                     }
                     else
                     {

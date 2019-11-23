@@ -16,11 +16,11 @@ namespace ESL.Services.BaseRepository
         {
             List<SelectListItem> list = new List<SelectListItem>();
 
-            var q = db.Tbl_Exam.ToList();
+            var q = db.Tbl_ExamInPerson.ToList();
 
             foreach (var item in q)
             {
-                list.Add(new SelectListItem() { Value = item.Exam_Guid.ToString(), Text = item.Exam_Title });
+                list.Add(new SelectListItem() { Value = item.EIP_Guid.ToString(), Text = item.EIP_Title });
             }
 
             return list.AsEnumerable();

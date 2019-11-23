@@ -25,15 +25,14 @@ namespace ESL.DataLayer.Domain
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<Tbl_Class> Tbl_Class { get; set; }
         public virtual DbSet<Tbl_ClassPlan> Tbl_ClassPlan { get; set; }
         public virtual DbSet<Tbl_Code> Tbl_Code { get; set; }
         public virtual DbSet<Tbl_CodeGroup> Tbl_CodeGroup { get; set; }
         public virtual DbSet<Tbl_Document> Tbl_Document { get; set; }
-        public virtual DbSet<Tbl_Exam> Tbl_Exam { get; set; }
         public virtual DbSet<Tbl_ExamInPerson> Tbl_ExamInPerson { get; set; }
-        public virtual DbSet<Tbl_ExamRemotely> Tbl_ExamRemotely { get; set; }
+        public virtual DbSet<Tbl_ExamInPersonPlan> Tbl_ExamInPersonPlan { get; set; }
+        public virtual DbSet<Tbl_ExamRemotelyPlan> Tbl_ExamRemotelyPlan { get; set; }
         public virtual DbSet<Tbl_Gallery> Tbl_Gallery { get; set; }
         public virtual DbSet<Tbl_GalleryDocument> Tbl_GalleryDocument { get; set; }
         public virtual DbSet<Tbl_Menu> Tbl_Menu { get; set; }
@@ -52,17 +51,17 @@ namespace ESL.DataLayer.Domain
         public virtual DbSet<Tbl_SMSResponse> Tbl_SMSResponse { get; set; }
         public virtual DbSet<Tbl_SMSSetting> Tbl_SMSSetting { get; set; }
         public virtual DbSet<Tbl_SMSTemplate> Tbl_SMSTemplate { get; set; }
-        public virtual DbSet<Tbl_SubExam> Tbl_SubExam { get; set; }
+        public virtual DbSet<Tbl_SubExamInPerson> Tbl_SubExamInPerson { get; set; }
         public virtual DbSet<Tbl_SubMenu> Tbl_SubMenu { get; set; }
         public virtual DbSet<Tbl_SubWorkshop> Tbl_SubWorkshop { get; set; }
         public virtual DbSet<Tbl_Tag> Tbl_Tag { get; set; }
         public virtual DbSet<Tbl_User> Tbl_User { get; set; }
-        public virtual DbSet<Tbl_UserClass> Tbl_UserClass { get; set; }
-        public virtual DbSet<Tbl_UserClassPresence> Tbl_UserClassPresence { get; set; }
-        public virtual DbSet<Tbl_UserExam> Tbl_UserExam { get; set; }
-        public virtual DbSet<Tbl_UserExamAccess> Tbl_UserExamAccess { get; set; }
-        public virtual DbSet<Tbl_UserExamInPerson> Tbl_UserExamInPerson { get; set; }
-        public virtual DbSet<Tbl_UserWorkshop> Tbl_UserWorkshop { get; set; }
+        public virtual DbSet<Tbl_UserClassPlan> Tbl_UserClassPlan { get; set; }
+        public virtual DbSet<Tbl_UserClassPlanPresence> Tbl_UserClassPlanPresence { get; set; }
+        public virtual DbSet<Tbl_UserExamInPersonPlan> Tbl_UserExamInPersonPlan { get; set; }
+        public virtual DbSet<Tbl_UserExamRemotelyPlan> Tbl_UserExamRemotelyPlan { get; set; }
+        public virtual DbSet<Tbl_UserExamRemotelyPlanAccess> Tbl_UserExamRemotelyPlanAccess { get; set; }
+        public virtual DbSet<Tbl_UserWorkshopPlan> Tbl_UserWorkshopPlan { get; set; }
         public virtual DbSet<Tbl_Wallet> Tbl_Wallet { get; set; }
         public virtual DbSet<Tbl_Workshop> Tbl_Workshop { get; set; }
         public virtual DbSet<Tbl_WorkshopPlan> Tbl_WorkshopPlan { get; set; }

@@ -148,16 +148,14 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
             db.Tbl_Wallet.Add(_Wallet);
 
-            //string test = new SMSPortal().SendServiceable(model.Mobile, "0", DateTime.Now.ToString("yyyy/MM/dd"), "0", SMSTemplate.Success);
-            string test = new SMSPortal().SendServiceable(model.Mobile, model.Name + " " + model.Family, "", "", SMSTemplate.Register);
-
-            //if (test == -1)
-            //{
-            //    // sth went wrong!
-            //};
-
             if (Convert.ToBoolean(db.SaveChanges() > 0))
             {
+                if (new SMSPortal().SendServiceable(model.Mobile, model.Mobile, model.Password, "", model.Name + " " + model.Family, SMSTemplate.Register) != "ارسال به مخابرات")
+                {
+                    TempData["TosterState"] = "warning";
+                    TempData["TosterType"] = TosterType.Maseage;
+                    TempData["TosterMassage"] = "خطا در ارسال پیامک";
+                };
 
                 TempData["TosterState"] = "success";
                 TempData["TosterType"] = TosterType.Maseage;
@@ -169,11 +167,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             {
                 return View();
             }
-
-         
         }
-
-
     }
 }
 

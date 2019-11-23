@@ -91,12 +91,12 @@ namespace ESL.Services.Services
             return false;
         }
 
-        public string SendServiceable(string receptor, string token, string token2, string token3, SMSTemplate template)
+        public string SendServiceable(string receptor, string token, string token2, string token3, string token20, SMSTemplate template)
         {
             try
             {
                 var api = new KavenegarApi(apikey);
-                SendResult result = api.VerifyLookup(receptor, token, token2, token3, GetTemplate(template));
+                SendResult result = api.VerifyLookup(receptor, token, token2, token3, "", token20, GetTemplate(template), Kavenegar.Models.Enums.VerifyLookupType.Sms);
 
                 InsertIntoDB(result, token, token2, token3);
 
@@ -107,6 +107,10 @@ namespace ESL.Services.Services
                 return ex.Message;
             }
             catch (HttpException ex)
+            {
+                return ex.Message;
+            }
+            catch (Exception ex)
             {
                 return ex.Message;
             }

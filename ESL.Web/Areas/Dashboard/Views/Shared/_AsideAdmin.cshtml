@@ -83,14 +83,14 @@
         <ul class="collapse nav aside-sub-panel" id="sub-menu-message">
 
             <li>
-                <a href="@Url.Action("Index", "Exam")">
+                <a href="@Url.Action("Index", "ExamRemotely")">
                     <i class="glyphicon glyphicon-book"></i>
                     ارسال پیام
                 </a>
             </li>
 
             <li>
-                <a href="@Url.Action("Index", "Exam")">
+                <a href="@Url.Action("Index", "ExamRemotely")">
                     <i class="glyphicon glyphicon-book"></i>
                     ارسال پیام گروهی
                 </a>
@@ -132,9 +132,30 @@
             </li>
 
             <li>
-                <a href="@Url.Action("Suspended", "Payment")">
+                <a href="@Url.Action("Confirmed", "Payment")">
+                    <i class="glyphicon glyphicon-book"></i>
+                    لیست تراکنش های تایید شده
+                </a>
+            </li>
+
+            <li>
+                <a href="@Url.Action("WaitForAcceptance", "Payment")">
                     <i class="glyphicon glyphicon-book"></i>
                     لیست تراکنش های تایید نشده
+                </a>
+            </li>
+
+            <li>
+                <a href="@Url.Action("Suspended", "Payment")">
+                    <i class="glyphicon glyphicon-book"></i>
+                    لیست تراکنش های معلق
+                </a>
+            </li>
+
+            <li>
+                <a href="@Url.Action("Rejected", "Payment")">
+                    <i class="glyphicon glyphicon-book"></i>
+                    لیست تراکنش های رد شده
                 </a>
             </li>
 
@@ -159,12 +180,12 @@
 
         <ul class="collapse nav aside-sub-panel" id="sub-menu-exam">
 
-            <li>
-                <a href="@Url.Action("Index", "Exam")">
+            @*<li>
+                <a href="@Url.Action("Index", "ExamRemotely")">
                     <i class="glyphicon glyphicon-book"></i>
                     آزمون های غیر حضوری
                 </a>
-            </li>
+            </li>*@
 
             <li>
                 <a href="@Url.Action("Index", "ExamInPerson")">

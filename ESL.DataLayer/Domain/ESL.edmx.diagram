@@ -4,48 +4,47 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="bda4d52595d241dd962fde531711dd7f" Name="Diagram1">
-        <EntityTypeShape EntityType="ESLModel.sysdiagram" Width="1.5" PointX="0.75" PointY="5.75" />
-        <EntityTypeShape EntityType="ESLModel.Tbl_Class" Width="1.5" PointX="6" PointY="36.125" />
-        <EntityTypeShape EntityType="ESLModel.Tbl_ClassPlan" Width="1.5" PointX="8.25" PointY="26.125" />
-        <EntityTypeShape EntityType="ESLModel.Tbl_Code" Width="1.5" PointX="3" PointY="19" />
-        <EntityTypeShape EntityType="ESLModel.Tbl_CodeGroup" Width="1.5" PointX="0.75" PointY="20.375" />
-        <EntityTypeShape EntityType="ESLModel.Tbl_Document" Width="1.5" PointX="5.25" PointY="28.875" />
-        <EntityTypeShape EntityType="ESLModel.Tbl_Exam" Width="1.5" PointX="7.75" PointY="1.75" />
-        <EntityTypeShape EntityType="ESLModel.Tbl_ExamInPerson" Width="1.5" PointX="12.25" PointY="1" />
-        <EntityTypeShape EntityType="ESLModel.Tbl_ExamRemotely" Width="1.5" PointX="5.25" PointY="16.25" />
-        <EntityTypeShape EntityType="ESLModel.Tbl_Gallery" Width="1.5" PointX="5.25" PointY="25.125" />
-        <EntityTypeShape EntityType="ESLModel.Tbl_GalleryDocument" Width="1.5" PointX="7.5" PointY="31.875" />
-        <EntityTypeShape EntityType="ESLModel.Tbl_Menu" Width="1.5" PointX="14.75" PointY="1" />
-        <EntityTypeShape EntityType="ESLModel.Tbl_Organization" Width="1.5" PointX="10.5" PointY="26" />
-        <EntityTypeShape EntityType="ESLModel.Tbl_Page" Width="1.5" PointX="10.5" PointY="20.625" />
-        <EntityTypeShape EntityType="ESLModel.Tbl_PageCategory" Width="1.5" PointX="8.25" PointY="13.75" />
-        <EntityTypeShape EntityType="ESLModel.Tbl_PageDocuments" Width="1.5" PointX="12.75" PointY="24" />
-        <EntityTypeShape EntityType="ESLModel.Tbl_PageTags" Width="1.5" PointX="15.75" PointY="21.625" />
-        <EntityTypeShape EntityType="ESLModel.Tbl_Payment" Width="1.5" PointX="13.5" PointY="27.75" />
-        <EntityTypeShape EntityType="ESLModel.Tbl_Question" Width="1.5" PointX="7.5" PointY="20.875" />
-        <EntityTypeShape EntityType="ESLModel.Tbl_Region" Width="1.5" PointX="5.25" PointY="20.5" />
-        <EntityTypeShape EntityType="ESLModel.Tbl_Response" Width="1.5" PointX="12.75" PointY="19.625" />
-        <EntityTypeShape EntityType="ESLModel.Tbl_Role" Width="1.5" PointX="3" PointY="11" />
-        <EntityTypeShape EntityType="ESLModel.Tbl_SMSProviderConfiguration" Width="1.5" PointX="15.75" PointY="12.625" />
-        <EntityTypeShape EntityType="ESLModel.Tbl_SMSProviderNumber" Width="1.5" PointX="18" PointY="16.375" />
-        <EntityTypeShape EntityType="ESLModel.Tbl_SMSResponse" Width="1.5" PointX="9.75" PointY="6.75" />
-        <EntityTypeShape EntityType="ESLModel.Tbl_SMSSetting" Width="1.5" PointX="18" PointY="12.75" />
-        <EntityTypeShape EntityType="ESLModel.Tbl_SMSTemplate" Width="1.5" PointX="15.75" PointY="17" />
-        <EntityTypeShape EntityType="ESLModel.Tbl_SubExam" Width="1.5" PointX="10" PointY="1.75" />
-        <EntityTypeShape EntityType="ESLModel.Tbl_SubMenu" Width="1.5" PointX="17" PointY="1" />
-        <EntityTypeShape EntityType="ESLModel.Tbl_SubWorkshop" Width="1.5" PointX="3" PointY="1.5" />
-        <EntityTypeShape EntityType="ESLModel.Tbl_Tag" Width="1.5" PointX="13.5" PointY="16.875" />
-        <EntityTypeShape EntityType="ESLModel.Tbl_User" Width="1.5" PointX="5.25" PointY="9" />
-        <EntityTypeShape EntityType="ESLModel.Tbl_UserClass" Width="1.5" PointX="10.5" PointY="29.75" />
-        <EntityTypeShape EntityType="ESLModel.Tbl_UserClassPresence" Width="1.5" PointX="15.75" PointY="28.75" />
-        <EntityTypeShape EntityType="ESLModel.Tbl_UserExam" Width="1.5" PointX="7.5" PointY="16.625" />
-        <EntityTypeShape EntityType="ESLModel.Tbl_UserExamAccess" Width="1.5" PointX="10.5" PointY="16.625" />
-        <EntityTypeShape EntityType="ESLModel.Tbl_UserExamInPerson" Width="1.5" PointX="14.5" PointY="6.25" />
-        <EntityTypeShape EntityType="ESLModel.Tbl_UserWorkshop" Width="1.5" PointX="7.5" PointY="6.5" />
-        <EntityTypeShape EntityType="ESLModel.Tbl_Wallet" Width="1.5" PointX="7.5" PointY="39.875" />
-        <EntityTypeShape EntityType="ESLModel.Tbl_Workshop" Width="1.5" PointX="0.75" PointY="1.625" />
-        <EntityTypeShape EntityType="ESLModel.Tbl_WorkshopPlan" Width="1.5" PointX="5.25" PointY="1" />
+      <Diagram DiagramId="a6bb5e7048f14787bfd6833efef24fa7" Name="Diagram1">
+        <EntityTypeShape EntityType="ESLModel.Tbl_Class" Width="1.5" PointX="3" PointY="18.5" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_ClassPlan" Width="1.5" PointX="5.25" PointY="19.5" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_Code" Width="1.5" PointX="3" PointY="22.375" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_CodeGroup" Width="1.5" PointX="0.75" PointY="23.75" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_Document" Width="1.5" PointX="5.25" PointY="32.25" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_ExamInPerson" Width="1.5" PointX="9" PointY="45.375" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_ExamInPersonPlan" Width="1.5" PointX="13.5" PointY="44.625" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_ExamRemotelyPlan" Width="1.5" PointX="5.25" PointY="24.875" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_Gallery" Width="1.5" PointX="8.25" PointY="49.5" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_GalleryDocument" Width="1.5" PointX="10.5" PointY="34.25" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_Menu" Width="1.5" PointX="5.75" PointY="2.75" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_Organization" Width="1.5" PointX="7.5" PointY="32.375" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_Page" Width="1.5" PointX="10.5" PointY="29.25" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_PageCategory" Width="1.5" PointX="8.25" PointY="36.375" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_PageDocuments" Width="1.5" PointX="12.75" PointY="27.375" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_PageTags" Width="1.5" PointX="15.75" PointY="31.25" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_Payment" Width="1.5" PointX="13.5" PointY="30.875" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_Question" Width="1.5" PointX="7.5" PointY="23.25" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_Region" Width="1.5" PointX="5.25" PointY="29.125" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_Response" Width="1.5" PointX="9.75" PointY="21.5" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_Role" Width="1.5" PointX="9" PointY="39.75" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_SMSProviderConfiguration" Width="1.5" PointX="0.75" PointY="4.5" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_SMSProviderNumber" Width="1.5" PointX="3" PointY="8.125" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_SMSResponse" Width="1.5" PointX="5.75" PointY="6.5" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_SMSSetting" Width="1.5" PointX="3" PointY="4.5" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_SMSTemplate" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_SubExamInPerson" Width="1.5" PointX="11.25" PointY="45.375" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_SubMenu" Width="1.5" PointX="8" PointY="2.75" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_SubWorkshop" Width="1.5" PointX="14.25" PointY="20.375" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_Tag" Width="1.5" PointX="13.5" PointY="37.375" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_User" Width="1.5" PointX="11.25" PointY="37.75" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_UserClassPlan" Width="1.5" PointX="15.75" PointY="26.25" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_UserClassPlanPresence" Width="1.5" PointX="18" PointY="27.75" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_UserExamInPersonPlan" Width="1.5" PointX="15.75" PointY="34.875" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_UserExamRemotelyPlan" Width="1.5" PointX="7.5" PointY="28.25" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_UserExamRemotelyPlanAccess" Width="1.5" PointX="10.5" PointY="25.25" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_UserWorkshopPlan" Width="1.5" PointX="18.75" PointY="31.875" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_Wallet" Width="1.5" PointX="13.5" PointY="40.375" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_Workshop" Width="1.5" PointX="12" PointY="20.375" />
+        <EntityTypeShape EntityType="ESLModel.Tbl_WorkshopPlan" Width="1.5" PointX="16.5" PointY="19.875" />
         <AssociationConnector Association="ESLModel.FK_Tbl_ClassPlan_Tbl_Class" />
         <AssociationConnector Association="ESLModel.FK_Tbl_ClassPlan_Tbl_Code" />
         <AssociationConnector Association="ESLModel.FK_Tbl_UserClass_Tbl_ClassPlan" />
@@ -66,7 +65,7 @@
         <AssociationConnector Association="ESLModel.FK_Tbl_PageDocuments_Tbl_Document" />
         <AssociationConnector Association="ESLModel.FK_Tbl_Payment_Tbl_Document" />
         <AssociationConnector Association="ESLModel.FK_Tbl_SubExam_Tbl_Exam" />
-        <AssociationConnector Association="ESLModel.FK_Tbl_ExamInPerson_Tbl_SubExam" />
+        <AssociationConnector Association="ESLModel.FK_Tbl_ExamInPersonPlan_Tbl_SubExamInPerson" />
         <AssociationConnector Association="ESLModel.FK_Tbl_UserExamInPerson_Tbl_ExamInPerson" />
         <AssociationConnector Association="ESLModel.FK_Tbl_Question_Tbl_ExamRemotely" />
         <AssociationConnector Association="ESLModel.FK_Tbl_UserExam_Tbl_ExamRemotely" />
@@ -81,6 +80,9 @@
         <AssociationConnector Association="ESLModel.FK_Tbl_PageTags_Tbl_Tag" />
         <AssociationConnector Association="ESLModel.FK_Tbl_Payment_Tbl_User" />
         <AssociationConnector Association="ESLModel.FK_Tbl_Presence_Tbl_Payment" />
+        <AssociationConnector Association="ESLModel.FK_Tbl_UserClassPlan_Tbl_Payment" />
+        <AssociationConnector Association="ESLModel.FK_Tbl_UserExamInPersonPlan_Tbl_Payment" />
+        <AssociationConnector Association="ESLModel.FK_Tbl_UserWorkshopPlan_Tbl_Payment" />
         <AssociationConnector Association="ESLModel.FK_Tbl_Question_Tbl_Response" />
         <AssociationConnector Association="ESLModel.FK_Tbl_Response_Tbl_Question" />
         <AssociationConnector Association="ESLModel.FK_Tbl_User_Tbl_Role" />

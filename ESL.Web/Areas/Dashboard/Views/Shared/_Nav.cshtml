@@ -11,8 +11,15 @@
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
 
+                @if (infoModel.Role == "دانشجو")
+                {
+                    <li class="credit">
+                        <a href="@Url.Action("ChargeWallet", "Payment")">موجودی:&nbsp;@(new Rep_Wallet().Get_WalletCreditWithUserGUID(infoModel.UserGuid))</a>
+                    </li>
+                }
+
                 <!-- Messages: style can be found in dropdown.less-->
-                <li class="dropdown messages-menu menu-item ">
+                <li class="dropdown messages-menu menu-item">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                         <i class="fa fa-envelope nav-top-userInfo-icon"></i>
                         <span class="label label-success">0</span>
@@ -49,21 +56,21 @@
                         </li>
                         <!-- Menu Body -->
                         @*<li class="user-body">
-                                <form action="@Url.Action("Dashboard","Dashboard")" class="col-xs-4 text-left">
+                    <form action="@Url.Action("Dashboard","Dashboard")" class="col-xs-4 text-left">
 
-                                    <button type="submit" class="btn btn-primary glyphicon glyphicon glyphicon-user " data-toggle="tooltip" data-placement="top" title="پروفایل"></button>
+                        <button type="submit" class="btn btn-primary glyphicon glyphicon glyphicon-user " data-toggle="tooltip" data-placement="top" title="پروفایل"></button>
 
-                                </form>
-                                <form action="@Url.Action("Dashboard","Dashboard")" class="col-xs-4 text-center ">
-                                    <button type="submit" class="btn btn-primary glyphicon glyphicon-cog " data-toggle="tooltip" data-placement="top" title="تنظمات کاربری"></button>
+                    </form>
+                    <form action="@Url.Action("Dashboard","Dashboard")" class="col-xs-4 text-center ">
+                        <button type="submit" class="btn btn-primary glyphicon glyphicon-cog " data-toggle="tooltip" data-placement="top" title="تنظمات کاربری"></button>
 
-                                </form>
-                                <form action="@Url.Action("Dashboard","Dashboard")" class="col-xs-4 text-right">
-                                    <button type="submit" class="btn btn-primary glyphicon glyphicon-folder-open " data-toggle="tooltip" data-placement="top" title="فایل های من"></button>
+                    </form>
+                    <form action="@Url.Action("Dashboard","Dashboard")" class="col-xs-4 text-right">
+                        <button type="submit" class="btn btn-primary glyphicon glyphicon-folder-open " data-toggle="tooltip" data-placement="top" title="فایل های من"></button>
 
-                                </form>
+                    </form>
 
-                            </li>*@
+                </li>*@
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">

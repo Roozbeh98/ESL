@@ -89,9 +89,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ESL.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Domain\sysdiagram.cs">
-      <DependentUpon>ESL.tt</DependentUpon>
-    </Compile>
     <Compile Include="Domain\Tbl_Class.cs">
       <DependentUpon>ESL.tt</DependentUpon>
     </Compile>
@@ -107,13 +104,13 @@
     <Compile Include="Domain\Tbl_Document.cs">
       <DependentUpon>ESL.tt</DependentUpon>
     </Compile>
-    <Compile Include="Domain\Tbl_Exam.cs">
-      <DependentUpon>ESL.tt</DependentUpon>
-    </Compile>
     <Compile Include="Domain\Tbl_ExamInPerson.cs">
       <DependentUpon>ESL.tt</DependentUpon>
     </Compile>
-    <Compile Include="Domain\Tbl_ExamRemotely.cs">
+    <Compile Include="Domain\Tbl_ExamInPersonPlan.cs">
+      <DependentUpon>ESL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Domain\Tbl_ExamRemotelyPlan.cs">
       <DependentUpon>ESL.tt</DependentUpon>
     </Compile>
     <Compile Include="Domain\Tbl_Gallery.cs">
@@ -170,7 +167,7 @@
     <Compile Include="Domain\Tbl_SMSTemplate.cs">
       <DependentUpon>ESL.tt</DependentUpon>
     </Compile>
-    <Compile Include="Domain\Tbl_SubExam.cs">
+    <Compile Include="Domain\Tbl_SubExamInPerson.cs">
       <DependentUpon>ESL.tt</DependentUpon>
     </Compile>
     <Compile Include="Domain\Tbl_SubMenu.cs">
@@ -185,22 +182,22 @@
     <Compile Include="Domain\Tbl_User.cs">
       <DependentUpon>ESL.tt</DependentUpon>
     </Compile>
-    <Compile Include="Domain\Tbl_UserClass.cs">
+    <Compile Include="Domain\Tbl_UserClassPlan.cs">
       <DependentUpon>ESL.tt</DependentUpon>
     </Compile>
-    <Compile Include="Domain\Tbl_UserClassPresence.cs">
+    <Compile Include="Domain\Tbl_UserClassPlanPresence.cs">
       <DependentUpon>ESL.tt</DependentUpon>
     </Compile>
-    <Compile Include="Domain\Tbl_UserExam.cs">
+    <Compile Include="Domain\Tbl_UserExamInPersonPlan.cs">
       <DependentUpon>ESL.tt</DependentUpon>
     </Compile>
-    <Compile Include="Domain\Tbl_UserExamAccess.cs">
+    <Compile Include="Domain\Tbl_UserExamRemotelyPlan.cs">
       <DependentUpon>ESL.tt</DependentUpon>
     </Compile>
-    <Compile Include="Domain\Tbl_UserExamInPerson.cs">
+    <Compile Include="Domain\Tbl_UserExamRemotelyPlanAccess.cs">
       <DependentUpon>ESL.tt</DependentUpon>
     </Compile>
-    <Compile Include="Domain\Tbl_UserWorkshop.cs">
+    <Compile Include="Domain\Tbl_UserWorkshopPlan.cs">
       <DependentUpon>ESL.tt</DependentUpon>
     </Compile>
     <Compile Include="Domain\Tbl_Wallet.cs">

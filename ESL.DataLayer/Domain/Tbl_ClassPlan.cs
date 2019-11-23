@@ -17,7 +17,7 @@ namespace ESL.DataLayer.Domain
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Tbl_ClassPlan()
         {
-            this.Tbl_UserClass = new HashSet<Tbl_UserClass>();
+            this.Tbl_UserClassPlan = new HashSet<Tbl_UserClassPlan>();
         }
     
         public int CP_ID { get; set; }
@@ -39,6 +39,6 @@ namespace ESL.DataLayer.Domain
         public virtual Tbl_Class Tbl_Class { get; set; }
         public virtual Tbl_Code Tbl_Code { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tbl_UserClass> Tbl_UserClass { get; set; }
+        public virtual ICollection<Tbl_UserClassPlan> Tbl_UserClassPlan { get; set; }
     }
 }

@@ -30,5 +30,33 @@ namespace ESL.Services.BaseRepository
         {
             return db.Tbl_Wallet.Where(x => x.Tbl_User.User_Guid == guid).SingleOrDefault().Wallet_Credit;
         }
+
+        public int Get_WalletCreditWithUserID(int id)
+        {
+            return db.Tbl_Wallet.Where(x => x.Tbl_User.User_ID == id).SingleOrDefault().Wallet_Credit;
+        }
+
+        public int? Get_CreditBeforeTransaction(Tbl_Payment _Payment)
+        {
+            int _Credit = Get_WalletCreditWithUserID(_Payment.Payment_UserID);
+
+            switch ((PaymentTitle)_Payment.Payment_TitleCodeID)
+            {
+                case PaymentTitle.Discharge:
+                    return _Credit + _Payment.Payment_Cost;
+
+                case PaymentTitle.ReturnToAccount:
+                    return _Credit + _Payment.Payment_Cost;
+
+                case PaymentTitle.ReturnToBankAccount:
+                    return _Credit;
+
+                case PaymentTitle.Charge:
+                    return _Credit - _Payment.Payment_Cost;
+
+                default:
+                    return null;
+            }
+        }
     }
 }

@@ -17,61 +17,10 @@ namespace ESL.Web.Areas.Dashboard.Controllers
     {
         private ESLEntities db = new ESLEntities();
 
-        [Authorize(Roles = "Student")]
-        public ActionResult List()
-        {
-            var _User = db.Tbl_User.Where(x => x.User_IsDelete == false && x.User_Mobile == User.Identity.Name).SingleOrDefault();
-
-            if (_User != null)
-            {
-                var q = db.Tbl_UserClass.Where(x => x.UC_IsDelete == false && x.UC_UserID == _User.User_ID).Select(x => new Model_UserClasses
-                {
-                    ID = x.UC_ID,
-                    User = x.Tbl_User.User_FirstName + " " + x.Tbl_User.User_lastName,
-                    Class = x.Tbl_ClassPlan.Tbl_Class.Class_Title,
-                    Type = x.Tbl_ClassPlan.Tbl_Code.Code_Display,
-                    Location = x.Tbl_ClassPlan.CP_Location,
-                    Time = x.Tbl_ClassPlan.CP_Time,
-                    CreationDate = x.UC_CreationDate
-
-                }).ToList();
-
-                return View(q);
-            }
-
-            return HttpNotFound();
-        }
-
-        [Authorize(Roles = "Student")]
-        public ActionResult Info(int? id)
-        {
-            if (id.HasValue && db.Tbl_UserClass.Any(x => x.UC_ID == id))
-            {
-                var p = db.Tbl_UserClass.Where(x => x.UC_ID == id).SingleOrDefault();
-
-                var q = db.Tbl_UserClassPresence.Where(x => x.UCP_IsDelete == false && x.Tbl_UserClass.UC_UserID == p.UC_UserID && x.Tbl_UserClass.UC_CPID == p.UC_CPID && x.Tbl_UserClass.Tbl_ClassPlan.CP_TypeCodeID == p.Tbl_ClassPlan.CP_TypeCodeID && x.Tbl_UserClass.Tbl_ClassPlan.CP_Location == p.Tbl_ClassPlan.CP_Location && x.Tbl_UserClass.Tbl_ClassPlan.CP_Time == p.Tbl_ClassPlan.CP_Time).Select(x => new Model_UserClassPresence
-                {
-                    ID = x.UCP_ID,
-                    Cost = x.Tbl_Payment.Payment_Cost,
-                    Discount = x.Tbl_Payment.Payment_Discount,
-                    Presence = x.UCP_IsPresent,
-                    CreationDate = x.UCP_CreationDate
-
-                }).ToList();
-
-                TempData["UserID"] = p.UC_UserID;
-                TempData["UserClassID"] = id;
-
-                return View(q);
-            }
-
-            return HttpNotFound();
-        }
-
         [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
-            var q = db.Tbl_ClassPlan.Where(x => x.CP_IsDelete == false).Select(x => new Model_Class
+            var q = db.Tbl_ClassPlan.Where(x => x.CP_IsDelete == false).Select(x => new Model_ClassPlan
             {
                 ID = x.CP_ID,
                 Class = x.Tbl_Class.Class_Title,
@@ -82,7 +31,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                 Activeness = x.CP_IsActive,
                 Capacity = x.CP_Capacity,
                 Time = x.CP_Time,
-                SessionsLength = x.CP_Capacity,
+                SessionsLength = x.CP_SessionsLength,
                 StartDate = x.CP_StartDate,
                 CreationDate = x.CP_CreationDate
 
@@ -100,7 +49,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Model_ClassCreate model)
+        public ActionResult Create(Model_ClassPlanCreate model)
         {
             if (ModelState.IsValid)
             {
@@ -212,12 +161,12 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         {
             if (id.HasValue && db.Tbl_ClassPlan.Any(x => x.CP_ID == id))
             {
-                var q = db.Tbl_UserClass.Where(x => x.UC_CPID == id).Select(x => new Model_UserClass
+                var q = db.Tbl_UserClassPlan.Where(x => x.UCP_CPID == id).Select(x => new Model_UserClassPlan
                 {
-                    ID = x.UC_ID,
+                    ID = x.UCP_ID,
                     User = x.Tbl_User.User_FirstName + " " + x.Tbl_User.User_lastName,
-                    CreationDate = x.UC_CreationDate,
-                    IsDelete = x.UC_IsDelete,
+                    CreationDate = x.UCP_CreationDate,
+                    IsDelete = x.UCP_IsDelete,
 
                 }).ToList();
 
@@ -283,6 +232,57 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             }
 
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        }
+
+        [Authorize(Roles = "Student")]
+        public ActionResult List()
+        {
+            var _User = db.Tbl_User.Where(x => x.User_IsDelete == false && x.User_Mobile == User.Identity.Name).SingleOrDefault();
+
+            if (_User != null)
+            {
+                var q = db.Tbl_UserClassPlan.Where(x => x.UCP_IsDelete == false && x.UCP_UserID == _User.User_ID).Select(x => new Model_UserClassPlans
+                {
+                    ID = x.UCP_ID,
+                    User = x.Tbl_User.User_FirstName + " " + x.Tbl_User.User_lastName,
+                    Class = x.Tbl_ClassPlan.Tbl_Class.Class_Title,
+                    Type = x.Tbl_ClassPlan.Tbl_Code.Code_Display,
+                    Location = x.Tbl_ClassPlan.CP_Location,
+                    Time = x.Tbl_ClassPlan.CP_Time,
+                    CreationDate = x.UCP_CreationDate
+
+                }).ToList();
+
+                return View(q);
+            }
+
+            return HttpNotFound();
+        }
+
+        [Authorize(Roles = "Student")]
+        public ActionResult Info(int? id)
+        {
+            if (id.HasValue && db.Tbl_UserClassPlan.Any(x => x.UCP_ID == id))
+            {
+                var p = db.Tbl_UserClassPlan.Where(x => x.UCP_ID == id).SingleOrDefault();
+
+                var q = db.Tbl_UserClassPlanPresence.Where(x => x.UCPP_IsDelete == false && x.Tbl_UserClassPlan.UCP_UserID == p.UCP_UserID && x.Tbl_UserClassPlan.UCP_CPID == p.UCP_CPID && x.Tbl_UserClassPlan.Tbl_ClassPlan.CP_TypeCodeID == p.Tbl_ClassPlan.CP_TypeCodeID && x.Tbl_UserClassPlan.Tbl_ClassPlan.CP_Location == p.Tbl_ClassPlan.CP_Location && x.Tbl_UserClassPlan.Tbl_ClassPlan.CP_Time == p.Tbl_ClassPlan.CP_Time).Select(x => new Model_UserClassPlanPresence
+                {
+                    ID = x.UCPP_ID,
+                    Cost = x.Tbl_Payment.Payment_Cost,
+                    Discount = x.Tbl_Payment.Payment_Discount,
+                    Presence = x.UCPP_IsPresent,
+                    CreationDate = x.UCPP_CreationDate
+
+                }).ToList();
+
+                TempData["UserID"] = p.UCP_UserID;
+                TempData["UserClassPlanID"] = id;
+
+                return View(q);
+            }
+
+            return HttpNotFound();
         }
     }
 }

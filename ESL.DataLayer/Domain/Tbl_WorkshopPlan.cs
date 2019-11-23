@@ -17,7 +17,7 @@ namespace ESL.DataLayer.Domain
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Tbl_WorkshopPlan()
         {
-            this.Tbl_UserWorkshop = new HashSet<Tbl_UserWorkshop>();
+            this.Tbl_UserWorkshopPlan = new HashSet<Tbl_UserWorkshopPlan>();
         }
     
         public int WP_ID { get; set; }
@@ -35,6 +35,6 @@ namespace ESL.DataLayer.Domain
     
         public virtual Tbl_SubWorkshop Tbl_SubWorkshop { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tbl_UserWorkshop> Tbl_UserWorkshop { get; set; }
+        public virtual ICollection<Tbl_UserWorkshopPlan> Tbl_UserWorkshopPlan { get; set; }
     }
 }

@@ -5,16 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="ESLModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
-        </EntityType>
         <EntityType Name="Tbl_Class">
           <Key>
             <PropertyRef Name="Class_ID" />
@@ -35,7 +25,7 @@
           <Property Name="CP_ClassID" Type="int" Nullable="false" />
           <Property Name="CP_TypeCodeID" Type="int" Nullable="false" />
           <Property Name="CP_Capacity" Type="int" Nullable="false" />
-          <Property Name="CP_Description" Type="ntext" Nullable="false" />
+          <Property Name="CP_Description" Type="nvarchar(max)" />
           <Property Name="CP_CostPerSession" Type="int" Nullable="false" />
           <Property Name="CP_Location" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="CP_Time" Type="time" Precision="7" Nullable="false" />
@@ -75,50 +65,50 @@
           <Property Name="Document_TypeCodeID" Type="int" Nullable="false" />
           <Property Name="Document_Path" Type="ntext" Nullable="false" />
         </EntityType>
-        <EntityType Name="Tbl_Exam">
-          <Key>
-            <PropertyRef Name="Exam_ID" />
-          </Key>
-          <Property Name="Exam_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Exam_Guid" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Exam_Title" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="Exam_HasSubExam" Type="bit" Nullable="false" />
-          <Property Name="Exam_CreationDate" Type="datetime2" Precision="7" Nullable="false" />
-          <Property Name="Exam_ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
-          <Property Name="Exam_IsDelete" Type="bit" Nullable="false" />
-        </EntityType>
         <EntityType Name="Tbl_ExamInPerson">
           <Key>
             <PropertyRef Name="EIP_ID" />
           </Key>
           <Property Name="EIP_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EIP_Guid" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="EIP_SEID" Type="int" Nullable="false" />
-          <Property Name="EIP_Capacity" Type="int" Nullable="false" />
-          <Property Name="EIP_Description" Type="ntext" Nullable="false" />
-          <Property Name="EIP_TotalMark" Type="int" Nullable="false" />
-          <Property Name="EIP_PassMark" Type="int" Nullable="false" />
-          <Property Name="EIP_Cost" Type="int" Nullable="false" />
-          <Property Name="EIP_Location" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="EIP_Date" Type="datetime2" Precision="7" Nullable="false" />
-          <Property Name="EIP_IsActive" Type="bit" Nullable="false" />
+          <Property Name="EIP_Title" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="EIP_HasSubExam" Type="bit" Nullable="false" />
           <Property Name="EIP_CreationDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="EIP_ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="EIP_IsDelete" Type="bit" Nullable="false" />
         </EntityType>
-        <EntityType Name="Tbl_ExamRemotely">
+        <EntityType Name="Tbl_ExamInPersonPlan">
           <Key>
-            <PropertyRef Name="ER_ID" />
+            <PropertyRef Name="EIPP_ID" />
           </Key>
-          <Property Name="ER_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ER_Guid" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="ER_GroupCodeID" Type="int" Nullable="false" />
-          <Property Name="ER_Title" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="ER_Mark" Type="int" Nullable="false" />
-          <Property Name="ER_PassMark" Type="int" Nullable="false" />
-          <Property Name="ER_CreationDate" Type="datetime2" Precision="7" Nullable="false" />
-          <Property Name="ER_ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
-          <Property Name="ER_IsDelete" Type="bit" Nullable="false" />
+          <Property Name="EIPP_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EIPP_Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="EIPP_SEIPID" Type="int" Nullable="false" />
+          <Property Name="EIPP_Capacity" Type="int" Nullable="false" />
+          <Property Name="EIPP_Description" Type="ntext" Nullable="false" />
+          <Property Name="EIPP_TotalMark" Type="int" Nullable="false" />
+          <Property Name="EIPP_PassMark" Type="int" Nullable="false" />
+          <Property Name="EIPP_Cost" Type="int" Nullable="false" />
+          <Property Name="EIPP_Location" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="EIPP_Date" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="EIPP_IsActive" Type="bit" Nullable="false" />
+          <Property Name="EIPP_CreationDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="EIPP_ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="EIPP_IsDelete" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tbl_ExamRemotelyPlan">
+          <Key>
+            <PropertyRef Name="ERP_ID" />
+          </Key>
+          <Property Name="ERP_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ERP_Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ERP_GroupCodeID" Type="int" Nullable="false" />
+          <Property Name="ERP_Title" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ERP_Mark" Type="int" Nullable="false" />
+          <Property Name="ERP_PassMark" Type="int" Nullable="false" />
+          <Property Name="ERP_CreationDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="ERP_ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="ERP_IsDelete" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Tbl_Gallery">
           <Key>
@@ -217,9 +207,9 @@
           <Property Name="Payment_Guid" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Payment_UserID" Type="int" Nullable="false" />
           <Property Name="Payment_TitleCodeID" Type="int" Nullable="false" />
-          <Property Name="Payment_WayCodeID" Type="int" Nullable="false" />
-          <Property Name="Payment_TypeCodeID" Type="int" Nullable="false" />
-          <Property Name="Payment_Description" Type="ntext" />
+          <Property Name="Payment_WayCodeID" Type="int" />
+          <Property Name="Payment_StateCodeID" Type="int" Nullable="false" />
+          <Property Name="Payment_Description" Type="nvarchar(max)" />
           <Property Name="Payment_Cost" Type="int" Nullable="false" />
           <Property Name="Payment_Discount" Type="int" Nullable="false" />
           <Property Name="Payment_RemaingWallet" Type="int" Nullable="false" />
@@ -346,17 +336,17 @@
           <Property Name="ST_ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="ST_IsDelete" Type="bit" Nullable="false" />
         </EntityType>
-        <EntityType Name="Tbl_SubExam">
+        <EntityType Name="Tbl_SubExamInPerson">
           <Key>
-            <PropertyRef Name="SE_ID" />
+            <PropertyRef Name="SEIP_ID" />
           </Key>
-          <Property Name="SE_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="SE_Guid" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="SE_ExamID" Type="int" Nullable="false" />
-          <Property Name="SE_Title" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="SE_CreationDate" Type="datetime2" Precision="7" Nullable="false" />
-          <Property Name="SE_ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
-          <Property Name="SE_IsDelete" Type="bit" Nullable="false" />
+          <Property Name="SEIP_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SEIP_Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="SEIP_ExamID" Type="int" Nullable="false" />
+          <Property Name="SEIP_Title" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="SEIP_CreationDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="SEIP_ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="SEIP_IsDelete" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Tbl_SubMenu">
           <Key>
@@ -407,90 +397,91 @@
           <Property Name="User_IdentityNumber" Type="nvarchar" MaxLength="128" />
           <Property Name="User_Mobile" Type="nvarchar" MaxLength="128" />
           <Property Name="User_Birthday" Type="date" />
-          <Property Name="User_Credit" Type="int" Nullable="false" />
           <Property Name="User_IsBan" Type="bit" Nullable="false" />
           <Property Name="User_IsDelete" Type="bit" Nullable="false" />
         </EntityType>
-        <EntityType Name="Tbl_UserClass">
-          <Key>
-            <PropertyRef Name="UC_ID" />
-          </Key>
-          <Property Name="UC_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UC_Guid" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="UC_UserID" Type="int" Nullable="false" />
-          <Property Name="UC_CPID" Type="int" Nullable="false" />
-          <Property Name="UC_PaymentID" Type="int" />
-          <Property Name="UC_CreationDate" Type="datetime2" Precision="7" Nullable="false" />
-          <Property Name="UC_ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
-          <Property Name="UC_IsDelete" Type="bit" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Tbl_UserClassPresence">
+        <EntityType Name="Tbl_UserClassPlan">
           <Key>
             <PropertyRef Name="UCP_ID" />
           </Key>
           <Property Name="UCP_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UCP_Guid" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="UCP_UCID" Type="int" Nullable="false" />
-          <Property Name="UCP_PaymentID" Type="int" Nullable="false" />
-          <Property Name="UCP_IsPresent" Type="bit" Nullable="false" />
-          <Property Name="UCP_Date" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="UCP_UserID" Type="int" Nullable="false" />
+          <Property Name="UCP_CPID" Type="int" Nullable="false" />
+          <Property Name="UCP_PaymentID" Type="int" />
+          <Property Name="UCP_IsActive" Type="bit" Nullable="false" />
           <Property Name="UCP_CreationDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="UCP_ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="UCP_IsDelete" Type="bit" Nullable="false" />
         </EntityType>
-        <EntityType Name="Tbl_UserExam">
+        <EntityType Name="Tbl_UserClassPlanPresence">
           <Key>
-            <PropertyRef Name="UE_ID" />
+            <PropertyRef Name="UCPP_ID" />
           </Key>
-          <Property Name="UE_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UE_Guid" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="UE_UserID" Type="int" Nullable="false" />
-          <Property Name="UE_ERID" Type="int" Nullable="false" />
-          <Property Name="UE_Mark" Type="int" Nullable="false" />
-          <Property Name="UE_Date" Type="datetime2" Precision="7" Nullable="false" />
-          <Property Name="UE_IsDelete" Type="bit" Nullable="false" />
+          <Property Name="UCPP_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UCPP_Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UCPP_UCPID" Type="int" Nullable="false" />
+          <Property Name="UCPP_PaymentID" Type="int" Nullable="false" />
+          <Property Name="UCPP_IsPresent" Type="bit" Nullable="false" />
+          <Property Name="UCPP_Date" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="UCPP_CreationDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="UCPP_ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="UCPP_IsDelete" Type="bit" Nullable="false" />
         </EntityType>
-        <EntityType Name="Tbl_UserExamAccess">
+        <EntityType Name="Tbl_UserExamInPersonPlan">
           <Key>
-            <PropertyRef Name="UEA_ID" />
+            <PropertyRef Name="UEIPP_ID" />
           </Key>
-          <Property Name="UEA_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UEA_Guid" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="UEA_UserID" Type="int" Nullable="false" />
-          <Property Name="UEA_ERID" Type="int" Nullable="false" />
-          <Property Name="UEA_Date" Type="datetime2" Precision="7" Nullable="false" />
-          <Property Name="UEA_IsActive" Type="bit" Nullable="false" />
-          <Property Name="UEA_IsDelete" Type="bit" Nullable="false" />
+          <Property Name="UEIPP_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UEIPP_Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UEIPP_UserID" Type="int" Nullable="false" />
+          <Property Name="UEIPP_EIPPID" Type="int" Nullable="false" />
+          <Property Name="UEIPP_SeatNumber" Type="int" Nullable="false" />
+          <Property Name="UEIPP_Mark" Type="int" Nullable="false" />
+          <Property Name="UEIPP_PaymentID" Type="int" />
+          <Property Name="UEIPP_IsPresent" Type="bit" Nullable="false" />
+          <Property Name="UEIPP_CreationDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="UEIPP_ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="UEIPP_IsDelete" Type="bit" Nullable="false" />
         </EntityType>
-        <EntityType Name="Tbl_UserExamInPerson">
+        <EntityType Name="Tbl_UserExamRemotelyPlan">
           <Key>
-            <PropertyRef Name="UEIP_ID" />
+            <PropertyRef Name="UERP_ID" />
           </Key>
-          <Property Name="UEIP_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UEIP_Guid" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="UEIP_UserID" Type="int" Nullable="false" />
-          <Property Name="UEIP_EIPID" Type="int" Nullable="false" />
-          <Property Name="UEIP_SeatNumber" Type="int" Nullable="false" />
-          <Property Name="UEIP_Mark" Type="int" Nullable="false" />
-          <Property Name="UEIP_PaymentID" Type="int" />
-          <Property Name="UEIP_IsPresent" Type="bit" Nullable="false" />
-          <Property Name="UEIP_CreationDate" Type="datetime2" Precision="7" Nullable="false" />
-          <Property Name="UEIP_ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
-          <Property Name="UEIP_IsDelete" Type="bit" Nullable="false" />
+          <Property Name="UERP_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UERP_Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UERP_UserID" Type="int" Nullable="false" />
+          <Property Name="UERP_ERPID" Type="int" Nullable="false" />
+          <Property Name="UERP_Mark" Type="int" Nullable="false" />
+          <Property Name="UERP_Date" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="UERP_IsDelete" Type="bit" Nullable="false" />
         </EntityType>
-        <EntityType Name="Tbl_UserWorkshop">
+        <EntityType Name="Tbl_UserExamRemotelyPlanAccess">
           <Key>
-            <PropertyRef Name="UW_ID" />
+            <PropertyRef Name="UERPA_ID" />
           </Key>
-          <Property Name="UW_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UW_Guid" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="UW_UserID" Type="int" Nullable="false" />
-          <Property Name="UW_WPID" Type="int" Nullable="false" />
-          <Property Name="UW_PaymentID" Type="int" />
-          <Property Name="UW_IsPresent" Type="bit" Nullable="false" />
-          <Property Name="UW_CreationDate" Type="datetime2" Precision="7" Nullable="false" />
-          <Property Name="UW_ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
-          <Property Name="UW_IsDelete" Type="bit" Nullable="false" />
+          <Property Name="UERPA_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UERPA_Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UERPA_UserID" Type="int" Nullable="false" />
+          <Property Name="UERPA_ERPID" Type="int" Nullable="false" />
+          <Property Name="UERPA_Date" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="UERPA_IsActive" Type="bit" Nullable="false" />
+          <Property Name="UERPA_IsDelete" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tbl_UserWorkshopPlan">
+          <Key>
+            <PropertyRef Name="UWP_ID" />
+          </Key>
+          <Property Name="UWP_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UWP_Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UWP_UserID" Type="int" Nullable="false" />
+          <Property Name="UWP_WPID" Type="int" Nullable="false" />
+          <Property Name="UWP_PaymentID" Type="int" />
+          <Property Name="UWP_IsPresent" Type="bit" Nullable="false" />
+          <Property Name="UWP_IsActive" Type="bit" Nullable="false" />
+          <Property Name="UWP_CreationDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="UWP_ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="UWP_IsDelete" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Tbl_Wallet">
           <Key>
@@ -502,6 +493,7 @@
           <Property Name="Wallet_Credit" Type="int" Nullable="false" />
           <Property Name="Wallet_CreationDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="Wallet_ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="Wallet_IsDelete" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Tbl_Workshop">
           <Key>
@@ -523,7 +515,7 @@
           <Property Name="WP_Guid" Type="uniqueidentifier" Nullable="false" />
           <Property Name="WP_SWID" Type="int" Nullable="false" />
           <Property Name="WP_Capacity" Type="int" Nullable="false" />
-          <Property Name="WP_Description" Type="ntext" Nullable="false" />
+          <Property Name="WP_Description" Type="nvarchar(max)" />
           <Property Name="WP_Cost" Type="int" Nullable="false" />
           <Property Name="WP_Location" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="WP_Date" Type="datetime2" Precision="7" Nullable="false" />
@@ -580,27 +572,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Tbl_ExamInPerson_Tbl_SubExam">
-          <End Role="Tbl_SubExam" Type="Self.Tbl_SubExam" Multiplicity="1" />
-          <End Role="Tbl_ExamInPerson" Type="Self.Tbl_ExamInPerson" Multiplicity="*" />
+        <Association Name="FK_Tbl_ExamInPersonPlan_Tbl_SubExamInPerson">
+          <End Role="Tbl_SubExamInPerson" Type="Self.Tbl_SubExamInPerson" Multiplicity="1" />
+          <End Role="Tbl_ExamInPersonPlan" Type="Self.Tbl_ExamInPersonPlan" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Tbl_SubExam">
-              <PropertyRef Name="SE_ID" />
+            <Principal Role="Tbl_SubExamInPerson">
+              <PropertyRef Name="SEIP_ID" />
             </Principal>
-            <Dependent Role="Tbl_ExamInPerson">
-              <PropertyRef Name="EIP_SEID" />
+            <Dependent Role="Tbl_ExamInPersonPlan">
+              <PropertyRef Name="EIPP_SEIPID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Tbl_ExamRemotely_Tbl_Code">
           <End Role="Tbl_Code" Type="Self.Tbl_Code" Multiplicity="1" />
-          <End Role="Tbl_ExamRemotely" Type="Self.Tbl_ExamRemotely" Multiplicity="*" />
+          <End Role="Tbl_ExamRemotelyPlan" Type="Self.Tbl_ExamRemotelyPlan" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tbl_Code">
               <PropertyRef Name="Code_ID" />
             </Principal>
-            <Dependent Role="Tbl_ExamRemotely">
-              <PropertyRef Name="ER_GroupCodeID" />
+            <Dependent Role="Tbl_ExamRemotelyPlan">
+              <PropertyRef Name="ERP_GroupCodeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -768,12 +760,12 @@
               <PropertyRef Name="Code_ID" />
             </Principal>
             <Dependent Role="Tbl_Payment">
-              <PropertyRef Name="Payment_TypeCodeID" />
+              <PropertyRef Name="Payment_StateCodeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Tbl_Payment_Tbl_Code_WayCodeID">
-          <End Role="Tbl_Code" Type="Self.Tbl_Code" Multiplicity="1" />
+          <End Role="Tbl_Code" Type="Self.Tbl_Code" Multiplicity="0..1" />
           <End Role="Tbl_Payment" Type="Self.Tbl_Payment" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tbl_Code">
@@ -810,13 +802,13 @@
         </Association>
         <Association Name="FK_Tbl_Presence_Tbl_Payment">
           <End Role="Tbl_Payment" Type="Self.Tbl_Payment" Multiplicity="1" />
-          <End Role="Tbl_UserClassPresence" Type="Self.Tbl_UserClassPresence" Multiplicity="*" />
+          <End Role="Tbl_UserClassPlanPresence" Type="Self.Tbl_UserClassPlanPresence" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tbl_Payment">
               <PropertyRef Name="Payment_ID" />
             </Principal>
-            <Dependent Role="Tbl_UserClassPresence">
-              <PropertyRef Name="UCP_PaymentID" />
+            <Dependent Role="Tbl_UserClassPlanPresence">
+              <PropertyRef Name="UCPP_PaymentID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -845,11 +837,11 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Tbl_Question_Tbl_ExamRemotely">
-          <End Role="Tbl_ExamRemotely" Type="Self.Tbl_ExamRemotely" Multiplicity="1" />
+          <End Role="Tbl_ExamRemotelyPlan" Type="Self.Tbl_ExamRemotelyPlan" Multiplicity="1" />
           <End Role="Tbl_Question" Type="Self.Tbl_Question" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Tbl_ExamRemotely">
-              <PropertyRef Name="ER_ID" />
+            <Principal Role="Tbl_ExamRemotelyPlan">
+              <PropertyRef Name="ERP_ID" />
             </Principal>
             <Dependent Role="Tbl_Question">
               <PropertyRef Name="Question_ERID" />
@@ -941,14 +933,14 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Tbl_SubExam_Tbl_Exam">
-          <End Role="Tbl_Exam" Type="Self.Tbl_Exam" Multiplicity="1" />
-          <End Role="Tbl_SubExam" Type="Self.Tbl_SubExam" Multiplicity="*" />
+          <End Role="Tbl_ExamInPerson" Type="Self.Tbl_ExamInPerson" Multiplicity="1" />
+          <End Role="Tbl_SubExamInPerson" Type="Self.Tbl_SubExamInPerson" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Tbl_Exam">
-              <PropertyRef Name="Exam_ID" />
+            <Principal Role="Tbl_ExamInPerson">
+              <PropertyRef Name="EIP_ID" />
             </Principal>
-            <Dependent Role="Tbl_SubExam">
-              <PropertyRef Name="SE_ExamID" />
+            <Dependent Role="Tbl_SubExamInPerson">
+              <PropertyRef Name="SEIP_ExamID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -990,133 +982,169 @@
         </Association>
         <Association Name="FK_Tbl_UserClass_Tbl_ClassPlan">
           <End Role="Tbl_ClassPlan" Type="Self.Tbl_ClassPlan" Multiplicity="1" />
-          <End Role="Tbl_UserClass" Type="Self.Tbl_UserClass" Multiplicity="*" />
+          <End Role="Tbl_UserClassPlan" Type="Self.Tbl_UserClassPlan" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tbl_ClassPlan">
               <PropertyRef Name="CP_ID" />
             </Principal>
-            <Dependent Role="Tbl_UserClass">
-              <PropertyRef Name="UC_CPID" />
+            <Dependent Role="Tbl_UserClassPlan">
+              <PropertyRef Name="UCP_CPID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Tbl_UserClass_Tbl_User">
           <End Role="Tbl_User" Type="Self.Tbl_User" Multiplicity="1" />
-          <End Role="Tbl_UserClass" Type="Self.Tbl_UserClass" Multiplicity="*" />
+          <End Role="Tbl_UserClassPlan" Type="Self.Tbl_UserClassPlan" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tbl_User">
               <PropertyRef Name="User_ID" />
             </Principal>
-            <Dependent Role="Tbl_UserClass">
-              <PropertyRef Name="UC_UserID" />
+            <Dependent Role="Tbl_UserClassPlan">
+              <PropertyRef Name="UCP_UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_UserClassPlan_Tbl_Payment">
+          <End Role="Tbl_Payment" Type="Self.Tbl_Payment" Multiplicity="0..1" />
+          <End Role="Tbl_UserClassPlan" Type="Self.Tbl_UserClassPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Payment">
+              <PropertyRef Name="Payment_ID" />
+            </Principal>
+            <Dependent Role="Tbl_UserClassPlan">
+              <PropertyRef Name="UCP_PaymentID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Tbl_UserClassPresence_Tbl_UserClass">
-          <End Role="Tbl_UserClass" Type="Self.Tbl_UserClass" Multiplicity="1" />
-          <End Role="Tbl_UserClassPresence" Type="Self.Tbl_UserClassPresence" Multiplicity="*" />
+          <End Role="Tbl_UserClassPlan" Type="Self.Tbl_UserClassPlan" Multiplicity="1" />
+          <End Role="Tbl_UserClassPlanPresence" Type="Self.Tbl_UserClassPlanPresence" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Tbl_UserClass">
-              <PropertyRef Name="UC_ID" />
+            <Principal Role="Tbl_UserClassPlan">
+              <PropertyRef Name="UCP_ID" />
             </Principal>
-            <Dependent Role="Tbl_UserClassPresence">
-              <PropertyRef Name="UCP_UCID" />
+            <Dependent Role="Tbl_UserClassPlanPresence">
+              <PropertyRef Name="UCPP_UCPID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Tbl_UserExam_Tbl_ExamRemotely">
-          <End Role="Tbl_ExamRemotely" Type="Self.Tbl_ExamRemotely" Multiplicity="1" />
-          <End Role="Tbl_UserExam" Type="Self.Tbl_UserExam" Multiplicity="*" />
+          <End Role="Tbl_ExamRemotelyPlan" Type="Self.Tbl_ExamRemotelyPlan" Multiplicity="1" />
+          <End Role="Tbl_UserExamRemotelyPlan" Type="Self.Tbl_UserExamRemotelyPlan" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Tbl_ExamRemotely">
-              <PropertyRef Name="ER_ID" />
+            <Principal Role="Tbl_ExamRemotelyPlan">
+              <PropertyRef Name="ERP_ID" />
             </Principal>
-            <Dependent Role="Tbl_UserExam">
-              <PropertyRef Name="UE_ERID" />
+            <Dependent Role="Tbl_UserExamRemotelyPlan">
+              <PropertyRef Name="UERP_ERPID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Tbl_UserExam_Tbl_User">
           <End Role="Tbl_User" Type="Self.Tbl_User" Multiplicity="1" />
-          <End Role="Tbl_UserExam" Type="Self.Tbl_UserExam" Multiplicity="*" />
+          <End Role="Tbl_UserExamRemotelyPlan" Type="Self.Tbl_UserExamRemotelyPlan" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tbl_User">
               <PropertyRef Name="User_ID" />
             </Principal>
-            <Dependent Role="Tbl_UserExam">
-              <PropertyRef Name="UE_UserID" />
+            <Dependent Role="Tbl_UserExamRemotelyPlan">
+              <PropertyRef Name="UERP_UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Tbl_UserExamAccess_Tbl_ExamRemotely">
-          <End Role="Tbl_ExamRemotely" Type="Self.Tbl_ExamRemotely" Multiplicity="1" />
-          <End Role="Tbl_UserExamAccess" Type="Self.Tbl_UserExamAccess" Multiplicity="*" />
+          <End Role="Tbl_ExamRemotelyPlan" Type="Self.Tbl_ExamRemotelyPlan" Multiplicity="1" />
+          <End Role="Tbl_UserExamRemotelyPlanAccess" Type="Self.Tbl_UserExamRemotelyPlanAccess" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Tbl_ExamRemotely">
-              <PropertyRef Name="ER_ID" />
+            <Principal Role="Tbl_ExamRemotelyPlan">
+              <PropertyRef Name="ERP_ID" />
             </Principal>
-            <Dependent Role="Tbl_UserExamAccess">
-              <PropertyRef Name="UEA_ERID" />
+            <Dependent Role="Tbl_UserExamRemotelyPlanAccess">
+              <PropertyRef Name="UERPA_ERPID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Tbl_UserExamAccess_Tbl_User">
           <End Role="Tbl_User" Type="Self.Tbl_User" Multiplicity="1" />
-          <End Role="Tbl_UserExamAccess" Type="Self.Tbl_UserExamAccess" Multiplicity="*" />
+          <End Role="Tbl_UserExamRemotelyPlanAccess" Type="Self.Tbl_UserExamRemotelyPlanAccess" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tbl_User">
               <PropertyRef Name="User_ID" />
             </Principal>
-            <Dependent Role="Tbl_UserExamAccess">
-              <PropertyRef Name="UEA_UserID" />
+            <Dependent Role="Tbl_UserExamRemotelyPlanAccess">
+              <PropertyRef Name="UERPA_UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Tbl_UserExamInPerson_Tbl_ExamInPerson">
-          <End Role="Tbl_ExamInPerson" Type="Self.Tbl_ExamInPerson" Multiplicity="1" />
-          <End Role="Tbl_UserExamInPerson" Type="Self.Tbl_UserExamInPerson" Multiplicity="*" />
+          <End Role="Tbl_ExamInPersonPlan" Type="Self.Tbl_ExamInPersonPlan" Multiplicity="1" />
+          <End Role="Tbl_UserExamInPersonPlan" Type="Self.Tbl_UserExamInPersonPlan" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Tbl_ExamInPerson">
-              <PropertyRef Name="EIP_ID" />
+            <Principal Role="Tbl_ExamInPersonPlan">
+              <PropertyRef Name="EIPP_ID" />
             </Principal>
-            <Dependent Role="Tbl_UserExamInPerson">
-              <PropertyRef Name="UEIP_EIPID" />
+            <Dependent Role="Tbl_UserExamInPersonPlan">
+              <PropertyRef Name="UEIPP_EIPPID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Tbl_UserExamInPerson_Tbl_User">
           <End Role="Tbl_User" Type="Self.Tbl_User" Multiplicity="1" />
-          <End Role="Tbl_UserExamInPerson" Type="Self.Tbl_UserExamInPerson" Multiplicity="*" />
+          <End Role="Tbl_UserExamInPersonPlan" Type="Self.Tbl_UserExamInPersonPlan" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tbl_User">
               <PropertyRef Name="User_ID" />
             </Principal>
-            <Dependent Role="Tbl_UserExamInPerson">
-              <PropertyRef Name="UEIP_UserID" />
+            <Dependent Role="Tbl_UserExamInPersonPlan">
+              <PropertyRef Name="UEIPP_UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_UserExamInPersonPlan_Tbl_Payment">
+          <End Role="Tbl_Payment" Type="Self.Tbl_Payment" Multiplicity="0..1" />
+          <End Role="Tbl_UserExamInPersonPlan" Type="Self.Tbl_UserExamInPersonPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Payment">
+              <PropertyRef Name="Payment_ID" />
+            </Principal>
+            <Dependent Role="Tbl_UserExamInPersonPlan">
+              <PropertyRef Name="UEIPP_PaymentID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Tbl_UserWorkshop_Tbl_User">
           <End Role="Tbl_User" Type="Self.Tbl_User" Multiplicity="1" />
-          <End Role="Tbl_UserWorkshop" Type="Self.Tbl_UserWorkshop" Multiplicity="*" />
+          <End Role="Tbl_UserWorkshopPlan" Type="Self.Tbl_UserWorkshopPlan" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tbl_User">
               <PropertyRef Name="User_ID" />
             </Principal>
-            <Dependent Role="Tbl_UserWorkshop">
-              <PropertyRef Name="UW_UserID" />
+            <Dependent Role="Tbl_UserWorkshopPlan">
+              <PropertyRef Name="UWP_UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Tbl_UserWorkshop_Tbl_WorkshopPlan">
           <End Role="Tbl_WorkshopPlan" Type="Self.Tbl_WorkshopPlan" Multiplicity="1" />
-          <End Role="Tbl_UserWorkshop" Type="Self.Tbl_UserWorkshop" Multiplicity="*" />
+          <End Role="Tbl_UserWorkshopPlan" Type="Self.Tbl_UserWorkshopPlan" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tbl_WorkshopPlan">
               <PropertyRef Name="WP_ID" />
             </Principal>
-            <Dependent Role="Tbl_UserWorkshop">
-              <PropertyRef Name="UW_WPID" />
+            <Dependent Role="Tbl_UserWorkshopPlan">
+              <PropertyRef Name="UWP_WPID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_UserWorkshopPlan_Tbl_Payment">
+          <End Role="Tbl_Payment" Type="Self.Tbl_Payment" Multiplicity="0..1" />
+          <End Role="Tbl_UserWorkshopPlan" Type="Self.Tbl_UserWorkshopPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Payment">
+              <PropertyRef Name="Payment_ID" />
+            </Principal>
+            <Dependent Role="Tbl_UserWorkshopPlan">
+              <PropertyRef Name="UWP_PaymentID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1145,15 +1173,14 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="ESLModelStoreContainer">
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Class" EntityType="Self.Tbl_Class" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_ClassPlan" EntityType="Self.Tbl_ClassPlan" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Code" EntityType="Self.Tbl_Code" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_CodeGroup" EntityType="Self.Tbl_CodeGroup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Document" EntityType="Self.Tbl_Document" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Tbl_Exam" EntityType="Self.Tbl_Exam" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_ExamInPerson" EntityType="Self.Tbl_ExamInPerson" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Tbl_ExamRemotely" EntityType="Self.Tbl_ExamRemotely" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_ExamInPersonPlan" EntityType="Self.Tbl_ExamInPersonPlan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_ExamRemotelyPlan" EntityType="Self.Tbl_ExamRemotelyPlan" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Gallery" EntityType="Self.Tbl_Gallery" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_GalleryDocument" EntityType="Self.Tbl_GalleryDocument" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Menu" EntityType="Self.Tbl_Menu" Schema="dbo" store:Type="Tables" />
@@ -1172,17 +1199,17 @@
           <EntitySet Name="Tbl_SMSResponse" EntityType="Self.Tbl_SMSResponse" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_SMSSetting" EntityType="Self.Tbl_SMSSetting" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_SMSTemplate" EntityType="Self.Tbl_SMSTemplate" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Tbl_SubExam" EntityType="Self.Tbl_SubExam" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_SubExamInPerson" EntityType="Self.Tbl_SubExamInPerson" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_SubMenu" EntityType="Self.Tbl_SubMenu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_SubWorkshop" EntityType="Self.Tbl_SubWorkshop" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Tag" EntityType="Self.Tbl_Tag" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_User" EntityType="Self.Tbl_User" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Tbl_UserClass" EntityType="Self.Tbl_UserClass" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Tbl_UserClassPresence" EntityType="Self.Tbl_UserClassPresence" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Tbl_UserExam" EntityType="Self.Tbl_UserExam" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Tbl_UserExamAccess" EntityType="Self.Tbl_UserExamAccess" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Tbl_UserExamInPerson" EntityType="Self.Tbl_UserExamInPerson" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Tbl_UserWorkshop" EntityType="Self.Tbl_UserWorkshop" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_UserClassPlan" EntityType="Self.Tbl_UserClassPlan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_UserClassPlanPresence" EntityType="Self.Tbl_UserClassPlanPresence" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_UserExamInPersonPlan" EntityType="Self.Tbl_UserExamInPersonPlan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_UserExamRemotelyPlan" EntityType="Self.Tbl_UserExamRemotelyPlan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_UserExamRemotelyPlanAccess" EntityType="Self.Tbl_UserExamRemotelyPlanAccess" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_UserWorkshopPlan" EntityType="Self.Tbl_UserWorkshopPlan" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Wallet" EntityType="Self.Tbl_Wallet" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Workshop" EntityType="Self.Tbl_Workshop" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_WorkshopPlan" EntityType="Self.Tbl_WorkshopPlan" Schema="dbo" store:Type="Tables" />
@@ -1202,13 +1229,13 @@
             <End Role="Tbl_Code" EntitySet="Tbl_Code" />
             <End Role="Tbl_Document" EntitySet="Tbl_Document" />
           </AssociationSet>
-          <AssociationSet Name="FK_Tbl_ExamInPerson_Tbl_SubExam" Association="Self.FK_Tbl_ExamInPerson_Tbl_SubExam">
-            <End Role="Tbl_SubExam" EntitySet="Tbl_SubExam" />
-            <End Role="Tbl_ExamInPerson" EntitySet="Tbl_ExamInPerson" />
+          <AssociationSet Name="FK_Tbl_ExamInPersonPlan_Tbl_SubExamInPerson" Association="Self.FK_Tbl_ExamInPersonPlan_Tbl_SubExamInPerson">
+            <End Role="Tbl_SubExamInPerson" EntitySet="Tbl_SubExamInPerson" />
+            <End Role="Tbl_ExamInPersonPlan" EntitySet="Tbl_ExamInPersonPlan" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_ExamRemotely_Tbl_Code" Association="Self.FK_Tbl_ExamRemotely_Tbl_Code">
             <End Role="Tbl_Code" EntitySet="Tbl_Code" />
-            <End Role="Tbl_ExamRemotely" EntitySet="Tbl_ExamRemotely" />
+            <End Role="Tbl_ExamRemotelyPlan" EntitySet="Tbl_ExamRemotelyPlan" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_GalleryDocument_Tbl_Document" Association="Self.FK_Tbl_GalleryDocument_Tbl_Document">
             <End Role="Tbl_Document" EntitySet="Tbl_Document" />
@@ -1280,7 +1307,7 @@
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_Presence_Tbl_Payment" Association="Self.FK_Tbl_Presence_Tbl_Payment">
             <End Role="Tbl_Payment" EntitySet="Tbl_Payment" />
-            <End Role="Tbl_UserClassPresence" EntitySet="Tbl_UserClassPresence" />
+            <End Role="Tbl_UserClassPlanPresence" EntitySet="Tbl_UserClassPlanPresence" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_Question_Tbl_Code_GroupCodeID" Association="Self.FK_Tbl_Question_Tbl_Code_GroupCodeID">
             <End Role="Tbl_Code" EntitySet="Tbl_Code" />
@@ -1291,7 +1318,7 @@
             <End Role="Tbl_Question" EntitySet="Tbl_Question" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_Question_Tbl_ExamRemotely" Association="Self.FK_Tbl_Question_Tbl_ExamRemotely">
-            <End Role="Tbl_ExamRemotely" EntitySet="Tbl_ExamRemotely" />
+            <End Role="Tbl_ExamRemotelyPlan" EntitySet="Tbl_ExamRemotelyPlan" />
             <End Role="Tbl_Question" EntitySet="Tbl_Question" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_Question_Tbl_Response" Association="Self.FK_Tbl_Question_Tbl_Response">
@@ -1323,8 +1350,8 @@
             <End Role="Tbl_SMSSetting" EntitySet="Tbl_SMSSetting" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_SubExam_Tbl_Exam" Association="Self.FK_Tbl_SubExam_Tbl_Exam">
-            <End Role="Tbl_Exam" EntitySet="Tbl_Exam" />
-            <End Role="Tbl_SubExam" EntitySet="Tbl_SubExam" />
+            <End Role="Tbl_ExamInPerson" EntitySet="Tbl_ExamInPerson" />
+            <End Role="Tbl_SubExamInPerson" EntitySet="Tbl_SubExamInPerson" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_SubMenu_Menu" Association="Self.FK_Tbl_SubMenu_Menu">
             <End Role="Tbl_Menu" EntitySet="Tbl_Menu" />
@@ -1340,47 +1367,59 @@
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_UserClass_Tbl_ClassPlan" Association="Self.FK_Tbl_UserClass_Tbl_ClassPlan">
             <End Role="Tbl_ClassPlan" EntitySet="Tbl_ClassPlan" />
-            <End Role="Tbl_UserClass" EntitySet="Tbl_UserClass" />
+            <End Role="Tbl_UserClassPlan" EntitySet="Tbl_UserClassPlan" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_UserClass_Tbl_User" Association="Self.FK_Tbl_UserClass_Tbl_User">
             <End Role="Tbl_User" EntitySet="Tbl_User" />
-            <End Role="Tbl_UserClass" EntitySet="Tbl_UserClass" />
+            <End Role="Tbl_UserClassPlan" EntitySet="Tbl_UserClassPlan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_UserClassPlan_Tbl_Payment" Association="Self.FK_Tbl_UserClassPlan_Tbl_Payment">
+            <End Role="Tbl_Payment" EntitySet="Tbl_Payment" />
+            <End Role="Tbl_UserClassPlan" EntitySet="Tbl_UserClassPlan" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_UserClassPresence_Tbl_UserClass" Association="Self.FK_Tbl_UserClassPresence_Tbl_UserClass">
-            <End Role="Tbl_UserClass" EntitySet="Tbl_UserClass" />
-            <End Role="Tbl_UserClassPresence" EntitySet="Tbl_UserClassPresence" />
+            <End Role="Tbl_UserClassPlan" EntitySet="Tbl_UserClassPlan" />
+            <End Role="Tbl_UserClassPlanPresence" EntitySet="Tbl_UserClassPlanPresence" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_UserExam_Tbl_ExamRemotely" Association="Self.FK_Tbl_UserExam_Tbl_ExamRemotely">
-            <End Role="Tbl_ExamRemotely" EntitySet="Tbl_ExamRemotely" />
-            <End Role="Tbl_UserExam" EntitySet="Tbl_UserExam" />
+            <End Role="Tbl_ExamRemotelyPlan" EntitySet="Tbl_ExamRemotelyPlan" />
+            <End Role="Tbl_UserExamRemotelyPlan" EntitySet="Tbl_UserExamRemotelyPlan" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_UserExam_Tbl_User" Association="Self.FK_Tbl_UserExam_Tbl_User">
             <End Role="Tbl_User" EntitySet="Tbl_User" />
-            <End Role="Tbl_UserExam" EntitySet="Tbl_UserExam" />
+            <End Role="Tbl_UserExamRemotelyPlan" EntitySet="Tbl_UserExamRemotelyPlan" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_UserExamAccess_Tbl_ExamRemotely" Association="Self.FK_Tbl_UserExamAccess_Tbl_ExamRemotely">
-            <End Role="Tbl_ExamRemotely" EntitySet="Tbl_ExamRemotely" />
-            <End Role="Tbl_UserExamAccess" EntitySet="Tbl_UserExamAccess" />
+            <End Role="Tbl_ExamRemotelyPlan" EntitySet="Tbl_ExamRemotelyPlan" />
+            <End Role="Tbl_UserExamRemotelyPlanAccess" EntitySet="Tbl_UserExamRemotelyPlanAccess" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_UserExamAccess_Tbl_User" Association="Self.FK_Tbl_UserExamAccess_Tbl_User">
             <End Role="Tbl_User" EntitySet="Tbl_User" />
-            <End Role="Tbl_UserExamAccess" EntitySet="Tbl_UserExamAccess" />
+            <End Role="Tbl_UserExamRemotelyPlanAccess" EntitySet="Tbl_UserExamRemotelyPlanAccess" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_UserExamInPerson_Tbl_ExamInPerson" Association="Self.FK_Tbl_UserExamInPerson_Tbl_ExamInPerson">
-            <End Role="Tbl_ExamInPerson" EntitySet="Tbl_ExamInPerson" />
-            <End Role="Tbl_UserExamInPerson" EntitySet="Tbl_UserExamInPerson" />
+            <End Role="Tbl_ExamInPersonPlan" EntitySet="Tbl_ExamInPersonPlan" />
+            <End Role="Tbl_UserExamInPersonPlan" EntitySet="Tbl_UserExamInPersonPlan" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_UserExamInPerson_Tbl_User" Association="Self.FK_Tbl_UserExamInPerson_Tbl_User">
             <End Role="Tbl_User" EntitySet="Tbl_User" />
-            <End Role="Tbl_UserExamInPerson" EntitySet="Tbl_UserExamInPerson" />
+            <End Role="Tbl_UserExamInPersonPlan" EntitySet="Tbl_UserExamInPersonPlan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_UserExamInPersonPlan_Tbl_Payment" Association="Self.FK_Tbl_UserExamInPersonPlan_Tbl_Payment">
+            <End Role="Tbl_Payment" EntitySet="Tbl_Payment" />
+            <End Role="Tbl_UserExamInPersonPlan" EntitySet="Tbl_UserExamInPersonPlan" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_UserWorkshop_Tbl_User" Association="Self.FK_Tbl_UserWorkshop_Tbl_User">
             <End Role="Tbl_User" EntitySet="Tbl_User" />
-            <End Role="Tbl_UserWorkshop" EntitySet="Tbl_UserWorkshop" />
+            <End Role="Tbl_UserWorkshopPlan" EntitySet="Tbl_UserWorkshopPlan" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_UserWorkshop_Tbl_WorkshopPlan" Association="Self.FK_Tbl_UserWorkshop_Tbl_WorkshopPlan">
             <End Role="Tbl_WorkshopPlan" EntitySet="Tbl_WorkshopPlan" />
-            <End Role="Tbl_UserWorkshop" EntitySet="Tbl_UserWorkshop" />
+            <End Role="Tbl_UserWorkshopPlan" EntitySet="Tbl_UserWorkshopPlan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_UserWorkshopPlan_Tbl_Payment" Association="Self.FK_Tbl_UserWorkshopPlan_Tbl_Payment">
+            <End Role="Tbl_Payment" EntitySet="Tbl_Payment" />
+            <End Role="Tbl_UserWorkshopPlan" EntitySet="Tbl_UserWorkshopPlan" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_Wallet_Tbl_User" Association="Self.FK_Tbl_Wallet_Tbl_User">
             <End Role="Tbl_User" EntitySet="Tbl_User" />
@@ -1396,15 +1435,14 @@
     <edmx:ConceptualModels>
       <Schema Namespace="ESLModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="ESLEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="sysdiagrams" EntityType="ESLModel.sysdiagram" />
           <EntitySet Name="Tbl_Class" EntityType="ESLModel.Tbl_Class" />
           <EntitySet Name="Tbl_ClassPlan" EntityType="ESLModel.Tbl_ClassPlan" />
           <EntitySet Name="Tbl_Code" EntityType="ESLModel.Tbl_Code" />
           <EntitySet Name="Tbl_CodeGroup" EntityType="ESLModel.Tbl_CodeGroup" />
           <EntitySet Name="Tbl_Document" EntityType="ESLModel.Tbl_Document" />
-          <EntitySet Name="Tbl_Exam" EntityType="ESLModel.Tbl_Exam" />
           <EntitySet Name="Tbl_ExamInPerson" EntityType="ESLModel.Tbl_ExamInPerson" />
-          <EntitySet Name="Tbl_ExamRemotely" EntityType="ESLModel.Tbl_ExamRemotely" />
+          <EntitySet Name="Tbl_ExamInPersonPlan" EntityType="ESLModel.Tbl_ExamInPersonPlan" />
+          <EntitySet Name="Tbl_ExamRemotelyPlan" EntityType="ESLModel.Tbl_ExamRemotelyPlan" />
           <EntitySet Name="Tbl_Gallery" EntityType="ESLModel.Tbl_Gallery" />
           <EntitySet Name="Tbl_GalleryDocument" EntityType="ESLModel.Tbl_GalleryDocument" />
           <EntitySet Name="Tbl_Menu" EntityType="ESLModel.Tbl_Menu" />
@@ -1423,17 +1461,17 @@
           <EntitySet Name="Tbl_SMSResponse" EntityType="ESLModel.Tbl_SMSResponse" />
           <EntitySet Name="Tbl_SMSSetting" EntityType="ESLModel.Tbl_SMSSetting" />
           <EntitySet Name="Tbl_SMSTemplate" EntityType="ESLModel.Tbl_SMSTemplate" />
-          <EntitySet Name="Tbl_SubExam" EntityType="ESLModel.Tbl_SubExam" />
+          <EntitySet Name="Tbl_SubExamInPerson" EntityType="ESLModel.Tbl_SubExamInPerson" />
           <EntitySet Name="Tbl_SubMenu" EntityType="ESLModel.Tbl_SubMenu" />
           <EntitySet Name="Tbl_SubWorkshop" EntityType="ESLModel.Tbl_SubWorkshop" />
           <EntitySet Name="Tbl_Tag" EntityType="ESLModel.Tbl_Tag" />
           <EntitySet Name="Tbl_User" EntityType="ESLModel.Tbl_User" />
-          <EntitySet Name="Tbl_UserClass" EntityType="ESLModel.Tbl_UserClass" />
-          <EntitySet Name="Tbl_UserClassPresence" EntityType="ESLModel.Tbl_UserClassPresence" />
-          <EntitySet Name="Tbl_UserExam" EntityType="ESLModel.Tbl_UserExam" />
-          <EntitySet Name="Tbl_UserExamAccess" EntityType="ESLModel.Tbl_UserExamAccess" />
-          <EntitySet Name="Tbl_UserExamInPerson" EntityType="ESLModel.Tbl_UserExamInPerson" />
-          <EntitySet Name="Tbl_UserWorkshop" EntityType="ESLModel.Tbl_UserWorkshop" />
+          <EntitySet Name="Tbl_UserClassPlan" EntityType="ESLModel.Tbl_UserClassPlan" />
+          <EntitySet Name="Tbl_UserClassPlanPresence" EntityType="ESLModel.Tbl_UserClassPlanPresence" />
+          <EntitySet Name="Tbl_UserExamInPersonPlan" EntityType="ESLModel.Tbl_UserExamInPersonPlan" />
+          <EntitySet Name="Tbl_UserExamRemotelyPlan" EntityType="ESLModel.Tbl_UserExamRemotelyPlan" />
+          <EntitySet Name="Tbl_UserExamRemotelyPlanAccess" EntityType="ESLModel.Tbl_UserExamRemotelyPlanAccess" />
+          <EntitySet Name="Tbl_UserWorkshopPlan" EntityType="ESLModel.Tbl_UserWorkshopPlan" />
           <EntitySet Name="Tbl_Wallet" EntityType="ESLModel.Tbl_Wallet" />
           <EntitySet Name="Tbl_Workshop" EntityType="ESLModel.Tbl_Workshop" />
           <EntitySet Name="Tbl_WorkshopPlan" EntityType="ESLModel.Tbl_WorkshopPlan" />
@@ -1447,7 +1485,7 @@
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_UserClass_Tbl_ClassPlan" Association="ESLModel.FK_Tbl_UserClass_Tbl_ClassPlan">
             <End Role="Tbl_ClassPlan" EntitySet="Tbl_ClassPlan" />
-            <End Role="Tbl_UserClass" EntitySet="Tbl_UserClass" />
+            <End Role="Tbl_UserClassPlan" EntitySet="Tbl_UserClassPlan" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_Code_Tbl_CodeGroup" Association="ESLModel.FK_Tbl_Code_Tbl_CodeGroup">
             <End Role="Tbl_CodeGroup" EntitySet="Tbl_CodeGroup" />
@@ -1459,7 +1497,7 @@
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_ExamRemotely_Tbl_Code" Association="ESLModel.FK_Tbl_ExamRemotely_Tbl_Code">
             <End Role="Tbl_Code" EntitySet="Tbl_Code" />
-            <End Role="Tbl_ExamRemotely" EntitySet="Tbl_ExamRemotely" />
+            <End Role="Tbl_ExamRemotelyPlan" EntitySet="Tbl_ExamRemotelyPlan" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_Organization_Tbl_Code" Association="ESLModel.FK_Tbl_Organization_Tbl_Code">
             <End Role="Tbl_Code" EntitySet="Tbl_Code" />
@@ -1514,28 +1552,28 @@
             <End Role="Tbl_Payment" EntitySet="Tbl_Payment" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_SubExam_Tbl_Exam" Association="ESLModel.FK_Tbl_SubExam_Tbl_Exam">
-            <End Role="Tbl_Exam" EntitySet="Tbl_Exam" />
-            <End Role="Tbl_SubExam" EntitySet="Tbl_SubExam" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Tbl_ExamInPerson_Tbl_SubExam" Association="ESLModel.FK_Tbl_ExamInPerson_Tbl_SubExam">
-            <End Role="Tbl_SubExam" EntitySet="Tbl_SubExam" />
             <End Role="Tbl_ExamInPerson" EntitySet="Tbl_ExamInPerson" />
+            <End Role="Tbl_SubExamInPerson" EntitySet="Tbl_SubExamInPerson" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_ExamInPersonPlan_Tbl_SubExamInPerson" Association="ESLModel.FK_Tbl_ExamInPersonPlan_Tbl_SubExamInPerson">
+            <End Role="Tbl_SubExamInPerson" EntitySet="Tbl_SubExamInPerson" />
+            <End Role="Tbl_ExamInPersonPlan" EntitySet="Tbl_ExamInPersonPlan" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_UserExamInPerson_Tbl_ExamInPerson" Association="ESLModel.FK_Tbl_UserExamInPerson_Tbl_ExamInPerson">
-            <End Role="Tbl_ExamInPerson" EntitySet="Tbl_ExamInPerson" />
-            <End Role="Tbl_UserExamInPerson" EntitySet="Tbl_UserExamInPerson" />
+            <End Role="Tbl_ExamInPersonPlan" EntitySet="Tbl_ExamInPersonPlan" />
+            <End Role="Tbl_UserExamInPersonPlan" EntitySet="Tbl_UserExamInPersonPlan" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_Question_Tbl_ExamRemotely" Association="ESLModel.FK_Tbl_Question_Tbl_ExamRemotely">
-            <End Role="Tbl_ExamRemotely" EntitySet="Tbl_ExamRemotely" />
+            <End Role="Tbl_ExamRemotelyPlan" EntitySet="Tbl_ExamRemotelyPlan" />
             <End Role="Tbl_Question" EntitySet="Tbl_Question" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_UserExam_Tbl_ExamRemotely" Association="ESLModel.FK_Tbl_UserExam_Tbl_ExamRemotely">
-            <End Role="Tbl_ExamRemotely" EntitySet="Tbl_ExamRemotely" />
-            <End Role="Tbl_UserExam" EntitySet="Tbl_UserExam" />
+            <End Role="Tbl_ExamRemotelyPlan" EntitySet="Tbl_ExamRemotelyPlan" />
+            <End Role="Tbl_UserExamRemotelyPlan" EntitySet="Tbl_UserExamRemotelyPlan" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_UserExamAccess_Tbl_ExamRemotely" Association="ESLModel.FK_Tbl_UserExamAccess_Tbl_ExamRemotely">
-            <End Role="Tbl_ExamRemotely" EntitySet="Tbl_ExamRemotely" />
-            <End Role="Tbl_UserExamAccess" EntitySet="Tbl_UserExamAccess" />
+            <End Role="Tbl_ExamRemotelyPlan" EntitySet="Tbl_ExamRemotelyPlan" />
+            <End Role="Tbl_UserExamRemotelyPlanAccess" EntitySet="Tbl_UserExamRemotelyPlanAccess" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_GalleryDocument_Tbl_Gallery" Association="ESLModel.FK_Tbl_GalleryDocument_Tbl_Gallery">
             <End Role="Tbl_Gallery" EntitySet="Tbl_Gallery" />
@@ -1575,7 +1613,19 @@
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_Presence_Tbl_Payment" Association="ESLModel.FK_Tbl_Presence_Tbl_Payment">
             <End Role="Tbl_Payment" EntitySet="Tbl_Payment" />
-            <End Role="Tbl_UserClassPresence" EntitySet="Tbl_UserClassPresence" />
+            <End Role="Tbl_UserClassPlanPresence" EntitySet="Tbl_UserClassPlanPresence" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_UserClassPlan_Tbl_Payment" Association="ESLModel.FK_Tbl_UserClassPlan_Tbl_Payment">
+            <End Role="Tbl_Payment" EntitySet="Tbl_Payment" />
+            <End Role="Tbl_UserClassPlan" EntitySet="Tbl_UserClassPlan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_UserExamInPersonPlan_Tbl_Payment" Association="ESLModel.FK_Tbl_UserExamInPersonPlan_Tbl_Payment">
+            <End Role="Tbl_Payment" EntitySet="Tbl_Payment" />
+            <End Role="Tbl_UserExamInPersonPlan" EntitySet="Tbl_UserExamInPersonPlan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_UserWorkshopPlan_Tbl_Payment" Association="ESLModel.FK_Tbl_UserWorkshopPlan_Tbl_Payment">
+            <End Role="Tbl_Payment" EntitySet="Tbl_Payment" />
+            <End Role="Tbl_UserWorkshopPlan" EntitySet="Tbl_UserWorkshopPlan" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_Question_Tbl_Response" Association="ESLModel.FK_Tbl_Question_Tbl_Response">
             <End Role="Tbl_Response" EntitySet="Tbl_Response" />
@@ -1611,47 +1661,37 @@
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_UserClass_Tbl_User" Association="ESLModel.FK_Tbl_UserClass_Tbl_User">
             <End Role="Tbl_User" EntitySet="Tbl_User" />
-            <End Role="Tbl_UserClass" EntitySet="Tbl_UserClass" />
+            <End Role="Tbl_UserClassPlan" EntitySet="Tbl_UserClassPlan" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_UserExam_Tbl_User" Association="ESLModel.FK_Tbl_UserExam_Tbl_User">
             <End Role="Tbl_User" EntitySet="Tbl_User" />
-            <End Role="Tbl_UserExam" EntitySet="Tbl_UserExam" />
+            <End Role="Tbl_UserExamRemotelyPlan" EntitySet="Tbl_UserExamRemotelyPlan" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_UserExamAccess_Tbl_User" Association="ESLModel.FK_Tbl_UserExamAccess_Tbl_User">
             <End Role="Tbl_User" EntitySet="Tbl_User" />
-            <End Role="Tbl_UserExamAccess" EntitySet="Tbl_UserExamAccess" />
+            <End Role="Tbl_UserExamRemotelyPlanAccess" EntitySet="Tbl_UserExamRemotelyPlanAccess" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_UserExamInPerson_Tbl_User" Association="ESLModel.FK_Tbl_UserExamInPerson_Tbl_User">
             <End Role="Tbl_User" EntitySet="Tbl_User" />
-            <End Role="Tbl_UserExamInPerson" EntitySet="Tbl_UserExamInPerson" />
+            <End Role="Tbl_UserExamInPersonPlan" EntitySet="Tbl_UserExamInPersonPlan" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_UserWorkshop_Tbl_User" Association="ESLModel.FK_Tbl_UserWorkshop_Tbl_User">
             <End Role="Tbl_User" EntitySet="Tbl_User" />
-            <End Role="Tbl_UserWorkshop" EntitySet="Tbl_UserWorkshop" />
+            <End Role="Tbl_UserWorkshopPlan" EntitySet="Tbl_UserWorkshopPlan" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_Wallet_Tbl_User" Association="ESLModel.FK_Tbl_Wallet_Tbl_User">
             <End Role="Tbl_User" EntitySet="Tbl_User" />
             <End Role="Tbl_Wallet" EntitySet="Tbl_Wallet" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_UserClassPresence_Tbl_UserClass" Association="ESLModel.FK_Tbl_UserClassPresence_Tbl_UserClass">
-            <End Role="Tbl_UserClass" EntitySet="Tbl_UserClass" />
-            <End Role="Tbl_UserClassPresence" EntitySet="Tbl_UserClassPresence" />
+            <End Role="Tbl_UserClassPlan" EntitySet="Tbl_UserClassPlan" />
+            <End Role="Tbl_UserClassPlanPresence" EntitySet="Tbl_UserClassPlanPresence" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_UserWorkshop_Tbl_WorkshopPlan" Association="ESLModel.FK_Tbl_UserWorkshop_Tbl_WorkshopPlan">
             <End Role="Tbl_WorkshopPlan" EntitySet="Tbl_WorkshopPlan" />
-            <End Role="Tbl_UserWorkshop" EntitySet="Tbl_UserWorkshop" />
+            <End Role="Tbl_UserWorkshopPlan" EntitySet="Tbl_UserWorkshopPlan" />
           </AssociationSet>
         </EntityContainer>
-        <EntityType Name="sysdiagram">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
         <EntityType Name="Tbl_Class">
           <Key>
             <PropertyRef Name="Class_ID" />
@@ -1673,7 +1713,7 @@
           <Property Name="CP_ClassID" Type="Int32" Nullable="false" />
           <Property Name="CP_TypeCodeID" Type="Int32" Nullable="false" />
           <Property Name="CP_Capacity" Type="Int32" Nullable="false" />
-          <Property Name="CP_Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CP_Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CP_CostPerSession" Type="Int32" Nullable="false" />
           <Property Name="CP_Location" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="CP_Time" Type="Time" Nullable="false" Precision="7" />
@@ -1685,7 +1725,7 @@
           <Property Name="CP_IsDelete" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Tbl_Class" Relationship="ESLModel.FK_Tbl_ClassPlan_Tbl_Class" FromRole="Tbl_ClassPlan" ToRole="Tbl_Class" />
           <NavigationProperty Name="Tbl_Code" Relationship="ESLModel.FK_Tbl_ClassPlan_Tbl_Code" FromRole="Tbl_ClassPlan" ToRole="Tbl_Code" />
-          <NavigationProperty Name="Tbl_UserClass" Relationship="ESLModel.FK_Tbl_UserClass_Tbl_ClassPlan" FromRole="Tbl_ClassPlan" ToRole="Tbl_UserClass" />
+          <NavigationProperty Name="Tbl_UserClassPlan" Relationship="ESLModel.FK_Tbl_UserClass_Tbl_ClassPlan" FromRole="Tbl_ClassPlan" ToRole="Tbl_UserClassPlan" />
         </EntityType>
         <EntityType Name="Tbl_Code">
           <Key>
@@ -1700,7 +1740,7 @@
           <NavigationProperty Name="Tbl_ClassPlan" Relationship="ESLModel.FK_Tbl_ClassPlan_Tbl_Code" FromRole="Tbl_Code" ToRole="Tbl_ClassPlan" />
           <NavigationProperty Name="Tbl_CodeGroup" Relationship="ESLModel.FK_Tbl_Code_Tbl_CodeGroup" FromRole="Tbl_Code" ToRole="Tbl_CodeGroup" />
           <NavigationProperty Name="Tbl_Document" Relationship="ESLModel.FK_Tbl_Document_Tbl_Code" FromRole="Tbl_Code" ToRole="Tbl_Document" />
-          <NavigationProperty Name="Tbl_ExamRemotely" Relationship="ESLModel.FK_Tbl_ExamRemotely_Tbl_Code" FromRole="Tbl_Code" ToRole="Tbl_ExamRemotely" />
+          <NavigationProperty Name="Tbl_ExamRemotelyPlan" Relationship="ESLModel.FK_Tbl_ExamRemotely_Tbl_Code" FromRole="Tbl_Code" ToRole="Tbl_ExamRemotelyPlan" />
           <NavigationProperty Name="Tbl_Organization" Relationship="ESLModel.FK_Tbl_Organization_Tbl_Code" FromRole="Tbl_Code" ToRole="Tbl_Organization" />
           <NavigationProperty Name="Tbl_PageDocuments" Relationship="ESLModel.FK_Tbl_PageDocuments_Tbl_Code" FromRole="Tbl_Code" ToRole="Tbl_PageDocuments" />
           <NavigationProperty Name="Tbl_Payment" Relationship="ESLModel.FK_Tbl_Payment_Tbl_Code_TitleCodeID" FromRole="Tbl_Code" ToRole="Tbl_Payment" />
@@ -1735,57 +1775,57 @@
           <NavigationProperty Name="Tbl_PageDocuments" Relationship="ESLModel.FK_Tbl_PageDocuments_Tbl_Document" FromRole="Tbl_Document" ToRole="Tbl_PageDocuments" />
           <NavigationProperty Name="Tbl_Payment" Relationship="ESLModel.FK_Tbl_Payment_Tbl_Document" FromRole="Tbl_Document" ToRole="Tbl_Payment" />
         </EntityType>
-        <EntityType Name="Tbl_Exam">
-          <Key>
-            <PropertyRef Name="Exam_ID" />
-          </Key>
-          <Property Name="Exam_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Exam_Guid" Type="Guid" Nullable="false" />
-          <Property Name="Exam_Title" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="Exam_HasSubExam" Type="Boolean" Nullable="false" />
-          <Property Name="Exam_CreationDate" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="Exam_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="Exam_IsDelete" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Tbl_SubExam" Relationship="ESLModel.FK_Tbl_SubExam_Tbl_Exam" FromRole="Tbl_Exam" ToRole="Tbl_SubExam" />
-        </EntityType>
         <EntityType Name="Tbl_ExamInPerson">
           <Key>
             <PropertyRef Name="EIP_ID" />
           </Key>
           <Property Name="EIP_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EIP_Guid" Type="Guid" Nullable="false" />
-          <Property Name="EIP_SEID" Type="Int32" Nullable="false" />
-          <Property Name="EIP_Capacity" Type="Int32" Nullable="false" />
-          <Property Name="EIP_Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="EIP_TotalMark" Type="Int32" Nullable="false" />
-          <Property Name="EIP_PassMark" Type="Int32" Nullable="false" />
-          <Property Name="EIP_Cost" Type="Int32" Nullable="false" />
-          <Property Name="EIP_Location" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="EIP_Date" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="EIP_IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="EIP_Title" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="EIP_HasSubExam" Type="Boolean" Nullable="false" />
           <Property Name="EIP_CreationDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="EIP_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="EIP_IsDelete" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Tbl_SubExam" Relationship="ESLModel.FK_Tbl_ExamInPerson_Tbl_SubExam" FromRole="Tbl_ExamInPerson" ToRole="Tbl_SubExam" />
-          <NavigationProperty Name="Tbl_UserExamInPerson" Relationship="ESLModel.FK_Tbl_UserExamInPerson_Tbl_ExamInPerson" FromRole="Tbl_ExamInPerson" ToRole="Tbl_UserExamInPerson" />
+          <NavigationProperty Name="Tbl_SubExamInPerson" Relationship="ESLModel.FK_Tbl_SubExam_Tbl_Exam" FromRole="Tbl_ExamInPerson" ToRole="Tbl_SubExamInPerson" />
         </EntityType>
-        <EntityType Name="Tbl_ExamRemotely">
+        <EntityType Name="Tbl_ExamInPersonPlan">
           <Key>
-            <PropertyRef Name="ER_ID" />
+            <PropertyRef Name="EIPP_ID" />
           </Key>
-          <Property Name="ER_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ER_Guid" Type="Guid" Nullable="false" />
-          <Property Name="ER_GroupCodeID" Type="Int32" Nullable="false" />
-          <Property Name="ER_Title" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="ER_Mark" Type="Int32" Nullable="false" />
-          <Property Name="ER_PassMark" Type="Int32" Nullable="false" />
-          <Property Name="ER_CreationDate" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="ER_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="ER_IsDelete" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Tbl_Code" Relationship="ESLModel.FK_Tbl_ExamRemotely_Tbl_Code" FromRole="Tbl_ExamRemotely" ToRole="Tbl_Code" />
-          <NavigationProperty Name="Tbl_Question" Relationship="ESLModel.FK_Tbl_Question_Tbl_ExamRemotely" FromRole="Tbl_ExamRemotely" ToRole="Tbl_Question" />
-          <NavigationProperty Name="Tbl_UserExam" Relationship="ESLModel.FK_Tbl_UserExam_Tbl_ExamRemotely" FromRole="Tbl_ExamRemotely" ToRole="Tbl_UserExam" />
-          <NavigationProperty Name="Tbl_UserExamAccess" Relationship="ESLModel.FK_Tbl_UserExamAccess_Tbl_ExamRemotely" FromRole="Tbl_ExamRemotely" ToRole="Tbl_UserExamAccess" />
+          <Property Name="EIPP_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EIPP_Guid" Type="Guid" Nullable="false" />
+          <Property Name="EIPP_SEIPID" Type="Int32" Nullable="false" />
+          <Property Name="EIPP_Capacity" Type="Int32" Nullable="false" />
+          <Property Name="EIPP_Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EIPP_TotalMark" Type="Int32" Nullable="false" />
+          <Property Name="EIPP_PassMark" Type="Int32" Nullable="false" />
+          <Property Name="EIPP_Cost" Type="Int32" Nullable="false" />
+          <Property Name="EIPP_Location" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="EIPP_Date" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="EIPP_IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="EIPP_CreationDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="EIPP_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="EIPP_IsDelete" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Tbl_SubExamInPerson" Relationship="ESLModel.FK_Tbl_ExamInPersonPlan_Tbl_SubExamInPerson" FromRole="Tbl_ExamInPersonPlan" ToRole="Tbl_SubExamInPerson" />
+          <NavigationProperty Name="Tbl_UserExamInPersonPlan" Relationship="ESLModel.FK_Tbl_UserExamInPerson_Tbl_ExamInPerson" FromRole="Tbl_ExamInPersonPlan" ToRole="Tbl_UserExamInPersonPlan" />
+        </EntityType>
+        <EntityType Name="Tbl_ExamRemotelyPlan">
+          <Key>
+            <PropertyRef Name="ERP_ID" />
+          </Key>
+          <Property Name="ERP_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ERP_Guid" Type="Guid" Nullable="false" />
+          <Property Name="ERP_GroupCodeID" Type="Int32" Nullable="false" />
+          <Property Name="ERP_Title" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ERP_Mark" Type="Int32" Nullable="false" />
+          <Property Name="ERP_PassMark" Type="Int32" Nullable="false" />
+          <Property Name="ERP_CreationDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="ERP_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="ERP_IsDelete" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Tbl_Code" Relationship="ESLModel.FK_Tbl_ExamRemotely_Tbl_Code" FromRole="Tbl_ExamRemotelyPlan" ToRole="Tbl_Code" />
+          <NavigationProperty Name="Tbl_Question" Relationship="ESLModel.FK_Tbl_Question_Tbl_ExamRemotely" FromRole="Tbl_ExamRemotelyPlan" ToRole="Tbl_Question" />
+          <NavigationProperty Name="Tbl_UserExamRemotelyPlan" Relationship="ESLModel.FK_Tbl_UserExam_Tbl_ExamRemotely" FromRole="Tbl_ExamRemotelyPlan" ToRole="Tbl_UserExamRemotelyPlan" />
+          <NavigationProperty Name="Tbl_UserExamRemotelyPlanAccess" Relationship="ESLModel.FK_Tbl_UserExamAccess_Tbl_ExamRemotely" FromRole="Tbl_ExamRemotelyPlan" ToRole="Tbl_UserExamRemotelyPlanAccess" />
         </EntityType>
         <EntityType Name="Tbl_Gallery">
           <Key>
@@ -1901,8 +1941,8 @@
           <Property Name="Payment_Guid" Type="Guid" Nullable="false" />
           <Property Name="Payment_UserID" Type="Int32" Nullable="false" />
           <Property Name="Payment_TitleCodeID" Type="Int32" Nullable="false" />
-          <Property Name="Payment_WayCodeID" Type="Int32" Nullable="false" />
-          <Property Name="Payment_TypeCodeID" Type="Int32" Nullable="false" />
+          <Property Name="Payment_WayCodeID" Type="Int32" />
+          <Property Name="Payment_StateCodeID" Type="Int32" Nullable="false" />
           <Property Name="Payment_Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Payment_Cost" Type="Int32" Nullable="false" />
           <Property Name="Payment_Discount" Type="Int32" Nullable="false" />
@@ -1917,7 +1957,10 @@
           <NavigationProperty Name="Tbl_Code2" Relationship="ESLModel.FK_Tbl_Payment_Tbl_Code_WayCodeID" FromRole="Tbl_Payment" ToRole="Tbl_Code" />
           <NavigationProperty Name="Tbl_Document" Relationship="ESLModel.FK_Tbl_Payment_Tbl_Document" FromRole="Tbl_Payment" ToRole="Tbl_Document" />
           <NavigationProperty Name="Tbl_User" Relationship="ESLModel.FK_Tbl_Payment_Tbl_User" FromRole="Tbl_Payment" ToRole="Tbl_User" />
-          <NavigationProperty Name="Tbl_UserClassPresence" Relationship="ESLModel.FK_Tbl_Presence_Tbl_Payment" FromRole="Tbl_Payment" ToRole="Tbl_UserClassPresence" />
+          <NavigationProperty Name="Tbl_UserClassPlanPresence" Relationship="ESLModel.FK_Tbl_Presence_Tbl_Payment" FromRole="Tbl_Payment" ToRole="Tbl_UserClassPlanPresence" />
+          <NavigationProperty Name="Tbl_UserClassPlan" Relationship="ESLModel.FK_Tbl_UserClassPlan_Tbl_Payment" FromRole="Tbl_Payment" ToRole="Tbl_UserClassPlan" />
+          <NavigationProperty Name="Tbl_UserExamInPersonPlan" Relationship="ESLModel.FK_Tbl_UserExamInPersonPlan_Tbl_Payment" FromRole="Tbl_Payment" ToRole="Tbl_UserExamInPersonPlan" />
+          <NavigationProperty Name="Tbl_UserWorkshopPlan" Relationship="ESLModel.FK_Tbl_UserWorkshopPlan_Tbl_Payment" FromRole="Tbl_Payment" ToRole="Tbl_UserWorkshopPlan" />
         </EntityType>
         <EntityType Name="Tbl_Question">
           <Key>
@@ -1937,7 +1980,7 @@
           <Property Name="Question_IsDelete" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Tbl_Code" Relationship="ESLModel.FK_Tbl_Question_Tbl_Code_GroupCodeID" FromRole="Tbl_Question" ToRole="Tbl_Code" />
           <NavigationProperty Name="Tbl_Code1" Relationship="ESLModel.FK_Tbl_Question_Tbl_Code_TypeCodeID" FromRole="Tbl_Question" ToRole="Tbl_Code" />
-          <NavigationProperty Name="Tbl_ExamRemotely" Relationship="ESLModel.FK_Tbl_Question_Tbl_ExamRemotely" FromRole="Tbl_Question" ToRole="Tbl_ExamRemotely" />
+          <NavigationProperty Name="Tbl_ExamRemotelyPlan" Relationship="ESLModel.FK_Tbl_Question_Tbl_ExamRemotely" FromRole="Tbl_Question" ToRole="Tbl_ExamRemotelyPlan" />
           <NavigationProperty Name="Tbl_Response" Relationship="ESLModel.FK_Tbl_Question_Tbl_Response" FromRole="Tbl_Question" ToRole="Tbl_Response" />
           <NavigationProperty Name="Tbl_Response1" Relationship="ESLModel.FK_Tbl_Response_Tbl_Question" FromRole="Tbl_Question" ToRole="Tbl_Response" />
         </EntityType>
@@ -2053,19 +2096,19 @@
           <Property Name="ST_IsDelete" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Tbl_SMSSetting" Relationship="ESLModel.FK_Tbl_SMSSetting_Tbl_SMSTemplate" FromRole="Tbl_SMSTemplate" ToRole="Tbl_SMSSetting" />
         </EntityType>
-        <EntityType Name="Tbl_SubExam">
+        <EntityType Name="Tbl_SubExamInPerson">
           <Key>
-            <PropertyRef Name="SE_ID" />
+            <PropertyRef Name="SEIP_ID" />
           </Key>
-          <Property Name="SE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SE_Guid" Type="Guid" Nullable="false" />
-          <Property Name="SE_ExamID" Type="Int32" Nullable="false" />
-          <Property Name="SE_Title" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="SE_CreationDate" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="SE_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="SE_IsDelete" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Tbl_Exam" Relationship="ESLModel.FK_Tbl_SubExam_Tbl_Exam" FromRole="Tbl_SubExam" ToRole="Tbl_Exam" />
-          <NavigationProperty Name="Tbl_ExamInPerson" Relationship="ESLModel.FK_Tbl_ExamInPerson_Tbl_SubExam" FromRole="Tbl_SubExam" ToRole="Tbl_ExamInPerson" />
+          <Property Name="SEIP_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SEIP_Guid" Type="Guid" Nullable="false" />
+          <Property Name="SEIP_ExamID" Type="Int32" Nullable="false" />
+          <Property Name="SEIP_Title" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="SEIP_CreationDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="SEIP_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="SEIP_IsDelete" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Tbl_ExamInPerson" Relationship="ESLModel.FK_Tbl_SubExam_Tbl_Exam" FromRole="Tbl_SubExamInPerson" ToRole="Tbl_ExamInPerson" />
+          <NavigationProperty Name="Tbl_ExamInPersonPlan" Relationship="ESLModel.FK_Tbl_ExamInPersonPlan_Tbl_SubExamInPerson" FromRole="Tbl_SubExamInPerson" ToRole="Tbl_ExamInPersonPlan" />
         </EntityType>
         <EntityType Name="Tbl_SubMenu">
           <Key>
@@ -2120,112 +2163,116 @@
           <Property Name="User_IdentityNumber" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="User_Mobile" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="User_Birthday" Type="DateTime" Precision="0" />
-          <Property Name="User_Credit" Type="Int32" Nullable="false" />
           <Property Name="User_IsBan" Type="Boolean" Nullable="false" />
           <Property Name="User_IsDelete" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Tbl_Page" Relationship="ESLModel.FK_Tbl_Page_Tbl_User" FromRole="Tbl_User" ToRole="Tbl_Page" />
           <NavigationProperty Name="Tbl_Payment" Relationship="ESLModel.FK_Tbl_Payment_Tbl_User" FromRole="Tbl_User" ToRole="Tbl_Payment" />
           <NavigationProperty Name="Tbl_Role" Relationship="ESLModel.FK_Tbl_User_Tbl_Role" FromRole="Tbl_User" ToRole="Tbl_Role" />
-          <NavigationProperty Name="Tbl_UserClass" Relationship="ESLModel.FK_Tbl_UserClass_Tbl_User" FromRole="Tbl_User" ToRole="Tbl_UserClass" />
-          <NavigationProperty Name="Tbl_UserExam" Relationship="ESLModel.FK_Tbl_UserExam_Tbl_User" FromRole="Tbl_User" ToRole="Tbl_UserExam" />
-          <NavigationProperty Name="Tbl_UserExamAccess" Relationship="ESLModel.FK_Tbl_UserExamAccess_Tbl_User" FromRole="Tbl_User" ToRole="Tbl_UserExamAccess" />
-          <NavigationProperty Name="Tbl_UserExamInPerson" Relationship="ESLModel.FK_Tbl_UserExamInPerson_Tbl_User" FromRole="Tbl_User" ToRole="Tbl_UserExamInPerson" />
-          <NavigationProperty Name="Tbl_UserWorkshop" Relationship="ESLModel.FK_Tbl_UserWorkshop_Tbl_User" FromRole="Tbl_User" ToRole="Tbl_UserWorkshop" />
+          <NavigationProperty Name="Tbl_UserClassPlan" Relationship="ESLModel.FK_Tbl_UserClass_Tbl_User" FromRole="Tbl_User" ToRole="Tbl_UserClassPlan" />
+          <NavigationProperty Name="Tbl_UserExamRemotelyPlan" Relationship="ESLModel.FK_Tbl_UserExam_Tbl_User" FromRole="Tbl_User" ToRole="Tbl_UserExamRemotelyPlan" />
+          <NavigationProperty Name="Tbl_UserExamRemotelyPlanAccess" Relationship="ESLModel.FK_Tbl_UserExamAccess_Tbl_User" FromRole="Tbl_User" ToRole="Tbl_UserExamRemotelyPlanAccess" />
+          <NavigationProperty Name="Tbl_UserExamInPersonPlan" Relationship="ESLModel.FK_Tbl_UserExamInPerson_Tbl_User" FromRole="Tbl_User" ToRole="Tbl_UserExamInPersonPlan" />
+          <NavigationProperty Name="Tbl_UserWorkshopPlan" Relationship="ESLModel.FK_Tbl_UserWorkshop_Tbl_User" FromRole="Tbl_User" ToRole="Tbl_UserWorkshopPlan" />
           <NavigationProperty Name="Tbl_Wallet" Relationship="ESLModel.FK_Tbl_Wallet_Tbl_User" FromRole="Tbl_User" ToRole="Tbl_Wallet" />
         </EntityType>
-        <EntityType Name="Tbl_UserClass">
-          <Key>
-            <PropertyRef Name="UC_ID" />
-          </Key>
-          <Property Name="UC_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UC_Guid" Type="Guid" Nullable="false" />
-          <Property Name="UC_UserID" Type="Int32" Nullable="false" />
-          <Property Name="UC_CPID" Type="Int32" Nullable="false" />
-          <Property Name="UC_PaymentID" Type="Int32" />
-          <Property Name="UC_CreationDate" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="UC_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="UC_IsDelete" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Tbl_ClassPlan" Relationship="ESLModel.FK_Tbl_UserClass_Tbl_ClassPlan" FromRole="Tbl_UserClass" ToRole="Tbl_ClassPlan" />
-          <NavigationProperty Name="Tbl_User" Relationship="ESLModel.FK_Tbl_UserClass_Tbl_User" FromRole="Tbl_UserClass" ToRole="Tbl_User" />
-          <NavigationProperty Name="Tbl_UserClassPresence" Relationship="ESLModel.FK_Tbl_UserClassPresence_Tbl_UserClass" FromRole="Tbl_UserClass" ToRole="Tbl_UserClassPresence" />
-        </EntityType>
-        <EntityType Name="Tbl_UserClassPresence">
+        <EntityType Name="Tbl_UserClassPlan">
           <Key>
             <PropertyRef Name="UCP_ID" />
           </Key>
           <Property Name="UCP_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UCP_Guid" Type="Guid" Nullable="false" />
-          <Property Name="UCP_UCID" Type="Int32" Nullable="false" />
-          <Property Name="UCP_PaymentID" Type="Int32" Nullable="false" />
-          <Property Name="UCP_IsPresent" Type="Boolean" Nullable="false" />
-          <Property Name="UCP_Date" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="UCP_UserID" Type="Int32" Nullable="false" />
+          <Property Name="UCP_CPID" Type="Int32" Nullable="false" />
+          <Property Name="UCP_PaymentID" Type="Int32" />
+          <Property Name="UCP_IsActive" Type="Boolean" Nullable="false" />
           <Property Name="UCP_CreationDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="UCP_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="UCP_IsDelete" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Tbl_Payment" Relationship="ESLModel.FK_Tbl_Presence_Tbl_Payment" FromRole="Tbl_UserClassPresence" ToRole="Tbl_Payment" />
-          <NavigationProperty Name="Tbl_UserClass" Relationship="ESLModel.FK_Tbl_UserClassPresence_Tbl_UserClass" FromRole="Tbl_UserClassPresence" ToRole="Tbl_UserClass" />
+          <NavigationProperty Name="Tbl_ClassPlan" Relationship="ESLModel.FK_Tbl_UserClass_Tbl_ClassPlan" FromRole="Tbl_UserClassPlan" ToRole="Tbl_ClassPlan" />
+          <NavigationProperty Name="Tbl_Payment" Relationship="ESLModel.FK_Tbl_UserClassPlan_Tbl_Payment" FromRole="Tbl_UserClassPlan" ToRole="Tbl_Payment" />
+          <NavigationProperty Name="Tbl_User" Relationship="ESLModel.FK_Tbl_UserClass_Tbl_User" FromRole="Tbl_UserClassPlan" ToRole="Tbl_User" />
+          <NavigationProperty Name="Tbl_UserClassPlanPresence" Relationship="ESLModel.FK_Tbl_UserClassPresence_Tbl_UserClass" FromRole="Tbl_UserClassPlan" ToRole="Tbl_UserClassPlanPresence" />
         </EntityType>
-        <EntityType Name="Tbl_UserExam">
+        <EntityType Name="Tbl_UserClassPlanPresence">
           <Key>
-            <PropertyRef Name="UE_ID" />
+            <PropertyRef Name="UCPP_ID" />
           </Key>
-          <Property Name="UE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UE_Guid" Type="Guid" Nullable="false" />
-          <Property Name="UE_UserID" Type="Int32" Nullable="false" />
-          <Property Name="UE_ERID" Type="Int32" Nullable="false" />
-          <Property Name="UE_Mark" Type="Int32" Nullable="false" />
-          <Property Name="UE_Date" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="UE_IsDelete" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Tbl_ExamRemotely" Relationship="ESLModel.FK_Tbl_UserExam_Tbl_ExamRemotely" FromRole="Tbl_UserExam" ToRole="Tbl_ExamRemotely" />
-          <NavigationProperty Name="Tbl_User" Relationship="ESLModel.FK_Tbl_UserExam_Tbl_User" FromRole="Tbl_UserExam" ToRole="Tbl_User" />
+          <Property Name="UCPP_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UCPP_Guid" Type="Guid" Nullable="false" />
+          <Property Name="UCPP_UCPID" Type="Int32" Nullable="false" />
+          <Property Name="UCPP_PaymentID" Type="Int32" Nullable="false" />
+          <Property Name="UCPP_IsPresent" Type="Boolean" Nullable="false" />
+          <Property Name="UCPP_Date" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="UCPP_CreationDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="UCPP_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="UCPP_IsDelete" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Tbl_Payment" Relationship="ESLModel.FK_Tbl_Presence_Tbl_Payment" FromRole="Tbl_UserClassPlanPresence" ToRole="Tbl_Payment" />
+          <NavigationProperty Name="Tbl_UserClassPlan" Relationship="ESLModel.FK_Tbl_UserClassPresence_Tbl_UserClass" FromRole="Tbl_UserClassPlanPresence" ToRole="Tbl_UserClassPlan" />
         </EntityType>
-        <EntityType Name="Tbl_UserExamAccess">
+        <EntityType Name="Tbl_UserExamInPersonPlan">
           <Key>
-            <PropertyRef Name="UEA_ID" />
+            <PropertyRef Name="UEIPP_ID" />
           </Key>
-          <Property Name="UEA_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UEA_Guid" Type="Guid" Nullable="false" />
-          <Property Name="UEA_UserID" Type="Int32" Nullable="false" />
-          <Property Name="UEA_ERID" Type="Int32" Nullable="false" />
-          <Property Name="UEA_Date" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="UEA_IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="UEA_IsDelete" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Tbl_ExamRemotely" Relationship="ESLModel.FK_Tbl_UserExamAccess_Tbl_ExamRemotely" FromRole="Tbl_UserExamAccess" ToRole="Tbl_ExamRemotely" />
-          <NavigationProperty Name="Tbl_User" Relationship="ESLModel.FK_Tbl_UserExamAccess_Tbl_User" FromRole="Tbl_UserExamAccess" ToRole="Tbl_User" />
+          <Property Name="UEIPP_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UEIPP_Guid" Type="Guid" Nullable="false" />
+          <Property Name="UEIPP_UserID" Type="Int32" Nullable="false" />
+          <Property Name="UEIPP_EIPPID" Type="Int32" Nullable="false" />
+          <Property Name="UEIPP_SeatNumber" Type="Int32" Nullable="false" />
+          <Property Name="UEIPP_Mark" Type="Int32" Nullable="false" />
+          <Property Name="UEIPP_PaymentID" Type="Int32" />
+          <Property Name="UEIPP_IsPresent" Type="Boolean" Nullable="false" />
+          <Property Name="UEIPP_CreationDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="UEIPP_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="UEIPP_IsDelete" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Tbl_ExamInPersonPlan" Relationship="ESLModel.FK_Tbl_UserExamInPerson_Tbl_ExamInPerson" FromRole="Tbl_UserExamInPersonPlan" ToRole="Tbl_ExamInPersonPlan" />
+          <NavigationProperty Name="Tbl_Payment" Relationship="ESLModel.FK_Tbl_UserExamInPersonPlan_Tbl_Payment" FromRole="Tbl_UserExamInPersonPlan" ToRole="Tbl_Payment" />
+          <NavigationProperty Name="Tbl_User" Relationship="ESLModel.FK_Tbl_UserExamInPerson_Tbl_User" FromRole="Tbl_UserExamInPersonPlan" ToRole="Tbl_User" />
         </EntityType>
-        <EntityType Name="Tbl_UserExamInPerson">
+        <EntityType Name="Tbl_UserExamRemotelyPlan">
           <Key>
-            <PropertyRef Name="UEIP_ID" />
+            <PropertyRef Name="UERP_ID" />
           </Key>
-          <Property Name="UEIP_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UEIP_Guid" Type="Guid" Nullable="false" />
-          <Property Name="UEIP_UserID" Type="Int32" Nullable="false" />
-          <Property Name="UEIP_EIPID" Type="Int32" Nullable="false" />
-          <Property Name="UEIP_SeatNumber" Type="Int32" Nullable="false" />
-          <Property Name="UEIP_Mark" Type="Int32" Nullable="false" />
-          <Property Name="UEIP_PaymentID" Type="Int32" />
-          <Property Name="UEIP_IsPresent" Type="Boolean" Nullable="false" />
-          <Property Name="UEIP_CreationDate" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="UEIP_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="UEIP_IsDelete" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Tbl_ExamInPerson" Relationship="ESLModel.FK_Tbl_UserExamInPerson_Tbl_ExamInPerson" FromRole="Tbl_UserExamInPerson" ToRole="Tbl_ExamInPerson" />
-          <NavigationProperty Name="Tbl_User" Relationship="ESLModel.FK_Tbl_UserExamInPerson_Tbl_User" FromRole="Tbl_UserExamInPerson" ToRole="Tbl_User" />
+          <Property Name="UERP_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UERP_Guid" Type="Guid" Nullable="false" />
+          <Property Name="UERP_UserID" Type="Int32" Nullable="false" />
+          <Property Name="UERP_ERPID" Type="Int32" Nullable="false" />
+          <Property Name="UERP_Mark" Type="Int32" Nullable="false" />
+          <Property Name="UERP_Date" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="UERP_IsDelete" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Tbl_ExamRemotelyPlan" Relationship="ESLModel.FK_Tbl_UserExam_Tbl_ExamRemotely" FromRole="Tbl_UserExamRemotelyPlan" ToRole="Tbl_ExamRemotelyPlan" />
+          <NavigationProperty Name="Tbl_User" Relationship="ESLModel.FK_Tbl_UserExam_Tbl_User" FromRole="Tbl_UserExamRemotelyPlan" ToRole="Tbl_User" />
         </EntityType>
-        <EntityType Name="Tbl_UserWorkshop">
+        <EntityType Name="Tbl_UserExamRemotelyPlanAccess">
           <Key>
-            <PropertyRef Name="UW_ID" />
+            <PropertyRef Name="UERPA_ID" />
           </Key>
-          <Property Name="UW_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UW_Guid" Type="Guid" Nullable="false" />
-          <Property Name="UW_UserID" Type="Int32" Nullable="false" />
-          <Property Name="UW_WPID" Type="Int32" Nullable="false" />
-          <Property Name="UW_PaymentID" Type="Int32" />
-          <Property Name="UW_IsPresent" Type="Boolean" Nullable="false" />
-          <Property Name="UW_CreationDate" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="UW_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="UW_IsDelete" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Tbl_User" Relationship="ESLModel.FK_Tbl_UserWorkshop_Tbl_User" FromRole="Tbl_UserWorkshop" ToRole="Tbl_User" />
-          <NavigationProperty Name="Tbl_WorkshopPlan" Relationship="ESLModel.FK_Tbl_UserWorkshop_Tbl_WorkshopPlan" FromRole="Tbl_UserWorkshop" ToRole="Tbl_WorkshopPlan" />
+          <Property Name="UERPA_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UERPA_Guid" Type="Guid" Nullable="false" />
+          <Property Name="UERPA_UserID" Type="Int32" Nullable="false" />
+          <Property Name="UERPA_ERPID" Type="Int32" Nullable="false" />
+          <Property Name="UERPA_Date" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="UERPA_IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="UERPA_IsDelete" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Tbl_ExamRemotelyPlan" Relationship="ESLModel.FK_Tbl_UserExamAccess_Tbl_ExamRemotely" FromRole="Tbl_UserExamRemotelyPlanAccess" ToRole="Tbl_ExamRemotelyPlan" />
+          <NavigationProperty Name="Tbl_User" Relationship="ESLModel.FK_Tbl_UserExamAccess_Tbl_User" FromRole="Tbl_UserExamRemotelyPlanAccess" ToRole="Tbl_User" />
+        </EntityType>
+        <EntityType Name="Tbl_UserWorkshopPlan">
+          <Key>
+            <PropertyRef Name="UWP_ID" />
+          </Key>
+          <Property Name="UWP_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UWP_Guid" Type="Guid" Nullable="false" />
+          <Property Name="UWP_UserID" Type="Int32" Nullable="false" />
+          <Property Name="UWP_WPID" Type="Int32" Nullable="false" />
+          <Property Name="UWP_PaymentID" Type="Int32" />
+          <Property Name="UWP_IsPresent" Type="Boolean" Nullable="false" />
+          <Property Name="UWP_IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="UWP_CreationDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="UWP_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="UWP_IsDelete" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Tbl_Payment" Relationship="ESLModel.FK_Tbl_UserWorkshopPlan_Tbl_Payment" FromRole="Tbl_UserWorkshopPlan" ToRole="Tbl_Payment" />
+          <NavigationProperty Name="Tbl_User" Relationship="ESLModel.FK_Tbl_UserWorkshop_Tbl_User" FromRole="Tbl_UserWorkshopPlan" ToRole="Tbl_User" />
+          <NavigationProperty Name="Tbl_WorkshopPlan" Relationship="ESLModel.FK_Tbl_UserWorkshop_Tbl_WorkshopPlan" FromRole="Tbl_UserWorkshopPlan" ToRole="Tbl_WorkshopPlan" />
         </EntityType>
         <EntityType Name="Tbl_Wallet">
           <Key>
@@ -2237,6 +2284,7 @@
           <Property Name="Wallet_Credit" Type="Int32" Nullable="false" />
           <Property Name="Wallet_CreationDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="Wallet_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="Wallet_IsDelete" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Tbl_User" Relationship="ESLModel.FK_Tbl_Wallet_Tbl_User" FromRole="Tbl_Wallet" ToRole="Tbl_User" />
         </EntityType>
         <EntityType Name="Tbl_Workshop">
@@ -2260,7 +2308,7 @@
           <Property Name="WP_Guid" Type="Guid" Nullable="false" />
           <Property Name="WP_SWID" Type="Int32" Nullable="false" />
           <Property Name="WP_Capacity" Type="Int32" Nullable="false" />
-          <Property Name="WP_Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="WP_Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="WP_Cost" Type="Int32" Nullable="false" />
           <Property Name="WP_Location" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="WP_Date" Type="DateTime" Nullable="false" Precision="7" />
@@ -2269,7 +2317,7 @@
           <Property Name="WP_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="WP_IsDelete" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Tbl_SubWorkshop" Relationship="ESLModel.FK_Tbl_WorkshopPlan_Tbl_SubWorkshop" FromRole="Tbl_WorkshopPlan" ToRole="Tbl_SubWorkshop" />
-          <NavigationProperty Name="Tbl_UserWorkshop" Relationship="ESLModel.FK_Tbl_UserWorkshop_Tbl_WorkshopPlan" FromRole="Tbl_WorkshopPlan" ToRole="Tbl_UserWorkshop" />
+          <NavigationProperty Name="Tbl_UserWorkshopPlan" Relationship="ESLModel.FK_Tbl_UserWorkshop_Tbl_WorkshopPlan" FromRole="Tbl_WorkshopPlan" ToRole="Tbl_UserWorkshopPlan" />
         </EntityType>
         <Association Name="FK_Tbl_ClassPlan_Tbl_Class">
           <End Type="ESLModel.Tbl_Class" Role="Tbl_Class" Multiplicity="1" />
@@ -2297,13 +2345,13 @@
         </Association>
         <Association Name="FK_Tbl_UserClass_Tbl_ClassPlan">
           <End Type="ESLModel.Tbl_ClassPlan" Role="Tbl_ClassPlan" Multiplicity="1" />
-          <End Type="ESLModel.Tbl_UserClass" Role="Tbl_UserClass" Multiplicity="*" />
+          <End Type="ESLModel.Tbl_UserClassPlan" Role="Tbl_UserClassPlan" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tbl_ClassPlan">
               <PropertyRef Name="CP_ID" />
             </Principal>
-            <Dependent Role="Tbl_UserClass">
-              <PropertyRef Name="UC_CPID" />
+            <Dependent Role="Tbl_UserClassPlan">
+              <PropertyRef Name="UCP_CPID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2333,13 +2381,13 @@
         </Association>
         <Association Name="FK_Tbl_ExamRemotely_Tbl_Code">
           <End Type="ESLModel.Tbl_Code" Role="Tbl_Code" Multiplicity="1" />
-          <End Type="ESLModel.Tbl_ExamRemotely" Role="Tbl_ExamRemotely" Multiplicity="*" />
+          <End Type="ESLModel.Tbl_ExamRemotelyPlan" Role="Tbl_ExamRemotelyPlan" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tbl_Code">
               <PropertyRef Name="Code_ID" />
             </Principal>
-            <Dependent Role="Tbl_ExamRemotely">
-              <PropertyRef Name="ER_GroupCodeID" />
+            <Dependent Role="Tbl_ExamRemotelyPlan">
+              <PropertyRef Name="ERP_GroupCodeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2387,12 +2435,12 @@
               <PropertyRef Name="Code_ID" />
             </Principal>
             <Dependent Role="Tbl_Payment">
-              <PropertyRef Name="Payment_TypeCodeID" />
+              <PropertyRef Name="Payment_StateCodeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Tbl_Payment_Tbl_Code_WayCodeID">
-          <End Type="ESLModel.Tbl_Code" Role="Tbl_Code" Multiplicity="1" />
+          <End Type="ESLModel.Tbl_Code" Role="Tbl_Code" Multiplicity="0..1" />
           <End Type="ESLModel.Tbl_Payment" Role="Tbl_Payment" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tbl_Code">
@@ -2500,47 +2548,47 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Tbl_SubExam_Tbl_Exam">
-          <End Type="ESLModel.Tbl_Exam" Role="Tbl_Exam" Multiplicity="1" />
-          <End Type="ESLModel.Tbl_SubExam" Role="Tbl_SubExam" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tbl_Exam">
-              <PropertyRef Name="Exam_ID" />
-            </Principal>
-            <Dependent Role="Tbl_SubExam">
-              <PropertyRef Name="SE_ExamID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Tbl_ExamInPerson_Tbl_SubExam">
-          <End Type="ESLModel.Tbl_SubExam" Role="Tbl_SubExam" Multiplicity="1" />
-          <End Type="ESLModel.Tbl_ExamInPerson" Role="Tbl_ExamInPerson" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tbl_SubExam">
-              <PropertyRef Name="SE_ID" />
-            </Principal>
-            <Dependent Role="Tbl_ExamInPerson">
-              <PropertyRef Name="EIP_SEID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Tbl_UserExamInPerson_Tbl_ExamInPerson">
           <End Type="ESLModel.Tbl_ExamInPerson" Role="Tbl_ExamInPerson" Multiplicity="1" />
-          <End Type="ESLModel.Tbl_UserExamInPerson" Role="Tbl_UserExamInPerson" Multiplicity="*" />
+          <End Type="ESLModel.Tbl_SubExamInPerson" Role="Tbl_SubExamInPerson" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tbl_ExamInPerson">
               <PropertyRef Name="EIP_ID" />
             </Principal>
-            <Dependent Role="Tbl_UserExamInPerson">
-              <PropertyRef Name="UEIP_EIPID" />
+            <Dependent Role="Tbl_SubExamInPerson">
+              <PropertyRef Name="SEIP_ExamID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_ExamInPersonPlan_Tbl_SubExamInPerson">
+          <End Type="ESLModel.Tbl_SubExamInPerson" Role="Tbl_SubExamInPerson" Multiplicity="1" />
+          <End Type="ESLModel.Tbl_ExamInPersonPlan" Role="Tbl_ExamInPersonPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_SubExamInPerson">
+              <PropertyRef Name="SEIP_ID" />
+            </Principal>
+            <Dependent Role="Tbl_ExamInPersonPlan">
+              <PropertyRef Name="EIPP_SEIPID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_UserExamInPerson_Tbl_ExamInPerson">
+          <End Type="ESLModel.Tbl_ExamInPersonPlan" Role="Tbl_ExamInPersonPlan" Multiplicity="1" />
+          <End Type="ESLModel.Tbl_UserExamInPersonPlan" Role="Tbl_UserExamInPersonPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_ExamInPersonPlan">
+              <PropertyRef Name="EIPP_ID" />
+            </Principal>
+            <Dependent Role="Tbl_UserExamInPersonPlan">
+              <PropertyRef Name="UEIPP_EIPPID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Tbl_Question_Tbl_ExamRemotely">
-          <End Type="ESLModel.Tbl_ExamRemotely" Role="Tbl_ExamRemotely" Multiplicity="1" />
+          <End Type="ESLModel.Tbl_ExamRemotelyPlan" Role="Tbl_ExamRemotelyPlan" Multiplicity="1" />
           <End Type="ESLModel.Tbl_Question" Role="Tbl_Question" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Tbl_ExamRemotely">
-              <PropertyRef Name="ER_ID" />
+            <Principal Role="Tbl_ExamRemotelyPlan">
+              <PropertyRef Name="ERP_ID" />
             </Principal>
             <Dependent Role="Tbl_Question">
               <PropertyRef Name="Question_ERID" />
@@ -2548,26 +2596,26 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Tbl_UserExam_Tbl_ExamRemotely">
-          <End Type="ESLModel.Tbl_ExamRemotely" Role="Tbl_ExamRemotely" Multiplicity="1" />
-          <End Type="ESLModel.Tbl_UserExam" Role="Tbl_UserExam" Multiplicity="*" />
+          <End Type="ESLModel.Tbl_ExamRemotelyPlan" Role="Tbl_ExamRemotelyPlan" Multiplicity="1" />
+          <End Type="ESLModel.Tbl_UserExamRemotelyPlan" Role="Tbl_UserExamRemotelyPlan" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Tbl_ExamRemotely">
-              <PropertyRef Name="ER_ID" />
+            <Principal Role="Tbl_ExamRemotelyPlan">
+              <PropertyRef Name="ERP_ID" />
             </Principal>
-            <Dependent Role="Tbl_UserExam">
-              <PropertyRef Name="UE_ERID" />
+            <Dependent Role="Tbl_UserExamRemotelyPlan">
+              <PropertyRef Name="UERP_ERPID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Tbl_UserExamAccess_Tbl_ExamRemotely">
-          <End Type="ESLModel.Tbl_ExamRemotely" Role="Tbl_ExamRemotely" Multiplicity="1" />
-          <End Type="ESLModel.Tbl_UserExamAccess" Role="Tbl_UserExamAccess" Multiplicity="*" />
+          <End Type="ESLModel.Tbl_ExamRemotelyPlan" Role="Tbl_ExamRemotelyPlan" Multiplicity="1" />
+          <End Type="ESLModel.Tbl_UserExamRemotelyPlanAccess" Role="Tbl_UserExamRemotelyPlanAccess" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Tbl_ExamRemotely">
-              <PropertyRef Name="ER_ID" />
+            <Principal Role="Tbl_ExamRemotelyPlan">
+              <PropertyRef Name="ERP_ID" />
             </Principal>
-            <Dependent Role="Tbl_UserExamAccess">
-              <PropertyRef Name="UEA_ERID" />
+            <Dependent Role="Tbl_UserExamRemotelyPlanAccess">
+              <PropertyRef Name="UERPA_ERPID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2681,13 +2729,49 @@
         </Association>
         <Association Name="FK_Tbl_Presence_Tbl_Payment">
           <End Type="ESLModel.Tbl_Payment" Role="Tbl_Payment" Multiplicity="1" />
-          <End Type="ESLModel.Tbl_UserClassPresence" Role="Tbl_UserClassPresence" Multiplicity="*" />
+          <End Type="ESLModel.Tbl_UserClassPlanPresence" Role="Tbl_UserClassPlanPresence" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tbl_Payment">
               <PropertyRef Name="Payment_ID" />
             </Principal>
-            <Dependent Role="Tbl_UserClassPresence">
+            <Dependent Role="Tbl_UserClassPlanPresence">
+              <PropertyRef Name="UCPP_PaymentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_UserClassPlan_Tbl_Payment">
+          <End Type="ESLModel.Tbl_Payment" Role="Tbl_Payment" Multiplicity="0..1" />
+          <End Type="ESLModel.Tbl_UserClassPlan" Role="Tbl_UserClassPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Payment">
+              <PropertyRef Name="Payment_ID" />
+            </Principal>
+            <Dependent Role="Tbl_UserClassPlan">
               <PropertyRef Name="UCP_PaymentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_UserExamInPersonPlan_Tbl_Payment">
+          <End Type="ESLModel.Tbl_Payment" Role="Tbl_Payment" Multiplicity="0..1" />
+          <End Type="ESLModel.Tbl_UserExamInPersonPlan" Role="Tbl_UserExamInPersonPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Payment">
+              <PropertyRef Name="Payment_ID" />
+            </Principal>
+            <Dependent Role="Tbl_UserExamInPersonPlan">
+              <PropertyRef Name="UEIPP_PaymentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_UserWorkshopPlan_Tbl_Payment">
+          <End Type="ESLModel.Tbl_Payment" Role="Tbl_Payment" Multiplicity="0..1" />
+          <End Type="ESLModel.Tbl_UserWorkshopPlan" Role="Tbl_UserWorkshopPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Payment">
+              <PropertyRef Name="Payment_ID" />
+            </Principal>
+            <Dependent Role="Tbl_UserWorkshopPlan">
+              <PropertyRef Name="UWP_PaymentID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2789,61 +2873,61 @@
         </Association>
         <Association Name="FK_Tbl_UserClass_Tbl_User">
           <End Type="ESLModel.Tbl_User" Role="Tbl_User" Multiplicity="1" />
-          <End Type="ESLModel.Tbl_UserClass" Role="Tbl_UserClass" Multiplicity="*" />
+          <End Type="ESLModel.Tbl_UserClassPlan" Role="Tbl_UserClassPlan" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tbl_User">
               <PropertyRef Name="User_ID" />
             </Principal>
-            <Dependent Role="Tbl_UserClass">
-              <PropertyRef Name="UC_UserID" />
+            <Dependent Role="Tbl_UserClassPlan">
+              <PropertyRef Name="UCP_UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Tbl_UserExam_Tbl_User">
           <End Type="ESLModel.Tbl_User" Role="Tbl_User" Multiplicity="1" />
-          <End Type="ESLModel.Tbl_UserExam" Role="Tbl_UserExam" Multiplicity="*" />
+          <End Type="ESLModel.Tbl_UserExamRemotelyPlan" Role="Tbl_UserExamRemotelyPlan" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tbl_User">
               <PropertyRef Name="User_ID" />
             </Principal>
-            <Dependent Role="Tbl_UserExam">
-              <PropertyRef Name="UE_UserID" />
+            <Dependent Role="Tbl_UserExamRemotelyPlan">
+              <PropertyRef Name="UERP_UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Tbl_UserExamAccess_Tbl_User">
           <End Type="ESLModel.Tbl_User" Role="Tbl_User" Multiplicity="1" />
-          <End Type="ESLModel.Tbl_UserExamAccess" Role="Tbl_UserExamAccess" Multiplicity="*" />
+          <End Type="ESLModel.Tbl_UserExamRemotelyPlanAccess" Role="Tbl_UserExamRemotelyPlanAccess" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tbl_User">
               <PropertyRef Name="User_ID" />
             </Principal>
-            <Dependent Role="Tbl_UserExamAccess">
-              <PropertyRef Name="UEA_UserID" />
+            <Dependent Role="Tbl_UserExamRemotelyPlanAccess">
+              <PropertyRef Name="UERPA_UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Tbl_UserExamInPerson_Tbl_User">
           <End Type="ESLModel.Tbl_User" Role="Tbl_User" Multiplicity="1" />
-          <End Type="ESLModel.Tbl_UserExamInPerson" Role="Tbl_UserExamInPerson" Multiplicity="*" />
+          <End Type="ESLModel.Tbl_UserExamInPersonPlan" Role="Tbl_UserExamInPersonPlan" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tbl_User">
               <PropertyRef Name="User_ID" />
             </Principal>
-            <Dependent Role="Tbl_UserExamInPerson">
-              <PropertyRef Name="UEIP_UserID" />
+            <Dependent Role="Tbl_UserExamInPersonPlan">
+              <PropertyRef Name="UEIPP_UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Tbl_UserWorkshop_Tbl_User">
           <End Type="ESLModel.Tbl_User" Role="Tbl_User" Multiplicity="1" />
-          <End Type="ESLModel.Tbl_UserWorkshop" Role="Tbl_UserWorkshop" Multiplicity="*" />
+          <End Type="ESLModel.Tbl_UserWorkshopPlan" Role="Tbl_UserWorkshopPlan" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tbl_User">
               <PropertyRef Name="User_ID" />
             </Principal>
-            <Dependent Role="Tbl_UserWorkshop">
-              <PropertyRef Name="UW_UserID" />
+            <Dependent Role="Tbl_UserWorkshopPlan">
+              <PropertyRef Name="UWP_UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2860,26 +2944,26 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Tbl_UserClassPresence_Tbl_UserClass">
-          <End Type="ESLModel.Tbl_UserClass" Role="Tbl_UserClass" Multiplicity="1" />
-          <End Type="ESLModel.Tbl_UserClassPresence" Role="Tbl_UserClassPresence" Multiplicity="*" />
+          <End Type="ESLModel.Tbl_UserClassPlan" Role="Tbl_UserClassPlan" Multiplicity="1" />
+          <End Type="ESLModel.Tbl_UserClassPlanPresence" Role="Tbl_UserClassPlanPresence" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Tbl_UserClass">
-              <PropertyRef Name="UC_ID" />
+            <Principal Role="Tbl_UserClassPlan">
+              <PropertyRef Name="UCP_ID" />
             </Principal>
-            <Dependent Role="Tbl_UserClassPresence">
-              <PropertyRef Name="UCP_UCID" />
+            <Dependent Role="Tbl_UserClassPlanPresence">
+              <PropertyRef Name="UCPP_UCPID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Tbl_UserWorkshop_Tbl_WorkshopPlan">
           <End Type="ESLModel.Tbl_WorkshopPlan" Role="Tbl_WorkshopPlan" Multiplicity="1" />
-          <End Type="ESLModel.Tbl_UserWorkshop" Role="Tbl_UserWorkshop" Multiplicity="*" />
+          <End Type="ESLModel.Tbl_UserWorkshopPlan" Role="Tbl_UserWorkshopPlan" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tbl_WorkshopPlan">
               <PropertyRef Name="WP_ID" />
             </Principal>
-            <Dependent Role="Tbl_UserWorkshop">
-              <PropertyRef Name="UW_WPID" />
+            <Dependent Role="Tbl_UserWorkshopPlan">
+              <PropertyRef Name="UWP_WPID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2889,17 +2973,6 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="ESLModelStoreContainer" CdmEntityContainer="ESLEntities">
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="ESLModel.sysdiagram">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="definition" ColumnName="definition" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Tbl_Class">
             <EntityTypeMapping TypeName="ESLModel.Tbl_Class">
               <MappingFragment StoreEntitySet="Tbl_Class">
@@ -2965,51 +3038,51 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Tbl_Exam">
-            <EntityTypeMapping TypeName="ESLModel.Tbl_Exam">
-              <MappingFragment StoreEntitySet="Tbl_Exam">
-                <ScalarProperty Name="Exam_IsDelete" ColumnName="Exam_IsDelete" />
-                <ScalarProperty Name="Exam_ModifiedDate" ColumnName="Exam_ModifiedDate" />
-                <ScalarProperty Name="Exam_CreationDate" ColumnName="Exam_CreationDate" />
-                <ScalarProperty Name="Exam_HasSubExam" ColumnName="Exam_HasSubExam" />
-                <ScalarProperty Name="Exam_Title" ColumnName="Exam_Title" />
-                <ScalarProperty Name="Exam_Guid" ColumnName="Exam_Guid" />
-                <ScalarProperty Name="Exam_ID" ColumnName="Exam_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Tbl_ExamInPerson">
             <EntityTypeMapping TypeName="ESLModel.Tbl_ExamInPerson">
               <MappingFragment StoreEntitySet="Tbl_ExamInPerson">
                 <ScalarProperty Name="EIP_IsDelete" ColumnName="EIP_IsDelete" />
                 <ScalarProperty Name="EIP_ModifiedDate" ColumnName="EIP_ModifiedDate" />
                 <ScalarProperty Name="EIP_CreationDate" ColumnName="EIP_CreationDate" />
-                <ScalarProperty Name="EIP_IsActive" ColumnName="EIP_IsActive" />
-                <ScalarProperty Name="EIP_Date" ColumnName="EIP_Date" />
-                <ScalarProperty Name="EIP_Location" ColumnName="EIP_Location" />
-                <ScalarProperty Name="EIP_Cost" ColumnName="EIP_Cost" />
-                <ScalarProperty Name="EIP_PassMark" ColumnName="EIP_PassMark" />
-                <ScalarProperty Name="EIP_TotalMark" ColumnName="EIP_TotalMark" />
-                <ScalarProperty Name="EIP_Description" ColumnName="EIP_Description" />
-                <ScalarProperty Name="EIP_Capacity" ColumnName="EIP_Capacity" />
-                <ScalarProperty Name="EIP_SEID" ColumnName="EIP_SEID" />
+                <ScalarProperty Name="EIP_HasSubExam" ColumnName="EIP_HasSubExam" />
+                <ScalarProperty Name="EIP_Title" ColumnName="EIP_Title" />
                 <ScalarProperty Name="EIP_Guid" ColumnName="EIP_Guid" />
                 <ScalarProperty Name="EIP_ID" ColumnName="EIP_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Tbl_ExamRemotely">
-            <EntityTypeMapping TypeName="ESLModel.Tbl_ExamRemotely">
-              <MappingFragment StoreEntitySet="Tbl_ExamRemotely">
-                <ScalarProperty Name="ER_IsDelete" ColumnName="ER_IsDelete" />
-                <ScalarProperty Name="ER_ModifiedDate" ColumnName="ER_ModifiedDate" />
-                <ScalarProperty Name="ER_CreationDate" ColumnName="ER_CreationDate" />
-                <ScalarProperty Name="ER_PassMark" ColumnName="ER_PassMark" />
-                <ScalarProperty Name="ER_Mark" ColumnName="ER_Mark" />
-                <ScalarProperty Name="ER_Title" ColumnName="ER_Title" />
-                <ScalarProperty Name="ER_GroupCodeID" ColumnName="ER_GroupCodeID" />
-                <ScalarProperty Name="ER_Guid" ColumnName="ER_Guid" />
-                <ScalarProperty Name="ER_ID" ColumnName="ER_ID" />
+          <EntitySetMapping Name="Tbl_ExamInPersonPlan">
+            <EntityTypeMapping TypeName="ESLModel.Tbl_ExamInPersonPlan">
+              <MappingFragment StoreEntitySet="Tbl_ExamInPersonPlan">
+                <ScalarProperty Name="EIPP_IsDelete" ColumnName="EIPP_IsDelete" />
+                <ScalarProperty Name="EIPP_ModifiedDate" ColumnName="EIPP_ModifiedDate" />
+                <ScalarProperty Name="EIPP_CreationDate" ColumnName="EIPP_CreationDate" />
+                <ScalarProperty Name="EIPP_IsActive" ColumnName="EIPP_IsActive" />
+                <ScalarProperty Name="EIPP_Date" ColumnName="EIPP_Date" />
+                <ScalarProperty Name="EIPP_Location" ColumnName="EIPP_Location" />
+                <ScalarProperty Name="EIPP_Cost" ColumnName="EIPP_Cost" />
+                <ScalarProperty Name="EIPP_PassMark" ColumnName="EIPP_PassMark" />
+                <ScalarProperty Name="EIPP_TotalMark" ColumnName="EIPP_TotalMark" />
+                <ScalarProperty Name="EIPP_Description" ColumnName="EIPP_Description" />
+                <ScalarProperty Name="EIPP_Capacity" ColumnName="EIPP_Capacity" />
+                <ScalarProperty Name="EIPP_SEIPID" ColumnName="EIPP_SEIPID" />
+                <ScalarProperty Name="EIPP_Guid" ColumnName="EIPP_Guid" />
+                <ScalarProperty Name="EIPP_ID" ColumnName="EIPP_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_ExamRemotelyPlan">
+            <EntityTypeMapping TypeName="ESLModel.Tbl_ExamRemotelyPlan">
+              <MappingFragment StoreEntitySet="Tbl_ExamRemotelyPlan">
+                <ScalarProperty Name="ERP_IsDelete" ColumnName="ERP_IsDelete" />
+                <ScalarProperty Name="ERP_ModifiedDate" ColumnName="ERP_ModifiedDate" />
+                <ScalarProperty Name="ERP_CreationDate" ColumnName="ERP_CreationDate" />
+                <ScalarProperty Name="ERP_PassMark" ColumnName="ERP_PassMark" />
+                <ScalarProperty Name="ERP_Mark" ColumnName="ERP_Mark" />
+                <ScalarProperty Name="ERP_Title" ColumnName="ERP_Title" />
+                <ScalarProperty Name="ERP_GroupCodeID" ColumnName="ERP_GroupCodeID" />
+                <ScalarProperty Name="ERP_Guid" ColumnName="ERP_Guid" />
+                <ScalarProperty Name="ERP_ID" ColumnName="ERP_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3122,7 +3195,7 @@
                 <ScalarProperty Name="Payment_Discount" ColumnName="Payment_Discount" />
                 <ScalarProperty Name="Payment_Cost" ColumnName="Payment_Cost" />
                 <ScalarProperty Name="Payment_Description" ColumnName="Payment_Description" />
-                <ScalarProperty Name="Payment_TypeCodeID" ColumnName="Payment_TypeCodeID" />
+                <ScalarProperty Name="Payment_StateCodeID" ColumnName="Payment_StateCodeID" />
                 <ScalarProperty Name="Payment_WayCodeID" ColumnName="Payment_WayCodeID" />
                 <ScalarProperty Name="Payment_TitleCodeID" ColumnName="Payment_TitleCodeID" />
                 <ScalarProperty Name="Payment_UserID" ColumnName="Payment_UserID" />
@@ -3257,16 +3330,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Tbl_SubExam">
-            <EntityTypeMapping TypeName="ESLModel.Tbl_SubExam">
-              <MappingFragment StoreEntitySet="Tbl_SubExam">
-                <ScalarProperty Name="SE_IsDelete" ColumnName="SE_IsDelete" />
-                <ScalarProperty Name="SE_ModifiedDate" ColumnName="SE_ModifiedDate" />
-                <ScalarProperty Name="SE_CreationDate" ColumnName="SE_CreationDate" />
-                <ScalarProperty Name="SE_Title" ColumnName="SE_Title" />
-                <ScalarProperty Name="SE_ExamID" ColumnName="SE_ExamID" />
-                <ScalarProperty Name="SE_Guid" ColumnName="SE_Guid" />
-                <ScalarProperty Name="SE_ID" ColumnName="SE_ID" />
+          <EntitySetMapping Name="Tbl_SubExamInPerson">
+            <EntityTypeMapping TypeName="ESLModel.Tbl_SubExamInPerson">
+              <MappingFragment StoreEntitySet="Tbl_SubExamInPerson">
+                <ScalarProperty Name="SEIP_IsDelete" ColumnName="SEIP_IsDelete" />
+                <ScalarProperty Name="SEIP_ModifiedDate" ColumnName="SEIP_ModifiedDate" />
+                <ScalarProperty Name="SEIP_CreationDate" ColumnName="SEIP_CreationDate" />
+                <ScalarProperty Name="SEIP_Title" ColumnName="SEIP_Title" />
+                <ScalarProperty Name="SEIP_ExamID" ColumnName="SEIP_ExamID" />
+                <ScalarProperty Name="SEIP_Guid" ColumnName="SEIP_Guid" />
+                <ScalarProperty Name="SEIP_ID" ColumnName="SEIP_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3309,7 +3382,6 @@
               <MappingFragment StoreEntitySet="Tbl_User">
                 <ScalarProperty Name="User_IsDelete" ColumnName="User_IsDelete" />
                 <ScalarProperty Name="User_IsBan" ColumnName="User_IsBan" />
-                <ScalarProperty Name="User_Credit" ColumnName="User_Credit" />
                 <ScalarProperty Name="User_Birthday" ColumnName="User_Birthday" />
                 <ScalarProperty Name="User_Mobile" ColumnName="User_Mobile" />
                 <ScalarProperty Name="User_IdentityNumber" ColumnName="User_IdentityNumber" />
@@ -3327,96 +3399,99 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Tbl_UserClass">
-            <EntityTypeMapping TypeName="ESLModel.Tbl_UserClass">
-              <MappingFragment StoreEntitySet="Tbl_UserClass">
-                <ScalarProperty Name="UC_IsDelete" ColumnName="UC_IsDelete" />
-                <ScalarProperty Name="UC_ModifiedDate" ColumnName="UC_ModifiedDate" />
-                <ScalarProperty Name="UC_CreationDate" ColumnName="UC_CreationDate" />
-                <ScalarProperty Name="UC_PaymentID" ColumnName="UC_PaymentID" />
-                <ScalarProperty Name="UC_CPID" ColumnName="UC_CPID" />
-                <ScalarProperty Name="UC_UserID" ColumnName="UC_UserID" />
-                <ScalarProperty Name="UC_Guid" ColumnName="UC_Guid" />
-                <ScalarProperty Name="UC_ID" ColumnName="UC_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tbl_UserClassPresence">
-            <EntityTypeMapping TypeName="ESLModel.Tbl_UserClassPresence">
-              <MappingFragment StoreEntitySet="Tbl_UserClassPresence">
+          <EntitySetMapping Name="Tbl_UserClassPlan">
+            <EntityTypeMapping TypeName="ESLModel.Tbl_UserClassPlan">
+              <MappingFragment StoreEntitySet="Tbl_UserClassPlan">
                 <ScalarProperty Name="UCP_IsDelete" ColumnName="UCP_IsDelete" />
                 <ScalarProperty Name="UCP_ModifiedDate" ColumnName="UCP_ModifiedDate" />
                 <ScalarProperty Name="UCP_CreationDate" ColumnName="UCP_CreationDate" />
-                <ScalarProperty Name="UCP_Date" ColumnName="UCP_Date" />
-                <ScalarProperty Name="UCP_IsPresent" ColumnName="UCP_IsPresent" />
+                <ScalarProperty Name="UCP_IsActive" ColumnName="UCP_IsActive" />
                 <ScalarProperty Name="UCP_PaymentID" ColumnName="UCP_PaymentID" />
-                <ScalarProperty Name="UCP_UCID" ColumnName="UCP_UCID" />
+                <ScalarProperty Name="UCP_CPID" ColumnName="UCP_CPID" />
+                <ScalarProperty Name="UCP_UserID" ColumnName="UCP_UserID" />
                 <ScalarProperty Name="UCP_Guid" ColumnName="UCP_Guid" />
                 <ScalarProperty Name="UCP_ID" ColumnName="UCP_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Tbl_UserExam">
-            <EntityTypeMapping TypeName="ESLModel.Tbl_UserExam">
-              <MappingFragment StoreEntitySet="Tbl_UserExam">
-                <ScalarProperty Name="UE_IsDelete" ColumnName="UE_IsDelete" />
-                <ScalarProperty Name="UE_Date" ColumnName="UE_Date" />
-                <ScalarProperty Name="UE_Mark" ColumnName="UE_Mark" />
-                <ScalarProperty Name="UE_ERID" ColumnName="UE_ERID" />
-                <ScalarProperty Name="UE_UserID" ColumnName="UE_UserID" />
-                <ScalarProperty Name="UE_Guid" ColumnName="UE_Guid" />
-                <ScalarProperty Name="UE_ID" ColumnName="UE_ID" />
+          <EntitySetMapping Name="Tbl_UserClassPlanPresence">
+            <EntityTypeMapping TypeName="ESLModel.Tbl_UserClassPlanPresence">
+              <MappingFragment StoreEntitySet="Tbl_UserClassPlanPresence">
+                <ScalarProperty Name="UCPP_IsDelete" ColumnName="UCPP_IsDelete" />
+                <ScalarProperty Name="UCPP_ModifiedDate" ColumnName="UCPP_ModifiedDate" />
+                <ScalarProperty Name="UCPP_CreationDate" ColumnName="UCPP_CreationDate" />
+                <ScalarProperty Name="UCPP_Date" ColumnName="UCPP_Date" />
+                <ScalarProperty Name="UCPP_IsPresent" ColumnName="UCPP_IsPresent" />
+                <ScalarProperty Name="UCPP_PaymentID" ColumnName="UCPP_PaymentID" />
+                <ScalarProperty Name="UCPP_UCPID" ColumnName="UCPP_UCPID" />
+                <ScalarProperty Name="UCPP_Guid" ColumnName="UCPP_Guid" />
+                <ScalarProperty Name="UCPP_ID" ColumnName="UCPP_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Tbl_UserExamAccess">
-            <EntityTypeMapping TypeName="ESLModel.Tbl_UserExamAccess">
-              <MappingFragment StoreEntitySet="Tbl_UserExamAccess">
-                <ScalarProperty Name="UEA_IsDelete" ColumnName="UEA_IsDelete" />
-                <ScalarProperty Name="UEA_IsActive" ColumnName="UEA_IsActive" />
-                <ScalarProperty Name="UEA_Date" ColumnName="UEA_Date" />
-                <ScalarProperty Name="UEA_ERID" ColumnName="UEA_ERID" />
-                <ScalarProperty Name="UEA_UserID" ColumnName="UEA_UserID" />
-                <ScalarProperty Name="UEA_Guid" ColumnName="UEA_Guid" />
-                <ScalarProperty Name="UEA_ID" ColumnName="UEA_ID" />
+          <EntitySetMapping Name="Tbl_UserExamInPersonPlan">
+            <EntityTypeMapping TypeName="ESLModel.Tbl_UserExamInPersonPlan">
+              <MappingFragment StoreEntitySet="Tbl_UserExamInPersonPlan">
+                <ScalarProperty Name="UEIPP_IsDelete" ColumnName="UEIPP_IsDelete" />
+                <ScalarProperty Name="UEIPP_ModifiedDate" ColumnName="UEIPP_ModifiedDate" />
+                <ScalarProperty Name="UEIPP_CreationDate" ColumnName="UEIPP_CreationDate" />
+                <ScalarProperty Name="UEIPP_IsPresent" ColumnName="UEIPP_IsPresent" />
+                <ScalarProperty Name="UEIPP_PaymentID" ColumnName="UEIPP_PaymentID" />
+                <ScalarProperty Name="UEIPP_Mark" ColumnName="UEIPP_Mark" />
+                <ScalarProperty Name="UEIPP_SeatNumber" ColumnName="UEIPP_SeatNumber" />
+                <ScalarProperty Name="UEIPP_EIPPID" ColumnName="UEIPP_EIPPID" />
+                <ScalarProperty Name="UEIPP_UserID" ColumnName="UEIPP_UserID" />
+                <ScalarProperty Name="UEIPP_Guid" ColumnName="UEIPP_Guid" />
+                <ScalarProperty Name="UEIPP_ID" ColumnName="UEIPP_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Tbl_UserExamInPerson">
-            <EntityTypeMapping TypeName="ESLModel.Tbl_UserExamInPerson">
-              <MappingFragment StoreEntitySet="Tbl_UserExamInPerson">
-                <ScalarProperty Name="UEIP_IsDelete" ColumnName="UEIP_IsDelete" />
-                <ScalarProperty Name="UEIP_ModifiedDate" ColumnName="UEIP_ModifiedDate" />
-                <ScalarProperty Name="UEIP_CreationDate" ColumnName="UEIP_CreationDate" />
-                <ScalarProperty Name="UEIP_IsPresent" ColumnName="UEIP_IsPresent" />
-                <ScalarProperty Name="UEIP_PaymentID" ColumnName="UEIP_PaymentID" />
-                <ScalarProperty Name="UEIP_Mark" ColumnName="UEIP_Mark" />
-                <ScalarProperty Name="UEIP_SeatNumber" ColumnName="UEIP_SeatNumber" />
-                <ScalarProperty Name="UEIP_EIPID" ColumnName="UEIP_EIPID" />
-                <ScalarProperty Name="UEIP_UserID" ColumnName="UEIP_UserID" />
-                <ScalarProperty Name="UEIP_Guid" ColumnName="UEIP_Guid" />
-                <ScalarProperty Name="UEIP_ID" ColumnName="UEIP_ID" />
+          <EntitySetMapping Name="Tbl_UserExamRemotelyPlan">
+            <EntityTypeMapping TypeName="ESLModel.Tbl_UserExamRemotelyPlan">
+              <MappingFragment StoreEntitySet="Tbl_UserExamRemotelyPlan">
+                <ScalarProperty Name="UERP_IsDelete" ColumnName="UERP_IsDelete" />
+                <ScalarProperty Name="UERP_Date" ColumnName="UERP_Date" />
+                <ScalarProperty Name="UERP_Mark" ColumnName="UERP_Mark" />
+                <ScalarProperty Name="UERP_ERPID" ColumnName="UERP_ERPID" />
+                <ScalarProperty Name="UERP_UserID" ColumnName="UERP_UserID" />
+                <ScalarProperty Name="UERP_Guid" ColumnName="UERP_Guid" />
+                <ScalarProperty Name="UERP_ID" ColumnName="UERP_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Tbl_UserWorkshop">
-            <EntityTypeMapping TypeName="ESLModel.Tbl_UserWorkshop">
-              <MappingFragment StoreEntitySet="Tbl_UserWorkshop">
-                <ScalarProperty Name="UW_IsDelete" ColumnName="UW_IsDelete" />
-                <ScalarProperty Name="UW_ModifiedDate" ColumnName="UW_ModifiedDate" />
-                <ScalarProperty Name="UW_CreationDate" ColumnName="UW_CreationDate" />
-                <ScalarProperty Name="UW_IsPresent" ColumnName="UW_IsPresent" />
-                <ScalarProperty Name="UW_PaymentID" ColumnName="UW_PaymentID" />
-                <ScalarProperty Name="UW_WPID" ColumnName="UW_WPID" />
-                <ScalarProperty Name="UW_UserID" ColumnName="UW_UserID" />
-                <ScalarProperty Name="UW_Guid" ColumnName="UW_Guid" />
-                <ScalarProperty Name="UW_ID" ColumnName="UW_ID" />
+          <EntitySetMapping Name="Tbl_UserExamRemotelyPlanAccess">
+            <EntityTypeMapping TypeName="ESLModel.Tbl_UserExamRemotelyPlanAccess">
+              <MappingFragment StoreEntitySet="Tbl_UserExamRemotelyPlanAccess">
+                <ScalarProperty Name="UERPA_IsDelete" ColumnName="UERPA_IsDelete" />
+                <ScalarProperty Name="UERPA_IsActive" ColumnName="UERPA_IsActive" />
+                <ScalarProperty Name="UERPA_Date" ColumnName="UERPA_Date" />
+                <ScalarProperty Name="UERPA_ERPID" ColumnName="UERPA_ERPID" />
+                <ScalarProperty Name="UERPA_UserID" ColumnName="UERPA_UserID" />
+                <ScalarProperty Name="UERPA_Guid" ColumnName="UERPA_Guid" />
+                <ScalarProperty Name="UERPA_ID" ColumnName="UERPA_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_UserWorkshopPlan">
+            <EntityTypeMapping TypeName="ESLModel.Tbl_UserWorkshopPlan">
+              <MappingFragment StoreEntitySet="Tbl_UserWorkshopPlan">
+                <ScalarProperty Name="UWP_IsDelete" ColumnName="UWP_IsDelete" />
+                <ScalarProperty Name="UWP_ModifiedDate" ColumnName="UWP_ModifiedDate" />
+                <ScalarProperty Name="UWP_CreationDate" ColumnName="UWP_CreationDate" />
+                <ScalarProperty Name="UWP_IsActive" ColumnName="UWP_IsActive" />
+                <ScalarProperty Name="UWP_IsPresent" ColumnName="UWP_IsPresent" />
+                <ScalarProperty Name="UWP_PaymentID" ColumnName="UWP_PaymentID" />
+                <ScalarProperty Name="UWP_WPID" ColumnName="UWP_WPID" />
+                <ScalarProperty Name="UWP_UserID" ColumnName="UWP_UserID" />
+                <ScalarProperty Name="UWP_Guid" ColumnName="UWP_Guid" />
+                <ScalarProperty Name="UWP_ID" ColumnName="UWP_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Tbl_Wallet">
             <EntityTypeMapping TypeName="ESLModel.Tbl_Wallet">
               <MappingFragment StoreEntitySet="Tbl_Wallet">
+                <ScalarProperty Name="Wallet_IsDelete" ColumnName="Wallet_IsDelete" />
                 <ScalarProperty Name="Wallet_ModifiedDate" ColumnName="Wallet_ModifiedDate" />
                 <ScalarProperty Name="Wallet_CreationDate" ColumnName="Wallet_CreationDate" />
                 <ScalarProperty Name="Wallet_Credit" ColumnName="Wallet_Credit" />

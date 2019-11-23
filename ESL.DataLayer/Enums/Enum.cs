@@ -6,12 +6,6 @@ using System.Threading.Tasks;
 
 namespace ESL.Web
 {
-    public enum Role
-    {
-        Student = 1,
-        Admin = 2
-    }
-
     public enum TosterType
     {
         JustTitel,
@@ -25,7 +19,7 @@ namespace ESL.Web
         QuestionGroup = 4,
         QuestionType = 5,
         QuestionOption = 6,
-        PaymentType = 10,
+        PaymentState = 10,
         PaymentWay = 9,
         DocumentType = 11,
         UploadFolder = 12,
@@ -33,7 +27,7 @@ namespace ESL.Web
         ClassType = 17
     }
 
-    public enum PaymentType
+    public enum PaymentState
     {
         WaitForAcceptance = 24,
         Confirmed = 25,
@@ -55,17 +49,12 @@ namespace ESL.Web
         Workshop = 45,
         Presence = 46,
         Absence = 47,
-        Exam = 48,
+        ExamInPerson = 48,
+        ExamRemotely = 58,
+        Class = 55,
         Discharge = 51,
         ReturnToAccount = 26,
         ReturnToBankAccount = 52
-    }
-
-    public enum WalletAction
-    {
-        Increase,
-        Decrease,
-        NoAction
     }
 
     public enum SMSTemplate

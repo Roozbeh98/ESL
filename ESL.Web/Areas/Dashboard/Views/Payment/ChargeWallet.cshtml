@@ -1,5 +1,5 @@
-﻿@*@model IEnumerable<ESL.Web.Areas.Dashboard.Models.ViewModels.Model_Payment>
-@using ESL.Common.Plugins*@
+﻿@model ESL.Web.Areas.Dashboard.Models.ViewModels.Model_ChargeWallet
+@using ESL.Services.BaseRepository
 
 @{
     ViewBag.Title = "شارژ کیف پول";
@@ -10,53 +10,77 @@
 <div class="panel panel-body panel-default  navigation">
 
     <div class="pull-left">
-        <h4 class="navigation-title"><b>شارژ کیف پول</b></h4>
-    </div>
-
-    <div class="pull-right">
-        <a href="@Url.Action("", "", new { area = "Dashboard" })"><i class="glyphicon glyphicon-plus navigation-btn-icon"></i></a>
+        <h4 class="navigation-title"><b>@ViewBag.Title</b></h4>
     </div>
 
 </div>
 
 <div class="panel panel-default">
 
+    <div class="panel-body">
 
+        @using (Html.BeginForm("ChargeWallet", "Payment", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="modal-main">
+
+                <div class="row" style="margin: 0 -30px;">
+
+                    <div class="col-md-6">
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Cost, htmlAttributes: new { @class = "control-label" })
+                            <div class="input-group">
+                                <span class=" input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                                @Html.EditorFor(model => model.Cost, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.Cost, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.TrackingToken, htmlAttributes: new { @class = "control-label" })
+                            <div class="input-group">
+                                <span class=" input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                                @Html.EditorFor(model => model.TrackingToken, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.TrackingToken, "", new { @class = "text-danger" })
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <div class="form-group">
+                            <label class="control-label">ضمیمه</label>
+                            <input class="form-control" type="file" name="document" />
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div style="margin-top:20px;">
+                <button class="btn btn-danger modal-btn-Dual pull-left" type="button" data-dismiss="modal">انصراف</button>
+                <button class="btn btn-success modal-btn-Dual pull-right " type="submit" name="btn-Delete">تایید</button>
+            </div>
+        }
+
+    </div>
 
 </div>
 
 
-@Html.Partial("_Modal")
+@section Scripts {
 
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 
-@section Modal {
+    <script src="~/Scripts/Plugins/jQuery.Select2/select2.js"></script>
+    <script src="~/Scripts/Plugins/jQuery.Select2/i18n/fa.js"></script>
 
-    <script>
-
-        function ChangeState(id) {
-            $.ajax({
-                url: "/Dashboard/Payment/ChangeState/" + id,
-                type: "Get",
-                data: {}
-            }).done(function (result) {
-                $('#myModal').modal('show');
-                $('#myModalLabel').html('تغییر نوع تراکنش');
-                $('#myModalBody').html(result);
-            });
-        }
-
-        function Delete(id) {
-            $.ajax({
-                url: "/Dashboard/Payment/Delete/" + id,
-                type: "Get",
-                data: {}
-            }).done(function (result) {
-                $('#myModal').modal('show');
-                $('#myModalLabel').html('حدف تراکنش');
-                $('#myModalBody').html(result);
-            });
-        }
-
-    </script>
+    <script src="~/Scripts/MyScripts/Select2_Config.js"></script>
 
 }

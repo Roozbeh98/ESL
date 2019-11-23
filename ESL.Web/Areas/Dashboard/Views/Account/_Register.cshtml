@@ -62,29 +62,19 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label " })
 
-
                 <div class="Login-btn-gender" data-toggle="buttons">
-                    @foreach (var item in Rep_CodeGroup.Get_AllCodesWithGroupWithGUID(CodeGroup.Gender))
+
+                    @foreach (var item in Rep_CodeGroup.Get_AllCodesWithGroupGUID(CodeGroup.Gender))
                     {
-                        if (item.Text == "مرد")
-                        {
-                            <label class="btn active">
-                                @Html.RadioButtonFor(model => model.Gender, item.Value, new { htmlAttributes = new { @class = "form-control" } })
-                                @item.Text
-                            </label>
-                        }
-                        else
-                        {
-                            <label class="btn">
-                                @Html.RadioButtonFor(model => model.Gender, item.Value, new { htmlAttributes = new { @class = "form-control" } })
-                                @item.Text
-                            </label>
-                        }
+                        <label class="btn">
+                            @Html.RadioButtonFor(model => model.Gender, item.Value, new { htmlAttributes = new { @class = "form-control" } })
+                            @item.Text
+                        </label>
                     }
+
                 </div>
-
-
             </div>
+
             <br />
             <br />
 

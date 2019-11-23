@@ -13,7 +13,7 @@ namespace ESL.Services.BaseRepository
     {
         private static readonly ESLEntities db = new ESLEntities();
 
-        public static IEnumerable<SelectListItem> Get_AllCodesWithGroupWithGUID(Guid guid)
+        public static IEnumerable<SelectListItem> Get_AllCodesWithGroupGUID(Guid guid)
         {
             List<SelectListItem> list = new List<SelectListItem>();
 
@@ -27,7 +27,7 @@ namespace ESL.Services.BaseRepository
             return list.AsEnumerable();
         }
 
-        public static IEnumerable<SelectListItem> Get_AllCodesWithGroupWithGUID(int id)
+        public static IEnumerable<SelectListItem> Get_AllCodesWithGroupGUID(int id)
         {
             List<SelectListItem> list = new List<SelectListItem>();
 
@@ -41,7 +41,7 @@ namespace ESL.Services.BaseRepository
             return list.AsEnumerable();
         }
 
-        public static IEnumerable<SelectListItem> Get_AllCodesWithGroupWithGUID(CodeGroup cg)
+        public static IEnumerable<SelectListItem> Get_AllCodesWithGroupGUID(CodeGroup cg)
         {
             List<SelectListItem> list = new List<SelectListItem>();
 

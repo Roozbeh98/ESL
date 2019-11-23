@@ -19,11 +19,11 @@ namespace ESL.DataLayer.Domain
         {
             this.Tbl_Page = new HashSet<Tbl_Page>();
             this.Tbl_Payment = new HashSet<Tbl_Payment>();
-            this.Tbl_UserClass = new HashSet<Tbl_UserClass>();
-            this.Tbl_UserExam = new HashSet<Tbl_UserExam>();
-            this.Tbl_UserExamAccess = new HashSet<Tbl_UserExamAccess>();
-            this.Tbl_UserExamInPerson = new HashSet<Tbl_UserExamInPerson>();
-            this.Tbl_UserWorkshop = new HashSet<Tbl_UserWorkshop>();
+            this.Tbl_UserClassPlan = new HashSet<Tbl_UserClassPlan>();
+            this.Tbl_UserExamRemotelyPlan = new HashSet<Tbl_UserExamRemotelyPlan>();
+            this.Tbl_UserExamRemotelyPlanAccess = new HashSet<Tbl_UserExamRemotelyPlanAccess>();
+            this.Tbl_UserExamInPersonPlan = new HashSet<Tbl_UserExamInPersonPlan>();
+            this.Tbl_UserWorkshopPlan = new HashSet<Tbl_UserWorkshopPlan>();
             this.Tbl_Wallet = new HashSet<Tbl_Wallet>();
         }
     
@@ -41,7 +41,6 @@ namespace ESL.DataLayer.Domain
         public string User_IdentityNumber { get; set; }
         public string User_Mobile { get; set; }
         public Nullable<System.DateTime> User_Birthday { get; set; }
-        public int User_Credit { get; set; }
         public bool User_IsBan { get; set; }
         public bool User_IsDelete { get; set; }
     
@@ -51,15 +50,15 @@ namespace ESL.DataLayer.Domain
         public virtual ICollection<Tbl_Payment> Tbl_Payment { get; set; }
         public virtual Tbl_Role Tbl_Role { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tbl_UserClass> Tbl_UserClass { get; set; }
+        public virtual ICollection<Tbl_UserClassPlan> Tbl_UserClassPlan { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tbl_UserExam> Tbl_UserExam { get; set; }
+        public virtual ICollection<Tbl_UserExamRemotelyPlan> Tbl_UserExamRemotelyPlan { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tbl_UserExamAccess> Tbl_UserExamAccess { get; set; }
+        public virtual ICollection<Tbl_UserExamRemotelyPlanAccess> Tbl_UserExamRemotelyPlanAccess { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tbl_UserExamInPerson> Tbl_UserExamInPerson { get; set; }
+        public virtual ICollection<Tbl_UserExamInPersonPlan> Tbl_UserExamInPersonPlan { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tbl_UserWorkshop> Tbl_UserWorkshop { get; set; }
+        public virtual ICollection<Tbl_UserWorkshopPlan> Tbl_UserWorkshopPlan { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_Wallet> Tbl_Wallet { get; set; }
     }

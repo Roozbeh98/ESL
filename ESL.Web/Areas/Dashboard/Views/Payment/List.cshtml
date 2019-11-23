@@ -1,0 +1,144 @@
+﻿@model IEnumerable<ESL.Web.Areas.Dashboard.Models.ViewModels.Model_Payment>
+@using ESL.Common.Plugins
+
+@{
+    ViewBag.Title = "لیست تراکنش ها";
+    Layout = "~/Areas/Dashboard/Views/Shared/_Master.cshtml";
+}
+
+
+<div class="panel panel-body panel-default navigation">
+
+    <div class="pull-left">
+        <h4 class="navigation-title"><b>@ViewBag.Title</b></h4>
+    </div>
+
+    <div class="pull-right">
+        <a href="@Url.Action("Create", "Payment", new { area = "Dashboard" })"><i class="glyphicon glyphicon-plus navigation-btn-icon"></i></a>
+    </div>
+
+</div>
+
+<div class="panel panel-default">
+
+    <div class="panel-body table-body" style="overflow-x:auto;">
+
+        <table id="DateTable" class="table  table-bordered table-striped table-secondary" style="width:100%;">
+
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.User)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Title)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.State)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Way)</th>
+                    <th scope="col"> @Html.DisplayNameFor(model => model.Description)</th>
+                    <th scope="col"> @Html.DisplayNameFor(model => model.Cost)</th>
+                    <th scope="col"> @Html.DisplayNameFor(model => model.Discount)</th>
+                    <th scope="col"> @Html.DisplayNameFor(model => model.RemaingWallet)</th>
+                    <th scope="col"> @Html.DisplayNameFor(model => model.TrackingToken)</th>
+                    <th scope="col"> @Html.DisplayNameFor(model => model.Document)</th>
+                    <th scope="col"> @Html.DisplayNameFor(model => model.CreateDate)</th>
+                    <th scope="col"> @Html.DisplayNameFor(model => model.ModifiedDate)</th>
+                    <th scope="col" data-orderable="false">کنترل</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @{
+                    int x = 0;
+                }
+
+                @foreach (var item in Model)
+                {
+                    x++;
+
+                    <tr>
+                        <td scope="row">@x</td>
+                        <td scope="row">
+                            <span> @Html.DisplayFor(modelItem => item.User) </span>
+                        </td>
+                        <td scope="row">
+                            <span> @Html.DisplayFor(modelItem => item.Title) </span>
+                        </td>
+                        <td scope="row">
+                            <span> @Html.DisplayFor(modelItem => item.State) </span>
+                        </td>
+                        <td scope="row">
+                            <span> @Html.DisplayFor(modelItem => item.Way) </span>
+                        </td>
+                        <td scope="row">
+                            <span> @Html.DisplayFor(modelItem => item.Description) </span>
+                        </td>
+                        <td scope="row">
+                            <span> @Html.DisplayFor(modelItem => item.Cost) </span>
+                        </td>
+                        <td scope="row">
+                            <span> @Html.DisplayFor(modelItem => item.Discount) </span>
+                        </td>
+                        <td scope="row">
+                            <span> @Html.DisplayFor(modelItem => item.RemaingWallet) </span>
+                        </td>
+                        <td scope="row">
+                            <span> @Html.DisplayFor(modelItem => item.TrackingToken) </span>
+                        </td>
+                        <td scope="row">
+                            <span> @Html.DisplayFor(modelItem => item.Document) </span>
+                        </td>
+                        <td scope="row">
+                            <span> @PersianDateExtensionMethods.ToPeString(item.CreateDate, "yyyy/MM/dd HH:mm") </span>
+                        </td>
+                        <td scope="row">
+                            <span> @PersianDateExtensionMethods.ToPeString(item.ModifiedDate, "yyyy/MM/dd HH:mm") </span>
+                        </td>
+                        <td scope="row">
+                            <a class="btn btn-info btn-sm glyphicon glyphicon-ok" href="javascript:void(0)" onclick="ChangeState(@item.ID)"> </a>
+                            @*<a class="btn btn-warning btn-sm glyphicon glyphicon-pencil" href="@Url.Action("Edit", "Payment", new { area = "Dashboard", id = item.ID })"> </a>*@
+                            @*<a class="btn btn-danger btn-sm glyphicon glyphicon-trash" href="javascript:void(0)" onclick="Delete(@item.ID)"> </a>*@
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+@Html.Partial("_Modal")
+
+
+@section Modal {
+
+    <script>
+
+        function ChangeState(id) {
+            $.ajax({
+                url: "/Dashboard/Payment/ChangeState/" + id,
+                type: "Get",
+                data: {}
+            }).done(function (result) {
+                $('#myModal').modal('show');
+                $('#myModalLabel').html('تغییر وضعیت تراکنش');
+                $('#myModalBody').html(result);
+            });
+        }
+
+        //function Delete(id) {
+        //    $.ajax({
+        //        url: "/Dashboard/Payment/Delete/" + id,
+        //        type: "Get",
+        //        data: {}
+        //    }).done(function (result) {
+        //        $('#myModal').modal('show');
+        //        $('#myModalLabel').html('حدف تراکنش');
+        //        $('#myModalBody').html(result);
+        //    });
+        //}
+
+    </script>
+
+}

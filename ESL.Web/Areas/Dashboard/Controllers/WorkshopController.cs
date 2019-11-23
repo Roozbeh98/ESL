@@ -23,16 +23,16 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
             if (_User != null)
             {
-                var q = db.Tbl_UserWorkshop.Where(x => x.UW_IsDelete == false && x.UW_UserID == _User.User_ID).Select(x => new Model_UserWorkshops
+                var q = db.Tbl_UserWorkshopPlan.Where(x => x.UWP_IsDelete == false && x.UWP_UserID == _User.User_ID).Select(x => new Model_UserWorkshopPlans
                 {
-                    ID = x.UW_ID,
+                    ID = x.UWP_ID,
                     User = _User.User_FirstName + " " + _User.User_lastName,
                     Workshop = x.Tbl_WorkshopPlan.Tbl_SubWorkshop.Tbl_Workshop.Workshop_Title,
                     SubWorkshop = x.Tbl_WorkshopPlan.Tbl_SubWorkshop.SW_Title,
                     Location = x.Tbl_WorkshopPlan.WP_Location,
                     Date = x.Tbl_WorkshopPlan.WP_Date,
                     Cost = x.Tbl_WorkshopPlan.WP_Cost,
-                    CreationDate = x.UW_CreationDate,
+                    CreationDate = x.UWP_CreationDate,
                     //RegisterationState = 
 
                 }).ToList();
@@ -50,7 +50,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             {
                 Model_MessageModal model = new Model_MessageModal();
 
-                var q = db.Tbl_UserWorkshop.Where(x => x.UW_ID == id).SingleOrDefault();
+                var q = db.Tbl_UserWorkshopPlan.Where(x => x.UWP_ID == id).SingleOrDefault();
 
                 if (q != null)
                 {
@@ -76,11 +76,11 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         {
             if (ModelState.IsValid)
             {
-                var q = db.Tbl_UserWorkshop.Where(x => x.UW_ID == model.ID).SingleOrDefault();
+                var q = db.Tbl_UserWorkshopPlan.Where(x => x.UWP_ID == model.ID).SingleOrDefault();
 
                 if (q != null)
                 {
-                    q.UW_IsDelete = true;
+                    q.UWP_IsDelete = true;
 
                     db.Entry(q).State = EntityState.Modified;
 
@@ -109,7 +109,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
-            var q = db.Tbl_WorkshopPlan.Where(x => x.WP_IsDelete == false).Select(x => new Model_Workshop
+            var q = db.Tbl_WorkshopPlan.Where(x => x.WP_IsDelete == false).Select(x => new Model_WorkshopPlan
             {
                 ID = x.WP_ID,
                 Workshop = x.Tbl_SubWorkshop.SW_Title,
@@ -135,7 +135,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Model_WorkshopCreate model)
+        public ActionResult Create(Model_WorkshopPlanCreate model)
         {
             if (ModelState.IsValid)
             {
@@ -244,13 +244,13 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         {
             if (id.HasValue && db.Tbl_WorkshopPlan.Any(x => x.WP_ID == id))
             {
-                var q = db.Tbl_UserWorkshop.Where(x => x.UW_WPID == id).Select(x => new Model_UserWorkshop
+                var q = db.Tbl_UserWorkshopPlan.Where(x => x.UWP_WPID == id).Select(x => new Model_UserWorkshopPlan
                 {
-                    ID = x.UW_ID,
+                    ID = x.UWP_ID,
                     User = x.Tbl_User.User_FirstName + " " + x.Tbl_User.User_lastName,
-                    IsPresent = x.UW_IsPresent,
-                    CreationDate = x.UW_CreationDate,
-                    IsDelete = x.UW_IsDelete,
+                    IsPresent = x.UWP_IsPresent,
+                    CreationDate = x.UWP_CreationDate,
+                    IsDelete = x.UWP_IsDelete,
 
                 }).ToList();
 

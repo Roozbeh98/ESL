@@ -19,9 +19,9 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
         public string Title { get; set; }
 
-        [Display(Name = "نوع تراکنش")]
+        [Display(Name = "وضعیت تراکنش")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
-        public string Type { get; set; }
+        public string State { get; set; }
 
         [Display(Name = "روش تراکنش")]
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
@@ -51,7 +51,10 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
         [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
         public string Document { get; set; }
 
-        [Display(Name = "تاریخ" )]
+        [Display(Name = "تاریخ ایجاد" )]
         public DateTime CreateDate { get; set; }
+
+        [Display(Name = "تاریخ بروزرسانی")]
+        public DateTime ModifiedDate { get; set; }
     }
 }

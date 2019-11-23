@@ -2,15 +2,15 @@
 @using ESL.Common.Plugins
 
 @{
-    ViewBag.Title = "لیست تراکنش های تایید نشده";
+    ViewBag.Title = "لیست تراکنش های معلق";
     Layout = "~/Areas/Dashboard/Views/Shared/_Master.cshtml";
 }
 
 
-<div class="panel panel-body panel-default  navigation">
+<div class="panel panel-body panel-default navigation">
 
     <div class="pull-left">
-        <h4 class="navigation-title"><b>لیست تراکنش های تایید نشده</b></h4>
+        <h4 class="navigation-title"><b>@ViewBag.Title</b></h4>
     </div>
 
     <div class="pull-right">
@@ -30,7 +30,7 @@
                     <th scope="col">#</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.User)</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.Title)</th>
-                    <th scope="col">@Html.DisplayNameFor(model => model.Type)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.State)</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.Way)</th>
                     <th scope="col"> @Html.DisplayNameFor(model => model.Description)</th>
                     <th scope="col"> @Html.DisplayNameFor(model => model.Cost)</th>
@@ -39,6 +39,7 @@
                     <th scope="col"> @Html.DisplayNameFor(model => model.TrackingToken)</th>
                     <th scope="col"> @Html.DisplayNameFor(model => model.Document)</th>
                     <th scope="col"> @Html.DisplayNameFor(model => model.CreateDate)</th>
+                    <th scope="col"> @Html.DisplayNameFor(model => model.ModifiedDate)</th>
                     <th scope="col" data-orderable="false">کنترل</th>
                 </tr>
             </thead>
@@ -61,7 +62,7 @@
                             <span> @Html.DisplayFor(modelItem => item.Title) </span>
                         </td>
                         <td scope="row">
-                            <span> @Html.DisplayFor(modelItem => item.Type) </span>
+                            <span> @Html.DisplayFor(modelItem => item.State) </span>
                         </td>
                         <td scope="row">
                             <span> @Html.DisplayFor(modelItem => item.Way) </span>
@@ -72,7 +73,7 @@
                         <td scope="row">
                             <span> @Html.DisplayFor(modelItem => item.Cost) </span>
                         </td>
-                         <td scope="row">
+                        <td scope="row">
                             <span> @Html.DisplayFor(modelItem => item.Discount) </span>
                         </td>
                         <td scope="row">
@@ -85,7 +86,10 @@
                             <span> @Html.DisplayFor(modelItem => item.Document) </span>
                         </td>
                         <td scope="row">
-                            <span> @PersianDateExtensionMethods.ToPeString(item.CreateDate, "yyyy/MM/dd") </span>
+                            <span> @PersianDateExtensionMethods.ToPeString(item.CreateDate, "yyyy/MM/dd HH:mm") </span>
+                        </td>
+                        <td scope="row">
+                            <span> @PersianDateExtensionMethods.ToPeString(item.ModifiedDate, "yyyy/MM/dd HH:mm") </span>
                         </td>
                         <td scope="row">
                             <a class="btn btn-info btn-sm glyphicon glyphicon-ok" href="javascript:void(0)" onclick="ChangeState(@item.ID)"> </a>

@@ -20,6 +20,7 @@ namespace ESL.DataLayer.Domain
         public int Wallet_Credit { get; set; }
         public System.DateTime Wallet_CreationDate { get; set; }
         public System.DateTime Wallet_ModifiedDate { get; set; }
+        public bool Wallet_IsDelete { get; set; }
     
         public virtual Tbl_User Tbl_User { get; set; }
     }

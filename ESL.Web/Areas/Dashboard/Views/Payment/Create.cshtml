@@ -40,12 +40,12 @@
 
                         <div class="form-group">
                             @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label" })
-                            @Html.DropDownListFor(model => model.Title, Rep_CodeGroup.Get_AllCodesWithGroupWithGUID(CodeGroup.PaymentTitle), new { @class = "form-control Select2_Normal" })
+                            @Html.DropDownListFor(model => model.Title, Rep_CodeGroup.Get_AllCodesWithGroupGUID(CodeGroup.PaymentTitle), new { @class = "form-control Select2_Normal" })
                         </div>
 
                         <div class="form-group">
                             @Html.LabelFor(model => model.Way, htmlAttributes: new { @class = "control-label" })
-                            @Html.DropDownListFor(model => model.Way, Rep_CodeGroup.Get_AllCodesWithGroupWithGUID(CodeGroup.PaymentWay), new { @class = "form-control Select2_Normal" })
+                            @Html.DropDownListFor(model => model.Way, Rep_CodeGroup.Get_AllCodesWithGroupGUID(CodeGroup.PaymentWay), new { @class = "form-control Select2_Normal" })
                         </div>
 
                         <div class="form-group">
