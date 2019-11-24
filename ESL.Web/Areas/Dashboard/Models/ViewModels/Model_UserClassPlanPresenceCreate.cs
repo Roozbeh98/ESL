@@ -9,15 +9,15 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
     public class Model_UserClassPlanPresenceCreate
     {
         [Display(Name = "تاریخ")]
-        [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
+        [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public string Date { get; set; }
 
         [Display(Name = "وضعیت حضور")]
-        [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
+        [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public bool Presence { get; set; }
 
         [Display(Name = "تخفیف")]
-        [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
+        [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public int Discount { get; set; }
     }
 }

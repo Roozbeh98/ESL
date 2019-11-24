@@ -9,11 +9,11 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
     public class Model_UserExamInPersonPlanSetSeatNumber
     {
         [Display(Name = "شناسه")]
-        [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
+        [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public int ID { get; set; }
 
         [Display(Name = "شماره صندلی")]
-        [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
+        [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public int SeatNumber { get; set; }
     }
 }

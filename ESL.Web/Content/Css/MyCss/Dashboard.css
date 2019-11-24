@@ -91,6 +91,18 @@ body {
     margin-right: 15px;
 }
 
+.control {
+    margin: 2.5px 0;
+}
+
+    .control:first-child {
+        margin-top: 0;
+    }
+
+    .control:last-child {
+        margin-bottom: 0;
+    }
+
 /*********************************************** navbar ********************************************/
 
 #Date .table-striped > tbody > tr:nth-of-type(odd) {
@@ -312,6 +324,22 @@ body {
 .esl-btn {
     border-radius: 0px;
 }
+
+.esl-btn-purchase {
+    background: #222d32;
+    color: whitesmoke;
+    transition: all .25s;
+}
+
+    .esl-btn-purchase:hover {
+        background: #35996c;
+        color: #fff;
+    }
+
+    .esl-btn-purchase:focus {
+        background: #35996c;
+        color: #fff;
+    }
 
 .esl-btn-success {
     background: #3ecf8e;
@@ -847,6 +875,7 @@ body {
         left: 0;
         text-transform: uppercase;
         border-radius: 0;
+        font-size: 16px;
     }
 
         .card-price .buy-now span {

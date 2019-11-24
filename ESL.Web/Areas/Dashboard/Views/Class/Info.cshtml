@@ -1,5 +1,5 @@
-﻿@model IEnumerable<ESL.Web.Areas.Dashboard.Models.ViewModels.Model_UserClassPlanPresence>
-
+﻿
+@model IEnumerable<ESL.Web.Areas.Dashboard.Models.ViewModels.Model_UserClassPlanPresence>
 @using ESL.Common.Plugins
 
 @{
@@ -20,7 +20,7 @@
 
     <div class="panel-body table-body" style="overflow-x:auto;">
 
-        <table id="DateTable" class="table  table-bordered table-striped table-secondary" style="width:100%;">
+        <table id="DateTable" class="table table-bordered table-striped table-secondary" style="width:100%;">
 
             <thead class="thead-dark">
                 <tr>
@@ -45,16 +45,16 @@
                     <tr>
                         <td scope="row">@x</td>
                         <td scope="row">
-                            <span> @Html.DisplayFor(modelItem => item.Cost) </span>
+                            <span>@Html.DisplayFor(modelItem => item.Cost)</span>
                         </td>
                         <td scope="row">
-                            <span> @Html.DisplayFor(modelItem => item.Discount) </span>
+                            <span>@Html.DisplayFor(modelItem => item.Discount)</span>
                         </td>
                         <td scope="row">
                             <span>@(item.Presence ? "حاضر" : "غایب")</span>
                         </td>
                         <td scope="row">
-                            <span> @PersianDateExtensionMethods.ToPeString(item.CreationDate, "yyyy/MM/dd") </span>
+                            <span>@PersianDateExtensionMethods.ToPeString(item.CreationDate, "yyyy/MM/dd")</span>
                         </td>
                     </tr>
                 }
@@ -66,6 +66,5 @@
     </div>
 
 </div>
-
 
 @Html.Partial("_Modal")

@@ -14,8 +14,8 @@ namespace ESL.Services.Services
 {
     public class SMSPortal
     {
-        private ESLEntities db = new ESLEntities();
-        private string apikey;
+        private readonly ESLEntities db = new ESLEntities();
+        private readonly string apikey;
 
         public SMSPortal()
         {
@@ -31,8 +31,9 @@ namespace ESL.Services.Services
         {
             if (result != null)
             {
-                Tbl_SMSResponse q = new Tbl_SMSResponse()
+                Tbl_SMSResponse _SMSResponse = new Tbl_SMSResponse()
                 {
+                    SMS_Guid = Guid.NewGuid(),
                     SMS_Status = result.Status,
                     SMS_StatusText = result.StatusText,
                     SMS_MessageID = result.Messageid.ToString(),
@@ -48,13 +49,12 @@ namespace ESL.Services.Services
                     SMS_ModifiedDate = DateTime.Now
                 };
 
-                db.Tbl_SMSResponse.Add(q);
+                db.Tbl_SMSResponse.Add(_SMSResponse);
 
                 if (Convert.ToBoolean(db.SaveChanges() > 0))
                 {
                     return true;
                 }
-
             }
 
             return false;
@@ -64,7 +64,7 @@ namespace ESL.Services.Services
         {
             if (result != null)
             {
-                Tbl_SMSResponse q = new Tbl_SMSResponse()
+                Tbl_SMSResponse _SMSResponse = new Tbl_SMSResponse()
                 {
                     SMS_Guid = Guid.NewGuid(),
                     SMS_Status = result.Status,
@@ -79,13 +79,12 @@ namespace ESL.Services.Services
                     SMS_ModifiedDate = DateTime.Now
                 };
 
-                db.Tbl_SMSResponse.Add(q);
+                db.Tbl_SMSResponse.Add(_SMSResponse);
 
                 if (Convert.ToBoolean(db.SaveChanges() > 0))
                 {
                     return true;
                 }
-
             }
 
             return false;
@@ -116,29 +115,29 @@ namespace ESL.Services.Services
             }
         }
 
-        public int SendAdvertising(string sender, string receptor, string message)
+        public string SendAdvertising(string sender, string receptor, string message)
         {
             try
             {
                 var api = new KavenegarApi(apikey);
-                var result = api.Send(sender, receptor, message);
+                SendResult result = api.Send(sender, receptor, message);
 
                 InsertIntoDB(result);
 
-                return result.Status;
+                return result.StatusText;
             }
             catch (ApiException ex)
             {
-                // در صورتی که خروجی وب سرویس 200 نباشد این خطارخ می دهد.
-                Console.Write("Message : " + ex.Message);
+                return ex.Message;
             }
             catch (HttpException ex)
             {
-                // در زمانی که مشکلی در برقرای ارتباط با وب سرویس وجود داشته باشد این خطا رخ می دهد
-                Console.Write("Message : " + ex.Message);
+                return ex.Message;
             }
-
-            return -1;
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
     }
 }

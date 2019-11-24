@@ -35,8 +35,16 @@
                     </div>
                     <div class="collapse navbar-collapse" id="menu">
                         <div class="navbar-nav">
-                            <a class="signUp nav-link" href="#">ثبت نام</a>
-                            <a class="login nav-link" href="#">ورود</a>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <a class="signUp nav-link" href="@Url.Action("Index", "Dashboard", new { area = "Dashboard" })">داشبورد</a>
+                                <a class="signUp nav-link" href="@Url.Action("Logout", "Account", new { area = "Dashboard" })">خروج</a>
+                            }
+                            else
+                            {
+                                <a class="signUp nav-link" href="@Url.Action("Login", "Account", new { area = "Dashboard" })">ثبت نام</a>
+                                <a class="login nav-link" href="@Url.Action("Login", "Account", new { area = "Dashboard" })">ورود</a>
+                            }
                             <a class="menu-item nav-link active" href="@Url.Action("Index", "Home")">صفحه اصلی</a>
                             <a class="menu-item nav-link" href="@Url.Action("Index", "AboutUs")">خانه آیلتس</a>
                             <a class="menu-item nav-link" href="@Url.Action("Index", "Courses")">دوره های آموزشی</a>

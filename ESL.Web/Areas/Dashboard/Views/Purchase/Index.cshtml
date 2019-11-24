@@ -1,4 +1,5 @@
-﻿@model IEnumerable<ESL.Web.Areas.Dashboard.Models.ViewModels.Model_Purchase>
+﻿
+@model IEnumerable<ESL.Web.Areas.Dashboard.Models.ViewModels.Model_Purchase>
 @using ESL.Common.Plugins
 
 @{
@@ -44,7 +45,7 @@
                                 <tr><td>مکان برگزاری</td><td class="note">@item.Location</td></tr>
                                 <tr><td>تاریخ برگزاری</td><td class="note">@PersianDateExtensionMethods.ToPeString(item.Date, "yyyy/MM/dd")</td></tr>
                             </table>
-                            <a href="javascript:void(0)" onclick="Pay(@item.ID, @((int)ProductType.Workshop))" class="btn esl-btn-success btn-lg btn-block buy-now">@item.Cost<span>تومان</span></a>
+                            <a href="javascript:void(0)" onclick="Pay(@item.ID, @((int)ProductType.Workshop))" class="btn esl-btn-purchase btn-lg btn-block buy-now">@item.Cost<span>تومان</span></a>
                         </div>
                     </div>
 
@@ -71,7 +72,7 @@
                                 <tr><td>مکان برگزاری</td><td class="note">@item.Location</td></tr>
                                 <tr><td>زمان برگزاری</td><td class="note">@PersianDateExtensionMethods.ToPeString(item.Date, "yyyy/MM/dd HH:mm")</td></tr>
                             </table>
-                            <a href="javascript:void(0)" onclick="Pay(@item.ID, @((int)ProductType.Class))" class="btn esl-btn-success btn-lg btn-block buy-now"><span>جلسه ای&nbsp;&nbsp;</span>@item.Cost<span>&nbsp;&nbsp;تومان</span></a>
+                            <a href="javascript:void(0)" onclick="Pay(@item.ID, @((int)ProductType.Class))" class="btn esl-btn-purchase btn-lg btn-block buy-now"><span>جلسه ای&nbsp;&nbsp;</span>@item.Cost<span>&nbsp;&nbsp;تومان</span></a>
                         </div>
                     </div>
 
@@ -100,13 +101,14 @@
                                 <tr><td>حداقل نمره قبولی</td><td class="note">@item.PassMark</td></tr>
                                 <tr><td>زمان برگزاری</td><td class="note">@PersianDateExtensionMethods.ToPeString(item.Date, "yyyy/MM/dd")</td></tr>
                             </table>
-                            <a href="javascript:void(0)" onclick="Pay(@item.ID, @((int)ProductType.ExamInPerson))" class="btn esl-btn-success btn-lg btn-block buy-now">@item.Cost<span>تومان</span></a>
+                            <a href="javascript:void(0)" onclick="Pay(@item.ID, @((int)ProductType.ExamInPerson))" class="btn esl-btn-purchase btn-lg btn-block buy-now">@item.Cost<span>تومان</span></a>
                         </div>
                     </div>
 
                     break;
 
                 case ProductType.ExamRemotely:
+
 
 
                     break;
@@ -124,9 +126,7 @@
 
 
 @section Scripts {
-
     <script>
-
         function Pay(id, type) {
             $.ajax({
                 url: "/Dashboard/Purchase/Pay/?id=" + id + "&type=" + type,
@@ -138,7 +138,5 @@
                 $('#myModalBody').html(result);
             });
         }
-
     </script>
-
 }

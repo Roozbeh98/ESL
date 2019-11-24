@@ -1,26 +1,27 @@
-﻿@model ESL.Web.Areas.Dashboard.Models.ViewModels.Model_ClassPlanCreate
+﻿
+@model ESL.Web.Areas.Dashboard.Models.ViewModels.Model_ClassPlanCreate
 @using ESL.Services.BaseRepository
 
 @{
-    ViewBag.Title = "کلاس جدید";
+    ViewBag.Title = "افزودن کلاس";
     Layout = "~/Areas/Dashboard/Views/Shared/_Master.cshtml";
 }
 
-
 @section Styles {
-
     <link href="~/Content/Plugins/jQuery.MdBootstrapPersianDateTimePicker/jquery.Bootstrap-PersianDateTimePicker.css" rel="stylesheet" />
-
 }
 
-<div class="panel panel-body panel-default  navigation">
+
+<div class="panel panel-body panel-default navigation">
 
     <div class="pull-left">
         <h4 class="navigation-title"><b>@ViewBag.Title</b></h4>
     </div>
 
     <div class="pull-right">
-        <a href="@Url.Action("Index", "Class")"><i class="glyphicon glyphicon-arrow-left navigation-btn-icon"></i></a>
+        <a href="@Url.Action("Index", "Class")" data-toggle="tooltip" data-placement="auto" title="برگشت به صفحه قبل">
+            <i class="glyphicon glyphicon-arrow-left navigation-btn-icon"></i>
+        </a>
     </div>
 
 </div>
@@ -140,7 +141,8 @@
             </div>
 
             <div style="margin-top:20px;">
-                <button class="btn btn-danger modal-btn-Dual pull-left" type="button" data-dismiss="modal">انصراف</button>
+                <a href="@Url.Action("Index", "Class")" class="btn btn-danger modal-btn-Dual pull-left">انصراف</a>
+                @*<button class="btn btn-danger modal-btn-Dual pull-left" type="button" data-dismiss="modal">انصراف</button>*@
                 <button class="btn btn-success modal-btn-Dual pull-right " type="submit" name="btn-Delete">تایید</button>
             </div>
         }
@@ -166,7 +168,7 @@
     <script>
 
         $(document).ready(function () {
-            $("#Date td[data-name=today]").click();            
+            $("#Date td[data-name=today]").click();
         });
 
     </script>

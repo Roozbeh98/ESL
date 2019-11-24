@@ -32,7 +32,7 @@ namespace ESL.Web
         WaitForAcceptance = 24,
         Confirmed = 25,
         Rejected = 54,
-        Suspended = 53
+        Suspended = 53,
     }
 
     public enum PaymentWay

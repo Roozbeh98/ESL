@@ -230,7 +230,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         {
             if (id != null)
             {
-                Model_MessageModal model = new Model_MessageModal();
+                Model_Message model = new Model_Message();
 
                 var q = db.Tbl_UserExamInPersonPlan.Where(x => x.UEIPP_ID == id).SingleOrDefault();
 
@@ -253,7 +253,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult UnRegister(Model_MessageModal model)
+        public ActionResult UnRegister(Model_Message model)
         {
             if (ModelState.IsValid)
             {
@@ -291,7 +291,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         {
             if (id != null)
             {
-                Model_MessageModal model = new Model_MessageModal();
+                Model_Message model = new Model_Message();
 
                 var q = db.Tbl_UserExamInPersonPlan.Where(x => x.UEIPP_ID == id).SingleOrDefault();
 
@@ -314,7 +314,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(Model_MessageModal model)
+        public ActionResult Register(Model_Message model)
         {
             if (ModelState.IsValid)
             {

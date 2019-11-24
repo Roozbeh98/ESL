@@ -284,6 +284,7 @@
     <Content Include="Areas\Dashboard\Views\Payment\RejectedList.cshtml" />
     <Content Include="Areas\Dashboard\Views\Payment\ConfirmedList.cshtml" />
     <Content Include="Areas\Dashboard\Views\Payment\Confirmed.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Payment\Cancel.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -1367,7 +1368,7 @@
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_ChargeWallet.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_ClassPlan.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_ClassPlanCreate.cs" />
-    <Compile Include="Areas\Dashboard\Models\ViewModels\Model_MessageModal.cs" />
+    <Compile Include="Areas\Dashboard\Models\ViewModels\Model_Message.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_ExamInPerson.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_ExamInPersonPlanCreate.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_ExamInPersonPlanEdit.cs" />

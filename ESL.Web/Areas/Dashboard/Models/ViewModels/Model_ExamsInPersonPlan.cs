@@ -15,32 +15,32 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
         public string Exam { get; set; }
 
         [Display(Name = "توضیحات")]
-        [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
+        [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public string Description { get; set; }
 
-        [Display(Name = "بها")]
-        [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
+        [Display(Name = "قیمت")]
+        [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public int Cost { get; set; }
 
         [DataType(DataType.MultilineText)]
         [Display(Name = "مکان")]
-        [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
+        [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public string Location { get; set; }
 
         [Display(Name = "فعال سازی")]
-        [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
+        [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public bool Activeness { get; set; }
 
         [Display(Name = "ظرفیت")]
-        [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
+        [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public int Capacity { get; set; }
 
         [Display(Name = "نمره")]
-        [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
+        [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public int TotalMark { get; set; }
 
         [Display(Name = "حداقل نمره قبولی")]
-        [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
+        [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public int PassMark { get; set; }
 
         [Display(Name = "تاریخ برگزاری")]

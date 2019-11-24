@@ -17,12 +17,12 @@ namespace ESL.Web.Areas.Dashboard.Controllers
     [Authorize(Roles = "Admin, Student")]
     public class PaymentController : Controller
     {
-        private ESLEntities db = new ESLEntities();
+        private readonly ESLEntities db = new ESLEntities();
 
         [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
-            var q = db.Tbl_Payment.Where(x => x.Payment_IsDelete == false).Select(x => new Model_Payment
+            var _Payments = db.Tbl_Payment.Where(x => x.Payment_IsDelete == false).Select(x => new Model_Payment
             {
                 ID = x.Payment_ID,
                 User = x.Tbl_User.User_FirstName + " " + x.Tbl_User.User_lastName,
@@ -40,13 +40,13 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
             }).ToList();
 
-            return View(q);
+            return View(_Payments);
         }
 
         [Authorize(Roles = "Admin")]
         public ActionResult WaitForAcceptance()
         {
-            var q = db.Tbl_Payment.Where(x => x.Payment_IsDelete == false && x.Tbl_Code1.Code_ID == (int)PaymentState.WaitForAcceptance).Select(x => new Model_Payment
+            var _Payments = db.Tbl_Payment.Where(x => x.Payment_IsDelete == false && x.Tbl_Code1.Code_ID == (int)PaymentState.WaitForAcceptance).Select(x => new Model_Payment
             {
                 ID = x.Payment_ID,
                 User = x.Tbl_User.User_FirstName + " " + x.Tbl_User.User_lastName,
@@ -64,13 +64,13 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
             }).ToList();
 
-            return View(q);
+            return View(_Payments);
         }
 
         [Authorize(Roles = "Admin")]
         public ActionResult Confirmed()
         {
-            var q = db.Tbl_Payment.Where(x => x.Payment_IsDelete == false && x.Tbl_Code1.Code_ID == (int)PaymentState.Confirmed).Select(x => new Model_Payment
+            var _Payments = db.Tbl_Payment.Where(x => x.Payment_IsDelete == false && x.Tbl_Code1.Code_ID == (int)PaymentState.Confirmed).Select(x => new Model_Payment
             {
                 ID = x.Payment_ID,
                 User = x.Tbl_User.User_FirstName + " " + x.Tbl_User.User_lastName,
@@ -88,13 +88,13 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
             }).ToList();
 
-            return View(q);
+            return View(_Payments);
         }
 
         [Authorize(Roles = "Admin")]
         public ActionResult Suspended()
         {
-            var q = db.Tbl_Payment.Where(x => x.Payment_IsDelete == false && x.Tbl_Code1.Code_ID == (int)PaymentState.Suspended).Select(x => new Model_Payment
+            var _Payments = db.Tbl_Payment.Where(x => x.Payment_IsDelete == false && x.Tbl_Code1.Code_ID == (int)PaymentState.Suspended).Select(x => new Model_Payment
             {
                 ID = x.Payment_ID,
                 User = x.Tbl_User.User_FirstName + " " + x.Tbl_User.User_lastName,
@@ -112,13 +112,13 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
             }).ToList();
 
-            return View(q);
+            return View(_Payments);
         }
 
         [Authorize(Roles = "Admin")]
         public ActionResult Rejected()
         {
-            var q = db.Tbl_Payment.Where(x => x.Payment_IsDelete == false && x.Tbl_Code1.Code_ID == (int)PaymentState.Rejected).Select(x => new Model_Payment
+            var _Payments = db.Tbl_Payment.Where(x => x.Payment_IsDelete == false && x.Tbl_Code1.Code_ID == (int)PaymentState.Rejected).Select(x => new Model_Payment
             {
                 ID = x.Payment_ID,
                 User = x.Tbl_User.User_FirstName + " " + x.Tbl_User.User_lastName,
@@ -136,7 +136,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
             }).ToList();
 
-            return View(q);
+            return View(_Payments);
         }
 
         [Authorize(Roles = "Admin")]
@@ -477,7 +477,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         {
             if (id != null)
             {
-                Model_MessageModal model = new Model_MessageModal();
+                Model_Message model = new Model_Message();
 
                 var _Payment = db.Tbl_Payment.Where(x => x.Payment_ID == id).FirstOrDefault();
 
@@ -501,7 +501,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(Model_MessageModal model)
+        public ActionResult Delete(Model_Message model)
         {
             if (ModelState.IsValid)
             {
@@ -609,6 +609,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                 {
                     int stateCodeId = Rep_CodeGroup.Get_CodeIDWithGUID(model.State), _Credit;
                     Tbl_Wallet _Wallet;
+                    Tbl_UserClassPlan _UserClassPlan;
 
                     switch ((PaymentTitle)_Payment.Payment_TitleCodeID)
                     {
@@ -1064,6 +1065,10 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                                     switch ((PaymentState)stateCodeId)
                                     {
+                                        case PaymentState.WaitForAcceptance:
+
+                                            return RedirectToAction("Index", "Payment", new { area = "Dashboard" });
+
                                         case PaymentState.Confirmed:
 
                                             _Credit = _Payment.Payment_RemaingWallet - _Payment.Payment_Cost;
@@ -1082,7 +1087,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                                             db.Entry(_Payment).State = EntityState.Modified;
 
-                                            Tbl_UserClassPlan _UserClassPlan = db.Tbl_UserClassPlan.Where(x => x.UCP_PaymentID == _Payment.Payment_ID).SingleOrDefault();
+                                            _UserClassPlan = db.Tbl_UserClassPlan.Where(x => x.UCP_PaymentID == _Payment.Payment_ID).SingleOrDefault();
                                             _UserClassPlan.UCP_IsActive = true;
                                             _UserClassPlan.UCP_ModifiedDate = DateTime.Now;
 
@@ -1104,6 +1109,444 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                                                 return HttpNotFound();
                                             }
+
+                                        case PaymentState.Rejected:
+
+                                            _Payment.Payment_StateCodeID = stateCodeId;
+                                            _Payment.Payment_WayCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Way);
+                                            _Payment.Payment_Description = model.Description;
+                                            _Payment.Payment_ModifiedDate = DateTime.Now;
+
+                                            db.Entry(_Payment).State = EntityState.Modified;
+
+                                            _UserClassPlan = db.Tbl_UserClassPlan.Where(x => x.UCP_PaymentID == _Payment.Payment_ID).SingleOrDefault();
+                                            _UserClassPlan.UCP_IsDelete = true;
+                                            _UserClassPlan.UCP_ModifiedDate = DateTime.Now;
+
+                                            db.Entry(_UserClassPlan).State = EntityState.Modified;
+
+                                            if (Convert.ToBoolean(db.SaveChanges() > 0))
+                                            {
+                                                TempData["TosterState"] = "success";
+                                                TempData["TosterType"] = TosterType.Maseage;
+                                                TempData["TosterMassage"] = "عملیات با موفقیت انجام شد";
+
+                                                return RedirectToAction("Index", "Payment", new { area = "Dashboard" });
+                                            }
+                                            else
+                                            {
+                                                TempData["TosterState"] = "error";
+                                                TempData["TosterType"] = TosterType.Maseage;
+                                                TempData["TosterMassage"] = "عملیات با موفقیت انجام نشد";
+
+                                                return HttpNotFound();
+                                            }
+
+                                        case PaymentState.Suspended:
+
+                                            _Payment.Payment_StateCodeID = stateCodeId;
+                                            _Payment.Payment_WayCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Way);
+                                            _Payment.Payment_Description = model.Description;
+                                            _Payment.Payment_ModifiedDate = DateTime.Now;
+
+                                            db.Entry(_Payment).State = EntityState.Modified;
+
+                                            if (Convert.ToBoolean(db.SaveChanges() > 0))
+                                            {
+                                                TempData["TosterState"] = "success";
+                                                TempData["TosterType"] = TosterType.Maseage;
+                                                TempData["TosterMassage"] = "عملیات با موفقیت انجام شد";
+
+                                                return RedirectToAction("Index", "Payment", new { area = "Dashboard" });
+                                            }
+                                            else
+                                            {
+                                                TempData["TosterState"] = "error";
+                                                TempData["TosterType"] = TosterType.Maseage;
+                                                TempData["TosterMassage"] = "عملیات با موفقیت انجام نشد";
+
+                                                return HttpNotFound();
+                                            }
+                                    }
+
+                                    break;
+
+                                case PaymentState.Confirmed:
+
+                                    switch ((PaymentState)stateCodeId)
+                                    {
+                                        case PaymentState.WaitForAcceptance:
+
+                                            _Credit = _Payment.Payment_RemaingWallet + _Payment.Payment_Cost;
+
+                                            _Wallet = db.Tbl_Wallet.Where(x => x.Wallet_UserID == _Payment.Payment_UserID).SingleOrDefault();
+                                            _Wallet.Wallet_Credit = _Credit;
+                                            _Wallet.Wallet_ModifiedDate = DateTime.Now;
+
+                                            db.Entry(_Wallet).State = EntityState.Modified;
+
+                                            _Payment.Payment_StateCodeID = stateCodeId;
+                                            _Payment.Payment_WayCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Way);
+                                            _Payment.Payment_Description = model.Description;
+                                            _Payment.Payment_RemaingWallet = _Credit;
+                                            _Payment.Payment_ModifiedDate = DateTime.Now;
+
+                                            db.Entry(_Payment).State = EntityState.Modified;
+
+                                            _UserClassPlan = db.Tbl_UserClassPlan.Where(x => x.UCP_PaymentID == _Payment.Payment_ID).SingleOrDefault();
+                                            _UserClassPlan.UCP_IsActive = false;
+                                            _UserClassPlan.UCP_ModifiedDate = DateTime.Now;
+
+                                            db.Entry(_UserClassPlan).State = EntityState.Modified;
+
+                                            if (Convert.ToBoolean(db.SaveChanges() > 0))
+                                            {
+                                                TempData["TosterState"] = "success";
+                                                TempData["TosterType"] = TosterType.Maseage;
+                                                TempData["TosterMassage"] = "عملیات با موفقیت انجام شد";
+
+                                                return RedirectToAction("Index", "Payment", new { area = "Dashboard" });
+                                            }
+                                            else
+                                            {
+                                                TempData["TosterState"] = "error";
+                                                TempData["TosterType"] = TosterType.Maseage;
+                                                TempData["TosterMassage"] = "عملیات با موفقیت انجام نشد";
+
+                                                return HttpNotFound();
+                                            }
+
+                                        case PaymentState.Confirmed:
+
+                                            return RedirectToAction("Index", "Payment", new { area = "Dashboard" });
+
+                                        case PaymentState.Rejected:
+
+                                            _Credit = _Payment.Payment_RemaingWallet + _Payment.Payment_Cost;
+
+                                            _Wallet = db.Tbl_Wallet.Where(x => x.Wallet_UserID == _Payment.Payment_UserID).SingleOrDefault();
+                                            _Wallet.Wallet_Credit = _Credit;
+                                            _Wallet.Wallet_ModifiedDate = DateTime.Now;
+
+                                            db.Entry(_Wallet).State = EntityState.Modified;
+
+                                            _Payment.Payment_StateCodeID = stateCodeId;
+                                            _Payment.Payment_WayCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Way);
+                                            _Payment.Payment_Description = model.Description;
+                                            _Payment.Payment_RemaingWallet = _Credit;
+                                            _Payment.Payment_ModifiedDate = DateTime.Now;
+
+                                            db.Entry(_Payment).State = EntityState.Modified;
+
+                                            _UserClassPlan = db.Tbl_UserClassPlan.Where(x => x.UCP_PaymentID == _Payment.Payment_ID).SingleOrDefault();
+                                            _UserClassPlan.UCP_IsActive = false;
+                                            _UserClassPlan.UCP_IsDelete = true;
+                                            _UserClassPlan.UCP_ModifiedDate = DateTime.Now;
+
+                                            db.Entry(_UserClassPlan).State = EntityState.Modified;
+
+                                            if (Convert.ToBoolean(db.SaveChanges() > 0))
+                                            {
+                                                TempData["TosterState"] = "success";
+                                                TempData["TosterType"] = TosterType.Maseage;
+                                                TempData["TosterMassage"] = "عملیات با موفقیت انجام شد";
+
+                                                return RedirectToAction("Index", "Payment", new { area = "Dashboard" });
+                                            }
+                                            else
+                                            {
+                                                TempData["TosterState"] = "error";
+                                                TempData["TosterType"] = TosterType.Maseage;
+                                                TempData["TosterMassage"] = "عملیات با موفقیت انجام نشد";
+
+                                                return HttpNotFound();
+                                            }
+
+                                        case PaymentState.Suspended:
+
+                                            _Credit = _Payment.Payment_RemaingWallet + _Payment.Payment_Cost;
+
+                                            _Wallet = db.Tbl_Wallet.Where(x => x.Wallet_UserID == _Payment.Payment_UserID).SingleOrDefault();
+                                            _Wallet.Wallet_Credit = _Credit;
+                                            _Wallet.Wallet_ModifiedDate = DateTime.Now;
+
+                                            db.Entry(_Wallet).State = EntityState.Modified;
+
+                                            _Payment.Payment_StateCodeID = stateCodeId;
+                                            _Payment.Payment_WayCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Way);
+                                            _Payment.Payment_Description = model.Description;
+                                            _Payment.Payment_RemaingWallet = _Credit;
+                                            _Payment.Payment_ModifiedDate = DateTime.Now;
+
+                                            db.Entry(_Payment).State = EntityState.Modified;
+
+                                            _UserClassPlan = db.Tbl_UserClassPlan.Where(x => x.UCP_PaymentID == _Payment.Payment_ID).SingleOrDefault();
+                                            _UserClassPlan.UCP_IsActive = false;
+                                            _UserClassPlan.UCP_ModifiedDate = DateTime.Now;
+
+                                            db.Entry(_UserClassPlan).State = EntityState.Modified;
+
+                                            if (Convert.ToBoolean(db.SaveChanges() > 0))
+                                            {
+                                                TempData["TosterState"] = "success";
+                                                TempData["TosterType"] = TosterType.Maseage;
+                                                TempData["TosterMassage"] = "عملیات با موفقیت انجام شد";
+
+                                                return RedirectToAction("Index", "Payment", new { area = "Dashboard" });
+                                            }
+                                            else
+                                            {
+                                                TempData["TosterState"] = "error";
+                                                TempData["TosterType"] = TosterType.Maseage;
+                                                TempData["TosterMassage"] = "عملیات با موفقیت انجام نشد";
+
+                                                return HttpNotFound();
+                                            }
+                                    }
+
+                                    break;
+
+                                case PaymentState.Rejected:
+
+                                    switch ((PaymentState)stateCodeId)
+                                    {
+                                        case PaymentState.WaitForAcceptance:
+
+                                            _Payment.Payment_StateCodeID = stateCodeId;
+                                            _Payment.Payment_WayCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Way);
+                                            _Payment.Payment_Description = model.Description;
+                                            _Payment.Payment_ModifiedDate = DateTime.Now;
+
+                                            db.Entry(_Payment).State = EntityState.Modified;
+
+                                            _UserClassPlan = db.Tbl_UserClassPlan.Where(x => x.UCP_PaymentID == _Payment.Payment_ID).SingleOrDefault();
+                                            _UserClassPlan.UCP_IsDelete = false;
+                                            _UserClassPlan.UCP_ModifiedDate = DateTime.Now;
+
+                                            db.Entry(_UserClassPlan).State = EntityState.Modified;
+
+                                            if (Convert.ToBoolean(db.SaveChanges() > 0))
+                                            {
+                                                TempData["TosterState"] = "success";
+                                                TempData["TosterType"] = TosterType.Maseage;
+                                                TempData["TosterMassage"] = "عملیات با موفقیت انجام شد";
+
+                                                return RedirectToAction("Index", "Payment", new { area = "Dashboard" });
+                                            }
+                                            else
+                                            {
+                                                TempData["TosterState"] = "error";
+                                                TempData["TosterType"] = TosterType.Maseage;
+                                                TempData["TosterMassage"] = "عملیات با موفقیت انجام نشد";
+
+                                                return HttpNotFound();
+                                            }
+
+                                        case PaymentState.Confirmed:
+
+                                            _Credit = _Payment.Payment_RemaingWallet - _Payment.Payment_Cost;
+
+                                            _Wallet = db.Tbl_Wallet.Where(x => x.Wallet_UserID == _Payment.Payment_UserID).SingleOrDefault();
+                                            _Wallet.Wallet_Credit = _Credit;
+                                            _Wallet.Wallet_ModifiedDate = DateTime.Now;
+
+                                            db.Entry(_Wallet).State = EntityState.Modified;
+
+                                            _Payment.Payment_StateCodeID = stateCodeId;
+                                            _Payment.Payment_WayCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Way);
+                                            _Payment.Payment_Description = model.Description;
+                                            _Payment.Payment_RemaingWallet = _Credit;
+                                            _Payment.Payment_ModifiedDate = DateTime.Now;
+
+                                            db.Entry(_Payment).State = EntityState.Modified;
+
+                                            _UserClassPlan = db.Tbl_UserClassPlan.Where(x => x.UCP_PaymentID == _Payment.Payment_ID).SingleOrDefault();
+                                            _UserClassPlan.UCP_IsDelete = false;
+                                            _UserClassPlan.UCP_IsActive = true;
+                                            _UserClassPlan.UCP_ModifiedDate = DateTime.Now;
+
+                                            db.Entry(_UserClassPlan).State = EntityState.Modified;
+
+                                            if (Convert.ToBoolean(db.SaveChanges() > 0))
+                                            {
+                                                if (new SMSPortal().SendServiceable(_Payment.Tbl_User.User_Mobile, (_Payment.Payment_Cost * 10).ToString(), PersianDateExtensionMethods.ToPeString(DateTime.Now, "yyyy/MM/dd"), _Credit.ToString(), "", SMSTemplate.Success) != "ارسال به مخابرات")
+                                                {
+                                                    TempData["TosterState"] = "warning";
+                                                    TempData["TosterType"] = TosterType.Maseage;
+                                                    TempData["TosterMassage"] = "خطا در ارسال پیامک";
+                                                }
+                                                else
+                                                {
+                                                    TempData["TosterState"] = "success";
+                                                    TempData["TosterType"] = TosterType.Maseage;
+                                                    TempData["TosterMassage"] = "عملیات با موفقیت انجام شد";
+                                                }
+
+                                                return RedirectToAction("Index", "Payment", new { area = "Dashboard" });
+                                            }
+                                            else
+                                            {
+                                                TempData["TosterState"] = "error";
+                                                TempData["TosterType"] = TosterType.Maseage;
+                                                TempData["TosterMassage"] = "عملیات با موفقیت انجام نشد";
+
+                                                return HttpNotFound();
+                                            }
+
+                                        case PaymentState.Rejected:
+
+                                            return RedirectToAction("Index", "Payment", new { area = "Dashboard" });
+
+                                        case PaymentState.Suspended:
+
+                                            _Payment.Payment_StateCodeID = stateCodeId;
+                                            _Payment.Payment_WayCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Way);
+                                            _Payment.Payment_Description = model.Description;
+                                            _Payment.Payment_ModifiedDate = DateTime.Now;
+
+                                            db.Entry(_Payment).State = EntityState.Modified;
+
+                                            _UserClassPlan = db.Tbl_UserClassPlan.Where(x => x.UCP_PaymentID == _Payment.Payment_ID).SingleOrDefault();
+                                            _UserClassPlan.UCP_IsDelete = false;
+                                            _UserClassPlan.UCP_ModifiedDate = DateTime.Now;
+
+                                            db.Entry(_UserClassPlan).State = EntityState.Modified;
+
+                                            if (Convert.ToBoolean(db.SaveChanges() > 0))
+                                            {
+                                                TempData["TosterState"] = "success";
+                                                TempData["TosterType"] = TosterType.Maseage;
+                                                TempData["TosterMassage"] = "عملیات با موفقیت انجام شد";
+
+                                                return RedirectToAction("Index", "Payment", new { area = "Dashboard" });
+                                            }
+                                            else
+                                            {
+                                                TempData["TosterState"] = "error";
+                                                TempData["TosterType"] = TosterType.Maseage;
+                                                TempData["TosterMassage"] = "عملیات با موفقیت انجام نشد";
+
+                                                return HttpNotFound();
+                                            }
+                                    }
+
+                                    break;
+
+                                case PaymentState.Suspended:
+
+                                    switch ((PaymentState)stateCodeId)
+                                    {
+                                        case PaymentState.WaitForAcceptance:
+
+                                            _Payment.Payment_StateCodeID = stateCodeId;
+                                            _Payment.Payment_WayCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Way);
+                                            _Payment.Payment_Description = model.Description;
+                                            _Payment.Payment_ModifiedDate = DateTime.Now;
+
+                                            db.Entry(_Payment).State = EntityState.Modified;
+
+                                            if (Convert.ToBoolean(db.SaveChanges() > 0))
+                                            {
+                                                TempData["TosterState"] = "success";
+                                                TempData["TosterType"] = TosterType.Maseage;
+                                                TempData["TosterMassage"] = "عملیات با موفقیت انجام شد";
+
+                                                return RedirectToAction("Index", "Payment", new { area = "Dashboard" });
+                                            }
+                                            else
+                                            {
+                                                TempData["TosterState"] = "error";
+                                                TempData["TosterType"] = TosterType.Maseage;
+                                                TempData["TosterMassage"] = "عملیات با موفقیت انجام نشد";
+
+                                                return HttpNotFound();
+                                            }
+
+                                        case PaymentState.Confirmed:
+
+                                            _Credit = _Payment.Payment_RemaingWallet - _Payment.Payment_Cost;
+
+                                            _Wallet = db.Tbl_Wallet.Where(x => x.Wallet_UserID == _Payment.Payment_UserID).SingleOrDefault();
+                                            _Wallet.Wallet_Credit = _Credit;
+                                            _Wallet.Wallet_ModifiedDate = DateTime.Now;
+
+                                            db.Entry(_Wallet).State = EntityState.Modified;
+
+                                            _Payment.Payment_StateCodeID = stateCodeId;
+                                            _Payment.Payment_WayCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Way);
+                                            _Payment.Payment_Description = model.Description;
+                                            _Payment.Payment_RemaingWallet = _Credit;
+                                            _Payment.Payment_ModifiedDate = DateTime.Now;
+
+                                            db.Entry(_Payment).State = EntityState.Modified;
+
+                                            _UserClassPlan = db.Tbl_UserClassPlan.Where(x => x.UCP_PaymentID == _Payment.Payment_ID).SingleOrDefault();
+                                            _UserClassPlan.UCP_IsActive = true;
+                                            _UserClassPlan.UCP_ModifiedDate = DateTime.Now;
+
+                                            db.Entry(_UserClassPlan).State = EntityState.Modified;
+
+                                            if (Convert.ToBoolean(db.SaveChanges() > 0))
+                                            {
+                                                if (new SMSPortal().SendServiceable(_Payment.Tbl_User.User_Mobile, (_Payment.Payment_Cost * 10).ToString(), PersianDateExtensionMethods.ToPeString(DateTime.Now, "yyyy/MM/dd"), _Credit.ToString(), "", SMSTemplate.Success) != "ارسال به مخابرات")
+                                                {
+                                                    TempData["TosterState"] = "warning";
+                                                    TempData["TosterType"] = TosterType.Maseage;
+                                                    TempData["TosterMassage"] = "خطا در ارسال پیامک";
+                                                }
+                                                else
+                                                {
+                                                    TempData["TosterState"] = "success";
+                                                    TempData["TosterType"] = TosterType.Maseage;
+                                                    TempData["TosterMassage"] = "عملیات با موفقیت انجام شد";
+                                                }
+
+                                                return RedirectToAction("Index", "Payment", new { area = "Dashboard" });
+                                            }
+                                            else
+                                            {
+                                                TempData["TosterState"] = "error";
+                                                TempData["TosterType"] = TosterType.Maseage;
+                                                TempData["TosterMassage"] = "عملیات با موفقیت انجام نشد";
+
+                                                return HttpNotFound();
+                                            }
+
+                                        case PaymentState.Rejected:
+
+                                            _Payment.Payment_StateCodeID = stateCodeId;
+                                            _Payment.Payment_WayCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Way);
+                                            _Payment.Payment_Description = model.Description;
+                                            _Payment.Payment_ModifiedDate = DateTime.Now;
+
+                                            db.Entry(_Payment).State = EntityState.Modified;
+
+                                            _UserClassPlan = db.Tbl_UserClassPlan.Where(x => x.UCP_PaymentID == _Payment.Payment_ID).SingleOrDefault();
+                                            _UserClassPlan.UCP_IsDelete = true;
+                                            _UserClassPlan.UCP_ModifiedDate = DateTime.Now;
+
+                                            db.Entry(_UserClassPlan).State = EntityState.Modified;
+
+                                            if (Convert.ToBoolean(db.SaveChanges() > 0))
+                                            {
+                                                TempData["TosterState"] = "success";
+                                                TempData["TosterType"] = TosterType.Maseage;
+                                                TempData["TosterMassage"] = "عملیات با موفقیت انجام شد";
+
+                                                return RedirectToAction("Index", "Payment", new { area = "Dashboard" });
+                                            }
+                                            else
+                                            {
+                                                TempData["TosterState"] = "error";
+                                                TempData["TosterType"] = TosterType.Maseage;
+                                                TempData["TosterMassage"] = "عملیات با موفقیت انجام نشد";
+
+                                                return HttpNotFound();
+                                            }
+
+                                        case PaymentState.Suspended:
+
+                                            return RedirectToAction("Index", "Payment", new { area = "Dashboard" });
                                     }
 
                                     break;
@@ -1201,23 +1644,8 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                 db.Tbl_Payment.Add(_Payment);
 
-                //Tbl_Wallet _Wallet = db.Tbl_Wallet.Where(x => x.Wallet_UserID == _User.User_ID).SingleOrDefault();
-                //_Wallet.Wallet_Credit = _Credit;
-                //_Wallet.Wallet_ModifiedDate = DateTime.Now;
-
-                //db.Entry(_Wallet).State = EntityState.Modified;
-
                 if (Convert.ToBoolean(db.SaveChanges() > 0))
                 {
-                    //if (new SMSPortal().SendServiceable(_User.User_Mobile, (model.Cost * 10).ToString(), PersianDateExtensionMethods.ToPeString(DateTime.Now, "yyyy/MM/dd"), _Credit.ToString(), "", SMSTemplate.Success) != "ارسال به مخابرات")
-                    //{
-                    //    TempData["TosterState"] = "warning";
-                    //    TempData["TosterType"] = TosterType.Maseage;
-                    //    TempData["TosterMassage"] = "خطا در ارسال پیامک";
-
-                    //    return View();
-                    //};
-
                     TempData["TosterState"] = "success";
                     TempData["TosterType"] = TosterType.Maseage;
                     TempData["TosterMassage"] = "درخواست شارژ با موفقیت ارسال شد";
@@ -1236,13 +1664,87 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         }
 
         [Authorize(Roles = "Student")]
+        public ActionResult Cancel(int? id)
+        {
+            if (id != null)
+            {
+                Model_Message model = new Model_Message();
+
+                var _Payment = db.Tbl_Payment.Where(x => x.Payment_ID == id && x.Payment_IsDelete == false).FirstOrDefault();
+
+                if (_Payment != null)
+                {
+                    model.ID = id.Value;
+                    model.Name = _Payment.Payment_TrackingToken;
+                    model.Description = "آیا از لغو درخواست مورد نظر اطمینان دارید ؟";
+
+                    return PartialView(model);
+                }
+                else
+                {
+                    return HttpNotFound();
+                }
+            }
+
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        }
+
+        [Authorize(Roles = "Student")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Cancel(Model_Message model)
+        {
+            if (ModelState.IsValid)
+            {
+                var _Payment = db.Tbl_Payment.Where(x => x.Payment_ID == model.ID).FirstOrDefault();
+
+                if (_Payment != null)
+                {
+                    _Payment.Payment_IsDelete = true;
+                    _Payment.Payment_ModifiedDate = DateTime.Now;
+
+                    db.Entry(_Payment).State = EntityState.Modified;
+
+                    var _UserClassPlan = db.Tbl_UserClassPlan.Where(x => x.UCP_PaymentID == _Payment.Payment_ID).SingleOrDefault();
+
+                    if (_UserClassPlan != null)
+                    {
+                        _UserClassPlan.UCP_IsDelete = true;
+                        _UserClassPlan.UCP_ModifiedDate = DateTime.Now;
+
+                        db.Entry(_UserClassPlan).State = EntityState.Modified;
+                    }
+
+                    if (Convert.ToBoolean(db.SaveChanges() > 0))
+                    {
+                        TempData["TosterState"] = "success";
+                        TempData["TosterType"] = TosterType.Maseage;
+                        TempData["TosterMassage"] = "درخواست مورد نظر با موفقیت لغو شد";
+
+                        return RedirectToAction("List", "Payment", new { area = "Dashboard" });
+                    }
+                    else
+                    {
+                        TempData["TosterState"] = "error";
+                        TempData["TosterType"] = TosterType.Maseage;
+                        TempData["TosterMassage"] = "درخواست مورد نظر با موفقیت لغو نشد";
+
+                        return HttpNotFound();
+                    }
+                }
+            }
+
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        }
+
+        [Authorize(Roles = "Student")]
         public ActionResult List()
         {
             var _User = db.Tbl_User.Where(x => x.User_IsDelete == false && x.User_Mobile == User.Identity.Name).SingleOrDefault();
 
             if (_User != null)
             {
-                var q = db.Tbl_Payment.Where(x => x.Payment_IsDelete == false && x.Payment_UserID == _User.User_ID).Select(x => new Model_Payment
+                var _Payments = db.Tbl_Payment.Where(x => x.Payment_IsDelete == false && x.Payment_UserID == _User.User_ID).Select(x => new Model_Payment
                 {
                     ID = x.Payment_ID,
                     User = x.Tbl_User.User_FirstName + " " + x.Tbl_User.User_lastName,
@@ -1260,7 +1762,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                 }).ToList();
 
-                return View(q);
+                return View(_Payments);
             }
 
             return HttpNotFound();
@@ -1273,7 +1775,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
             if (_User != null)
             {
-                var q = db.Tbl_Payment.Where(x => x.Payment_IsDelete == false && x.Payment_UserID == _User.User_ID && x.Tbl_Code1.Code_ID == (int)PaymentState.WaitForAcceptance).Select(x => new Model_Payment
+                var _Payments = db.Tbl_Payment.Where(x => x.Payment_IsDelete == false && x.Payment_UserID == _User.User_ID && x.Tbl_Code1.Code_ID == (int)PaymentState.WaitForAcceptance).Select(x => new Model_Payment
                 {
                     ID = x.Payment_ID,
                     User = x.Tbl_User.User_FirstName + " " + x.Tbl_User.User_lastName,
@@ -1291,7 +1793,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                 }).ToList();
 
-                return View(q);
+                return View(_Payments);
             }
 
             return HttpNotFound();
@@ -1304,7 +1806,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
             if (_User != null)
             {
-                var q = db.Tbl_Payment.Where(x => x.Payment_IsDelete == false && x.Payment_UserID == _User.User_ID && x.Tbl_Code1.Code_ID == (int)PaymentState.Confirmed).Select(x => new Model_Payment
+                var _Payments = db.Tbl_Payment.Where(x => x.Payment_IsDelete == false && x.Payment_UserID == _User.User_ID && x.Tbl_Code1.Code_ID == (int)PaymentState.Confirmed).Select(x => new Model_Payment
                 {
                     ID = x.Payment_ID,
                     User = x.Tbl_User.User_FirstName + " " + x.Tbl_User.User_lastName,
@@ -1322,7 +1824,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                 }).ToList();
 
-                return View(q);
+                return View(_Payments);
             }
 
             return HttpNotFound();
@@ -1335,7 +1837,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
             if (_User != null)
             {
-                var q = db.Tbl_Payment.Where(x => x.Payment_IsDelete == false && x.Payment_UserID == _User.User_ID && x.Tbl_Code1.Code_ID == (int)PaymentState.Suspended).Select(x => new Model_Payment
+                var _Payments = db.Tbl_Payment.Where(x => x.Payment_IsDelete == false && x.Payment_UserID == _User.User_ID && x.Tbl_Code1.Code_ID == (int)PaymentState.Suspended).Select(x => new Model_Payment
                 {
                     ID = x.Payment_ID,
                     User = x.Tbl_User.User_FirstName + " " + x.Tbl_User.User_lastName,
@@ -1353,7 +1855,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                 }).ToList();
 
-                return View(q);
+                return View(_Payments);
             }
 
             return HttpNotFound();
@@ -1366,7 +1868,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
             if (_User != null)
             {
-                var q = db.Tbl_Payment.Where(x => x.Payment_IsDelete == false && x.Payment_UserID == _User.User_ID && x.Tbl_Code1.Code_ID == (int)PaymentState.Rejected).Select(x => new Model_Payment
+                var _Payments = db.Tbl_Payment.Where(x => x.Payment_IsDelete == false && x.Payment_UserID == _User.User_ID && x.Tbl_Code1.Code_ID == (int)PaymentState.Rejected).Select(x => new Model_Payment
                 {
                     ID = x.Payment_ID,
                     User = x.Tbl_User.User_FirstName + " " + x.Tbl_User.User_lastName,
@@ -1384,7 +1886,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                 }).ToList();
 
-                return View(q);
+                return View(_Payments);
             }
 
             return HttpNotFound();

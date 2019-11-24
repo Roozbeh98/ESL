@@ -1,8 +1,9 @@
-﻿@model IEnumerable<ESL.Web.Areas.Dashboard.Models.ViewModels.Model_UserClassPlans>
+﻿
+@model IEnumerable<ESL.Web.Areas.Dashboard.Models.ViewModels.Model_UserClassPlans>
 @using ESL.Common.Plugins
 
 @{
-    ViewBag.Title = "کلاس ها";
+    ViewBag.Title = "لیست کلاس های ثبت نام شده";
     Layout = "~/Areas/Dashboard/Views/Shared/_Master.cshtml";
 }
 
@@ -10,7 +11,7 @@
 <div class="panel panel-body panel-default navigation">
 
     <div class="pull-left">
-        <h4 class="navigation-title"><b>لیست کلاس های ثبت نام شده</b></h4>
+        <h4 class="navigation-title"><b>@ViewBag.Title</b></h4>
     </div>
 
 </div>
@@ -47,25 +48,25 @@
                     <tr>
                         <td scope="row">@x</td>
                         <td scope="row">
-                            <span> @Html.DisplayFor(modelItem => item.User) </span>
+                            <span>@Html.DisplayFor(modelItem => item.User)</span>
                         </td>
                         <td scope="row">
-                            <span> @Html.DisplayFor(modelItem => item.Class) </span>
+                            <span>@Html.DisplayFor(modelItem => item.Class)</span>
                         </td>
                         <td scope="row">
-                            <span> @Html.DisplayFor(modelItem => item.Type) </span>
+                            <span>@Html.DisplayFor(modelItem => item.Type)</span>
                         </td>
                         <td scope="row">
-                            <span> @Html.DisplayFor(modelItem => item.Location) </span>
+                            <span>@Html.DisplayFor(modelItem => item.Location)</span>
                         </td>
                         <td scope="row">
-                            <span> @Html.DisplayFor(modelItem => item.Time) </span>
+                            <span>@Html.DisplayFor(modelItem => item.Time)</span>
                         </td>
                         <td scope="row">
-                            <span> @PersianDateExtensionMethods.ToPeString(item.CreationDate, "yyyy/MM/dd") </span>
+                            <span>@PersianDateExtensionMethods.ToPeString(item.CreationDate, "yyyy/MM/dd")</span>
                         </td>
                         <td scope="row">
-                            <a class="btn btn-info btn-sm glyphicon glyphicon-list" href="@Url.Action("Info", "Class", new { area = "Dashboard", id = item.ID })"> </a>
+                            <a class="btn btn-info btn-sm glyphicon glyphicon-list" href="@Url.Action("Info", "Class", new { area = "Dashboard", id = item.ID })"></a>
                         </td>
                     </tr>
                 }
@@ -77,6 +78,5 @@
     </div>
 
 </div>
-
 
 @Html.Partial("_Modal")

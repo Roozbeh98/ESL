@@ -8,12 +8,12 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
 {
     public class Model_ChargeWallet
     {
-        [Display(Name = "بها")]
-        [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
+        [Display(Name = "قیمت (تومان)")]
+        [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public int Cost { get; set; }
 
         [Display(Name = "کد رهگیری")]
-        [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
+        [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public string TrackingToken { get; set; }
     }
 }

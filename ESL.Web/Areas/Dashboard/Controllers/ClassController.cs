@@ -15,12 +15,12 @@ namespace ESL.Web.Areas.Dashboard.Controllers
     [Authorize(Roles = "Admin, Student")]
     public class ClassController : Controller
     {
-        private ESLEntities db = new ESLEntities();
+        private readonly ESLEntities db = new ESLEntities();
 
         [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
-            var q = db.Tbl_ClassPlan.Where(x => x.CP_IsDelete == false).Select(x => new Model_ClassPlan
+            var _ClassPlans = db.Tbl_ClassPlan.Where(x => x.CP_IsDelete == false).Select(x => new Model_ClassPlan
             {
                 ID = x.CP_ID,
                 Class = x.Tbl_Class.Class_Title,
@@ -33,11 +33,12 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                 Time = x.CP_Time,
                 SessionsLength = x.CP_SessionsLength,
                 StartDate = x.CP_StartDate,
-                CreationDate = x.CP_CreationDate
+                CreationDate = x.CP_CreationDate,
+                ModifiedDate = x.CP_ModifiedDate
 
             }).ToList();
 
-            return View(q);
+            return View(_ClassPlans);
         }
 
         [Authorize(Roles = "Admin")]
@@ -53,7 +54,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         {
             if (ModelState.IsValid)
             {
-                Tbl_ClassPlan q = new Tbl_ClassPlan
+                Tbl_ClassPlan _ClassPlan = new Tbl_ClassPlan
                 {
                     CP_Guid = Guid.NewGuid(),
                     CP_ClassID = db.Tbl_Class.Where(x => x.Class_Guid.ToString() == model.Class).SingleOrDefault().Class_ID,
@@ -70,13 +71,13 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     CP_ModifiedDate = DateTime.Now,
                 };
 
-                db.Tbl_ClassPlan.Add(q);
+                db.Tbl_ClassPlan.Add(_ClassPlan);
 
                 if (Convert.ToBoolean(db.SaveChanges() > 0))
                 {
                     TempData["TosterState"] = "success";
                     TempData["TosterType"] = TosterType.Maseage;
-                    TempData["TosterMassage"] = "عملیات با موفقیت انجام شده";
+                    TempData["TosterMassage"] = "کلاس جدید با موفقیت ثبت شد";
 
                     return RedirectToAction("Index");
                 }
@@ -84,7 +85,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                 {
                     TempData["TosterState"] = "error";
                     TempData["TosterType"] = TosterType.Maseage;
-                    TempData["TosterMassage"] = "عملیات با موفقیت انجام نشده";
+                    TempData["TosterMassage"] = "کلاس جدید با موفقیت ثبت نشد";
 
                     return View();
                 }
@@ -98,14 +99,14 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         {
             if (id != null)
             {
-                Model_MessageModal model = new Model_MessageModal();
+                Model_Message model = new Model_Message();
 
-                var q = db.Tbl_ClassPlan.Where(x => x.CP_ID == id).SingleOrDefault();
+                var _ClassPlan = db.Tbl_ClassPlan.Where(x => x.CP_ID == id).SingleOrDefault();
 
-                if (q != null)
+                if (_ClassPlan != null)
                 {
                     model.ID = id.Value;
-                    model.Name = q.CP_Description;
+                    model.Name = _ClassPlan.Tbl_Class.Class_Title;
                     model.Description = "آیا از حذف کلاس مورد نظر اطمینان دارید ؟";
 
                     return PartialView(model);
@@ -122,23 +123,24 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(Model_MessageModal model)
+        public ActionResult Delete(Model_Message model)
         {
             if (ModelState.IsValid)
             {
-                var q = db.Tbl_ClassPlan.Where(x => x.CP_ID == model.ID).SingleOrDefault();
+                var _ClassPlan = db.Tbl_ClassPlan.Where(x => x.CP_ID == model.ID).SingleOrDefault();
 
-                if (q != null)
+                if (_ClassPlan != null)
                 {
-                    q.CP_IsDelete = true;
+                    _ClassPlan.CP_IsDelete = true;
+                    _ClassPlan.CP_ModifiedDate = DateTime.Now;
 
-                    db.Entry(q).State = EntityState.Modified;
+                    db.Entry(_ClassPlan).State = EntityState.Modified;
 
                     if (Convert.ToBoolean(db.SaveChanges() > 0))
                     {
                         TempData["TosterState"] = "success";
                         TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام شده";
+                        TempData["TosterMassage"] = "کلاس مورد نظر با موفقیت حذف شد";
 
                         return RedirectToAction("Index");
                     }
@@ -146,7 +148,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     {
                         TempData["TosterState"] = "error";
                         TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام نشده";
+                        TempData["TosterMassage"] = "کلاس مورد نظر با موفقیت حذف نشد";
 
                         return HttpNotFound();
                     }
@@ -161,7 +163,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         {
             if (id.HasValue && db.Tbl_ClassPlan.Any(x => x.CP_ID == id))
             {
-                var q = db.Tbl_UserClassPlan.Where(x => x.UCP_CPID == id).Select(x => new Model_UserClassPlan
+                var _UserClassPlans = db.Tbl_UserClassPlan.Where(x => x.UCP_CPID == id).Select(x => new Model_UserClassPlan
                 {
                     ID = x.UCP_ID,
                     User = x.Tbl_User.User_FirstName + " " + x.Tbl_User.User_lastName,
@@ -172,7 +174,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                 ViewBag.ClassID = id;
 
-                return View(q);
+                return View(_UserClassPlans);
             }
 
             return HttpNotFound();
@@ -181,14 +183,14 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult SetActiveness(int id)
         {
-            var q = db.Tbl_ClassPlan.Where(x => x.CP_ID == id).SingleOrDefault();
+            var _ClassPlan = db.Tbl_ClassPlan.Where(x => x.CP_ID == id).SingleOrDefault();
 
-            if (q != null)
+            if (_ClassPlan != null)
             {
                 Model_SetActiveness model = new Model_SetActiveness()
                 {
                     ID = id,
-                    Activeness = q.CP_IsActive
+                    Activeness = _ClassPlan.CP_IsActive
                 };
 
                 return PartialView(model);
@@ -204,13 +206,14 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         {
             if (ModelState.IsValid)
             {
-                var q = db.Tbl_ClassPlan.Where(x => x.CP_ID == model.ID).SingleOrDefault();
+                var _ClassPlan = db.Tbl_ClassPlan.Where(x => x.CP_ID == model.ID).SingleOrDefault();
 
-                if (q != null)
+                if (_ClassPlan != null)
                 {
-                    q.CP_IsActive = model.Activeness;
+                    _ClassPlan.CP_IsActive = model.Activeness;
+                    _ClassPlan.CP_ModifiedDate = DateTime.Now;
 
-                    db.Entry(q).State = EntityState.Modified;
+                    db.Entry(_ClassPlan).State = EntityState.Modified;
 
                     if (Convert.ToBoolean(db.SaveChanges() > 0))
                     {
@@ -241,7 +244,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
             if (_User != null)
             {
-                var q = db.Tbl_UserClassPlan.Where(x => x.UCP_IsDelete == false && x.UCP_UserID == _User.User_ID).Select(x => new Model_UserClassPlans
+                var _UserClassPlans = db.Tbl_UserClassPlan.Where(x => x.UCP_IsDelete == false && x.UCP_UserID == _User.User_ID).Select(x => new Model_UserClassPlans
                 {
                     ID = x.UCP_ID,
                     User = x.Tbl_User.User_FirstName + " " + x.Tbl_User.User_lastName,
@@ -253,7 +256,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                 }).ToList();
 
-                return View(q);
+                return View(_UserClassPlans);
             }
 
             return HttpNotFound();
@@ -264,9 +267,9 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         {
             if (id.HasValue && db.Tbl_UserClassPlan.Any(x => x.UCP_ID == id))
             {
-                var p = db.Tbl_UserClassPlan.Where(x => x.UCP_ID == id).SingleOrDefault();
+                var _UserClassPlan = db.Tbl_UserClassPlan.Where(x => x.UCP_ID == id).SingleOrDefault();
 
-                var q = db.Tbl_UserClassPlanPresence.Where(x => x.UCPP_IsDelete == false && x.Tbl_UserClassPlan.UCP_UserID == p.UCP_UserID && x.Tbl_UserClassPlan.UCP_CPID == p.UCP_CPID && x.Tbl_UserClassPlan.Tbl_ClassPlan.CP_TypeCodeID == p.Tbl_ClassPlan.CP_TypeCodeID && x.Tbl_UserClassPlan.Tbl_ClassPlan.CP_Location == p.Tbl_ClassPlan.CP_Location && x.Tbl_UserClassPlan.Tbl_ClassPlan.CP_Time == p.Tbl_ClassPlan.CP_Time).Select(x => new Model_UserClassPlanPresence
+                var _UserClassPlanPresence = db.Tbl_UserClassPlanPresence.Where(x => x.UCPP_IsDelete == false && x.Tbl_UserClassPlan.UCP_UserID == _UserClassPlan.UCP_UserID && x.Tbl_UserClassPlan.UCP_CPID == _UserClassPlan.UCP_CPID && x.Tbl_UserClassPlan.Tbl_ClassPlan.CP_TypeCodeID == _UserClassPlan.Tbl_ClassPlan.CP_TypeCodeID && x.Tbl_UserClassPlan.Tbl_ClassPlan.CP_Location == _UserClassPlan.Tbl_ClassPlan.CP_Location && x.Tbl_UserClassPlan.Tbl_ClassPlan.CP_Time == _UserClassPlan.Tbl_ClassPlan.CP_Time).Select(x => new Model_UserClassPlanPresence
                 {
                     ID = x.UCPP_ID,
                     Cost = x.Tbl_Payment.Payment_Cost,
@@ -276,10 +279,10 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                 }).ToList();
 
-                TempData["UserID"] = p.UCP_UserID;
+                TempData["UserID"] = _UserClassPlan.UCP_UserID;
                 TempData["UserClassPlanID"] = id;
 
-                return View(q);
+                return View(_UserClassPlanPresence);
             }
 
             return HttpNotFound();

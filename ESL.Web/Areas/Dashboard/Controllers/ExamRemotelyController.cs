@@ -111,7 +111,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         {
             if (id != null)
             {
-                Model_MessageModal model = new Model_MessageModal();
+                Model_Message model = new Model_Message();
 
                 var exam = db.Tbl_ExamRemotelyPlan.Where(x => x.ERP_ID == id).FirstOrDefault();
 
@@ -134,7 +134,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(Model_MessageModal model)
+        public ActionResult Delete(Model_Message model)
         {
             if (ModelState.IsValid)
             {

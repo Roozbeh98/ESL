@@ -10,10 +10,10 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
     public class Model_Login
     {
         [Display(Name = "نام کاربری")]
-        [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
+        [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public string Username { get; set; }
         [Display(Name = "رمز عبور")]
-        [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
+        [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
         public bool RemenberMe { get; set; }

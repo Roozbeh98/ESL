@@ -9,11 +9,11 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
     public class Model_UserClassPlanCreate
     {
         [Display(Name = "شناسه کلاس")]
-        [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
+        [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public int ClassID { get; set; }
 
         [Display(Name = "شناسه کاربر")]
-        [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
+        [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public Guid UserGuid { get; set; }
     }
 }

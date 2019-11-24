@@ -1,4 +1,5 @@
-﻿@model ESL.Web.Areas.Dashboard.Models.ViewModels.Model_PaymentCreate
+﻿
+@model ESL.Web.Areas.Dashboard.Models.ViewModels.Model_PaymentCreate
 @using ESL.Services.BaseRepository
 
 @{
@@ -7,20 +8,21 @@
 }
 
 
-<div class="panel panel-body panel-default  navigation">
+<div class="panel panel-body panel-default navigation">
 
     <div class="pull-left">
-        <h4 class="navigation-title"><b>تراکنش جدید</b></h4>
+        <h4 class="navigation-title"><b>@ViewBag.Title</b></h4>
     </div>
 
     <div class="pull-right">
-        <a href="@Url.Action("Index", "Payment")"><i class="glyphicon glyphicon-arrow-left navigation-btn-icon"></i></a>
+        <a href="@Url.Action("Index", "Payment")" data-toggle="tooltip" data-placement="auto" title="بازگشت به صفحه قبل">
+            <i class="glyphicon glyphicon-arrow-left navigation-btn-icon"></i>
+        </a>
     </div>
 
 </div>
 
 <div class="panel panel-default">
-
     <div class="panel-body">
 
         @using (Html.BeginForm("Create", "Payment", FormMethod.Post, new { enctype="multipart/form-data"}))
@@ -28,7 +30,6 @@
             @Html.AntiForgeryToken()
 
             <div class="modal-main">
-
                 <div class="row" style="margin: 0 -30px;">
 
                     <div class="col-md-6">
@@ -58,6 +59,7 @@
                         </div>
 
                     </div>
+
                     <div class="col-md-6">
 
                         <div class="form-group">
@@ -95,7 +97,6 @@
                     </div>
 
                 </div>
-
             </div>
 
             <div style="margin-top:20px;">

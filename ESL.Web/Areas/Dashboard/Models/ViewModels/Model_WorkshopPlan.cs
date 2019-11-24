@@ -17,7 +17,7 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
         [Display(Name = "توضیحات")]
         public string Description { get; set; }
 
-        [Display(Name = "بها")]
+        [Display(Name = "قیمت")]
         public int Cost { get; set; }
 
         [DataType(DataType.MultilineText)]

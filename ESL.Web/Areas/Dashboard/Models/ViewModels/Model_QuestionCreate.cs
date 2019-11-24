@@ -15,15 +15,15 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
         [AllowHtml]
         [DataType(DataType.MultilineText)]
         [Display(Name = "عنوان")]
-        [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
+        [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public string Title { get; set; }
 
         [Display(Name = "نوع")]
-        [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
+        [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public Guid Type { get; set; }
 
         [Display(Name = "گروه")]
-        [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
+        [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public Guid Group { get; set; }
 
         [Display(Name = "ضمیمه 1")]
@@ -39,11 +39,11 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
         public string Filepond4 { get; set; }
 
         [Display(Name = "پاسخ")]
-        [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
+        [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public Guid Response { get; set; }
 
         [Display(Name = "نمره")]
-        [Required(ErrorMessage = "لطفا مقدار را وارد نمایید")]
+        [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public int Mark { get; set; }
     }
 }

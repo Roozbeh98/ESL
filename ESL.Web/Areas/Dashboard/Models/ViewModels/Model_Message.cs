@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ESL.Web.Areas.Dashboard.Models.ViewModels
 {
-    public class Model_MessageModal
+    public class Model_Message
     {
         public int ID { get; set; }
 

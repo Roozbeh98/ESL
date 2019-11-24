@@ -92,7 +92,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         {
             if (id.HasValue)
             {
-                Model_MessageModal model = new Model_MessageModal();
+                Model_Message model = new Model_Message();
 
                 switch ((ProductType)type)
                 {

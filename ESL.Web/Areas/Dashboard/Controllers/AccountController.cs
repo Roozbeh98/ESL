@@ -155,16 +155,22 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     TempData["TosterState"] = "warning";
                     TempData["TosterType"] = TosterType.Maseage;
                     TempData["TosterMassage"] = "خطا در ارسال پیامک";
+
+                    return RedirectToAction("Login");
                 };
 
                 TempData["TosterState"] = "success";
                 TempData["TosterType"] = TosterType.Maseage;
-                TempData["TosterMassage"] = "ثبت نام با موفقیت انجام شده";
+                TempData["TosterMassage"] = "ثبت نام با موفقیت انجام شد";
 
                 return RedirectToAction("Login");
             }
             else
             {
+                TempData["TosterState"] = "error";
+                TempData["TosterType"] = TosterType.Maseage;
+                TempData["TosterMassage"] = "ثبت نام با موفقیت انجام نشد";
+
                 return View();
             }
         }
