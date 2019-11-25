@@ -89,6 +89,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ESL.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Domain\sysdiagram.cs">
+      <DependentUpon>ESL.tt</DependentUpon>
+    </Compile>
     <Compile Include="Domain\Tbl_Class.cs">
       <DependentUpon>ESL.tt</DependentUpon>
     </Compile>

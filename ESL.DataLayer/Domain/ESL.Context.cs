@@ -25,6 +25,7 @@ namespace ESL.DataLayer.Domain
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<Tbl_Class> Tbl_Class { get; set; }
         public virtual DbSet<Tbl_ClassPlan> Tbl_ClassPlan { get; set; }
         public virtual DbSet<Tbl_Code> Tbl_Code { get; set; }
