@@ -42,7 +42,7 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
         [Display(Name = "تاریخ ایجاد")]
         public DateTime CreationDate { get; set; }
 
-        [Display(Name = "تاریخ آخرین ویرایش")]
+        [Display(Name = "تاریخ بروزرسانی")]
         public DateTime ModifiedDate { get; set; }
 
         [Display(Name = "وضعیت نمایش")]

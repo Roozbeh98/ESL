@@ -13,23 +13,22 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
         [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public Guid User { get; set; }
 
-        [Display(Name = "عنوان تراکنش")]
+        [Display(Name = "عنوان")]
         [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public Guid Title { get; set; }
 
-        [Display(Name = "روش تراکنش")]
+        [Display(Name = "روش")]
         [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public Guid Way { get; set; }
 
         [Display(Name = "توضیحات")]
-        [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public string Description { get; set; }
 
-        [Display(Name = "قیمت")]
+        [Display(Name = "قیمت (تومان)")]
         [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public int Cost { get; set; }
 
-        [Display(Name = "تخفیف")]
+        [Display(Name = "تخفیف (تومان)")]
         [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public int Discount { get; set; }
 
