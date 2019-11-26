@@ -47,7 +47,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                 {
                     TempData["TosterState"] = "success";
                     TempData["TosterType"] = TosterType.Maseage;
-                    TempData["TosterMassage"] = "عملیات با موفقیت انجام شده";
+                    TempData["TosterMassage"] = "عملیات با موفقیت انجام شد";
 
                     return RedirectToAction("Details", "ExamInPerson", new { area = "Dashboard", id = model.ExamID });
                 }
@@ -55,7 +55,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                 {
                     TempData["TosterState"] = "error";
                     TempData["TosterType"] = TosterType.Maseage;
-                    TempData["TosterMassage"] = "عملیات با موفقیت انجام نشده";
+                    TempData["TosterMassage"] = "عملیات با موفقیت انجام نشد";
 
                     return RedirectToAction("Details", "ExamInPerson", new { area = "Dashboard", id = model.ExamID });
                 }
@@ -100,7 +100,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     {
                         TempData["TosterState"] = "success";
                         TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام شده";
+                        TempData["TosterMassage"] = "عملیات با موفقیت انجام شد";
 
                         return RedirectToAction("Details", "ExamInPerson", new { area = "Dashboard", id = db.Tbl_UserExamInPersonPlan.Where(x => x.UEIPP_ID == model.ID).SingleOrDefault().UEIPP_EIPPID });
                     }
@@ -108,7 +108,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     {
                         TempData["TosterState"] = "error";
                         TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام نشده";
+                        TempData["TosterMassage"] = "عملیات با موفقیت انجام نشد";
 
                         return HttpNotFound();
                     }
@@ -154,7 +154,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     {
                         TempData["TosterState"] = "success";
                         TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام شده";
+                        TempData["TosterMassage"] = "عملیات با موفقیت انجام شد";
 
                         return RedirectToAction("Details", "ExamInPerson", new { area = "Dashboard", id = db.Tbl_UserExamInPersonPlan.Where(x => x.UEIPP_ID == model.ID).SingleOrDefault().UEIPP_EIPPID });
                     }
@@ -162,7 +162,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     {
                         TempData["TosterState"] = "error";
                         TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام نشده";
+                        TempData["TosterMassage"] = "عملیات با موفقیت انجام نشد";
 
                         return HttpNotFound();
                     }
@@ -208,7 +208,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     {
                         TempData["TosterState"] = "success";
                         TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام شده";
+                        TempData["TosterMassage"] = "عملیات با موفقیت انجام شد";
 
                         return RedirectToAction("Details", "ExamInPerson", new { area = "Dashboard", id = db.Tbl_UserExamInPersonPlan.Where(x => x.UEIPP_ID == model.ID).SingleOrDefault().UEIPP_EIPPID });
                     }
@@ -216,7 +216,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     {
                         TempData["TosterState"] = "error";
                         TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام نشده";
+                        TempData["TosterMassage"] = "عملیات با موفقیت انجام نشد";
 
                         return HttpNotFound();
                     }
@@ -269,7 +269,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     {
                         TempData["TosterState"] = "success";
                         TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام شده";
+                        TempData["TosterMassage"] = "عملیات با موفقیت انجام شد";
 
                         return RedirectToAction("Details", "ExamInPerson", new { area = "Dashboard", id = db.Tbl_UserExamInPersonPlan.Where(x => x.UEIPP_ID == model.ID).SingleOrDefault().UEIPP_EIPPID });
                     }
@@ -277,7 +277,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     {
                         TempData["TosterState"] = "error";
                         TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام نشده";
+                        TempData["TosterMassage"] = "عملیات با موفقیت انجام نشد";
 
                         return HttpNotFound();
                     }
@@ -330,7 +330,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     {
                         TempData["TosterState"] = "success";
                         TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام شده";
+                        TempData["TosterMassage"] = "عملیات با موفقیت انجام شد";
 
                         return RedirectToAction("Details", "ExamInPerson", new { area = "Dashboard", id = db.Tbl_UserExamInPersonPlan.Where(x => x.UEIPP_ID == model.ID).SingleOrDefault().UEIPP_EIPPID });
                     }
@@ -338,7 +338,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     {
                         TempData["TosterState"] = "error";
                         TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام نشده";
+                        TempData["TosterMassage"] = "عملیات با موفقیت انجام نشد";
 
                         return HttpNotFound();
                     }

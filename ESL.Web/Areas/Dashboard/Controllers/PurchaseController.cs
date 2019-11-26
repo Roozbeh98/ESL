@@ -14,7 +14,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
     [Authorize(Roles = "Student")]
     public class PurchaseController : Controller
     {
-        private ESLEntities db = new ESLEntities();
+        private readonly ESLEntities db = new ESLEntities();
 
         public ActionResult Index()
         {
@@ -442,7 +442,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         {
             int credit = new Rep_Wallet().Get_WalletCreditWithUserID(user.User_ID);
 
-            if (credit + 50000 < cost)
+            if (credit + 30000 < cost)
             {
                 if (new SMSPortal().SendServiceable(user.User_Mobile, ".", "", "", user.User_FirstName + " " + user.User_lastName, SMSTemplate.Charge) != "ارسال به مخابرات")
                 {

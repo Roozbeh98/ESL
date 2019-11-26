@@ -1,5 +1,5 @@
-﻿@model IEnumerable<ESL.Web.Areas.Dashboard.Models.ViewModels.Model_UserClassPlanPresence>
-
+﻿
+@model IEnumerable<ESL.Web.Areas.Dashboard.Models.ViewModels.Model_UserClassPlanPresence>
 @using ESL.Common.Plugins
 
 @{
@@ -15,15 +15,15 @@
     </div>
 
     <div class="pull-right">
-        <a href="javascript:void(0)" onclick="Create()"><i class="glyphicon glyphicon-plus navigation-btn-icon"></i></a>
+        <a href="javascript:void(0)" onclick="Create()" data-toggle="tooltip" data-placement="auto" title="ثبت حضور جدید">
+            <i class="glyphicon glyphicon-plus navigation-btn-icon"></i>
+        </a>
     </div>
 
 </div>
 
 <div class="panel panel-default">
-
     <div class="panel-body table-body" style="overflow-x:auto;">
-
         <table id="DateTable" class="table table-bordered table-striped table-secondary" style="width:100%;">
 
             <thead class="thead-dark">
@@ -32,7 +32,7 @@
                     <th scope="col">@Html.DisplayNameFor(model => model.Cost)</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.Discount)</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.Presence)</th>
-                    <th scope="col">@Html.DisplayNameFor(model => model.CreationDate)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Date)</th>
                     <th scope="col" data-orderable="false">کنترل</th>
                 </tr>
             </thead>
@@ -50,20 +50,20 @@
                     <tr>
                         <td scope="row">@x</td>
                         <td scope="row">
-                            <span> @Html.DisplayFor(modelItem => item.Cost) </span>
+                            <span>@Html.DisplayFor(modelItem => item.Cost)</span>
                         </td>
                         <td scope="row">
-                            <span> @Html.DisplayFor(modelItem => item.Discount) </span>
+                            <span>@Html.DisplayFor(modelItem => item.Discount)</span>
                         </td>
                         <td scope="row">
-                            <span>@(item.Presence ? "حاضر" : "غایب")</span>
+                            <span>@( item.Presence ? "حاضر" : "غایب" )</span>
                         </td>
                         <td scope="row">
-                            <span> @PersianDateExtensionMethods.ToPeString(item.CreationDate, "yyyy/MM/dd") </span>
+                            <span>@PersianDateExtensionMethods.ToPeString(item.Date, "yyyy/MM/dd HH:mm")</span>
                         </td>
                         <td scope="row">
-                            <a class="btn btn-primary btn-sm glyphicon glyphicon-ok" href="javascript:void(0)" onclick="SetPresence(@item.ID)"> </a>
-                            <a class="btn btn-danger btn-sm glyphicon glyphicon-trash" href="javascript:void(0)" onclick="Delete(@item.ID)"> </a>
+                            <a class="btn btn-primary btn-sm glyphicon glyphicon-ok" data-toggle="tooltip" data-placement="auto" title="تغییر وضعیت حضور" href="javascript:void(0)" onclick="SetPresence(@item.ID)"></a>
+                            <a class="btn btn-danger btn-sm glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="auto" title="حذف" href="javascript:void(0)" onclick="Delete(@item.ID)"></a>
                         </td>
                     </tr>
                 }
@@ -71,11 +71,8 @@
             </tbody>
 
         </table>
-
     </div>
-
 </div>
-
 
 @Html.Partial("_Modal")
 

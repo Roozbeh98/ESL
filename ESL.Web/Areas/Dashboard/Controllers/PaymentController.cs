@@ -177,11 +177,6 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                         break;
 
                     default:
-
-                        TempData["TosterState"] = "error";
-                        TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام نشد";
-
                         return View();
                 }
 
@@ -246,7 +241,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     Payment_StateCodeID = (int)PaymentState.Confirmed,
                     Payment_Description = model.Description,
                     Payment_Cost = model.Cost,
-                    Payment_Discount = model.Discount,
+                    Payment_Discount = 0,
                     Payment_RemaingWallet = newCredit,
                     Payment_TrackingToken = model.TrackingToken,
                     Payment_CreateDate = DateTime.Now,

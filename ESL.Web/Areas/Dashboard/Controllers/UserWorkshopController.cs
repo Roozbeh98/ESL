@@ -46,7 +46,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                 {
                     TempData["TosterState"] = "success";
                     TempData["TosterType"] = TosterType.Maseage;
-                    TempData["TosterMassage"] = "عملیات با موفقیت انجام شده";
+                    TempData["TosterMassage"] = "عملیات با موفقیت انجام شد";
 
                     return RedirectToAction("Details", "Workshop", new { area = "Dashboard", id = model.WorkshopID });
                 }
@@ -54,7 +54,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                 {
                     TempData["TosterState"] = "error";
                     TempData["TosterType"] = TosterType.Maseage;
-                    TempData["TosterMassage"] = "عملیات با موفقیت انجام نشده";
+                    TempData["TosterMassage"] = "عملیات با موفقیت انجام نشد";
 
                     return RedirectToAction("Details", "Workshop", new { area = "Dashboard", id = model.WorkshopID });
                 }
@@ -99,7 +99,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     {
                         TempData["TosterState"] = "success";
                         TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام شده";
+                        TempData["TosterMassage"] = "عملیات با موفقیت انجام شد";
 
                         return RedirectToAction("Details", "Workshop", new { area = "Dashboard", id = db.Tbl_UserWorkshopPlan.Where(x => x.UWP_ID == model.ID).SingleOrDefault().UWP_WPID });
                     }
@@ -107,7 +107,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     {
                         TempData["TosterState"] = "error";
                         TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام نشده";
+                        TempData["TosterMassage"] = "عملیات با موفقیت انجام نشد";
 
                         return HttpNotFound();
                     }
@@ -160,7 +160,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     {
                         TempData["TosterState"] = "success";
                         TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام شده";
+                        TempData["TosterMassage"] = "عملیات با موفقیت انجام شد";
 
                         return RedirectToAction("Details", "Workshop", new { area = "Dashboard", id = db.Tbl_UserWorkshopPlan.Where(x => x.UWP_ID == model.ID).SingleOrDefault().UWP_WPID });
                     }
@@ -168,7 +168,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     {
                         TempData["TosterState"] = "error";
                         TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام نشده";
+                        TempData["TosterMassage"] = "عملیات با موفقیت انجام نشد";
 
                         return HttpNotFound();
                     }
@@ -221,7 +221,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     {
                         TempData["TosterState"] = "success";
                         TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام شده";
+                        TempData["TosterMassage"] = "عملیات با موفقیت انجام شد";
 
                         return RedirectToAction("Details", "Workshop", new { area = "Dashboard", id = db.Tbl_UserWorkshopPlan.Where(x => x.UWP_ID == model.ID).SingleOrDefault().UWP_WPID });
                     }
@@ -229,7 +229,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     {
                         TempData["TosterState"] = "error";
                         TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام نشده";
+                        TempData["TosterMassage"] = "عملیات با موفقیت انجام نشد";
 
                         return HttpNotFound();
                     }

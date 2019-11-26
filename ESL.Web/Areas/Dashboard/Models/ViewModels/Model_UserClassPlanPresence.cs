@@ -11,16 +11,16 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
         [Display(Name = "شناسه")]
         public int ID { get; set; }
 
-        [Display(Name = "قیمت")]
+        [Display(Name = "قیمت (تومان)")]
         public int Cost { get; set; }
 
-        [Display(Name = "تخفیف")]
+        [Display(Name = "تخفیف (تومان)")]
         public int Discount { get; set; }
 
         [Display(Name = "وضعیت حضور")]
         public bool Presence { get; set; }
 
-        [Display(Name = "تاریخ")]
-        public DateTime CreationDate { get; set; }
+        [Display(Name = "ساعت و تاریخ")]
+        public DateTime Date { get; set; }
     }
 }

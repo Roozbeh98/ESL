@@ -17,6 +17,8 @@ namespace ESL.Web.Areas.Dashboard.Controllers
     {
         private readonly ESLEntities db = new ESLEntities();
 
+        #region Admin
+
         [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
@@ -168,7 +170,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     ID = x.UCP_ID,
                     User = x.Tbl_User.User_FirstName + " " + x.Tbl_User.User_lastName,
                     CreationDate = x.UCP_CreationDate,
-                    IsDelete = x.UCP_IsDelete,
+                    Activeness = x.UCP_IsActive,
 
                 }).ToList();
 
@@ -219,7 +221,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     {
                         TempData["TosterState"] = "success";
                         TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام شده";
+                        TempData["TosterMassage"] = "عملیات با موفقیت انجام شد";
 
                         return RedirectToAction("Index", "Class", new { area = "Dashboard" });
                     }
@@ -227,7 +229,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     {
                         TempData["TosterState"] = "error";
                         TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام نشده";
+                        TempData["TosterMassage"] = "عملیات با موفقیت انجام نشد";
 
                         return HttpNotFound();
                     }
@@ -236,6 +238,10 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
+
+        #endregion
+
+        #region Student
 
         [Authorize(Roles = "Student")]
         public ActionResult List()
@@ -275,7 +281,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     Cost = x.Tbl_Payment.Payment_Cost,
                     Discount = x.Tbl_Payment.Payment_Discount,
                     Presence = x.UCPP_IsPresent,
-                    CreationDate = x.UCPP_CreationDate
+                    Date = x.UCPP_Date
 
                 }).ToList();
 
@@ -287,5 +293,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
             return HttpNotFound();
         }
+
+        #endregion
     }
 }

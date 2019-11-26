@@ -1,5 +1,6 @@
 ﻿using ESL.DataLayer.Domain;
 using ESL.Services.BaseRepository;
+using ESL.Services.Services;
 using ESL.Web.Areas.Dashboard.Models.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -11,9 +12,10 @@ using System.Web.Mvc;
 
 namespace ESL.Web.Areas.Dashboard.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class UserClassController : Controller
     {
-        private ESLEntities db = new ESLEntities();
+        private readonly ESLEntities db = new ESLEntities();
 
         public ActionResult Create(int id)
         {
@@ -31,158 +33,120 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         {
             if (ModelState.IsValid)
             {
-                Tbl_UserClassPlan q = new Tbl_UserClassPlan
+                var _User = db.Tbl_User.Where(x => x.User_Guid == model.UserGuid && x.User_IsDelete == false).SingleOrDefault();
+
+                if (db.Tbl_UserClassPlan.Where(x => x.UCP_UserID == _User.User_ID && x.UCP_CPID == model.ClassID && x.UCP_IsDelete == false).FirstOrDefault() != null)
                 {
-                    UCP_Guid = Guid.NewGuid(),
-                    UCP_UserID = new Rep_User().Get_UserIDWithGUID(model.UserGuid),
-                    UCP_CPID = model.ClassID,
-                    UCP_CreationDate = DateTime.Now,
-                    UCP_ModifiedDate = DateTime.Now
+                    TempData["TosterState"] = "info";
+                    TempData["TosterType"] = TosterType.Maseage;
+                    TempData["TosterMassage"] = "قبلا خریداری شده است و هم اکنون فعال یا در انتظار تایید می باشد";
+
+                    return RedirectToAction("Details", "Class", new { area = "Dashboard", id = model.ClassID });
                 };
 
-                db.Tbl_UserClassPlan.Add(q);
+                var _ClassPlan = db.Tbl_ClassPlan.Where(x => x.CP_ID == model.ClassID).SingleOrDefault();
 
-                if (Convert.ToBoolean(db.SaveChanges() > 0))
+                if (_ClassPlan != null)
                 {
-                    TempData["TosterState"] = "success";
-                    TempData["TosterType"] = TosterType.Maseage;
-                    TempData["TosterMassage"] = "عملیات با موفقیت انجام شده";
+                    Tbl_Payment _Payment = Purchase(_User, _ClassPlan.CP_CostPerSession, out int state);
 
-                    return RedirectToAction("Details", "Class", new { area = "Dashboard", id = model.ClassID });
-                }
-                else
-                {
+                    db.Tbl_Payment.Add(_Payment);
+
+                    Tbl_Wallet _Wallet = db.Tbl_Wallet.Where(x => x.Wallet_UserID == _Payment.Payment_UserID).SingleOrDefault();
+                    _Wallet.Wallet_Credit = _Payment.Payment_RemaingWallet - _Payment.Payment_Cost;
+                    _Wallet.Wallet_ModifiedDate = DateTime.Now;
+
+                    db.Entry(_Wallet).State = EntityState.Modified;
+
+                    Tbl_UserClassPlan _UserClassPlan = new Tbl_UserClassPlan()
+                    {
+                        UCP_Guid = Guid.NewGuid(),
+                        UCP_UserID = _User.User_ID,
+                        UCP_CPID = model.ClassID,
+                        Tbl_Payment = _Payment,
+                        UCP_IsActive = true,
+                        UCP_CreationDate = DateTime.Now,
+                        UCP_ModifiedDate = DateTime.Now
+                    };
+
+                    db.Tbl_UserClassPlan.Add(_UserClassPlan);
+
+                    if (Convert.ToBoolean(db.SaveChanges() > 0))
+                    {
+                        if (state == 1)
+                        {
+                            TempData["TosterState"] = "success";
+                            TempData["TosterType"] = TosterType.Maseage;
+                            TempData["TosterMassage"] = "ثبت نام با موفقیت انجام شد";
+                        }
+                        else if (state == 0)
+                        {
+                            TempData["TosterState"] = "error";
+                            TempData["TosterType"] = TosterType.Maseage;
+                            TempData["TosterMassage"] = "موجودی کیف پول کاربر مورد نظر کافی نمی باشد";
+                        }
+                        else if (state == -1)
+                        {
+                            TempData["TosterState"] = "warning";
+                            TempData["TosterType"] = TosterType.Maseage;
+                            TempData["TosterMassage"] = "خطا در ارسال پیامک";
+                        }
+
+                        return RedirectToAction("Details", "Class", new { area = "Dashboard", id = model.ClassID });
+                    }
+
                     TempData["TosterState"] = "error";
                     TempData["TosterType"] = TosterType.Maseage;
-                    TempData["TosterMassage"] = "عملیات با موفقیت انجام نشده";
+                    TempData["TosterMassage"] = "ثبت نام با موفقیت انجام نشد";
+                    
 
                     return RedirectToAction("Details", "Class", new { area = "Dashboard", id = model.ClassID });
                 }
-            }
-
-            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        }
-
-        public ActionResult UnRegister(int? id)
-        {
-            if (id != null)
-            {
-                Model_Message model = new Model_Message();
-
-                var q = db.Tbl_UserClassPlan.Where(x => x.UCP_ID == id).SingleOrDefault();
-
-                if (q != null)
-                {
-                    model.ID = id.Value;
-                    model.Name = q.Tbl_User.User_FirstName + " " + q.Tbl_User.User_lastName;
-                    model.Description = $"آیا از لغو ثبت نام کاربر { model.Name } اطمینان دارید ؟";
-
-                    return PartialView(model);
-                }
                 else
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
             }
 
-            return HttpNotFound();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult UnRegister(Model_Message model)
-        {
-            if (ModelState.IsValid)
-            {
-                var q = db.Tbl_UserClassPlan.Where(x => x.UCP_ID == model.ID).SingleOrDefault();
-
-                if (q != null)
-                {
-                    q.UCP_IsDelete = true;
-
-                    db.Entry(q).State = EntityState.Modified;
-
-                    if (Convert.ToBoolean(db.SaveChanges() > 0))
-                    {
-                        TempData["TosterState"] = "success";
-                        TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام شده";
-
-                        return RedirectToAction("Details", "Class", new { area = "Dashboard", id = db.Tbl_UserClassPlan.Where(x => x.UCP_ID == model.ID).SingleOrDefault().UCP_CPID });
-                    }
-                    else
-                    {
-                        TempData["TosterState"] = "error";
-                        TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام نشده";
-
-                        return HttpNotFound();
-                    }
-                }
-            }
-
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
-        public ActionResult Register(int? id)
+        private Tbl_Payment Purchase(Tbl_User user, int cost, out int state)
         {
-            if (id != null)
+            int credit = new Rep_Wallet().Get_WalletCreditWithUserID(user.User_ID);
+
+            if (credit + 30000 < cost)
             {
-                Model_Message model = new Model_Message();
-
-                var q = db.Tbl_UserClassPlan.Where(x => x.UCP_ID == id).SingleOrDefault();
-
-                if (q != null)
+                if (new SMSPortal().SendServiceable(user.User_Mobile, ".", "", "", user.User_FirstName + " " + user.User_lastName, SMSTemplate.Charge) != "ارسال به مخابرات")
                 {
-                    model.ID = id.Value;
-                    model.Name = q.Tbl_User.User_FirstName + " " + q.Tbl_User.User_lastName;
-                    model.Description = $"آیا از ثبت نام مجدد کاربر { model.Name } اطمینان دارید ؟";
-
-                    return PartialView(model);
+                    state = -1;
                 }
                 else
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    state = 0;
                 }
             }
-
-            return HttpNotFound();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Register(Model_Message model)
-        {
-            if (ModelState.IsValid)
+            else
             {
-                var q = db.Tbl_UserClassPlan.Where(x => x.UCP_ID == model.ID).SingleOrDefault();
-
-                if (q != null)
-                {
-                    q.UCP_IsDelete = false;
-
-                    db.Entry(q).State = EntityState.Modified;
-
-                    if (Convert.ToBoolean(db.SaveChanges() > 0))
-                    {
-                        TempData["TosterState"] = "success";
-                        TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام شده";
-
-                        return RedirectToAction("Details", "Class", new { area = "Dashboard", id = db.Tbl_UserClassPlan.Where(x => x.UCP_ID == model.ID).SingleOrDefault().UCP_CPID });
-                    }
-                    else
-                    {
-                        TempData["TosterState"] = "error";
-                        TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام نشده";
-
-                        return HttpNotFound();
-                    }
-                }
+                state = 1;
             }
 
-            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            Tbl_Payment _Payment = new Tbl_Payment
+            {
+                Payment_Guid = Guid.NewGuid(),
+                Payment_UserID = user.User_ID,
+                Payment_TitleCodeID = (int)PaymentTitle.Class,
+                Payment_WayCodeID = (int)PaymentWay.Internet,
+                Payment_StateCodeID = (int)PaymentState.Confirmed,
+                Payment_Cost = cost,
+                Payment_Discount = 0,
+                Payment_RemaingWallet = credit,
+                Payment_TrackingToken = "ESL-" + new Random().Next(100000, 999999).ToString(),
+                Payment_CreateDate = DateTime.Now,
+                Payment_ModifiedDate = DateTime.Now
+            };
+
+            return _Payment;
         }
 
         public JsonResult Get_Users(string searchTerm)

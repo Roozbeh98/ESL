@@ -94,7 +94,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     TempData["TosterState"] = "success";
                     TempData["TosterType"] = TosterType.Maseage;
                     TempData["TosterTitel"] = "2";
-                    TempData["TosterMassage"] = "عملیات با موفقیت انجام شده";
+                    TempData["TosterMassage"] = "عملیات با موفقیت انجام شد";
 
                     return RedirectToAction("Index");
                 }
@@ -152,7 +152,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                         TempData["TosterState"] = "success";
                         TempData["TosterType"] = TosterType.Maseage;
                         TempData["TosterTitel"] = "2";
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام شده";
+                        TempData["TosterMassage"] = "عملیات با موفقیت انجام شد";
 
                         return RedirectToAction("Index");
                     }
@@ -310,7 +310,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                 {
                     TempData["TosterState"] = "success";
                     TempData["TosterType"] = TosterType.Maseage;
-                    TempData["TosterMassage"] = "عملیات با موفقیت انجام شده";
+                    TempData["TosterMassage"] = "عملیات با موفقیت انجام شد";
 
                     return RedirectToAction("Index");
                 }
@@ -318,7 +318,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                 {
                     TempData["TosterState"] = "error";
                     TempData["TosterType"] = TosterType.Maseage;
-                    TempData["TosterMassage"] = "عملیات با موفقیت انجام نشده";
+                    TempData["TosterMassage"] = "عملیات با موفقیت انجام نشد";
 
                     return RedirectToAction("Details");
                 }
@@ -374,7 +374,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     TempData["TosterState"] = "success";
                     TempData["TosterType"] = TosterType.Maseage;
                     TempData["TosterTitel"] = "2";
-                    TempData["TosterMassage"] = "عملیات با موفقیت انجام شده";
+                    TempData["TosterMassage"] = "عملیات با موفقیت انجام شد";
 
                     return RedirectToAction("Index");
                 }

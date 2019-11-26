@@ -15,11 +15,11 @@ namespace ESL.Web.Areas.Dashboard.Controllers
     [Authorize(Roles = "Admin")]
     public class PresenceController : Controller
     {
-        private ESLEntities db = new ESLEntities();
+        private readonly ESLEntities db = new ESLEntities();
 
         public ActionResult Index()
         {
-            var q = db.Tbl_UserClassPlan.Where(x => x.UCP_IsDelete == false).Select(x => new Model_UserClassPlans
+            var _UserClassPlans = db.Tbl_UserClassPlan.Where(x => x.UCP_IsActive == true && x.UCP_IsDelete == false).Select(x => new Model_UserClassPlans
             {
                 ID = x.UCP_ID,
                 User = x.Tbl_User.User_FirstName + " " + x.Tbl_User.User_lastName,
@@ -31,28 +31,28 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
             }).ToList();
 
-            return View(q);
+            return View(_UserClassPlans);
         }
 
         public ActionResult Details(int? id)
         {
             if (id.HasValue && db.Tbl_UserClassPlan.Any(x => x.UCP_ID == id))
             {
-                var p = db.Tbl_UserClassPlan.Where(x => x.UCP_IsDelete == false && x.UCP_ID == id).SingleOrDefault();
+                var _UserClassPlan = db.Tbl_UserClassPlan.Where(x => x.UCP_IsDelete == false && x.UCP_ID == id).SingleOrDefault();
 
-                var q = db.Tbl_UserClassPlanPresence.Where(x => x.UCPP_IsDelete == false && x.Tbl_UserClassPlan.UCP_UserID == p.UCP_UserID && x.Tbl_UserClassPlan.UCP_CPID == p.UCP_CPID && x.Tbl_UserClassPlan.Tbl_ClassPlan.CP_TypeCodeID == p.Tbl_ClassPlan.CP_TypeCodeID && x.Tbl_UserClassPlan.Tbl_ClassPlan.CP_Location == p.Tbl_ClassPlan.CP_Location && x.Tbl_UserClassPlan.Tbl_ClassPlan.CP_Time == p.Tbl_ClassPlan.CP_Time).Select(x => new Model_UserClassPlanPresence
+                var _UserClassPlanPresences = db.Tbl_UserClassPlanPresence.Where(x => x.UCPP_IsDelete == false && x.Tbl_UserClassPlan.UCP_UserID == _UserClassPlan.UCP_UserID && x.Tbl_UserClassPlan.UCP_CPID == _UserClassPlan.UCP_CPID && x.Tbl_UserClassPlan.Tbl_ClassPlan.CP_TypeCodeID == _UserClassPlan.Tbl_ClassPlan.CP_TypeCodeID && x.Tbl_UserClassPlan.Tbl_ClassPlan.CP_Location == _UserClassPlan.Tbl_ClassPlan.CP_Location && x.Tbl_UserClassPlan.Tbl_ClassPlan.CP_Time == _UserClassPlan.Tbl_ClassPlan.CP_Time).Select(x => new Model_UserClassPlanPresence
                 {
                     ID = x.UCPP_ID,
                     Cost = x.Tbl_Payment.Payment_Cost,
                     Discount = x.Tbl_Payment.Payment_Discount,
                     Presence = x.UCPP_IsPresent,
-                    CreationDate = x.UCPP_CreationDate
+                    Date = x.UCPP_Date
 
                 }).ToList();
 
                 TempData["UserClassPlanID"] = id;
 
-                return View(q);
+                return View(_UserClassPlanPresences);
             }
 
             return HttpNotFound();
@@ -69,13 +69,14 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         {
             if (ModelState.IsValid)
             {
-                int _UserClassID = (int)TempData["UserClassPlanID"];
+                int userClassId = (int)TempData["UserClassPlanID"];
 
-                var _UserClass = db.Tbl_UserClassPlan.Where(x => x.UCP_IsDelete == false && x.UCP_ID == _UserClassID).SingleOrDefault();
+                var _UserClass = db.Tbl_UserClassPlan.Where(x => x.UCP_IsDelete == false && x.UCP_ID == userClassId).SingleOrDefault();
 
-                int _Credit = db.Tbl_Wallet.Where(x => x.Wallet_UserID == _UserClass.UCP_UserID).SingleOrDefault().Wallet_Credit;
+                var _Wallet = db.Tbl_Wallet.Where(x => x.Wallet_UserID == _UserClass.UCP_UserID).SingleOrDefault();
+                _Wallet.Wallet_Credit = _Wallet.Wallet_Credit - _UserClass.Tbl_ClassPlan.CP_CostPerSession + model.Discount;
 
-                Tbl_Payment q = new Tbl_Payment()
+                Tbl_Payment _Payment = new Tbl_Payment()
                 {
                     Payment_Guid = Guid.NewGuid(),
                     Payment_UserID = _UserClass.UCP_UserID,
@@ -84,42 +85,43 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     Payment_StateCodeID = (int)PaymentState.Confirmed,
                     Payment_Cost = _UserClass.Tbl_ClassPlan.CP_CostPerSession,
                     Payment_Discount = model.Discount,
-                    Payment_RemaingWallet = _Credit - _UserClass.Tbl_ClassPlan.CP_CostPerSession + model.Discount,
+                    Payment_RemaingWallet = _Wallet.Wallet_Credit,
                     Payment_TrackingToken = "ESL-" + new Random().Next(100000, 999999).ToString(),
                     Payment_CreateDate = DateTime.Now,
                     Payment_ModifiedDate = DateTime.Now
                 };
 
-                Tbl_UserClassPlanPresence p = new Tbl_UserClassPlanPresence
+                Tbl_UserClassPlanPresence _UserClassPlanPresence = new Tbl_UserClassPlanPresence
                 {
                     UCPP_Guid = Guid.NewGuid(),
-                    UCPP_UCPID = _UserClassID,
+                    UCPP_UCPID = userClassId,
                     UCPP_IsPresent = model.Presence,
                     UCPP_Date = DateConverter.ToGeorgianDateTime(model.Date),
                     UCPP_CreationDate = DateTime.Now,
                     UCPP_ModifiedDate = DateTime.Now
                 };
 
-                p.Tbl_Payment = q;
+                _UserClassPlanPresence.Tbl_Payment = _Payment;
 
-                db.Tbl_Payment.Add(q);
-                db.Tbl_UserClassPlanPresence.Add(p);
+                db.Tbl_Payment.Add(_Payment);
+                db.Tbl_UserClassPlanPresence.Add(_UserClassPlanPresence);
+                db.Entry(_Wallet).State = EntityState.Modified;
 
                 if (Convert.ToBoolean(db.SaveChanges() > 0))
                 {
                     TempData["TosterState"] = "success";
                     TempData["TosterType"] = TosterType.Maseage;
-                    TempData["TosterMassage"] = "عملیات با موفقیت انجام شده";
+                    TempData["TosterMassage"] = "حضور با موفقیت ثبت شد";
 
-                    return RedirectToAction("Details", new { id = _UserClassID });
+                    return RedirectToAction("Details", new { id = userClassId });
                 }
                 else
                 {
                     TempData["TosterState"] = "error";
                     TempData["TosterType"] = TosterType.Maseage;
-                    TempData["TosterMassage"] = "عملیات با موفقیت انجام نشده";
+                    TempData["TosterMassage"] = "حضور با موفقیت ثبت نشد";
 
-                    return RedirectToAction("Details", new { id = _UserClassID });
+                    return RedirectToAction("Details", new { id = userClassId });
                 }
             }
 
@@ -132,12 +134,12 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             {
                 Model_Message model = new Model_Message();
 
-                var q = db.Tbl_UserClassPlanPresence.Where(x => x.UCPP_ID == id).SingleOrDefault();
+                var _UserClassPlanPresence = db.Tbl_UserClassPlanPresence.Where(x => x.UCPP_ID == id).SingleOrDefault();
 
-                if (q != null)
+                if (_UserClassPlanPresence != null)
                 {
                     model.ID = id.Value;
-                    model.Name = q.Tbl_UserClassPlan.Tbl_User.User_FirstName + " " + q.Tbl_UserClassPlan.Tbl_User.User_lastName;
+                    model.Name = _UserClassPlanPresence.Tbl_UserClassPlan.Tbl_User.User_FirstName + " " + _UserClassPlanPresence.Tbl_UserClassPlan.Tbl_User.User_lastName;
                     model.Description = "آیا از حذف حضور مورد نظر اطمینان دارید ؟";
 
                     return PartialView(model);
@@ -157,19 +159,30 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         {
             if (ModelState.IsValid)
             {
-                var q = db.Tbl_UserClassPlanPresence.Where(x => x.UCPP_ID == model.ID).SingleOrDefault();
+                var _UserClassPlanPresence = db.Tbl_UserClassPlanPresence.Where(x => x.UCPP_ID == model.ID).SingleOrDefault();
 
-                if (q != null)
+                if (_UserClassPlanPresence != null)
                 {
-                    q.UCPP_IsDelete = true;
+                    var _Payment = db.Tbl_Payment.Where(x => x.Payment_ID == _UserClassPlanPresence.UCPP_PaymentID).SingleOrDefault();
+                    
+                    if (_Payment != null)
+                    {
+                        _UserClassPlanPresence.UCPP_IsDelete = true;
+                        _Payment.Payment_IsDelete = true;
 
-                    db.Entry(q).State = EntityState.Modified;
+                        var _Wallet = db.Tbl_Wallet.Where(x => x.Wallet_UserID == _UserClassPlanPresence.Tbl_UserClassPlan.UCP_UserID).SingleOrDefault();
+                        _Wallet.Wallet_Credit = _Payment.Payment_RemaingWallet + _Payment.Payment_Cost - _Payment.Payment_Discount;
+
+                        db.Entry(_UserClassPlanPresence).State = EntityState.Modified;
+                        db.Entry(_Payment).State = EntityState.Modified;
+                        db.Entry(_Wallet).State = EntityState.Modified;
+                    }
 
                     if (Convert.ToBoolean(db.SaveChanges() > 0))
                     {
                         TempData["TosterState"] = "success";
                         TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام شده";
+                        TempData["TosterMassage"] = "حضور مورد نظر با موفقیت حذف شد";
 
                         return RedirectToAction("Details", "Presence", new { area = "Dashboard", id = db.Tbl_UserClassPlanPresence.Where(x => x.UCPP_ID == model.ID).SingleOrDefault().Tbl_UserClassPlan.UCP_ID });
                     }
@@ -177,7 +190,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     {
                         TempData["TosterState"] = "error";
                         TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام نشده";
+                        TempData["TosterMassage"] = "حضور مورد نظر با موفقیت حذف نشد";
 
                         return RedirectToAction("Details", "Presence", new { area = "Dashboard", id = db.Tbl_UserClassPlanPresence.Where(x => x.UCPP_ID == model.ID).SingleOrDefault().Tbl_UserClassPlan.UCP_ID });
                     }
@@ -189,14 +202,14 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
         public ActionResult SetPresence(int id)
         {
-            var q = db.Tbl_UserClassPlanPresence.Where(x => x.UCPP_ID == id).SingleOrDefault();
+            var _UserClassPlanPresence = db.Tbl_UserClassPlanPresence.Where(x => x.UCPP_ID == id).SingleOrDefault();
 
-            if (q != null)
+            if (_UserClassPlanPresence != null)
             {
                 Model_SetActiveness model = new Model_SetActiveness()
                 {
                     ID = id,
-                    Activeness = q.UCPP_IsPresent
+                    Activeness = _UserClassPlanPresence.UCPP_IsPresent
                 };
 
                 return PartialView(model);
@@ -211,19 +224,19 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         {
             if (ModelState.IsValid)
             {
-                var q = db.Tbl_UserClassPlanPresence.Where(x => x.UCPP_ID == model.ID).SingleOrDefault();
+                var _UserClassPlanPresence = db.Tbl_UserClassPlanPresence.Where(x => x.UCPP_ID == model.ID).SingleOrDefault();
 
-                if (q != null)
+                if (_UserClassPlanPresence != null)
                 {
-                    q.UCPP_IsPresent = model.Activeness;
+                    _UserClassPlanPresence.UCPP_IsPresent = model.Activeness;
 
-                    db.Entry(q).State = EntityState.Modified;
+                    db.Entry(_UserClassPlanPresence).State = EntityState.Modified;
 
                     if (Convert.ToBoolean(db.SaveChanges() > 0))
                     {
                         TempData["TosterState"] = "success";
                         TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام شده";
+                        TempData["TosterMassage"] = "تغییر وضعیت حضور با موفقیت انجام شد";
 
                         return RedirectToAction("Details", "Presence", new { area = "Dashboard", id = db.Tbl_UserClassPlanPresence.Where(x => x.UCPP_ID == model.ID).SingleOrDefault().Tbl_UserClassPlan.UCP_ID });
                     }
@@ -231,7 +244,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     {
                         TempData["TosterState"] = "error";
                         TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام نشده";
+                        TempData["TosterMassage"] = "تغییر وضعیت حضور با موفقیت انجام نشد";
 
                         return RedirectToAction("Details", "Presence", new { area = "Dashboard", id = db.Tbl_UserClassPlanPresence.Where(x => x.UCPP_ID == model.ID).SingleOrDefault().Tbl_UserClassPlan.UCP_ID });
                     }

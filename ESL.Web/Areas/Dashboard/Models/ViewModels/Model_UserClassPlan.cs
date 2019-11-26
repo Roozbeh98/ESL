@@ -15,11 +15,11 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
         [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public string User { get; set; }
 
-        [Display(Name = "تاریخ ایجاد")]
+        [Display(Name = "تاریخ ثبت نام")]
         public DateTime CreationDate { get; set; }
 
         [Display(Name = "وضعیت ثبت نام")]
         [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
-        public bool IsDelete { get; set; }
+        public bool Activeness { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿$(document).ready(function () {
     $('#DateTable').DataTable({
+        "order": [[0, "desc"]],
         "language": {
 
             "sEmptyTable": "هیچ داده ای در جدول وجود ندارد",

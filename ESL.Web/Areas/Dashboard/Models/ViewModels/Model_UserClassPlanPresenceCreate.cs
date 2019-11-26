@@ -8,7 +8,7 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
 {
     public class Model_UserClassPlanPresenceCreate
     {
-        [Display(Name = "تاریخ")]
+        [Display(Name = "ساعت و تاریخ")]
         [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public string Date { get; set; }
 
@@ -16,7 +16,7 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
         [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public bool Presence { get; set; }
 
-        [Display(Name = "تخفیف")]
+        [Display(Name = "تخفیف (تومان)")]
         [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public int Discount { get; set; }
     }
