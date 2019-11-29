@@ -10,7 +10,13 @@
 
 <div class="panel panel-body panel-default navigation">
 
-    <div class="pull-left">
+    <div class="pull-left" style="margin-left: 10px;">
+         <a href="@Url.Action("Index", "Presence")" data-toggle="tooltip" data-placement="auto" title="برگشت به صفحه قبل">
+             <i class="glyphicon glyphicon-arrow-left navigation-btn-icon"></i>
+         </a>
+    </div>
+
+    <div class="pull-left" style="margin-left: 10px;">
         <h4 class="navigation-title"><b>@ViewBag.Title</b></h4>
     </div>
 
@@ -62,8 +68,8 @@
                             <span>@PersianDateExtensionMethods.ToPeString(item.Date, "yyyy/MM/dd HH:mm")</span>
                         </td>
                         <td scope="row">
-                            <a class="btn btn-primary btn-sm glyphicon glyphicon-ok" data-toggle="tooltip" data-placement="auto" title="تغییر وضعیت حضور" href="javascript:void(0)" onclick="SetPresence(@item.ID)"></a>
-                            <a class="btn btn-danger btn-sm glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="auto" title="حذف" href="javascript:void(0)" onclick="Delete(@item.ID)"></a>
+                            <a class="control btn btn-primary btn-sm glyphicon glyphicon-ok" data-toggle="tooltip" data-placement="auto" title="تغییر وضعیت حضور" href="javascript:void(0)" onclick="SetPresence(@item.ID)"></a>
+                            <a class="control btn btn-danger btn-sm glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="auto" title="حذف" href="javascript:void(0)" onclick="Delete(@item.ID)"></a>
                         </td>
                     </tr>
                 }

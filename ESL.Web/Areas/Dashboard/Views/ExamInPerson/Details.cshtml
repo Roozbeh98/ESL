@@ -72,14 +72,14 @@
                         <td scope="row">
                             @if (!item.IsDelete)
                             {
-                                <a class="btn btn-success btn-sm glyphicon glyphicon-user" href="javascript:void(0)" onclick="UnRegister(@item.ID)"> </a>
-                                <a class="btn btn-info btn-sm fas fa-file-excel" style="line-height: 18px;padding-left: 12px;padding-right: 12px;" href="javascript:void(0)" onclick="SetMark(@item.ID)"> </a>
-                                <a class="btn btn-warning btn-sm fas fa-couch" style="line-height: 18px;padding-left: 9px;padding-right: 9px;" href="javascript:void(0)" onclick="SetSeatNumber(@item.ID)"> </a>
-                                <a class="btn btn-primary btn-sm glyphicon glyphicon-ok" href="javascript:void(0)" onclick="SetPresence(@item.ID)"> </a>
+                                <a class="control btn btn-success btn-sm glyphicon glyphicon-user" href="javascript:void(0)" onclick="UnRegister(@item.ID)"></a>
+                                <a class="control btn btn-info btn-sm fas fa-file-excel" style="line-height: 18px;padding-left: 12px;padding-right: 12px;" href="javascript:void(0)" onclick="SetMark(@item.ID)"></a>
+                                <a class="control btn btn-warning btn-sm fas fa-couch" style="line-height: 18px;padding-left: 9px;padding-right: 9px;" href="javascript:void(0)" onclick="SetSeatNumber(@item.ID)"></a>
+                                <a class="control btn btn-primary btn-sm glyphicon glyphicon-ok" href="javascript:void(0)" onclick="SetPresence(@item.ID)"></a>
                             }
                             else
                             {
-                                <a class="btn btn-danger btn-sm glyphicon glyphicon-user" href="javascript:void(0)" onclick="Register(@item.ID)"> </a>
+                                <a class="control btn btn-danger btn-sm glyphicon glyphicon-user" href="javascript:void(0)" onclick="Register(@item.ID)"></a>
                             }
                         </td>
                     </tr>

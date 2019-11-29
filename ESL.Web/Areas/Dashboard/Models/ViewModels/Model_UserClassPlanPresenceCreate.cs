@@ -8,7 +8,7 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
 {
     public class Model_UserClassPlanPresenceCreate
     {
-        [Display(Name = "ساعت و تاریخ")]
+        [Display(Name = "تاریخ و زمان")]
         [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public string Date { get; set; }
 

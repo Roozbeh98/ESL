@@ -8,19 +8,25 @@
 }
 
 
-<div class="panel panel-body panel-default navigation">
+    <div class="panel panel-body panel-default navigation">
 
-    <div class="pull-left">
-        <h4 class="navigation-title"><b>@ViewBag.Title</b></h4>
+        <div class="pull-left" style="margin-left: 10px;">
+            <a href="@Url.Action("Index", "Class")" data-toggle="tooltip" data-placement="auto" title="برگشت به صفحه قبل">
+                <i class="glyphicon glyphicon-arrow-left navigation-btn-icon"></i>
+            </a>
+        </div>
+
+        <div class="pull-left" style="margin-left: 10px;">
+            <h4 class="navigation-title"><b>@ViewBag.Title</b></h4>
+        </div>
+
+        <div class="pull-right">
+            <a href="javascript:void(0)" onclick="Create(@ViewBag.ClassID)" data-toggle="tooltip" data-placement="auto" title="ثبت نام">
+                <i class="glyphicon glyphicon-plus navigation-btn-icon"></i>
+            </a>
+        </div>
+
     </div>
-
-    <div class="pull-right">
-        <a href="javascript:void(0)" onclick="Create(@ViewBag.ClassID)" data-toggle="tooltip" data-placement="auto" title="ثبت نام">
-            <i class="glyphicon glyphicon-plus navigation-btn-icon"></i>
-        </a>
-    </div>
-
-</div>
 
 <div class="panel panel-default">
     <div class="panel-body table-body" style="overflow-x:auto;">
@@ -31,6 +37,7 @@
                     <th scope="col">#</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.User)</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.CreationDate)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.PresenceSessions)</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.Activeness)</th>
                 </tr>
             </thead>
@@ -52,6 +59,9 @@
                         </td>
                         <td scope="row">
                             <span>@PersianDateExtensionMethods.ToPeString(item.CreationDate, "yyyy/MM/dd HH:mm")</span>
+                        </td>
+                        <td scope="row">
+                            <span>@Html.DisplayFor(modelItem => item.PresenceSessions)</span>
                         </td>
                         <td scope="row">
                             <span>@(item.Activeness ? "تایید شده" : "تایید نشده")</span>

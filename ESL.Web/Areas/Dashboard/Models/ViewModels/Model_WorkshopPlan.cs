@@ -17,11 +17,11 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
         [Display(Name = "توضیحات")]
         public string Description { get; set; }
 
-        [Display(Name = "قیمت")]
+        [Display(Name = "قیمت (تومان)")]
         public int Cost { get; set; }
 
         [DataType(DataType.MultilineText)]
-        [Display(Name = "مکان")]
+        [Display(Name = "مکان برگزاری")]
         public string Location { get; set; }
 
         [Display(Name = "وضعیت نمایش")]
@@ -30,10 +30,13 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
         [Display(Name = "ظرفیت")]
         public int Capacity { get; set; }
 
-        [Display(Name = "تاریخ برگزاری")]
+        [Display(Name = "تاریخ و زمان برگزاری")]
         public DateTime Date { get; set; }
 
         [Display(Name = "تاریخ ایجاد")]
         public DateTime CreationDate { get; set; }
+
+        [Display(Name = "تاریخ بروزرسانی")]
+        public DateTime ModifiedDate { get; set; }
     }
 }

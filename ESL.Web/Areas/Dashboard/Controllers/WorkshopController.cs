@@ -14,7 +14,228 @@ namespace ESL.Web.Areas.Dashboard.Controllers
     [Authorize(Roles = "Admin, Student")]
     public class WorkshopController : Controller
     {
-        private ESLEntities db = new ESLEntities();
+        private readonly ESLEntities db = new ESLEntities();
+
+        #region Admin
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult Index()
+        {
+            var _WorkshopPlans = db.Tbl_WorkshopPlan.Where(x => x.WP_IsDelete == false).Select(x => new Model_WorkshopPlan
+            {
+                ID = x.WP_ID,
+                Workshop = x.Tbl_SubWorkshop.SW_Title,
+                Description = x.WP_Description,
+                Cost = x.WP_Cost,
+                Location = x.WP_Location,
+                Activeness = x.WP_IsActive,
+                Capacity = x.WP_Capacity,
+                Date = x.WP_Date,
+                CreationDate = x.WP_CreationDate,
+                ModifiedDate = x.WP_ModifiedDate
+
+            }).ToList();
+
+            return View(_WorkshopPlans);
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(Model_WorkshopPlanCreate model)
+        {
+            if (ModelState.IsValid)
+            {
+                Tbl_WorkshopPlan _WorkshopPlan = new Tbl_WorkshopPlan
+                {
+                    WP_Guid = Guid.NewGuid(),
+                    WP_SWID = db.Tbl_SubWorkshop.Where(x => x.SW_Guid.ToString() == model.SubWorkshop).SingleOrDefault().SW_ID,
+                    WP_Description = model.Description,
+                    WP_Cost = model.Cost,
+                    WP_Location = model.Location,
+                    WP_Capacity = model.Capacity,
+                    WP_Date = DateConverter.ToGeorgianDateTime(model.Date),
+                    WP_IsActive = model.Activeness,
+                    WP_CreationDate = DateTime.Now,
+                    WP_ModifiedDate = DateTime.Now,
+                };
+
+                db.Tbl_WorkshopPlan.Add(_WorkshopPlan);
+
+                if (Convert.ToBoolean(db.SaveChanges() > 0))
+                {
+                    TempData["TosterState"] = "success";
+                    TempData["TosterType"] = TosterType.Maseage;
+                    TempData["TosterMassage"] = "کارگاه جدید با موفقیت ثبت شد";
+
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    TempData["TosterState"] = "error";
+                    TempData["TosterType"] = TosterType.Maseage;
+                    TempData["TosterMassage"] = "کارگاه جدید با موفقیت ثبت نشد";
+
+                    return View();
+                }
+            }
+
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult Delete(int? id)
+        {
+            if (id != null)
+            {
+                Model_Message model = new Model_Message();
+
+                var _WorkshopPlan = db.Tbl_WorkshopPlan.Where(x => x.WP_ID == id).SingleOrDefault();
+
+                if (_WorkshopPlan != null)
+                {
+                    model.ID = id.Value;
+                    model.Name = _WorkshopPlan.WP_Description;
+                    model.Description = "آیا از حذف کارگاه مورد نظر اطمینان دارید ؟";
+
+                    return PartialView(model);
+                }
+                else
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+            }
+
+            return HttpNotFound();
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(Model_Message model)
+        {
+            if (ModelState.IsValid)
+            {
+                var _WorkshopPlan = db.Tbl_WorkshopPlan.Where(x => x.WP_ID == model.ID).SingleOrDefault();
+
+                if (_WorkshopPlan != null)
+                {
+                    _WorkshopPlan.WP_IsDelete = true;
+                    _WorkshopPlan.WP_ModifiedDate = DateTime.Now;
+
+                    db.Entry(_WorkshopPlan).State = EntityState.Modified;
+
+                    if (Convert.ToBoolean(db.SaveChanges() > 0))
+                    {
+                        TempData["TosterState"] = "success";
+                        TempData["TosterType"] = TosterType.Maseage;
+                        TempData["TosterMassage"] = "کارگاه مورد نظر با موفقیت حذف شد";
+
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        TempData["TosterState"] = "error";
+                        TempData["TosterType"] = TosterType.Maseage;
+                        TempData["TosterMassage"] = "کارگاه مورد نظر با موفقیت حذف نشد";
+
+                        return HttpNotFound();
+                    }
+                }
+            }
+
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult Details(int? id)
+        {
+            if (id.HasValue && db.Tbl_WorkshopPlan.Any(x => x.WP_ID == id))
+            {
+                var _UserWorkshopPlans = db.Tbl_UserWorkshopPlan.Where(x => x.UWP_WPID == id).Select(x => new Model_UserWorkshopPlan
+                {
+                    ID = x.UWP_ID,
+                    User = x.Tbl_User.User_FirstName + " " + x.Tbl_User.User_lastName,
+                    Presence = x.UWP_IsPresent,
+                    Activeness = x.UWP_IsActive,
+                    CreationDate = x.UWP_CreationDate,
+
+                }).ToList();
+
+                ViewBag.WorkshopID = id;
+
+                return View(_UserWorkshopPlans);
+            }
+
+            return HttpNotFound();
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult SetActiveness(int id)
+        {
+            var _WorkshopPlan = db.Tbl_WorkshopPlan.Where(x => x.WP_ID == id).SingleOrDefault();
+
+            if (_WorkshopPlan != null)
+            {
+                Model_SetActiveness model = new Model_SetActiveness()
+                {
+                    ID = id,
+                    Activeness = _WorkshopPlan.WP_IsActive
+                };
+
+                return PartialView(model);
+            }
+
+            return HttpNotFound();
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SetActiveness(Model_SetActiveness model)
+        {
+            if (ModelState.IsValid)
+            {
+                var _WorkshopPlan = db.Tbl_WorkshopPlan.Where(x => x.WP_ID == model.ID).SingleOrDefault();
+
+                if (_WorkshopPlan != null)
+                {
+                    _WorkshopPlan.WP_IsActive = model.Activeness;
+                    _WorkshopPlan.WP_ModifiedDate = DateTime.Now;
+
+                    db.Entry(_WorkshopPlan).State = EntityState.Modified;
+
+                    if (Convert.ToBoolean(db.SaveChanges() > 0))
+                    {
+                        TempData["TosterState"] = "success";
+                        TempData["TosterType"] = TosterType.Maseage;
+                        TempData["TosterMassage"] = "تغییر وضعیت نمایش با موفقیت انجام شد";
+
+                        return RedirectToAction("Index", "Workshop", new { area = "Dashboard" });
+                    }
+                    else
+                    {
+                        TempData["TosterState"] = "error";
+                        TempData["TosterType"] = TosterType.Maseage;
+                        TempData["TosterMassage"] = "تغییر وضعیت نمایش با موفقیت انجام نشد";
+
+                        return HttpNotFound();
+                    }
+                }
+            }
+
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        }
+
+        #endregion
+
+        #region Student
 
         [Authorize(Roles = "Student")]
         public ActionResult List()
@@ -23,7 +244,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
             if (_User != null)
             {
-                var q = db.Tbl_UserWorkshopPlan.Where(x => x.UWP_IsDelete == false && x.UWP_UserID == _User.User_ID).Select(x => new Model_UserWorkshopPlans
+                var _UserWorkshopPlans = db.Tbl_UserWorkshopPlan.Where(x => x.UWP_IsDelete == false && x.UWP_UserID == _User.User_ID).Select(x => new Model_UserWorkshopPlans
                 {
                     ID = x.UWP_ID,
                     User = _User.User_FirstName + " " + _User.User_lastName,
@@ -37,7 +258,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                 }).ToList();
 
-                return View(q);
+                return View(_UserWorkshopPlans);
             }
 
             return HttpNotFound();
@@ -50,12 +271,12 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             {
                 Model_Message model = new Model_Message();
 
-                var q = db.Tbl_UserWorkshopPlan.Where(x => x.UWP_ID == id).SingleOrDefault();
+                var _UserWorkshopPlan = db.Tbl_UserWorkshopPlan.Where(x => x.UWP_ID == id).SingleOrDefault();
 
-                if (q != null)
+                if (_UserWorkshopPlan != null)
                 {
                     model.ID = id.Value;
-                    model.Name = q.Tbl_User.User_FirstName + " " + q.Tbl_User.User_lastName;
+                    model.Name = _UserWorkshopPlan.Tbl_User.User_FirstName + " " + _UserWorkshopPlan.Tbl_User.User_lastName;
                     model.Description = "آیا از لغو ثبت نام اطمینان دارید ؟";
 
                     return PartialView(model);
@@ -76,13 +297,13 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         {
             if (ModelState.IsValid)
             {
-                var q = db.Tbl_UserWorkshopPlan.Where(x => x.UWP_ID == model.ID).SingleOrDefault();
+                var _UserWorkshopPlan = db.Tbl_UserWorkshopPlan.Where(x => x.UWP_ID == model.ID).SingleOrDefault();
 
-                if (q != null)
+                if (_UserWorkshopPlan != null)
                 {
-                    q.UWP_IsDelete = true;
+                    _UserWorkshopPlan.UWP_IsDelete = true;
 
-                    db.Entry(q).State = EntityState.Modified;
+                    db.Entry(_UserWorkshopPlan).State = EntityState.Modified;
 
                     if (Convert.ToBoolean(db.SaveChanges() > 0))
                     {
@@ -106,229 +327,21 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
-        [Authorize(Roles = "Admin")]
-        public ActionResult Index()
-        {
-            var q = db.Tbl_WorkshopPlan.Where(x => x.WP_IsDelete == false).Select(x => new Model_WorkshopPlan
-            {
-                ID = x.WP_ID,
-                Workshop = x.Tbl_SubWorkshop.SW_Title,
-                Description = x.WP_Description,
-                Cost = x.WP_Cost,
-                Location = x.WP_Location,
-                Activeness = x.WP_IsActive,
-                Capacity = x.WP_Capacity,
-                Date = x.WP_Date,
-                CreationDate = x.WP_CreationDate
+        #endregion
 
-            }).ToList();
-
-            return View(q);
-        }
-
-        [Authorize(Roles = "Admin")]
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        [Authorize(Roles = "Admin")]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(Model_WorkshopPlanCreate model)
-        {
-            if (ModelState.IsValid)
-            {
-                Tbl_WorkshopPlan q = new Tbl_WorkshopPlan
-                {
-                    WP_Guid = Guid.NewGuid(),
-                    WP_SWID = db.Tbl_SubWorkshop.Where(x => x.SW_Guid.ToString() == model.SubWorkshop).SingleOrDefault().SW_ID,
-                    WP_Description = model.Description,
-                    WP_Cost = model.Cost,
-                    WP_Location = model.Location,
-                    WP_Capacity = model.Capacity,
-                    WP_Date = DateConverter.ToGeorgianDateTime(model.Date),
-                    WP_IsActive = model.Activeness,
-                    WP_CreationDate = DateTime.Now,
-                    WP_ModifiedDate = DateTime.Now,
-                };
-
-                db.Tbl_WorkshopPlan.Add(q);
-
-                if (Convert.ToBoolean(db.SaveChanges() > 0))
-                {
-                    TempData["TosterState"] = "success";
-                    TempData["TosterType"] = TosterType.Maseage;
-                    TempData["TosterMassage"] = "عملیات با موفقیت انجام شد";
-
-                    return RedirectToAction("Index");
-                }
-                else
-                {
-                    TempData["TosterState"] = "error";
-                    TempData["TosterType"] = TosterType.Maseage;
-                    TempData["TosterMassage"] = "عملیات با موفقیت انجام نشد";
-
-                    return View();
-                }
-            }
-
-            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        }
-
-        [Authorize(Roles = "Admin")]
-        public ActionResult Delete(int? id)
-        {
-            if (id != null)
-            {
-                Model_Message model = new Model_Message();
-
-                var q = db.Tbl_WorkshopPlan.Where(x => x.WP_ID == id).SingleOrDefault();
-
-                if (q != null)
-                {
-                    model.ID = id.Value;
-                    model.Name = q.WP_Description;
-                    model.Description = "آیا از حذف کارگاه مورد نظر اطمینان دارید ؟";
-
-                    return PartialView(model);
-                }
-                else
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-            }
-
-            return HttpNotFound();
-        }
-
-        [Authorize(Roles = "Admin")]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(Model_Message model)
-        {
-            if (ModelState.IsValid)
-            {
-                var q = db.Tbl_WorkshopPlan.Where(x => x.WP_ID == model.ID).SingleOrDefault();
-
-                if (q != null)
-                {
-                    q.WP_IsDelete = true;
-
-                    db.Entry(q).State = EntityState.Modified;
-
-                    if (Convert.ToBoolean(db.SaveChanges() > 0))
-                    {
-                        TempData["TosterState"] = "success";
-                        TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام شد";
-
-                        return RedirectToAction("Index");
-                    }
-                    else
-                    {
-                        TempData["TosterState"] = "error";
-                        TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام نشد";
-
-                        return HttpNotFound();
-                    }
-                }
-            }
-
-            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        }
-
-        [Authorize(Roles = "Admin")]
-        public ActionResult Details(int? id)
-        {
-            if (id.HasValue && db.Tbl_WorkshopPlan.Any(x => x.WP_ID == id))
-            {
-                var q = db.Tbl_UserWorkshopPlan.Where(x => x.UWP_WPID == id).Select(x => new Model_UserWorkshopPlan
-                {
-                    ID = x.UWP_ID,
-                    User = x.Tbl_User.User_FirstName + " " + x.Tbl_User.User_lastName,
-                    IsPresent = x.UWP_IsPresent,
-                    CreationDate = x.UWP_CreationDate,
-                    IsDelete = x.UWP_IsDelete,
-
-                }).ToList();
-
-                ViewBag.WorkshopID = id;
-
-                return View(q);
-            }
-
-            return HttpNotFound();
-        }
-
-        [Authorize(Roles = "Admin")]
-        public ActionResult SetActiveness(int id)
-        {
-            var q = db.Tbl_WorkshopPlan.Where(x => x.WP_ID == id).SingleOrDefault();
-
-            if (q != null)
-            {
-                Model_SetActiveness model = new Model_SetActiveness()
-                {
-                    ID = id,
-                    Activeness = q.WP_IsActive
-                };
-
-                return PartialView(model);
-            }
-
-            return HttpNotFound();
-        }
-
-        [Authorize(Roles = "Admin")]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult SetActiveness(Model_SetActiveness model)
-        {
-            if (ModelState.IsValid)
-            {
-                var q = db.Tbl_WorkshopPlan.Where(x => x.WP_ID == model.ID).SingleOrDefault();
-
-                if (q != null)
-                {
-                    q.WP_IsActive = model.Activeness;
-
-                    db.Entry(q).State = EntityState.Modified;
-
-                    if (Convert.ToBoolean(db.SaveChanges() > 0))
-                    {
-                        TempData["TosterState"] = "success";
-                        TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام شد";
-
-                        return RedirectToAction("Index", "Workshop", new { area = "Dashboard" });
-                    }
-                    else
-                    {
-                        TempData["TosterState"] = "error";
-                        TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام نشد";
-
-                        return HttpNotFound();
-                    }
-                }
-            }
-
-            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        }
+        #region Functions
 
         [Authorize(Roles = "Admin")]
         public JsonResult Get_WorkshopList(string searchTerm)
         {
-            var q = db.Tbl_Workshop.ToList();
+            var _Workshops = db.Tbl_Workshop.ToList();
 
             if (searchTerm != null)
             {
-                q = db.Tbl_Workshop.Where(a => a.Workshop_Title.Contains(searchTerm)).ToList();
+                _Workshops = db.Tbl_Workshop.Where(a => a.Workshop_Title.Contains(searchTerm)).ToList();
             }
 
-            var md = q.Select(a => new { id = a.Workshop_ID, text = a.Workshop_Title });
+            var md = _Workshops.Select(a => new { id = a.Workshop_ID, text = a.Workshop_Title });
 
             return Json(md, JsonRequestBehavior.AllowGet);
         }
@@ -339,11 +352,17 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         {
             var q = db.Tbl_Workshop.Where(a => a.Workshop_Guid.ToString() == WorkshopID).SingleOrDefault();
 
-            var t = db.Tbl_SubWorkshop.Where(a => a.Tbl_Workshop.Workshop_ID == q.Workshop_ID).ToList();
-            var md = t.Select(a => new { id = a.SW_Guid, text = a.SW_Title });
+            if (q != null)
+            {
+                var t = db.Tbl_SubWorkshop.Where(a => a.Tbl_Workshop.Workshop_ID == q.Workshop_ID).ToList();
+                var md = t.Select(a => new { id = a.SW_Guid, text = a.SW_Title });
 
-            return Json(md, JsonRequestBehavior.AllowGet);
+                return Json(md, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(false, JsonRequestBehavior.AllowGet);
         }
 
+        #endregion
     }
 }

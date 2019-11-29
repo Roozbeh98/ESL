@@ -84,10 +84,10 @@
                             <span> @(item.Activeness ? "فعال" : "غیر فعال") </span>
                         </td>
                         <td scope="row">
-                            <a class="btn btn-primary btn-sm glyphicon glyphicon-ok" href="javascript:void(0)" onclick="SetActiveness(@item.ID)"> </a>
-                            <a class="btn btn-info btn-sm glyphicon glyphicon-list" href="@Url.Action("Details", "ExamInPerson", new { area = "Dashboard", id = item.ID })"> </a>
-                            <a class="btn btn-warning btn-sm glyphicon glyphicon-pencil" href="@Url.Action("Edit", "ExamInPerson", new { area = "Dashboard", id = item.ID })"> </a>
-                            <a class="btn btn-danger btn-sm glyphicon glyphicon-trash" href="javascript:void(0)" onclick="Delete(@item.ID)"> </a>
+                            <a class="control btn btn-primary btn-sm glyphicon glyphicon-ok" href="javascript:void(0)" onclick="SetActiveness(@item.ID)"></a>
+                            <a class="control btn btn-info btn-sm glyphicon glyphicon-list" href="@Url.Action("Details", "ExamInPerson", new { area = "Dashboard", id = item.ID })"></a>
+                            <a class="control btn btn-warning btn-sm glyphicon glyphicon-pencil" href="@Url.Action("Edit", "ExamInPerson", new { area = "Dashboard", id = item.ID })"></a>
+                            <a class="control btn btn-danger btn-sm glyphicon glyphicon-trash" href="javascript:void(0)" onclick="Delete(@item.ID)"></a>
                         </td>
                     </tr>
                 }

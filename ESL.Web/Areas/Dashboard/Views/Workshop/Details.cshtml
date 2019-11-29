@@ -1,38 +1,45 @@
-﻿@model IEnumerable<ESL.Web.Areas.Dashboard.Models.ViewModels.Model_UserWorkshopPlan>
+﻿
+@model IEnumerable<ESL.Web.Areas.Dashboard.Models.ViewModels.Model_UserWorkshopPlan>
 
 @using ESL.Common.Plugins
 
 @{
-    ViewBag.Title = "لیست افراد حاضر در کارگاه";
+    ViewBag.Title = "لیست افراد شرکت کننده در کارگاه";
     Layout = "~/Areas/Dashboard/Views/Shared/_Master.cshtml";
 }
 
 
-<div class="panel panel-body panel-default  navigation">
+<div class="panel panel-body panel-default navigation">
 
-    <div class="pull-left">
-        <h4 class="navigation-title"><b>لیست افراد حاضر در کارگاه</b></h4>
+    <div class="pull-left" style="margin-left: 10px;">
+        <a href="@Url.Action("Index", "Workshop")" data-toggle="tooltip" data-placement="auto" title="برگشت به صفحه قبل">
+            <i class="glyphicon glyphicon-arrow-left navigation-btn-icon"></i>
+        </a>
+    </div>
+
+    <div class="pull-left" style="margin-left: 10px;">
+        <h4 class="navigation-title"><b>@ViewBag.Title</b></h4>
     </div>
 
     <div class="pull-right">
-        <a href="javascript:void(0)" onclick="Create(@ViewBag.WorkshopID)"><i class="glyphicon glyphicon-plus navigation-btn-icon"></i></a>
+        <a href="javascript:void(0)" onclick="Create(@ViewBag.WorkshopID)" data-toggle="tooltip" data-placement="auto" title="ثبت نام">
+            <i class="glyphicon glyphicon-plus navigation-btn-icon"></i>
+        </a>
     </div>
 
 </div>
 
 <div class="panel panel-default">
-
     <div class="panel-body table-body" style="overflow-x:auto;">
-
-        <table id="DateTable" class="table  table-bordered table-striped table-secondary" style="width:100%;">
+        <table id="DateTable" class="table table-bordered table-striped table-secondary" style="width:100%;">
 
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.User)</th>
-                    <th scope="col">@Html.DisplayNameFor(model => model.IsPresent)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Presence)</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.CreationDate)</th>
-                    <th scope="col">@Html.DisplayNameFor(model => model.IsDelete)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Activeness)</th>
                     <th scope="col" data-orderable="false">کنترل</th>
                 </tr>
             </thead>
@@ -50,27 +57,19 @@
                     <tr>
                         <td scope="row">@x</td>
                         <td scope="row">
-                            <span> @Html.DisplayFor(modelItem => item.User) </span>
+                            <span>@Html.DisplayFor(modelItem => item.User)</span>
                         </td>
                         <td scope="row">
-                            <span>@(item.IsPresent ? "حاضر" : "غایب")</span>
+                            <span>@( item.Presence ? "حاضر" : "غایب" )</span>
                         </td>
                         <td scope="row">
-                            <span> @PersianDateExtensionMethods.ToPeString(item.CreationDate, "yyyy/MM/dd") </span>
+                            <span>@PersianDateExtensionMethods.ToPeString(item.CreationDate, "yyyy/MM/dd HH:mm")</span>
                         </td>
                         <td scope="row">
-                            <span>@(item.IsDelete ? "لغو" : "تایید شده")</span>
+                            <span>@( item.Activeness ? "تایید شده" : "تایید نشده" )</span>
                         </td>
                         <td scope="row">
-                            @if (!item.IsDelete)
-                            {
-                                <a class="btn btn-success btn-sm glyphicon glyphicon-user" href="javascript:void(0)" onclick="UnRegister(@item.ID)"> </a>
-                                <a class="btn btn-primary btn-sm glyphicon glyphicon-ok" href="javascript:void(0)" onclick="SetPresence(@item.ID)"> </a>
-                            }
-                            else
-                            {
-                                <a class="btn btn-danger btn-sm glyphicon glyphicon-user" href="javascript:void(0)" onclick="Register(@item.ID)"> </a>
-                            }
+                            <a class="control btn btn-primary btn-sm glyphicon glyphicon-ok" href="javascript:void(0)" onclick="SetPresence(@item.ID)"></a>
                         </td>
                     </tr>
                 }
@@ -78,11 +77,8 @@
             </tbody>
 
         </table>
-
     </div>
-
 </div>
-
 
 @Html.Partial("_Modal")
 
@@ -103,29 +99,29 @@
             });
         }
 
-        function UnRegister(id) {
-            $.ajax({
-                url: "/Dashboard/UserWorkshop/UnRegister/" + id,
-                type: "Get",
-                data: {}
-            }).done(function (result) {
-                $('#myModal').modal('show');
-                $('#myModalLabel').html('لغو ثبت نام');
-                $('#myModalBody').html(result);
-            });
-        }
+        //function UnRegister(id) {
+        //    $.ajax({
+        //        url: "/Dashboard/UserWorkshop/UnRegister/" + id,
+        //        type: "Get",
+        //        data: {}
+        //    }).done(function (result) {
+        //        $('#myModal').modal('show');
+        //        $('#myModalLabel').html('لغو ثبت نام');
+        //        $('#myModalBody').html(result);
+        //    });
+        //}
 
-        function Register(id) {
-            $.ajax({
-                url: "/Dashboard/UserWorkshop/Register/" + id,
-                type: "Get",
-                data: {}
-            }).done(function (result) {
-                $('#myModal').modal('show');
-                $('#myModalLabel').html('ثبت نام مجدد');
-                $('#myModalBody').html(result);
-            });
-        }
+        //function Register(id) {
+        //    $.ajax({
+        //        url: "/Dashboard/UserWorkshop/Register/" + id,
+        //        type: "Get",
+        //        data: {}
+        //    }).done(function (result) {
+        //        $('#myModal').modal('show');
+        //        $('#myModalLabel').html('ثبت نام مجدد');
+        //        $('#myModalBody').html(result);
+        //    });
+        //}
 
         function SetPresence(id) {
             $.ajax({

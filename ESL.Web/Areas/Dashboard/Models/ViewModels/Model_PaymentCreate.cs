@@ -9,7 +9,7 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
 {
     public class Model_PaymentCreate
     {
-        [Display(Name = "شناسه کاربر")]
+        [Display(Name = "کاربر")]
         [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public Guid User { get; set; }
 

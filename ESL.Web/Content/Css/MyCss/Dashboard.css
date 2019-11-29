@@ -95,14 +95,6 @@ body {
     margin: 2.5px 0;
 }
 
-    .control:first-child {
-        margin-top: 0;
-    }
-
-    .control:last-child {
-        margin-bottom: 0;
-    }
-
 /*********************************************** navbar ********************************************/
 
 #Date .table-striped > tbody > tr:nth-of-type(odd) {
@@ -306,7 +298,7 @@ body {
 }
 
 .navigation-title {
-    margin-top: 5px;
+    margin-top: 7.5px;
     margin-bottom: 0px;
 }
 

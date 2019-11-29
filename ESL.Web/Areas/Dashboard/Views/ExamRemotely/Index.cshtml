@@ -60,9 +60,9 @@
                             <span> @PersianDateExtensionMethods.ToPeString(item.CreationDate, "yyyy/MM/dd") </span>
                         </td>
                         <td scope="row" >
-                            <a class="btn btn-info btn-sm glyphicon glyphicon-list" href="@Url.Action("Details", "ExamRemotely", new { id = item.ID })"> </a>
-                            <a class="btn btn-warning btn-sm glyphicon glyphicon-pencil" onclick="Edit(@item.ID)"> </a>
-                            <a class="btn btn-danger btn-sm glyphicon glyphicon-trash" onclick="Delete(@item.ID)"> </a>
+                            <a class="control btn btn-info btn-sm glyphicon glyphicon-list" href="@Url.Action("Details", "ExamRemotely", new { id = item.ID })"></a>
+                            <a class="control btn btn-warning btn-sm glyphicon glyphicon-pencil" onclick="Edit(@item.ID)"></a>
+                            <a class="control btn btn-danger btn-sm glyphicon glyphicon-trash" onclick="Delete(@item.ID)"></a>
                         </td>
                     </tr>
                 }

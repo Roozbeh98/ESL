@@ -17,15 +17,14 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
         public string SubWorkshop { get; set; }
 
         [Display(Name = "توضیحات")]
-        [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public string Description { get; set; }
 
-        [Display(Name = "قیمت")]
+        [Display(Name = "قیمت (تومان)")]
         [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public int Cost { get; set; }
 
         [DataType(DataType.MultilineText)]
-        [Display(Name = "مکان")]
+        [Display(Name = "مکان برگزاری")]
         [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public string Location { get; set; }
 
@@ -33,7 +32,7 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
         [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public int Capacity { get; set; }
 
-        [Display(Name = "تاریخ برگزاری")]
+        [Display(Name = " تاریخ و زمان برگزاری")]
         [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public string Date { get; set; }
 

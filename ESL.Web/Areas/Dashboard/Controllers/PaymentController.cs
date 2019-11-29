@@ -779,18 +779,9 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                                         case PaymentState.Confirmed:
 
-                                            credit = _Payment.Payment_RemaingWallet - _Payment.Payment_Cost;
-
-                                            _Wallet = db.Tbl_Wallet.Where(x => x.Wallet_UserID == _Payment.Payment_UserID).SingleOrDefault();
-                                            _Wallet.Wallet_Credit = credit;
-                                            _Wallet.Wallet_ModifiedDate = DateTime.Now;
-
-                                            db.Entry(_Wallet).State = EntityState.Modified;
-
                                             _Payment.Payment_StateCodeID = stateCodeId;
                                             _Payment.Payment_WayCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Way);
                                             _Payment.Payment_Description = model.Description;
-                                            _Payment.Payment_RemaingWallet = credit;
                                             _Payment.Payment_ModifiedDate = DateTime.Now;
 
                                             db.Entry(_Payment).State = EntityState.Modified;
@@ -1517,7 +1508,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     TempData["TosterType"] = TosterType.Maseage;
                     TempData["TosterMassage"] = "درخواست شارژ با موفقیت ارسال شد";
 
-                    return View();
+                    return RedirectToAction("Index", "Dashboard");
                 }
 
                 TempData["TosterState"] = "error";

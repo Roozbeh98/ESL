@@ -12,7 +12,7 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
         [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public int WorkshopID { get; set; }
 
-        [Display(Name = "شناسه کاربر")]
+        [Display(Name = "کاربر")]
         [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public Guid UserGuid { get; set; }
     }

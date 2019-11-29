@@ -14,20 +14,19 @@
 
 <div class="panel panel-body panel-default navigation">
 
-    <div class="pull-left">
-        <h4 class="navigation-title"><b>@ViewBag.Title</b></h4>
-    </div>
-
-    <div class="pull-right">
+    <div class="pull-left" style="margin-left: 10px;">
         <a href="@Url.Action("Index", "Class")" data-toggle="tooltip" data-placement="auto" title="برگشت به صفحه قبل">
             <i class="glyphicon glyphicon-arrow-left navigation-btn-icon"></i>
         </a>
     </div>
 
+    <div class="pull-left" style="margin-left: 10px;">
+        <h4 class="navigation-title"><b>@ViewBag.Title</b></h4>
+    </div>
+
 </div>
 
 <div class="panel panel-default">
-
     <div class="panel-body">
 
         @using (Html.BeginForm())
@@ -35,7 +34,6 @@
             @Html.AntiForgeryToken()
 
             <div class="modal-main">
-
                 <div class="row" style="margin: 0 -30px;">
 
                     <div class="col-md-6">
@@ -100,7 +98,7 @@
 
                         <div class="form-group">
                             @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label" })
-                            <div id="Date" data-englishnumber="true" data-mddatetimepicker="true" data-inline="true" data-isgregorian="false" data-targetselector="#fromDate" data-enabletimepicker="true" style="border: solid 1px #ccc;  background: #222d32; color: #ccc;"></div>
+                            <div id="Date" data-englishnumber="true" data-mddatetimepicker="true" data-inline="true" data-isgregorian="false" data-targetselector="#fromDate" data-enabletimepicker="true" style="border: solid 1px #ccc; background: #222d32; color: #ccc;"></div>
                             <input type="hidden" name="StartDate" class="form-control" id="fromDate" placeholder="تاریخ" readonly />
                         </div>
 
@@ -137,18 +135,15 @@
                     </div>
 
                 </div>
-
             </div>
 
             <div style="margin-top:20px;">
                 <a href="@Url.Action("Index", "Class")" class="btn btn-danger modal-btn-Dual pull-left">انصراف</a>
-                @*<button class="btn btn-danger modal-btn-Dual pull-left" type="button" data-dismiss="modal">انصراف</button>*@
                 <button class="btn btn-success modal-btn-Dual pull-right " type="submit" name="btn-Delete">تایید</button>
             </div>
         }
 
     </div>
-
 </div>
 
 
@@ -166,19 +161,15 @@
     <script src="~/Scripts/Plugins/jQuery.MdBootstrapPersianDateTimePicker/jquery.Bootstrap-PersianDateTimePicker.js"></script>
 
     <script>
-
         $(document).ready(function () {
             $("#Date td[data-name=today]").click();
         });
-
     </script>
 
     <script>
-
         $(function () {
             $("input[type='hidden']:eq(2)").remove();
         });
-
     </script>
 
 }

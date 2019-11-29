@@ -36,7 +36,7 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
         [Display(Name = "طول هر جلسه (دقیقه)")]
         public double SessionsLength { get; set; }
 
-        [Display(Name = "تاریخ شروع")]
+        [Display(Name = "تاریخ و زمان شروع")]
         public DateTime StartDate { get; set; }
 
         [Display(Name = "تاریخ ایجاد")]

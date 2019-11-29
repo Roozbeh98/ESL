@@ -1,4 +1,5 @@
-﻿@model IEnumerable<ESL.Web.Areas.Dashboard.Models.ViewModels.Model_WorkshopPlan>
+﻿
+@model IEnumerable<ESL.Web.Areas.Dashboard.Models.ViewModels.Model_WorkshopPlan>
 @using ESL.Common.Plugins
 
 @{
@@ -7,22 +8,22 @@
 }
 
 
-<div class="panel panel-body panel-default  navigation">
+<div class="panel panel-body panel-default navigation">
 
     <div class="pull-left">
-        <h4 class="navigation-title"><b>لیست کارگاه ها</b></h4>
+        <h4 class="navigation-title"><b>@ViewBag.Title</b></h4>
     </div>
 
     <div class="pull-right">
-        <a href="@Url.Action("Create", "Workshop" , new { area = "Dashboard" })"><i class="glyphicon glyphicon-plus navigation-btn-icon"></i></a>
+        <a href="@Url.Action("Create", "Workshop" , new { area = "Dashboard" })" data-toggle="tooltip" data-placement="auto" title="افزودن کارگاه">
+            <i class="glyphicon glyphicon-plus navigation-btn-icon"></i>
+        </a>
     </div>
 
 </div>
 
 <div class="panel panel-default">
-
     <div class="panel-body table-body" style="overflow-x:auto;">
-
         <table id="DateTable" class="table table-bordered table-striped table-secondary" style="width:100%;">
 
             <thead class="thead-dark">
@@ -35,12 +36,14 @@
                     <th scope="col">@Html.DisplayNameFor(model => model.Capacity)</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.Date)</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.CreationDate)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.ModifiedDate)</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.Activeness)</th>
                     <th scope="col" data-orderable="false">کنترل</th>
                 </tr>
             </thead>
 
             <tbody>
+
                 @{
                     int x = 0;
                 }
@@ -52,34 +55,37 @@
                     <tr>
                         <td scope="row">@x</td>
                         <td scope="row">
-                            <span> @Html.DisplayFor(modelItem => item.Workshop) </span>
+                            <span>@Html.DisplayFor(modelItem => item.Workshop)</span>
                         </td>
                         <td scope="row">
-                            <span> @Html.DisplayFor(modelItem => item.Description) </span>
+                            <span>@( item.Description == null ? "ثبت نشده" : item.Description )</span>
                         </td>
                         <td scope="row">
-                            <span> @Html.DisplayFor(modelItem => item.Cost) </span>
+                            <span>@Html.DisplayFor(modelItem => item.Cost)</span>
                         </td>
                         <td scope="row">
-                            <span> @Html.DisplayFor(modelItem => item.Location) </span>
+                            <span>@Html.DisplayFor(modelItem => item.Location)</span>
                         </td>
                         <td scope="row">
-                            <span> @Html.DisplayFor(modelItem => item.Capacity) </span>
+                            <span>@Html.DisplayFor(modelItem => item.Capacity)</span>
                         </td>
                         <td scope="row">
-                            <span> @PersianDateExtensionMethods.ToPeString(item.Date, "yyyy/MM/dd HH:mm") </span>
+                            <span>@PersianDateExtensionMethods.ToPeString(item.Date, "yyyy/MM/dd HH:mm")</span>
                         </td>
                         <td scope="row">
-                            <span> @PersianDateExtensionMethods.ToPeString(item.CreationDate, "yyyy/MM/dd") </span>
+                            <span>@PersianDateExtensionMethods.ToPeString(item.CreationDate, "yyyy/MM/dd HH:mm")</span>
                         </td>
                         <td scope="row">
-                            <span> @(item.Activeness ? "فعال" : "غیر فعال") </span>
+                            <span>@PersianDateExtensionMethods.ToPeString(item.ModifiedDate, "yyyy/MM/dd HH:mm")</span>
                         </td>
                         <td scope="row">
-                            <a class="btn btn-primary btn-sm glyphicon glyphicon-ok" href="javascript:void(0)" onclick="SetActiveness(@item.ID)"> </a>
-                            <a class="btn btn-info btn-sm glyphicon glyphicon-list" href="@Url.Action("Details", "Workshop", new { area = "Dashboard", id = item.ID })"> </a>
-                            <a class="btn btn-warning btn-sm glyphicon glyphicon-pencil" href="@Url.Action("Edit", "Workshop", new { area = "Dashboard", id = item.ID })"> </a>
-                            <a class="btn btn-danger btn-sm glyphicon glyphicon-trash" href="javascript:void(0)" onclick="Delete(@item.ID)"> </a>
+                            <span>@( item.Activeness ? "فعال" : "غیر فعال" )</span>
+                        </td>
+                        <td scope="row">
+                            <a class="control btn btn-primary btn-sm glyphicon glyphicon-ok" data-toggle="tooltip" data-placement="auto" title="تغییر وضعیت نمایش" href="javascript:void(0)" onclick="SetActiveness(@item.ID)"></a>
+                            <a class="control btn btn-info btn-sm glyphicon glyphicon-list" data-toggle="tooltip" data-placement="auto" title="افراد شرکت کننده در کارگاه" href="@Url.Action("Details", "Workshop", new { area = "Dashboard", id = item.ID })"></a>
+                            <a class="control btn btn-warning btn-sm glyphicon glyphicon-pencil" data-toggle="tooltip" data-placement="auto" title="ویرایش" href="@Url.Action("Edit", "Workshop", new { area = "Dashboard", id = item.ID })"></a>
+                            <a class="control btn btn-danger btn-sm glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="auto" title="حذف" href="javascript:void(0)" onclick="Delete(@item.ID)"></a>
                         </td>
                     </tr>
                 }
@@ -87,15 +93,14 @@
             </tbody>
 
         </table>
-
     </div>
-
 </div>
-
 
 @Html.Partial("_Modal")
 
+
 @section Modal {
+
     <script>
 
         function Delete(id) {
@@ -117,10 +122,11 @@
                 data: {}
             }).done(function (result) {
                 $('#myModal').modal('show');
-                $('#myModalLabel').html('تغییر وضعیت فعال بودن');
+                $('#myModalLabel').html('تغییر وضعیت نمایش');
                 $('#myModalBody').html(result);
             });
         }
 
     </script>
+
 }

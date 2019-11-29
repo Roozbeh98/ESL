@@ -11,7 +11,7 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
         [Display(Name = "شناسه")]
         public int ID { get; set; }
 
-        [Display(Name = "شناسه کاربر")]
+        [Display(Name = "کاربر")]
         [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public Guid User { get; set; }
 

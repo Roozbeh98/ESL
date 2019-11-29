@@ -170,6 +170,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     ID = x.UCP_ID,
                     User = x.Tbl_User.User_FirstName + " " + x.Tbl_User.User_lastName,
                     CreationDate = x.UCP_CreationDate,
+                    PresenceSessions = x.Tbl_UserClassPlanPresence.Where(xx => xx.UCPP_IsPresent == true).Count(),
                     Activeness = x.UCP_IsActive,
 
                 }).ToList();
@@ -221,7 +222,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     {
                         TempData["TosterState"] = "success";
                         TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام شد";
+                        TempData["TosterMassage"] = "تغییر وضعیت نمایش با موفقیت انجام شد";
 
                         return RedirectToAction("Index", "Class", new { area = "Dashboard" });
                     }
@@ -229,7 +230,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     {
                         TempData["TosterState"] = "error";
                         TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام نشد";
+                        TempData["TosterMassage"] = "تغییر وضعیت نمایش موفقیت انجام نشد";
 
                         return HttpNotFound();
                     }

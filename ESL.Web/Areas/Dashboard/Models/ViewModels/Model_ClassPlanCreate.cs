@@ -40,7 +40,7 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
         [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public float SessionsLength { get; set; }
 
-        [Display(Name = "تاریخ شروع")]
+        [Display(Name = "تاریخ و زمان شروع")]
         [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public string StartDate { get; set; }
 

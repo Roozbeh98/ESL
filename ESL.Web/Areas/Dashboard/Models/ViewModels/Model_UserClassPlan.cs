@@ -12,14 +12,15 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
         public int ID { get; set; }
 
         [Display(Name = "کاربر")]
-        [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public string User { get; set; }
 
-        [Display(Name = "تاریخ ثبت نام")]
+        [Display(Name = "تاریخ و زمان ثبت نام")]
         public DateTime CreationDate { get; set; }
 
+        [Display(Name = "تعداد جلسات حضور")]
+        public int PresenceSessions { get; set; }
+
         [Display(Name = "وضعیت ثبت نام")]
-        [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public bool Activeness { get; set; }
     }
 }

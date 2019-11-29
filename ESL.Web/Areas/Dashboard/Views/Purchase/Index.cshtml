@@ -18,107 +18,116 @@
 
 <div class="row">
 
-    <div class="box">
+    @if (Model.Count() > 0)
+    {
+        <div class="box">
 
-        @foreach (var item in Model)
-        {
-            switch ((ProductType)item.Type)
+            @foreach (var item in Model)
             {
-                case ProductType.Workshop:
+                switch ((ProductType)item.Type)
+                {
+                    case ProductType.Workshop:
 
-                    <div class="card card-price">
-                        <div class="card-img">
-                            <div class="type" style="background-color: darkcyan;">
-                                <h6>کارگاه</h6>
+                        <div class="card card-price">
+                            <div class="card-img">
+                                <div class="type" style="background-color: darkcyan;">
+                                    <h6>کارگاه</h6>
+                                </div>
+                                <div class="card-caption">
+                                    <span class="h2">@item.Name</span>
+                                </div>
                             </div>
-                            <div class="card-caption">
-                                <span class="h2">@item.Name</span>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <ul class="details">
-                                <li>@item.Description</li>
-                            </ul>
-                            <table class="table">
-                                <tr><td>نوع کارگاه</td><td class="note">@item.SubName</td></tr>
-                                <tr><td>ظرفیت</td><td class="note">150 @item.Capacity</td></tr>
-                                <tr><td>مکان برگزاری</td><td class="note">@item.Location</td></tr>
-                                <tr><td>تاریخ برگزاری</td><td class="note">@PersianDateExtensionMethods.ToPeString(item.Date, "yyyy/MM/dd")</td></tr>
-                            </table>
-                            <a href="javascript:void(0)" onclick="Pay(@item.ID, @((int)ProductType.Workshop))" class="btn esl-btn-purchase btn-lg btn-block buy-now">@item.Cost<span>تومان</span></a>
-                        </div>
-                    </div>
-
-                    break;
-
-                case ProductType.Class:
-
-                    <div class="card card-price">
-                        <div class="card-img">
-                            <div class="type" style="background-color: darkred;">
-                                <h6>کلاس</h6>
-                            </div>
-                            <div class="card-caption">
-                                <span class="h2">@item.Name</span>
+                            <div class="card-body">
+                                <ul class="details">
+                                    <li>@item.Description</li>
+                                </ul>
+                                <table class="table">
+                                    <tr><td>نوع کارگاه</td><td class="note">@item.SubName</td></tr>
+                                    <tr><td>ظرفیت</td><td class="note">@item.Capacity</td></tr>
+                                    <tr><td>مکان برگزاری</td><td class="note">@item.Location</td></tr>
+                                    <tr><td>زمان برگزاری</td><td class="note">@PersianDateExtensionMethods.ToPeString(item.Date, "yyyy/MM/dd HH:mm")</td></tr>
+                                </table>
+                                <a href="javascript:void(0)" onclick="Pay(@item.ID, @((int)ProductType.Workshop))" class="btn esl-btn-purchase btn-lg btn-block buy-now">@item.Cost<span>&nbsp;&nbsp;تومان</span></a>
                             </div>
                         </div>
-                        <div class="card-body">
-                            <ul class="details">
-                                <li>@item.Description</li>
-                            </ul>
-                            <table class="table">
-                                <tr><td>زمان شروع</td><td class="note">@item.Time</td></tr>
-                                <tr><td>ظرفیت</td><td class="note">@item.Capacity</td></tr>
-                                <tr><td>مکان برگزاری</td><td class="note">@item.Location</td></tr>
-                                <tr><td>زمان برگزاری</td><td class="note">@PersianDateExtensionMethods.ToPeString(item.Date, "yyyy/MM/dd HH:mm")</td></tr>
-                            </table>
-                            <a href="javascript:void(0)" onclick="Pay(@item.ID, @((int)ProductType.Class))" class="btn esl-btn-purchase btn-lg btn-block buy-now"><span>جلسه ای&nbsp;&nbsp;</span>@item.Cost<span>&nbsp;&nbsp;تومان</span></a>
-                        </div>
-                    </div>
 
-                    break;
+                        break;
 
-                case ProductType.ExamInPerson:
+                    case ProductType.Class:
 
-                    <div class="card card-price">
-                        <div class="card-img">
-                            <div class="type" style="background-color: darkslategray;">
-                                <h6>آزمون</h6>
+                        <div class="card card-price">
+                            <div class="card-img">
+                                <div class="type" style="background-color: darkred;">
+                                    <h6>کلاس</h6>
+                                </div>
+                                <div class="card-caption">
+                                    <span class="h2">@item.Name</span>
+                                </div>
                             </div>
-                            <div class="card-caption">
-                                <span class="h2">@item.Name</span>
+                            <div class="card-body">
+                                <ul class="details">
+                                    <li>@item.Description</li>
+                                </ul>
+                                <table class="table">
+                                    <tr><td>زمان شروع</td><td class="note">@item.Time</td></tr>
+                                    <tr><td>ظرفیت</td><td class="note">@item.Capacity</td></tr>
+                                    <tr><td>مکان برگزاری</td><td class="note">@item.Location</td></tr>
+                                    <tr><td>زمان برگزاری</td><td class="note">@PersianDateExtensionMethods.ToPeString(item.Date, "yyyy/MM/dd HH:mm")</td></tr>
+                                </table>
+                                <a href="javascript:void(0)" onclick="Pay(@item.ID, @((int)ProductType.Class))" class="btn esl-btn-purchase btn-lg btn-block buy-now"><span>جلسه ای&nbsp;&nbsp;</span>@item.Cost<span>&nbsp;&nbsp;تومان</span></a>
                             </div>
                         </div>
-                        <div class="card-body">
-                            <ul class="details">
-                                <li>@item.Description</li>
-                            </ul>
-                            <table class="table">
-                                <tr><td>زیر گروه</td><td class="note">@item.SubName</td></tr>
-                                <tr><td>ظرفیت</td><td class="note">150 @item.Capacity</td></tr>
-                                <tr><td>مکان برگزاری</td><td class="note">@item.Location</td></tr>
-                                <tr><td>نمره کل</td><td class="note">@item.TotalMark</td></tr>
-                                <tr><td>حداقل نمره قبولی</td><td class="note">@item.PassMark</td></tr>
-                                <tr><td>زمان برگزاری</td><td class="note">@PersianDateExtensionMethods.ToPeString(item.Date, "yyyy/MM/dd")</td></tr>
-                            </table>
-                            <a href="javascript:void(0)" onclick="Pay(@item.ID, @((int)ProductType.ExamInPerson))" class="btn esl-btn-purchase btn-lg btn-block buy-now">@item.Cost<span>تومان</span></a>
+
+                        break;
+
+                    case ProductType.ExamInPerson:
+
+                        <div class="card card-price">
+                            <div class="card-img">
+                                <div class="type" style="background-color: darkslategray;">
+                                    <h6>آزمون</h6>
+                                </div>
+                                <div class="card-caption">
+                                    <span class="h2">@item.Name</span>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <ul class="details">
+                                    <li>@item.Description</li>
+                                </ul>
+                                <table class="table">
+                                    <tr><td>زیر گروه</td><td class="note">@item.SubName</td></tr>
+                                    <tr><td>ظرفیت</td><td class="note">@item.Capacity</td></tr>
+                                    <tr><td>مکان برگزاری</td><td class="note">@item.Location</td></tr>
+                                    <tr><td>نمره کل</td><td class="note">@item.TotalMark</td></tr>
+                                    <tr><td>حداقل نمره قبولی</td><td class="note">@item.PassMark</td></tr>
+                                    <tr><td>زمان برگزاری</td><td class="note">@PersianDateExtensionMethods.ToPeString(item.Date, "yyyy/MM/dd HH:mm")</td></tr>
+                                </table>
+                                <a href="javascript:void(0)" onclick="Pay(@item.ID, @((int)ProductType.ExamInPerson))" class="btn esl-btn-purchase btn-lg btn-block buy-now">@item.Cost<span>تومان&nbsp;&nbsp;</span></a>
+                            </div>
                         </div>
-                    </div>
 
-                    break;
+                        break;
 
-                case ProductType.ExamRemotely:
-
+                    case ProductType.ExamRemotely:
 
 
-                    break;
 
-                default:
-                    break;
+                        break;
+
+                    default:
+                        break;
+                }
             }
-        }
 
-    </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info" role="alert" style="margin: 0 15px;">
+            گزینه ای برای خرید یافت نشد.
+        </div>
+    }
 
 </div>
 
