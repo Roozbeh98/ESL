@@ -165,7 +165,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         {
             if (id.HasValue && db.Tbl_ClassPlan.Any(x => x.CP_ID == id))
             {
-                var _UserClassPlans = db.Tbl_UserClassPlan.Where(x => x.UCP_CPID == id).Select(x => new Model_UserClassPlan
+                var _UserClassPlans = db.Tbl_UserClassPlan.Where(x => x.UCP_IsDelete == false && x.UCP_CPID == id).Select(x => new Model_UserClassPlan
                 {
                     ID = x.UCP_ID,
                     User = x.Tbl_User.User_FirstName + " " + x.Tbl_User.User_lastName,
@@ -251,7 +251,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
             if (_User != null)
             {
-                var _UserClassPlans = db.Tbl_UserClassPlan.Where(x => x.UCP_IsDelete == false && x.UCP_UserID == _User.User_ID).Select(x => new Model_UserClassPlans
+                var _UserClassPlans = db.Tbl_UserClassPlan.Where(x => x.UCP_IsDelete == false && x.UCP_IsActive == true && x.UCP_UserID == _User.User_ID).Select(x => new Model_UserClassPlans
                 {
                     ID = x.UCP_ID,
                     User = x.Tbl_User.User_FirstName + " " + x.Tbl_User.User_lastName,

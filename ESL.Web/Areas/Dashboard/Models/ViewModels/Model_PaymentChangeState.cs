@@ -22,9 +22,5 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
 
         [Display(Name = "توضیحات")]
         public string Description { get; set; }
-
-        [Display(Name = "تخفیف (تومان)")]
-        [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
-        public int Discount { get; set; }
     }
 }

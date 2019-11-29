@@ -295,7 +295,6 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     ID = id,
                     State = _Payment.Tbl_Code1.Code_Guid,
                     Description = _Payment.Payment_Description,
-                    Discount = _Payment.Payment_Discount
                 };
 
                 return PartialView(model);
@@ -1526,15 +1525,16 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         {
             if (id != null)
             {
-                Model_Message model = new Model_Message();
-
-                var _Payment = db.Tbl_Payment.Where(x => x.Payment_ID == id && x.Payment_IsDelete == false).FirstOrDefault();
+                var _Payment = db.Tbl_Payment.Where(x => x.Payment_IsDelete == false && x.Payment_ID == id && x.Payment_StateCodeID == (int)PaymentState.WaitForAcceptance).FirstOrDefault();
 
                 if (_Payment != null)
                 {
-                    model.ID = id.Value;
-                    model.Name = _Payment.Payment_TrackingToken;
-                    model.Description = "آیا از لغو درخواست مورد نظر اطمینان دارید ؟";
+                    Model_Message model = new Model_Message
+                    {
+                        ID = id.Value,
+                        Name = _Payment.Payment_TrackingToken,
+                        Description = "آیا از لغو درخواست مورد نظر اطمینان دارید ؟"
+                    };
 
                     return PartialView(model);
                 }

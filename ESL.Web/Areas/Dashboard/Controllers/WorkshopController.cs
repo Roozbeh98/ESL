@@ -244,7 +244,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
             if (_User != null)
             {
-                var _UserWorkshopPlans = db.Tbl_UserWorkshopPlan.Where(x => x.UWP_IsDelete == false && x.UWP_UserID == _User.User_ID).Select(x => new Model_UserWorkshopPlans
+                var _UserWorkshopPlans = db.Tbl_UserWorkshopPlan.Where(x => x.UWP_IsDelete == false && x.UWP_IsActive == true && x.UWP_UserID == _User.User_ID).Select(x => new Model_UserWorkshopPlans
                 {
                     ID = x.UWP_ID,
                     User = _User.User_FirstName + " " + _User.User_lastName,
@@ -254,7 +254,6 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     Date = x.Tbl_WorkshopPlan.WP_Date,
                     Cost = x.Tbl_WorkshopPlan.WP_Cost,
                     CreationDate = x.UWP_CreationDate,
-                    //RegisterationState = 
 
                 }).ToList();
 
@@ -262,69 +261,6 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             }
 
             return HttpNotFound();
-        }
-
-        [Authorize(Roles = "Student")]
-        public ActionResult UnRegister(int? id)
-        {
-            if (id != null)
-            {
-                Model_Message model = new Model_Message();
-
-                var _UserWorkshopPlan = db.Tbl_UserWorkshopPlan.Where(x => x.UWP_ID == id).SingleOrDefault();
-
-                if (_UserWorkshopPlan != null)
-                {
-                    model.ID = id.Value;
-                    model.Name = _UserWorkshopPlan.Tbl_User.User_FirstName + " " + _UserWorkshopPlan.Tbl_User.User_lastName;
-                    model.Description = "آیا از لغو ثبت نام اطمینان دارید ؟";
-
-                    return PartialView(model);
-                }
-                else
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-            }
-
-            return HttpNotFound();
-        }
-
-        [Authorize(Roles = "Student")]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult UnRegister(Model_Message model)
-        {
-            if (ModelState.IsValid)
-            {
-                var _UserWorkshopPlan = db.Tbl_UserWorkshopPlan.Where(x => x.UWP_ID == model.ID).SingleOrDefault();
-
-                if (_UserWorkshopPlan != null)
-                {
-                    _UserWorkshopPlan.UWP_IsDelete = true;
-
-                    db.Entry(_UserWorkshopPlan).State = EntityState.Modified;
-
-                    if (Convert.ToBoolean(db.SaveChanges() > 0))
-                    {
-                        TempData["TosterState"] = "success";
-                        TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام شد";
-
-                        return RedirectToAction("List", "Workshop");
-                    }
-                    else
-                    {
-                        TempData["TosterState"] = "error";
-                        TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام نشد";
-
-                        return HttpNotFound();
-                    }
-                }
-            }
-
-            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
         #endregion

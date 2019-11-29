@@ -88,7 +88,7 @@
                             <span>@PersianDateExtensionMethods.ToPeString(item.ModifiedDate, "yyyy/MM/dd HH:mm")</span>
                         </td>
                         <td scope="row">
-                            @if (item.State != "لغو")
+                            @if (item.State == "در انتظار تایید")
                             {
                                 <a class="control btn btn-danger btn-sm glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="auto" title="لغو درخواست خرید" href="javascript:void(0)" onclick="Cancel(@item.ID)"></a>
                             }
