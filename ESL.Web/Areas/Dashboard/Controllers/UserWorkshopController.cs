@@ -41,7 +41,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     TempData["TosterType"] = TosterType.Maseage;
                     TempData["TosterMassage"] = "کارگاه مورد نظر قبلا خریداری شده است";
 
-                    return RedirectToAction("Details", "Class", new { area = "Dashboard", id = model.WorkshopID });
+                    return RedirectToAction("Details", "Workshop", new { area = "Dashboard", id = model.WorkshopID });
                 };
 
                 var _WorkshopPlan = db.Tbl_WorkshopPlan.Where(x => x.WP_ID == model.WorkshopID).SingleOrDefault();
@@ -59,7 +59,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                             TempData["TosterType"] = TosterType.Maseage;
                             TempData["TosterMassage"] = "کمبود موجودی کیف پول کاربر";
 
-                            return RedirectToAction("Index");
+                            return RedirectToAction("Details", "Workshop", new { area = "Dashboard", id = model.WorkshopID });
                         }
 
                         db.Tbl_Payment.Add(_Payment);
@@ -357,7 +357,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                         Payment_UserID = user.User_ID,
                         Payment_TitleCodeID = (int)PaymentTitle.Class,
                         Payment_WayCodeID = (int)PaymentWay.Internet,
-                        Payment_StateCodeID = (int)PaymentState.WaitForAcceptance,
+                        Payment_StateCodeID = (int)PaymentState.Confirmed,
                         Payment_Cost = cost,
                         Payment_Discount = 0,
                         Payment_RemaingWallet = credit,

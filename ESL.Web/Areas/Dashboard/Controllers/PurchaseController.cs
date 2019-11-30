@@ -275,7 +275,9 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                         case ProductType.Class:
 
-                            if (db.Tbl_UserClassPlan.Where(x => x.UCP_UserID == _User.User_ID && x.UCP_CPID == model.ID && x.UCP_IsDelete == false).FirstOrDefault() != null)
+                            Tbl_UserClassPlan _UserClassPlan = db.Tbl_UserClassPlan.Where(x => x.UCP_UserID == _User.User_ID && x.UCP_CPID == model.ID).FirstOrDefault();
+
+                            if (_UserClassPlan != null && !_UserClassPlan.UCP_IsDelete)
                             {
                                 TempData["TosterState"] = "info";
                                 TempData["TosterType"] = TosterType.Maseage;
@@ -295,17 +297,28 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                                 {
                                     db.Tbl_Payment.Add(_Payment);
 
-                                    Tbl_UserClassPlan _UserClassPlan = new Tbl_UserClassPlan()
+                                    if (_UserClassPlan != null)
                                     {
-                                        UCP_Guid = Guid.NewGuid(),
-                                        UCP_UserID = _User.User_ID,
-                                        UCP_CPID = model.ID,
-                                        Tbl_Payment = _Payment,
-                                        UCP_CreationDate = DateTime.Now,
-                                        UCP_ModifiedDate = DateTime.Now
-                                    };
+                                        _UserClassPlan.UCP_IsDelete = false;
+                                        _UserClassPlan.UCP_ModifiedDate = DateTime.Now;
+                                        _UserClassPlan.Tbl_Payment = _Payment;
 
-                                    db.Tbl_UserClassPlan.Add(_UserClassPlan);
+                                        db.Entry(_UserClassPlan).State = EntityState.Modified;
+                                    }
+                                    else
+                                    {
+                                        _UserClassPlan = new Tbl_UserClassPlan()
+                                        {
+                                            UCP_Guid = Guid.NewGuid(),
+                                            UCP_UserID = _User.User_ID,
+                                            UCP_CPID = model.ID,
+                                            Tbl_Payment = _Payment,
+                                            UCP_CreationDate = DateTime.Now,
+                                            UCP_ModifiedDate = DateTime.Now
+                                        };
+
+                                        db.Tbl_UserClassPlan.Add(_UserClassPlan);
+                                    }
 
                                     if (Convert.ToBoolean(db.SaveChanges() > 0))
                                     {

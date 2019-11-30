@@ -35,7 +35,9 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             {
                 var _User = db.Tbl_User.Where(x => x.User_Guid == model.UserGuid && x.User_IsDelete == false).SingleOrDefault();
 
-                if (db.Tbl_UserClassPlan.Where(x => x.UCP_UserID == _User.User_ID && x.UCP_CPID == model.ClassID && x.UCP_IsDelete == false).FirstOrDefault() != null)
+                Tbl_UserClassPlan _UserClassPlan = db.Tbl_UserClassPlan.Where(x => x.UCP_UserID == _User.User_ID && x.UCP_CPID == model.ClassID).FirstOrDefault();
+
+                if (_UserClassPlan != null && !_UserClassPlan.UCP_IsDelete)
                 {
                     TempData["TosterState"] = "info";
                     TempData["TosterType"] = TosterType.Maseage;
@@ -49,24 +51,35 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                 if (_ClassPlan != null)
                 {
                     bool smsResult = true;
-                    Tbl_Payment _Payment = Purchase(_User, _ClassPlan.CP_CostPerSession, ProductType.Workshop, out bool walletResult, ref smsResult);
+                    Tbl_Payment _Payment = Purchase(_User, _ClassPlan.CP_CostPerSession, ProductType.Class, out bool walletResult, ref smsResult);
 
                     if (_Payment != null)
                     {
                         db.Tbl_Payment.Add(_Payment);
 
-                        Tbl_UserClassPlan _UserClassPlan = new Tbl_UserClassPlan()
+                        if (_UserClassPlan != null)
                         {
-                            UCP_Guid = Guid.NewGuid(),
-                            UCP_UserID = _User.User_ID,
-                            UCP_CPID = model.ClassID,
-                            Tbl_Payment = _Payment,
-                            UCP_IsActive = true,
-                            UCP_CreationDate = DateTime.Now,
-                            UCP_ModifiedDate = DateTime.Now
-                        };
+                            _UserClassPlan.UCP_IsDelete = false;
+                            _UserClassPlan.UCP_ModifiedDate = DateTime.Now;
+                            _UserClassPlan.Tbl_Payment = _Payment;
 
-                        db.Tbl_UserClassPlan.Add(_UserClassPlan);
+                            db.Entry(_UserClassPlan).State = EntityState.Modified;
+                        }
+                        else
+                        {
+                            _UserClassPlan = new Tbl_UserClassPlan()
+                            {
+                                UCP_Guid = Guid.NewGuid(),
+                                UCP_UserID = _User.User_ID,
+                                UCP_CPID = model.ClassID,
+                                Tbl_Payment = _Payment,
+                                UCP_IsActive = true,
+                                UCP_CreationDate = DateTime.Now,
+                                UCP_ModifiedDate = DateTime.Now
+                            };
+
+                            db.Tbl_UserClassPlan.Add(_UserClassPlan);
+                        }
 
                         if (Convert.ToBoolean(db.SaveChanges() > 0))
                         {
@@ -105,6 +118,161 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
+            }
+
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        }
+
+        public ActionResult UnRegister(int? id)
+        {
+            if (id != null)
+            {
+                var _UserClassPlan = db.Tbl_UserClassPlan.Where(x => x.UCP_ID == id).SingleOrDefault();
+
+                if (_UserClassPlan != null)
+                {
+                    Model_Message model = new Model_Message();
+
+                    model.ID = id.Value;
+                    model.Name = _UserClassPlan.Tbl_User.User_FirstName + " " + _UserClassPlan.Tbl_User.User_lastName;
+                    model.Description = $"آیا از لغو ثبت نام کاربر { model.Name } اطمینان دارید ؟";
+
+                    return PartialView(model);
+                }
+                else
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+            }
+
+            return HttpNotFound();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UnRegister(Model_Message model)
+        {
+            if (ModelState.IsValid)
+            {
+                var _UserClassPlan = db.Tbl_UserClassPlan.Where(x => x.UCP_ID == model.ID).SingleOrDefault();
+
+                if (_UserClassPlan != null)
+                {
+                    var _Payment = db.Tbl_Payment.Where(x => x.Payment_ID == _UserClassPlan.UCP_PaymentID).SingleOrDefault();
+
+                    if (_Payment != null)
+                    {
+                        _Payment.Payment_StateCodeID = (int)PaymentState.Rejected;
+                        _Payment.Payment_WayCodeID = (int)PaymentWay.Internet;
+                        _Payment.Payment_ModifiedDate = DateTime.Now;
+
+                        db.Entry(_Payment).State = EntityState.Modified;
+
+                        _UserClassPlan.UCP_IsActive = false;
+                        //_UserClassPlan.UCP_IsDelete = true;
+                        _UserClassPlan.UCP_ModifiedDate = DateTime.Now;
+
+                        db.Entry(_UserClassPlan).State = EntityState.Modified;
+
+                        if (Convert.ToBoolean(db.SaveChanges() > 0))
+                        {
+                            TempData["TosterState"] = "success";
+                            TempData["TosterType"] = TosterType.Maseage;
+                            TempData["TosterMassage"] = "ثبت نام کاربر مورد نظر با موفقیت لغو شد";
+
+                            return RedirectToAction("Details", "Class", new { area = "Dashboard", id = db.Tbl_UserClassPlan.Where(x => x.UCP_ID == model.ID).SingleOrDefault().UCP_CPID });
+                        }
+
+                        TempData["TosterState"] = "error";
+                        TempData["TosterType"] = TosterType.Maseage;
+                        TempData["TosterMassage"] = "ثبت نام کاربر مورد نظر با موفقیت لغو نشد";
+
+                        return RedirectToAction("Details", "Class", new { area = "Dashboard", id = db.Tbl_UserClassPlan.Where(x => x.UCP_ID == model.ID).SingleOrDefault().UCP_CPID });
+                    }
+                }
+
+                TempData["TosterState"] = "error";
+                TempData["TosterType"] = TosterType.Maseage;
+                TempData["TosterMassage"] = "ثبت نام کاربر مورد نظر با موفقیت لغو نشد";
+
+                return HttpNotFound();
+            }
+
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        }
+
+        public ActionResult Register(int? id)
+        {
+            if (id != null)
+            {
+                var _UserClassPlan = db.Tbl_UserClassPlan.Where(x => x.UCP_ID == id).SingleOrDefault();
+
+                if (_UserClassPlan != null)
+                {
+                    Model_Message model = new Model_Message();
+
+                    model.ID = id.Value;
+                    model.Name = _UserClassPlan.Tbl_User.User_FirstName + " " + _UserClassPlan.Tbl_User.User_lastName;
+                    model.Description = $"آیا از ثبت نام کاربر { model.Name } اطمینان دارید ؟";
+
+                    return PartialView(model);
+                }
+                else
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+            }
+
+            return HttpNotFound();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Register(Model_Message model)
+        {
+            if (ModelState.IsValid)
+            {
+                var _UserClassPlan = db.Tbl_UserClassPlan.Where(x => x.UCP_ID == model.ID).SingleOrDefault();
+                
+                if (_UserClassPlan != null)
+                {
+                    var _Payment = db.Tbl_Payment.Where(x => x.Payment_ID == _UserClassPlan.UCP_PaymentID).SingleOrDefault();
+
+                    if (_Payment != null)
+                    {
+                        _Payment.Payment_StateCodeID = (int)PaymentState.Confirmed;
+                        _Payment.Payment_WayCodeID = (int)PaymentWay.Internet;
+                        _Payment.Payment_ModifiedDate = DateTime.Now;
+
+                        db.Entry(_Payment).State = EntityState.Modified;
+
+                        _UserClassPlan.UCP_IsActive = true;
+                        _UserClassPlan.UCP_ModifiedDate = DateTime.Now;
+
+                        db.Entry(_UserClassPlan).State = EntityState.Modified;
+
+                        if (Convert.ToBoolean(db.SaveChanges() > 0))
+                        {
+                            TempData["TosterState"] = "success";
+                            TempData["TosterType"] = TosterType.Maseage;
+                            TempData["TosterMassage"] = "ثبت نام کاربر مورد نظر با موفقیت انجام شد";
+
+                            return RedirectToAction("Details", "Class", new { area = "Dashboard", id = db.Tbl_UserClassPlan.Where(x => x.UCP_ID == model.ID).SingleOrDefault().UCP_CPID });
+                        }
+
+                        TempData["TosterState"] = "error";
+                        TempData["TosterType"] = TosterType.Maseage;
+                        TempData["TosterMassage"] = "ثبت نام کاربر مورد نظر با موفقیت انجام نشد";
+
+                        return RedirectToAction("Details", "Class", new { area = "Dashboard", id = db.Tbl_UserClassPlan.Where(x => x.UCP_ID == model.ID).SingleOrDefault().UCP_CPID });
+                    }
+                }
+
+                TempData["TosterState"] = "error";
+                TempData["TosterType"] = TosterType.Maseage;
+                TempData["TosterMassage"] = "ثبت نام کاربر مورد نظر با موفقیت انجام نشد";
+
+                return HttpNotFound();
             }
 
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -166,7 +334,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                         Payment_UserID = user.User_ID,
                         Payment_TitleCodeID = (int)PaymentTitle.Class,
                         Payment_WayCodeID = (int)PaymentWay.Internet,
-                        Payment_StateCodeID = (int)PaymentState.WaitForAcceptance,
+                        Payment_StateCodeID = (int)PaymentState.Confirmed,
                         Payment_Cost = cost,
                         Payment_Discount = 0,
                         Payment_RemaingWallet = credit,

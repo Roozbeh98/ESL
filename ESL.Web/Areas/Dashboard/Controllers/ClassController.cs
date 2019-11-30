@@ -165,7 +165,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         {
             if (id.HasValue && db.Tbl_ClassPlan.Any(x => x.CP_ID == id))
             {
-                var _UserClassPlans = db.Tbl_UserClassPlan.Where(x => x.UCP_IsDelete == false && x.UCP_CPID == id).Select(x => new Model_UserClassPlan
+                var _UserClassPlans = db.Tbl_UserClassPlan.Where(x => x.UCP_CPID == id && x.UCP_IsDelete == false).Select(x => new Model_UserClassPlan
                 {
                     ID = x.UCP_ID,
                     User = x.Tbl_User.User_FirstName + " " + x.Tbl_User.User_lastName,

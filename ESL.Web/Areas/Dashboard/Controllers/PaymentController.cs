@@ -818,7 +818,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                                             db.Entry(_Payment).State = EntityState.Modified;
 
                                             _UserClassPlan = db.Tbl_UserClassPlan.Where(x => x.UCP_PaymentID == _Payment.Payment_ID).SingleOrDefault();
-                                            _UserClassPlan.UCP_IsDelete = true;
+                                            //_UserClassPlan.UCP_IsDelete = true;
                                             _UserClassPlan.UCP_ModifiedDate = DateTime.Now;
 
                                             db.Entry(_UserClassPlan).State = EntityState.Modified;
@@ -875,18 +875,9 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                                     {
                                         case PaymentState.WaitForAcceptance:
 
-                                            credit = _Payment.Payment_RemaingWallet + _Payment.Payment_Cost;
-
-                                            _Wallet = db.Tbl_Wallet.Where(x => x.Wallet_UserID == _Payment.Payment_UserID).SingleOrDefault();
-                                            _Wallet.Wallet_Credit = credit;
-                                            _Wallet.Wallet_ModifiedDate = DateTime.Now;
-
-                                            db.Entry(_Wallet).State = EntityState.Modified;
-
                                             _Payment.Payment_StateCodeID = stateCodeId;
                                             _Payment.Payment_WayCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Way);
                                             _Payment.Payment_Description = model.Description;
-                                            _Payment.Payment_RemaingWallet = credit;
                                             _Payment.Payment_ModifiedDate = DateTime.Now;
 
                                             db.Entry(_Payment).State = EntityState.Modified;
@@ -920,25 +911,16 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                                         case PaymentState.Rejected:
 
-                                            credit = _Payment.Payment_RemaingWallet + _Payment.Payment_Cost;
-
-                                            _Wallet = db.Tbl_Wallet.Where(x => x.Wallet_UserID == _Payment.Payment_UserID).SingleOrDefault();
-                                            _Wallet.Wallet_Credit = credit;
-                                            _Wallet.Wallet_ModifiedDate = DateTime.Now;
-
-                                            db.Entry(_Wallet).State = EntityState.Modified;
-
                                             _Payment.Payment_StateCodeID = stateCodeId;
                                             _Payment.Payment_WayCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Way);
                                             _Payment.Payment_Description = model.Description;
-                                            _Payment.Payment_RemaingWallet = credit;
                                             _Payment.Payment_ModifiedDate = DateTime.Now;
 
                                             db.Entry(_Payment).State = EntityState.Modified;
 
                                             _UserClassPlan = db.Tbl_UserClassPlan.Where(x => x.UCP_PaymentID == _Payment.Payment_ID).SingleOrDefault();
                                             _UserClassPlan.UCP_IsActive = false;
-                                            _UserClassPlan.UCP_IsDelete = true;
+                                            //_UserClassPlan.UCP_IsDelete = true;
                                             _UserClassPlan.UCP_ModifiedDate = DateTime.Now;
 
                                             db.Entry(_UserClassPlan).State = EntityState.Modified;
@@ -962,18 +944,9 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                                         case PaymentState.Suspended:
 
-                                            credit = _Payment.Payment_RemaingWallet + _Payment.Payment_Cost;
-
-                                            _Wallet = db.Tbl_Wallet.Where(x => x.Wallet_UserID == _Payment.Payment_UserID).SingleOrDefault();
-                                            _Wallet.Wallet_Credit = credit;
-                                            _Wallet.Wallet_ModifiedDate = DateTime.Now;
-
-                                            db.Entry(_Wallet).State = EntityState.Modified;
-
                                             _Payment.Payment_StateCodeID = stateCodeId;
                                             _Payment.Payment_WayCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Way);
                                             _Payment.Payment_Description = model.Description;
-                                            _Payment.Payment_RemaingWallet = credit;
                                             _Payment.Payment_ModifiedDate = DateTime.Now;
 
                                             db.Entry(_Payment).State = EntityState.Modified;
@@ -1018,7 +991,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                                             db.Entry(_Payment).State = EntityState.Modified;
 
                                             _UserClassPlan = db.Tbl_UserClassPlan.Where(x => x.UCP_PaymentID == _Payment.Payment_ID).SingleOrDefault();
-                                            _UserClassPlan.UCP_IsDelete = false;
+                                            //_UserClassPlan.UCP_IsDelete = false;
                                             _UserClassPlan.UCP_ModifiedDate = DateTime.Now;
 
                                             db.Entry(_UserClassPlan).State = EntityState.Modified;
@@ -1042,24 +1015,15 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                                         case PaymentState.Confirmed:
 
-                                            credit = _Payment.Payment_RemaingWallet - _Payment.Payment_Cost;
-
-                                            _Wallet = db.Tbl_Wallet.Where(x => x.Wallet_UserID == _Payment.Payment_UserID).SingleOrDefault();
-                                            _Wallet.Wallet_Credit = credit;
-                                            _Wallet.Wallet_ModifiedDate = DateTime.Now;
-
-                                            db.Entry(_Wallet).State = EntityState.Modified;
-
                                             _Payment.Payment_StateCodeID = stateCodeId;
                                             _Payment.Payment_WayCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Way);
                                             _Payment.Payment_Description = model.Description;
-                                            _Payment.Payment_RemaingWallet = credit;
                                             _Payment.Payment_ModifiedDate = DateTime.Now;
 
                                             db.Entry(_Payment).State = EntityState.Modified;
 
                                             _UserClassPlan = db.Tbl_UserClassPlan.Where(x => x.UCP_PaymentID == _Payment.Payment_ID).SingleOrDefault();
-                                            _UserClassPlan.UCP_IsDelete = false;
+                                            //_UserClassPlan.UCP_IsDelete = false;
                                             _UserClassPlan.UCP_IsActive = true;
                                             _UserClassPlan.UCP_ModifiedDate = DateTime.Now;
 
@@ -1067,18 +1031,9 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                                             if (Convert.ToBoolean(db.SaveChanges() > 0))
                                             {
-                                                if (new SMSPortal().SendServiceable(_Payment.Tbl_User.User_Mobile, (_Payment.Payment_Cost * 10).ToString(), PersianDateExtensionMethods.ToPeString(DateTime.Now, "yyyy/MM/dd"), credit.ToString(), "", SMSTemplate.Success) != "ارسال به مخابرات")
-                                                {
-                                                    TempData["TosterState"] = "warning";
-                                                    TempData["TosterType"] = TosterType.Maseage;
-                                                    TempData["TosterMassage"] = "خطا در ارسال پیامک";
-                                                }
-                                                else
-                                                {
-                                                    TempData["TosterState"] = "success";
-                                                    TempData["TosterType"] = TosterType.Maseage;
-                                                    TempData["TosterMassage"] = "عملیات با موفقیت انجام شد";
-                                                }
+                                                TempData["TosterState"] = "success";
+                                                TempData["TosterType"] = TosterType.Maseage;
+                                                TempData["TosterMassage"] = "عملیات با موفقیت انجام شد";
 
                                                 return RedirectToAction("Index", "Payment", new { area = "Dashboard" });
                                             }
@@ -1105,7 +1060,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                                             db.Entry(_Payment).State = EntityState.Modified;
 
                                             _UserClassPlan = db.Tbl_UserClassPlan.Where(x => x.UCP_PaymentID == _Payment.Payment_ID).SingleOrDefault();
-                                            _UserClassPlan.UCP_IsDelete = false;
+                                            //_UserClassPlan.UCP_IsDelete = false;
                                             _UserClassPlan.UCP_ModifiedDate = DateTime.Now;
 
                                             db.Entry(_UserClassPlan).State = EntityState.Modified;
@@ -1162,18 +1117,9 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                                         case PaymentState.Confirmed:
 
-                                            credit = _Payment.Payment_RemaingWallet - _Payment.Payment_Cost;
-
-                                            _Wallet = db.Tbl_Wallet.Where(x => x.Wallet_UserID == _Payment.Payment_UserID).SingleOrDefault();
-                                            _Wallet.Wallet_Credit = credit;
-                                            _Wallet.Wallet_ModifiedDate = DateTime.Now;
-
-                                            db.Entry(_Wallet).State = EntityState.Modified;
-
                                             _Payment.Payment_StateCodeID = stateCodeId;
                                             _Payment.Payment_WayCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Way);
                                             _Payment.Payment_Description = model.Description;
-                                            _Payment.Payment_RemaingWallet = credit;
                                             _Payment.Payment_ModifiedDate = DateTime.Now;
 
                                             db.Entry(_Payment).State = EntityState.Modified;
@@ -1186,18 +1132,9 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                                             if (Convert.ToBoolean(db.SaveChanges() > 0))
                                             {
-                                                if (new SMSPortal().SendServiceable(_Payment.Tbl_User.User_Mobile, (_Payment.Payment_Cost * 10).ToString(), PersianDateExtensionMethods.ToPeString(DateTime.Now, "yyyy/MM/dd"), credit.ToString(), "", SMSTemplate.Success) != "ارسال به مخابرات")
-                                                {
-                                                    TempData["TosterState"] = "warning";
-                                                    TempData["TosterType"] = TosterType.Maseage;
-                                                    TempData["TosterMassage"] = "خطا در ارسال پیامک";
-                                                }
-                                                else
-                                                {
-                                                    TempData["TosterState"] = "success";
-                                                    TempData["TosterType"] = TosterType.Maseage;
-                                                    TempData["TosterMassage"] = "عملیات با موفقیت انجام شد";
-                                                }
+                                                TempData["TosterState"] = "success";
+                                                TempData["TosterType"] = TosterType.Maseage;
+                                                TempData["TosterMassage"] = "عملیات با موفقیت انجام شد";
 
                                                 return RedirectToAction("Index", "Payment", new { area = "Dashboard" });
                                             }
@@ -1220,7 +1157,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                                             db.Entry(_Payment).State = EntityState.Modified;
 
                                             _UserClassPlan = db.Tbl_UserClassPlan.Where(x => x.UCP_PaymentID == _Payment.Payment_ID).SingleOrDefault();
-                                            _UserClassPlan.UCP_IsDelete = true;
+                                            //_UserClassPlan.UCP_IsDelete = true;
                                             _UserClassPlan.UCP_ModifiedDate = DateTime.Now;
 
                                             db.Entry(_UserClassPlan).State = EntityState.Modified;

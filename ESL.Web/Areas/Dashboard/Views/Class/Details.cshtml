@@ -39,6 +39,7 @@
                     <th scope="col">@Html.DisplayNameFor(model => model.CreationDate)</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.PresenceSessions)</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.Activeness)</th>
+                    <th scope="col">کنترل</th>
                 </tr>
             </thead>
 
@@ -64,7 +65,17 @@
                             <span>@Html.DisplayFor(modelItem => item.PresenceSessions)</span>
                         </td>
                         <td scope="row">
-                            <span>@(item.Activeness ? "تایید شده" : "تایید نشده")</span>
+                            <span>@( item.Activeness ? "تایید شده" : "تایید نشده" )</span>
+                        </td>
+                        <td scope="row">
+                            @if (item.Activeness)
+                            {
+                                <a class="control btn btn-danger btn-sm glyphicon glyphicon-user" data-toggle="tooltip" data-placement="auto" title="لغو ثبت نام" href="javascript:void(0)" onclick="UnRegister(@item.ID)"></a>
+                            }
+                            else
+                            {
+                                <a class="control btn btn-success btn-sm glyphicon glyphicon-user" data-toggle="tooltip" data-placement="auto" title="ثبت نام" href="javascript:void(0)" onclick="Register(@item.ID)"></a>
+                            }
                         </td>
                     </tr>
                 }
@@ -80,6 +91,7 @@
 
 @section Scripts {
     <script>
+
         function Create(id) {
             $.ajax({
                 url: "/Dashboard/UserClass/Create/" + id,
@@ -91,5 +103,30 @@
                 $('#myModalBody').html(result);
             });
         }
+
+        function UnRegister(id) {
+            $.ajax({
+                url: "/Dashboard/UserClass/UnRegister/" + id,
+                type: "Get",
+                data: {}
+            }).done(function (result) {
+                $('#myModal').modal('show');
+                $('#myModalLabel').html('لغو ثبت نام');
+                $('#myModalBody').html(result);
+            });
+        }
+
+        function Register(id) {
+            $.ajax({
+                url: "/Dashboard/UserClass/Register/" + id,
+                type: "Get",
+                data: {}
+            }).done(function (result) {
+                $('#myModal').modal('show');
+                $('#myModalLabel').html('ثبت نام');
+                $('#myModalBody').html(result);
+            });
+        }
+
     </script>
 }
