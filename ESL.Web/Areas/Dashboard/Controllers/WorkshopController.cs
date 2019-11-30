@@ -164,7 +164,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     User = x.Tbl_User.User_FirstName + " " + x.Tbl_User.User_lastName,
                     Presence = x.UWP_IsPresent,
                     Activeness = x.UWP_IsActive,
-                    CreationDate = x.UWP_CreationDate,
+                    CreationDate = x.UWP_CreationDate
 
                 }).ToList();
 
@@ -286,12 +286,12 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         [HttpPost]
         public JsonResult Get_SubWorkshopList(string WorkshopID)
         {
-            var q = db.Tbl_Workshop.Where(a => a.Workshop_Guid.ToString() == WorkshopID).SingleOrDefault();
+            var _Workshop = db.Tbl_Workshop.Where(a => a.Workshop_Guid.ToString() == WorkshopID).SingleOrDefault();
 
-            if (q != null)
+            if (_Workshop != null)
             {
-                var t = db.Tbl_SubWorkshop.Where(a => a.Tbl_Workshop.Workshop_ID == q.Workshop_ID).ToList();
-                var md = t.Select(a => new { id = a.SW_Guid, text = a.SW_Title });
+                var _SubWorkshops = db.Tbl_SubWorkshop.Where(a => a.Tbl_Workshop.Workshop_ID == _Workshop.Workshop_ID).ToList();
+                var md = _SubWorkshops.Select(a => new { id = a.SW_Guid, text = a.SW_Title });
 
                 return Json(md, JsonRequestBehavior.AllowGet);
             }

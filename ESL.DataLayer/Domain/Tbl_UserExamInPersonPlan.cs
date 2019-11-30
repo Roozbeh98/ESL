@@ -22,6 +22,7 @@ namespace ESL.DataLayer.Domain
         public int UEIPP_Mark { get; set; }
         public Nullable<int> UEIPP_PaymentID { get; set; }
         public bool UEIPP_IsPresent { get; set; }
+        public bool UEIPP_IsActive { get; set; }
         public System.DateTime UEIPP_CreationDate { get; set; }
         public System.DateTime UEIPP_ModifiedDate { get; set; }
         public bool UEIPP_IsDelete { get; set; }

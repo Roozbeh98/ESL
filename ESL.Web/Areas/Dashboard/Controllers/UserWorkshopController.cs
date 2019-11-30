@@ -48,6 +48,15 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                 if (_WorkshopPlan != null)
                 {
+                    if (_WorkshopPlan.WP_Capacity <= 0)
+                    {
+                        TempData["TosterState"] = "info";
+                        TempData["TosterType"] = TosterType.Maseage;
+                        TempData["TosterMassage"] = "ظرفیت کارگاه مورد نظر پر شده است";
+
+                        return RedirectToAction("Details", "Workshop", new { area = "Dashboard", id = model.WorkshopID });
+                    }
+
                     bool smsResult = true;
                     Tbl_Payment _Payment = Purchase(_User, _WorkshopPlan.WP_Cost, ProductType.Workshop, out bool walletResult, ref smsResult);
 
@@ -82,6 +91,10 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                         };
 
                         db.Tbl_UserWorkshopPlan.Add(_UserWorkshopPlan);
+
+                        _WorkshopPlan.WP_Capacity -= 1;
+
+                        db.Entry(_WorkshopPlan).State = EntityState.Modified;
 
                         if (Convert.ToBoolean(db.SaveChanges() > 0))
                         {
@@ -127,14 +140,14 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
         public ActionResult SetPresence(int id)
         {
-            var q = db.Tbl_UserWorkshopPlan.Where(x => x.UWP_ID == id).SingleOrDefault();
+            var _UserWorkshopPlan = db.Tbl_UserWorkshopPlan.Where(x => x.UWP_ID == id).SingleOrDefault();
 
-            if (q != null)
+            if (_UserWorkshopPlan != null)
             {
                 Model_UserWorkshopPlanSetPresence model = new Model_UserWorkshopPlanSetPresence()
                 {
                     ID = id,
-                    Presence = q.UWP_IsPresent
+                    Presence = _UserWorkshopPlan.UWP_IsPresent
                 };
 
                 return PartialView(model);
@@ -149,13 +162,14 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         {
             if (ModelState.IsValid)
             {
-                var q = db.Tbl_UserWorkshopPlan.Where(x => x.UWP_ID == model.ID).SingleOrDefault();
+                var _UserWorkshopPlan = db.Tbl_UserWorkshopPlan.Where(x => x.UWP_ID == model.ID).SingleOrDefault();
 
-                if (q != null)
+                if (_UserWorkshopPlan != null)
                 {
-                    q.UWP_IsPresent = model.Presence;
+                    _UserWorkshopPlan.UWP_IsPresent = model.Presence;
+                    _UserWorkshopPlan.UWP_ModifiedDate = DateTime.Now;
 
-                    db.Entry(q).State = EntityState.Modified;
+                    db.Entry(_UserWorkshopPlan).State = EntityState.Modified;
 
                     if (Convert.ToBoolean(db.SaveChanges() > 0))
                     {
@@ -324,7 +338,22 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             {
                 case ProductType.ExamInPerson:
 
-                    return null;
+                    _Payment = new Tbl_Payment
+                    {
+                        Payment_Guid = Guid.NewGuid(),
+                        Payment_UserID = user.User_ID,
+                        Payment_TitleCodeID = (int)PaymentTitle.ExamInPerson,
+                        Payment_WayCodeID = (int)PaymentWay.Internet,
+                        Payment_StateCodeID = (int)PaymentState.Confirmed,
+                        Payment_Cost = cost,
+                        Payment_Discount = 0,
+                        Payment_RemaingWallet = credit,
+                        Payment_TrackingToken = "ESL-" + new Random().Next(100000, 999999).ToString(),
+                        Payment_CreateDate = DateTime.Now,
+                        Payment_ModifiedDate = DateTime.Now
+                    };
+
+                    return _Payment;
 
                 case ProductType.ExamRemotely:
 

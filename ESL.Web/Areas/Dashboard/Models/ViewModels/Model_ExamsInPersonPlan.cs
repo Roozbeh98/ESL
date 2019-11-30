@@ -15,38 +15,34 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
         public string Exam { get; set; }
 
         [Display(Name = "توضیحات")]
-        [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public string Description { get; set; }
 
-        [Display(Name = "قیمت")]
-        [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
+        [Display(Name = "قیمت (تومان)")]
         public int Cost { get; set; }
 
         [DataType(DataType.MultilineText)]
-        [Display(Name = "مکان")]
-        [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
+        [Display(Name = "مکان برگزاری")]
         public string Location { get; set; }
 
-        [Display(Name = "فعال سازی")]
-        [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
+        [Display(Name = "وضعیت نمایش")]
         public bool Activeness { get; set; }
 
         [Display(Name = "ظرفیت")]
-        [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public int Capacity { get; set; }
 
         [Display(Name = "نمره")]
-        [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public int TotalMark { get; set; }
 
         [Display(Name = "حداقل نمره قبولی")]
-        [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public int PassMark { get; set; }
 
-        [Display(Name = "تاریخ برگزاری")]
+        [Display(Name = "تاریخ و زمان برگزاری")]
         public DateTime Date { get; set; }
 
         [Display(Name = "تاریخ ایجاد")]
         public DateTime CreationDate { get; set; }
+
+        [Display(Name = "تاریخ بروزرسانی")]
+        public DateTime ModifiedDate { get; set; }
     }
 }

@@ -42,7 +42,7 @@
                                     <li>@item.Description</li>
                                 </ul>
                                 <table class="table">
-                                    <tr><td>نوع کارگاه</td><td class="note">@item.SubName</td></tr>
+                                    <tr><td>عنوان</td><td class="note">@item.SubName</td></tr>
                                     <tr><td>ظرفیت</td><td class="note">@item.Capacity</td></tr>
                                     <tr><td>مکان برگزاری</td><td class="note">@item.Location</td></tr>
                                     <tr><td>زمان برگزاری</td><td class="note">@PersianDateExtensionMethods.ToPeString(item.Date, "yyyy/MM/dd HH:mm")</td></tr>
@@ -96,14 +96,14 @@
                                     <li>@item.Description</li>
                                 </ul>
                                 <table class="table">
-                                    <tr><td>زیر گروه</td><td class="note">@item.SubName</td></tr>
+                                    <tr><td>عنوان</td><td class="note">@item.SubName</td></tr>
                                     <tr><td>ظرفیت</td><td class="note">@item.Capacity</td></tr>
-                                    <tr><td>مکان برگزاری</td><td class="note">@item.Location</td></tr>
                                     <tr><td>نمره کل</td><td class="note">@item.TotalMark</td></tr>
                                     <tr><td>حداقل نمره قبولی</td><td class="note">@item.PassMark</td></tr>
+                                    <tr><td>مکان برگزاری</td><td class="note">@item.Location</td></tr>
                                     <tr><td>زمان برگزاری</td><td class="note">@PersianDateExtensionMethods.ToPeString(item.Date, "yyyy/MM/dd HH:mm")</td></tr>
                                 </table>
-                                <a href="javascript:void(0)" onclick="Pay(@item.ID, @((int)ProductType.ExamInPerson))" class="btn esl-btn-purchase btn-lg btn-block buy-now">@item.Cost<span>تومان&nbsp;&nbsp;</span></a>
+                                <a href="javascript:void(0)" onclick="Pay(@item.ID, @((int)ProductType.ExamInPerson))" class="btn esl-btn-purchase btn-lg btn-block buy-now">@item.Cost<span>&nbsp;&nbsp;تومان</span></a>
                             </div>
                         </div>
 

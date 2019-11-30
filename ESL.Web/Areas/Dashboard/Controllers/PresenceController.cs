@@ -36,7 +36,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
         public ActionResult Details(int? id)
         {
-            if (id.HasValue && db.Tbl_UserClassPlan.Any(x => x.UCP_ID == id))
+            if (id.HasValue && db.Tbl_UserClassPlan.Any(x => x.UCP_ID == id && x.UCP_IsActive == true))
             {
                 var _UserClassPlan = db.Tbl_UserClassPlan.Where(x => x.UCP_IsDelete == false && x.UCP_ID == id).SingleOrDefault();
 

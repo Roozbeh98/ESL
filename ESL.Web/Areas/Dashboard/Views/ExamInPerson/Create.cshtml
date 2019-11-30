@@ -1,31 +1,32 @@
-﻿@model ESL.Web.Areas.Dashboard.Models.ViewModels.Model_ExamInPersonPlanCreate
+﻿
+@model ESL.Web.Areas.Dashboard.Models.ViewModels.Model_ExamInPersonPlanCreate
 @using ESL.Services.BaseRepository
 
 @{
-    ViewBag.Title = "آزمون جدید";
+    ViewBag.Title = "افزودن آزمون";
     Layout = "~/Areas/Dashboard/Views/Shared/_Master.cshtml";
 }
-
 
 @section Styles {
     <link href="~/Content/Plugins/jQuery.MdBootstrapPersianDateTimePicker/jquery.Bootstrap-PersianDateTimePicker.css" rel="stylesheet" />
 }
 
 
-<div class="panel panel-body panel-default  navigation">
+<div class="panel panel-body panel-default navigation">
 
-    <div class="pull-left">
-        <h4 class="navigation-title"><b>آزمون جدید</b></h4>
+    <div class="pull-left" style="margin-left: 10px;">
+        <a href="@Url.Action("Index", "ExamInPerson")" data-toggle="tooltip" data-placement="auto" title="برگشت به صفحه قبل">
+            <i class="glyphicon glyphicon-arrow-left navigation-btn-icon"></i>
+        </a>
     </div>
 
-    <div class="pull-right">
-        <a href="@Url.Action("Index", "ExamInPerson")"><i class="glyphicon glyphicon-arrow-left navigation-btn-icon"></i></a>
+    <div class="pull-left" style="margin-left: 10px;">
+        <h4 class="navigation-title"><b>@ViewBag.Title</b></h4>
     </div>
 
 </div>
 
 <div class="panel panel-default">
-
     <div class="panel-body">
 
         @using (Html.BeginForm())
@@ -33,7 +34,6 @@
             @Html.AntiForgeryToken()
 
             <div class="modal-main">
-
                 <div class="row" style="margin: 0 -30px;">
 
                     <div class="col-md-6">
@@ -74,16 +74,6 @@
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label" })
-                            <div id="Date" data-englishnumber="true" data-mddatetimepicker="true" data-inline="true" data-isgregorian="false" data-targetselector="#fromDate" data-enabletimepicker="true" style="border: solid 1px #ccc;"></div>
-                            <input type="hidden" name="Date" class="form-control" id="fromDate" placeholder="تاریخ" readonly />
-                        </div>
-
-                    </div>
-
-                    <div class="col-md-6">
-
-                        <div class="form-group">
                             @Html.LabelFor(model => model.Location, htmlAttributes: new { @class = "control-label" })
 
                             <div class="input-group">
@@ -103,6 +93,16 @@
                             </div>
 
                             @Html.ValidationMessageFor(model => model.Capacity, "", new { @class = "text-danger" })
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label" })
+                            <div id="Date" data-englishnumber="true" data-mddatetimepicker="true" data-inline="true" data-isgregorian="false" data-targetselector="#fromDate" data-enabletimepicker="true" style="border: solid 1px #ccc; background: #222d32; color: #ccc;"></div>
+                            <input type="hidden" name="Date" class="form-control" id="fromDate" placeholder="تاریخ" readonly />
                         </div>
 
                         <div class="form-group">
@@ -138,17 +138,15 @@
                     </div>
 
                 </div>
-
             </div>
 
             <div style="margin-top:20px;">
-                <button class="btn btn-danger modal-btn-Dual pull-left" type="button" data-dismiss="modal">انصراف</button>
-                <button class="btn btn-success modal-btn-Dual pull-right " type="submit" name="btn-Delete">تایید</button>
+                <a href="@Url.Action("Index", "ExamInPerson")" class="btn btn-danger modal-btn-Dual pull-left">انصراف</a>
+                <button class="btn btn-success modal-btn-Dual pull-right" type="submit" name="btn-Delete">تایید</button>
             </div>
         }
 
     </div>
-
 </div>
 
 
@@ -200,6 +198,12 @@
 
     <script src="~/Scripts/Plugins/jQuery.MdBootstrapPersianDateTimePicker/jalaali.js"></script>
     <script src="~/Scripts/Plugins/jQuery.MdBootstrapPersianDateTimePicker/jquery.Bootstrap-PersianDateTimePicker.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#Date td[data-name=today]").click();
+        });
+    </script>
 
     <script>
         $(function () {

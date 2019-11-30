@@ -95,7 +95,7 @@
           <Property Name="EIPP_Guid" Type="uniqueidentifier" Nullable="false" />
           <Property Name="EIPP_SEIPID" Type="int" Nullable="false" />
           <Property Name="EIPP_Capacity" Type="int" Nullable="false" />
-          <Property Name="EIPP_Description" Type="ntext" Nullable="false" />
+          <Property Name="EIPP_Description" Type="nvarchar(max)" />
           <Property Name="EIPP_TotalMark" Type="int" Nullable="false" />
           <Property Name="EIPP_PassMark" Type="int" Nullable="false" />
           <Property Name="EIPP_Cost" Type="int" Nullable="false" />
@@ -239,7 +239,7 @@
           <Property Name="Question_GroupCodeID" Type="int" Nullable="false" />
           <Property Name="Question_ResponseID" Type="int" />
           <Property Name="Question_TypeCodeID" Type="int" Nullable="false" />
-          <Property Name="Question_Title" Type="ntext" Nullable="false" />
+          <Property Name="Question_Title" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Question_Mark" Type="int" Nullable="false" />
           <Property Name="Question_Order" Type="int" Nullable="false" />
           <Property Name="Question_CreationDate" Type="datetime2" Precision="7" Nullable="false" />
@@ -450,6 +450,7 @@
           <Property Name="UEIPP_Mark" Type="int" Nullable="false" />
           <Property Name="UEIPP_PaymentID" Type="int" />
           <Property Name="UEIPP_IsPresent" Type="bit" Nullable="false" />
+          <Property Name="UEIPP_IsActive" Type="bit" Nullable="false" />
           <Property Name="UEIPP_CreationDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="UEIPP_ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="UEIPP_IsDelete" Type="bit" Nullable="false" />
@@ -1818,7 +1819,7 @@
           <Property Name="EIPP_Guid" Type="Guid" Nullable="false" />
           <Property Name="EIPP_SEIPID" Type="Int32" Nullable="false" />
           <Property Name="EIPP_Capacity" Type="Int32" Nullable="false" />
-          <Property Name="EIPP_Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EIPP_Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="EIPP_TotalMark" Type="Int32" Nullable="false" />
           <Property Name="EIPP_PassMark" Type="Int32" Nullable="false" />
           <Property Name="EIPP_Cost" Type="Int32" Nullable="false" />
@@ -2243,6 +2244,7 @@
           <Property Name="UEIPP_Mark" Type="Int32" Nullable="false" />
           <Property Name="UEIPP_PaymentID" Type="Int32" />
           <Property Name="UEIPP_IsPresent" Type="Boolean" Nullable="false" />
+          <Property Name="UEIPP_IsActive" Type="Boolean" Nullable="false" />
           <Property Name="UEIPP_CreationDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="UEIPP_ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="UEIPP_IsDelete" Type="Boolean" Nullable="false" />
@@ -3468,6 +3470,7 @@
                 <ScalarProperty Name="UEIPP_IsDelete" ColumnName="UEIPP_IsDelete" />
                 <ScalarProperty Name="UEIPP_ModifiedDate" ColumnName="UEIPP_ModifiedDate" />
                 <ScalarProperty Name="UEIPP_CreationDate" ColumnName="UEIPP_CreationDate" />
+                <ScalarProperty Name="UEIPP_IsActive" ColumnName="UEIPP_IsActive" />
                 <ScalarProperty Name="UEIPP_IsPresent" ColumnName="UEIPP_IsPresent" />
                 <ScalarProperty Name="UEIPP_PaymentID" ColumnName="UEIPP_PaymentID" />
                 <ScalarProperty Name="UEIPP_Mark" ColumnName="UEIPP_Mark" />

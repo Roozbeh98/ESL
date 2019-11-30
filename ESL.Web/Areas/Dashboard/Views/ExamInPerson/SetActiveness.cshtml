@@ -1,4 +1,5 @@
-﻿@model ESL.Web.Areas.Dashboard.Models.ViewModels.Model_SetActiveness
+﻿
+@model ESL.Web.Areas.Dashboard.Models.ViewModels.Model_SetActiveness
 
 
 @using (Html.BeginForm())
@@ -7,7 +8,6 @@
     @Html.HiddenFor(model => model.ID)
 
     <div class="modal-main">
-
         <div class="form-group material-switch-body">
             <label class="pull-left">فعال سازی</label>
             <div class="material-switch pull-right">
@@ -15,12 +15,11 @@
                 @Html.LabelFor(model => model.Activeness, htmlAttributes: new { @class = "label-success" })
             </div>
         </div>
-
     </div>
 
     <div style="margin-top:20px;">
         <button class="btn btn-danger modal-btn-Dual pull-left" type="button" data-dismiss="modal">انصراف</button>
-        <button class="btn btn-success modal-btn-Dual pull-right " type="submit" name="btn-Delete">تایید</button>
+        <button class="btn btn-success modal-btn-Dual pull-right" type="submit" name="btn-Delete">تایید</button>
     </div>
 }
 

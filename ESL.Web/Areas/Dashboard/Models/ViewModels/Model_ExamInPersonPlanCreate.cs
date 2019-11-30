@@ -9,21 +9,22 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
     public class Model_ExamInPersonPlanCreate
     {
         [Display(Name = "آزمون")]
+        [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public string Exam { get; set; }
 
-        [Display(Name = "کتاب")]
+        [Display(Name = "عنوان")]
+        [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public string SubExam { get; set; }
 
         [Display(Name = "توضیحات")]
-        [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public string Description { get; set; }
 
-        [Display(Name = "قیمت")]
+        [Display(Name = "قیمت (تومان)")]
         [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public int Cost { get; set; }
 
         [DataType(DataType.MultilineText)]
-        [Display(Name = "مکان")]
+        [Display(Name = "مکان برگزاری")]
         [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public string Location { get; set; }
 
@@ -39,7 +40,8 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
         [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public int PassMark { get; set; }
 
-        [Display(Name = "تاریخ برگزاری")]
+        [Display(Name = "تاریخ و زمان برگزاری")]
+        [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public string Date { get; set; }
 
         [Display(Name = "وضعیت نمایش")]

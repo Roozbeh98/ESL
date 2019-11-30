@@ -14,12 +14,14 @@ namespace ESL.Web.Areas.Dashboard.Controllers
     [Authorize(Roles = "Admin, Student")]
     public class ExamInPersonController : Controller
     {
-        private ESLEntities db = new ESLEntities();
+        private readonly ESLEntities db = new ESLEntities();
+
+        #region Admin
 
         [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
-            var q = db.Tbl_ExamInPersonPlan.Where(x => x.EIPP_IsDelete == false).Select(x => new Model_ExamsInPersonPlan
+            var _ExamsInPersonPlans = db.Tbl_ExamInPersonPlan.Where(x => x.EIPP_IsDelete == false).Select(x => new Model_ExamsInPersonPlan
             {
                 ID = x.EIPP_ID,
                 Exam = x.Tbl_SubExamInPerson.SEIP_Title,
@@ -31,11 +33,12 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                 TotalMark = x.EIPP_TotalMark,
                 PassMark = x.EIPP_PassMark,
                 Date = x.EIPP_Date,
-                CreationDate = x.EIPP_CreationDate
-
+                CreationDate = x.EIPP_CreationDate,
+                ModifiedDate = x.EIPP_ModifiedDate
+                
             }).ToList();
 
-            return View(q);
+            return View(_ExamsInPersonPlans);
         }
 
         public ActionResult Create()
@@ -50,7 +53,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         {
             if (ModelState.IsValid)
             {
-                Tbl_ExamInPersonPlan q = new Tbl_ExamInPersonPlan
+                Tbl_ExamInPersonPlan _ExamInPersonPlan = new Tbl_ExamInPersonPlan
                 {
                     EIPP_Guid = Guid.NewGuid(),
                     EIPP_SEIPID = db.Tbl_SubExamInPerson.Where(x => x.SEIP_Guid.ToString() == model.SubExam).SingleOrDefault().SEIP_ID,
@@ -66,13 +69,13 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     EIPP_ModifiedDate = DateTime.Now,
                 };
 
-                db.Tbl_ExamInPersonPlan.Add(q);
+                db.Tbl_ExamInPersonPlan.Add(_ExamInPersonPlan);
 
                 if (Convert.ToBoolean(db.SaveChanges() > 0))
                 {
                     TempData["TosterState"] = "success";
                     TempData["TosterType"] = TosterType.Maseage;
-                    TempData["TosterMassage"] = "عملیات با موفقیت انجام شد";
+                    TempData["TosterMassage"] = "آزمون جدید با موفقیت ثبت شد";
 
                     return RedirectToAction("Index");
                 }
@@ -80,7 +83,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                 {
                     TempData["TosterState"] = "error";
                     TempData["TosterType"] = TosterType.Maseage;
-                    TempData["TosterMassage"] = "عملیات با موفقیت انجام نشد";
+                    TempData["TosterMassage"] = "آزمون جدید با موفقیت ثبت نشد";
 
                     return View();
                 }
@@ -92,23 +95,23 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Edit(int id)
         {
-            var q = db.Tbl_ExamInPersonPlan.Where(x => x.EIPP_ID == id).SingleOrDefault();
+            var _ExamInPersonPlan = db.Tbl_ExamInPersonPlan.Where(x => x.EIPP_ID == id).SingleOrDefault();
 
-            if (q != null)
+            if (_ExamInPersonPlan != null)
             {
                 Model_ExamInPersonPlanEdit model = new Model_ExamInPersonPlanEdit()
                 {
-                    ID = q.EIPP_ID,
-                    Exam = q.Tbl_SubExamInPerson.Tbl_ExamInPerson.EIP_Guid.ToString(),
-                    SubExam = q.Tbl_SubExamInPerson.SEIP_Guid.ToString(),
-                    Description = q.EIPP_Description,
-                    Cost = q.EIPP_Cost,
-                    Location = q.EIPP_Location,
-                    Capacity = q.EIPP_Capacity,
-                    TotalMark = q.EIPP_TotalMark,
-                    PassMark = q.EIPP_PassMark,
-                    Activeness = q.EIPP_IsActive,
-                    Date = q.EIPP_Date
+                    ID = _ExamInPersonPlan.EIPP_ID,
+                    Exam = _ExamInPersonPlan.Tbl_SubExamInPerson.Tbl_ExamInPerson.EIP_Guid.ToString(),
+                    SubExam = _ExamInPersonPlan.Tbl_SubExamInPerson.SEIP_Guid.ToString(),
+                    Description = _ExamInPersonPlan.EIPP_Description,
+                    Cost = _ExamInPersonPlan.EIPP_Cost,
+                    Location = _ExamInPersonPlan.EIPP_Location,
+                    Capacity = _ExamInPersonPlan.EIPP_Capacity,
+                    TotalMark = _ExamInPersonPlan.EIPP_TotalMark,
+                    PassMark = _ExamInPersonPlan.EIPP_PassMark,
+                    Activeness = _ExamInPersonPlan.EIPP_IsActive,
+                    Date = _ExamInPersonPlan.EIPP_Date
                 };
 
                 return View(model);
@@ -124,26 +127,26 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         {
             if (ModelState.IsValid)
             {
-                Tbl_ExamInPersonPlan q = db.Tbl_ExamInPersonPlan.Where(x => x.EIPP_ID == model.ID).SingleOrDefault();
+                Tbl_ExamInPersonPlan _ExamInPersonPlan = db.Tbl_ExamInPersonPlan.Where(x => x.EIPP_ID == model.ID).SingleOrDefault();
 
-                if (q != null)
+                if (_ExamInPersonPlan != null)
                 {
-                    q.EIPP_Description = model.Description;
-                    q.EIPP_Cost = model.Cost;
-                    q.EIPP_Capacity = model.Capacity;
-                    q.EIPP_TotalMark = model.TotalMark;
-                    q.EIPP_PassMark = model.PassMark;
-                    q.EIPP_IsActive = model.Activeness;
+                    _ExamInPersonPlan.EIPP_Description = model.Description;
+                    _ExamInPersonPlan.EIPP_Cost = model.Cost;
+                    _ExamInPersonPlan.EIPP_Capacity = model.Capacity;
+                    _ExamInPersonPlan.EIPP_TotalMark = model.TotalMark;
+                    _ExamInPersonPlan.EIPP_PassMark = model.PassMark;
+                    _ExamInPersonPlan.EIPP_IsActive = model.Activeness;
 
-                    q.EIPP_ModifiedDate = DateTime.Now;
+                    _ExamInPersonPlan.EIPP_ModifiedDate = DateTime.Now;
 
-                    db.Entry(q).State = EntityState.Modified;
+                    db.Entry(_ExamInPersonPlan).State = EntityState.Modified;
 
                     if (Convert.ToBoolean(db.SaveChanges() > 0))
                     {
                         TempData["TosterState"] = "success";
                         TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام شد";
+                        TempData["TosterMassage"] = "آزمون مورد نظر با موفقیت ویرایش شد";
 
                         return RedirectToAction("Index");
                     }
@@ -151,7 +154,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     {
                         TempData["TosterState"] = "error";
                         TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام نشد";
+                        TempData["TosterMassage"] = "آزمون مورد نظر با موفقیت ویرایش نشد";
 
                         return RedirectToAction("Index");
                     }
@@ -171,13 +174,13 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             if (id != null)
             {
                 Model_Message model = new Model_Message();
-                
-                var q = db.Tbl_ExamInPersonPlan.Where(x => x.EIPP_ID == id).SingleOrDefault();
 
-                if (q != null)
+                var _ExamInPersonPlan = db.Tbl_ExamInPersonPlan.Where(x => x.EIPP_ID == id).SingleOrDefault();
+
+                if (_ExamInPersonPlan != null)
                 {
                     model.ID = id.Value;
-                    model.Name = q.EIPP_Description;
+                    model.Name = _ExamInPersonPlan.EIPP_Description;
                     model.Description = "آیا از حذف آزمون مورد نظر اطمینان دارید ؟";
 
                     return PartialView(model);
@@ -198,19 +201,20 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         {
             if (ModelState.IsValid)
             {
-                var q = db.Tbl_ExamInPersonPlan.Where(x => x.EIPP_ID == model.ID).SingleOrDefault();
+                var _ExamInPersonPlan = db.Tbl_ExamInPersonPlan.Where(x => x.EIPP_ID == model.ID).SingleOrDefault();
 
-                if (q != null)
+                if (_ExamInPersonPlan != null)
                 {
-                    q.EIPP_IsDelete = true;
+                    _ExamInPersonPlan.EIPP_IsDelete = true;
+                    _ExamInPersonPlan.EIPP_ModifiedDate = DateTime.Now;
 
-                    db.Entry(q).State = EntityState.Modified;
+                    db.Entry(_ExamInPersonPlan).State = EntityState.Modified;
 
                     if (Convert.ToBoolean(db.SaveChanges() > 0))
                     {
                         TempData["TosterState"] = "success";
                         TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام شد";
+                        TempData["TosterMassage"] = "آزمون مورد نظر با موفقیت حذف شد";
 
                         return RedirectToAction("Index");
                     }
@@ -218,7 +222,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     {
                         TempData["TosterState"] = "error";
                         TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام نشد";
+                        TempData["TosterMassage"] = "آزمون مورد نظر با موفقیت حذف نشد";
 
                         return HttpNotFound();
                     }
@@ -233,21 +237,21 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         {
             if (id.HasValue && db.Tbl_ExamInPersonPlan.Any(x => x.EIPP_ID == id))
             {
-                var q = db.Tbl_UserExamInPersonPlan.Where(x => x.UEIPP_EIPPID == id).Select(x => new Model_UsersExamInPersonPlan
+                var _UsersExamInPersonPlans = db.Tbl_UserExamInPersonPlan.Where(x => x.UEIPP_EIPPID == id).Select(x => new Model_UsersExamInPersonPlan
                 {
                     ID = x.UEIPP_ID,
                     User = x.Tbl_User.User_FirstName + " " + x.Tbl_User.User_lastName,
                     SeatNumber = x.UEIPP_SeatNumber,
                     Mark = x.UEIPP_Mark,
-                    IsPresent = x.UEIPP_IsPresent,
-                    CreationDate = x.UEIPP_CreationDate,
-                    IsDelete = x.UEIPP_IsDelete
+                    Presence = x.UEIPP_IsPresent,
+                    Activeness = x.UEIPP_IsActive,
+                    CreationDate = x.UEIPP_CreationDate
 
                 }).ToList();
 
                 ViewBag.ExamID = id;
 
-                return View(q);
+                return View(_UsersExamInPersonPlans);
             }
 
             return HttpNotFound();
@@ -256,14 +260,14 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult SetActiveness(int id)
         {
-            var q = db.Tbl_ExamInPersonPlan.Where(x => x.EIPP_ID == id).SingleOrDefault();
+            var _ExamInPersonPlan = db.Tbl_ExamInPersonPlan.Where(x => x.EIPP_ID == id).SingleOrDefault();
 
-            if (q != null)
+            if (_ExamInPersonPlan != null)
             {
                 Model_SetActiveness model = new Model_SetActiveness()
                 {
                     ID = id,
-                    Activeness = q.EIPP_IsActive
+                    Activeness = _ExamInPersonPlan.EIPP_IsActive
                 };
 
                 return PartialView(model);
@@ -279,19 +283,20 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         {
             if (ModelState.IsValid)
             {
-                var q = db.Tbl_ExamInPersonPlan.Where(x => x.EIPP_ID == model.ID).SingleOrDefault();
+                var _ExamInPersonPlan = db.Tbl_ExamInPersonPlan.Where(x => x.EIPP_ID == model.ID).SingleOrDefault();
 
-                if (q != null)
+                if (_ExamInPersonPlan != null)
                 {
-                    q.EIPP_IsActive = model.Activeness;
+                    _ExamInPersonPlan.EIPP_IsActive = model.Activeness;
+                    _ExamInPersonPlan.EIPP_ModifiedDate = DateTime.Now;
 
-                    db.Entry(q).State = EntityState.Modified;
+                    db.Entry(_ExamInPersonPlan).State = EntityState.Modified;
 
                     if (Convert.ToBoolean(db.SaveChanges() > 0))
                     {
                         TempData["TosterState"] = "success";
                         TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام شد";
+                        TempData["TosterMassage"] = "تغییر وضعیت نمایش با موفقیت انجام شد";
 
                         return RedirectToAction("Index", "ExamInPerson", new { area = "Dashboard" });
                     }
@@ -299,7 +304,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     {
                         TempData["TosterState"] = "error";
                         TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام نشد";
+                        TempData["TosterMassage"] = "تغییر وضعیت نمایش با موفقیت انجام نشد";
 
                         return HttpNotFound();
                     }
@@ -309,17 +314,27 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
+        #endregion
+
+        #region Student
+
+
+
+        #endregion
+
+        #region Functions
+
         [Authorize(Roles = "Admin")]
         public JsonResult Get_ExamList(string searchTerm)
         {
-            var q = db.Tbl_ExamInPerson.ToList();
+            var _ExamsInPerson = db.Tbl_ExamInPerson.ToList();
 
             if (searchTerm != null)
             {
-                q = db.Tbl_ExamInPerson.Where(a => a.EIP_Title.Contains(searchTerm)).ToList();
+                _ExamsInPerson = db.Tbl_ExamInPerson.Where(a => a.EIP_Title.Contains(searchTerm)).ToList();
             }
 
-            var md = q.Select(a => new { id = a.EIP_ID, text = a.EIP_Title });
+            var md = _ExamsInPerson.Select(a => new { id = a.EIP_ID, text = a.EIP_Title });
 
             return Json(md, JsonRequestBehavior.AllowGet);
         }
@@ -328,13 +343,20 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         [HttpPost]
         public JsonResult Get_SubExamList(string ExamID)
         {
-            var q = db.Tbl_ExamInPerson.Where(a => a.EIP_Guid.ToString() == ExamID).SingleOrDefault();
+            var _ExamsInPerson = db.Tbl_ExamInPerson.Where(a => a.EIP_Guid.ToString() == ExamID).SingleOrDefault();
 
-            var t = db.Tbl_SubExamInPerson.Where(a => a.Tbl_ExamInPerson.EIP_ID == q.EIP_ID).ToList();
-            var md = t.Select(a => new { id = a.SEIP_Guid, text = a.SEIP_Title });
+            if (_ExamsInPerson != null)
+            {
+                var _SubExamsInPerson = db.Tbl_SubExamInPerson.Where(a => a.Tbl_ExamInPerson.EIP_ID == _ExamsInPerson.EIP_ID).ToList();
+                var md = _SubExamsInPerson.Select(a => new { id = a.SEIP_Guid, text = a.SEIP_Title });
 
-            return Json(md, JsonRequestBehavior.AllowGet);
+                return Json(md, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(false, JsonRequestBehavior.AllowGet);
         }
+
+        #endregion
 
         protected override void Dispose(bool disposing)
         {

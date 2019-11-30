@@ -8,7 +8,7 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
 {
     public class Model_ClassPlanCreate
     {
-        [Display(Name = "عنوان")]
+        [Display(Name = "کلاس")]
         [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public string Class { get; set; }
 

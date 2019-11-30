@@ -50,6 +50,15 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                 if (_ClassPlan != null)
                 {
+                    if (_ClassPlan.CP_Capacity <= 0)
+                    {
+                        TempData["TosterState"] = "info";
+                        TempData["TosterType"] = TosterType.Maseage;
+                        TempData["TosterMassage"] = "ظرفیت کلاس مورد نظر پر شده است";
+
+                        return RedirectToAction("Details", "Class", new { area = "Dashboard", id = model.ClassID });
+                    }
+
                     bool smsResult = true;
                     Tbl_Payment _Payment = Purchase(_User, _ClassPlan.CP_CostPerSession, ProductType.Class, out bool walletResult, ref smsResult);
 
@@ -80,6 +89,10 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                             db.Tbl_UserClassPlan.Add(_UserClassPlan);
                         }
+
+                        _ClassPlan.CP_Capacity -= 1;
+
+                        db.Entry(_ClassPlan).State = EntityState.Modified;
 
                         if (Convert.ToBoolean(db.SaveChanges() > 0))
                         {
@@ -171,6 +184,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                         _UserClassPlan.UCP_IsActive = false;
                         //_UserClassPlan.UCP_IsDelete = true;
                         _UserClassPlan.UCP_ModifiedDate = DateTime.Now;
+                        _UserClassPlan.Tbl_ClassPlan.CP_Capacity += 1;
 
                         db.Entry(_UserClassPlan).State = EntityState.Modified;
 
@@ -236,6 +250,15 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                 
                 if (_UserClassPlan != null)
                 {
+                    if (_UserClassPlan.Tbl_ClassPlan.CP_Capacity <= 0)
+                    {
+                        TempData["TosterState"] = "info";
+                        TempData["TosterType"] = TosterType.Maseage;
+                        TempData["TosterMassage"] = "ظرفیت کلاس مورد نظر پر شده است";
+
+                        return RedirectToAction("Details", "Class", new { area = "Dashboard", id = db.Tbl_UserClassPlan.Where(x => x.UCP_ID == model.ID).SingleOrDefault().UCP_CPID });
+                    }
+
                     var _Payment = db.Tbl_Payment.Where(x => x.Payment_ID == _UserClassPlan.UCP_PaymentID).SingleOrDefault();
 
                     if (_Payment != null)
@@ -247,7 +270,9 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                         db.Entry(_Payment).State = EntityState.Modified;
 
                         _UserClassPlan.UCP_IsActive = true;
+                        //_UserClassPlan.UCP_IsDelete = false;
                         _UserClassPlan.UCP_ModifiedDate = DateTime.Now;
+                        _UserClassPlan.Tbl_ClassPlan.CP_Capacity -= 1;
 
                         db.Entry(_UserClassPlan).State = EntityState.Modified;
 
@@ -301,7 +326,22 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             {
                 case ProductType.ExamInPerson:
 
-                    return null;
+                    _Payment = new Tbl_Payment
+                    {
+                        Payment_Guid = Guid.NewGuid(),
+                        Payment_UserID = user.User_ID,
+                        Payment_TitleCodeID = (int)PaymentTitle.ExamInPerson,
+                        Payment_WayCodeID = (int)PaymentWay.Internet,
+                        Payment_StateCodeID = (int)PaymentState.Confirmed,
+                        Payment_Cost = cost,
+                        Payment_Discount = 0,
+                        Payment_RemaingWallet = credit,
+                        Payment_TrackingToken = "ESL-" + new Random().Next(100000, 999999).ToString(),
+                        Payment_CreateDate = DateTime.Now,
+                        Payment_ModifiedDate = DateTime.Now
+                    };
+
+                    return _Payment;
 
                 case ProductType.ExamRemotely:
 

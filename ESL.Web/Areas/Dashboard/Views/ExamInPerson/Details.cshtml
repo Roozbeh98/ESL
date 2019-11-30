@@ -1,30 +1,36 @@
-﻿@model IEnumerable<ESL.Web.Areas.Dashboard.Models.ViewModels.Model_UsersExamInPersonPlan>
-
+﻿
+@model IEnumerable<ESL.Web.Areas.Dashboard.Models.ViewModels.Model_UsersExamInPersonPlan>
 @using ESL.Common.Plugins
 
 @{
-    ViewBag.Title = "لیست افراد حاضر در آزمون";
+    ViewBag.Title = "لیست افراد شرکت کننده در آزمون";
     Layout = "~/Areas/Dashboard/Views/Shared/_Master.cshtml";
 }
 
 
-<div class="panel panel-body panel-default  navigation">
+<div class="panel panel-body panel-default navigation">
 
-    <div class="pull-left">
-        <h4 class="navigation-title"><b>لیست افراد حاضر در آزمون</b></h4>
+    <div class="pull-left" style="margin-left: 10px;">
+        <a href="@Url.Action("Index", "ExamInPerson")" data-toggle="tooltip" data-placement="auto" title="برگشت به صفحه قبل">
+            <i class="glyphicon glyphicon-arrow-left navigation-btn-icon"></i>
+        </a>
+    </div>
+
+    <div class="pull-left" style="margin-left: 10px;">
+        <h4 class="navigation-title"><b>@ViewBag.Title</b></h4>
     </div>
 
     <div class="pull-right">
-        <a href="javascript:void(0)" onclick="Create(@ViewBag.ExamID)"><i class="glyphicon glyphicon-plus navigation-btn-icon"></i></a>
+        <a href="javascript:void(0)" onclick="Create(@ViewBag.ExamID)" data-toggle="tooltip" data-placement="auto" title="ثبت نام">
+            <i class="glyphicon glyphicon-plus navigation-btn-icon"></i>
+        </a>
     </div>
 
 </div>
 
 <div class="panel panel-default">
-
     <div class="panel-body table-body" style="overflow-x:auto;">
-
-        <table id="DateTable" class="table  table-bordered table-striped table-secondary" style="width:100%;">
+        <table id="DateTable" class="table table-bordered table-striped table-secondary" style="width:100%;">
 
             <thead class="thead-dark">
                 <tr>
@@ -32,9 +38,9 @@
                     <th scope="col">@Html.DisplayNameFor(model => model.User)</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.SeatNumber)</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.Mark)</th>
-                    <th scope="col">@Html.DisplayNameFor(model => model.IsPresent)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Presence)</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.CreationDate)</th>
-                    <th scope="col">@Html.DisplayNameFor(model => model.IsDelete)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Activeness)</th>
                     <th scope="col" data-orderable="false">کنترل</th>
                 </tr>
             </thead>
@@ -61,16 +67,16 @@
                             <span> @Html.DisplayFor(modelItem => item.Mark) </span>
                         </td>
                         <td scope="row">
-                            <span>@( item.IsPresent ? "حاضر" : "غایب" )</span>
+                            <span>@( item.Presence ? "حاضر" : "غایب" )</span>
                         </td>
                         <td scope="row">
                             <span> @PersianDateExtensionMethods.ToPeString(item.CreationDate, "yyyy/MM/dd") </span>
                         </td>
                         <td scope="row">
-                            <span>@( item.IsDelete? "لغو" : "تایید شده"  )</span>
+                            <span>@( item.Activeness ? "تایید نشده" : "تایید شده" )</span>
                         </td>
                         <td scope="row">
-                            @if (!item.IsDelete)
+                            @if (!item.Activeness)
                             {
                                 <a class="control btn btn-success btn-sm glyphicon glyphicon-user" href="javascript:void(0)" onclick="UnRegister(@item.ID)"></a>
                                 <a class="control btn btn-info btn-sm fas fa-file-excel" style="line-height: 18px;padding-left: 12px;padding-right: 12px;" href="javascript:void(0)" onclick="SetMark(@item.ID)"></a>
@@ -88,11 +94,8 @@
             </tbody>
 
         </table>
-
     </div>
-
 </div>
-
 
 @Html.Partial("_Modal")
 

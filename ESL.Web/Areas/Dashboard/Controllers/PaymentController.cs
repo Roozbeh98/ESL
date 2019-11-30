@@ -788,6 +788,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                                             _UserClassPlan = db.Tbl_UserClassPlan.Where(x => x.UCP_PaymentID == _Payment.Payment_ID).SingleOrDefault();
                                             _UserClassPlan.UCP_IsActive = true;
                                             _UserClassPlan.UCP_ModifiedDate = DateTime.Now;
+                                            _UserClassPlan.Tbl_ClassPlan.CP_Capacity -= 1;
 
                                             db.Entry(_UserClassPlan).State = EntityState.Modified;
 
@@ -885,6 +886,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                                             _UserClassPlan = db.Tbl_UserClassPlan.Where(x => x.UCP_PaymentID == _Payment.Payment_ID).SingleOrDefault();
                                             _UserClassPlan.UCP_IsActive = false;
                                             _UserClassPlan.UCP_ModifiedDate = DateTime.Now;
+                                            _UserClassPlan.Tbl_ClassPlan.CP_Capacity += 1;
 
                                             db.Entry(_UserClassPlan).State = EntityState.Modified;
 
@@ -922,6 +924,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                                             _UserClassPlan.UCP_IsActive = false;
                                             //_UserClassPlan.UCP_IsDelete = true;
                                             _UserClassPlan.UCP_ModifiedDate = DateTime.Now;
+                                            _UserClassPlan.Tbl_ClassPlan.CP_Capacity += 1;
 
                                             db.Entry(_UserClassPlan).State = EntityState.Modified;
 
@@ -954,6 +957,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                                             _UserClassPlan = db.Tbl_UserClassPlan.Where(x => x.UCP_PaymentID == _Payment.Payment_ID).SingleOrDefault();
                                             _UserClassPlan.UCP_IsActive = false;
                                             _UserClassPlan.UCP_ModifiedDate = DateTime.Now;
+                                            _UserClassPlan.Tbl_ClassPlan.CP_Capacity += 1;
 
                                             db.Entry(_UserClassPlan).State = EntityState.Modified;
 
@@ -1026,6 +1030,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                                             //_UserClassPlan.UCP_IsDelete = false;
                                             _UserClassPlan.UCP_IsActive = true;
                                             _UserClassPlan.UCP_ModifiedDate = DateTime.Now;
+                                            _UserClassPlan.Tbl_ClassPlan.CP_Capacity -= 1;
 
                                             db.Entry(_UserClassPlan).State = EntityState.Modified;
 
@@ -1127,6 +1132,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                                             _UserClassPlan = db.Tbl_UserClassPlan.Where(x => x.UCP_PaymentID == _Payment.Payment_ID).SingleOrDefault();
                                             _UserClassPlan.UCP_IsActive = true;
                                             _UserClassPlan.UCP_ModifiedDate = DateTime.Now;
+                                            _UserClassPlan.Tbl_ClassPlan.CP_Capacity -= 1;
 
                                             db.Entry(_UserClassPlan).State = EntityState.Modified;
 

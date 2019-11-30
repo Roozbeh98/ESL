@@ -8,7 +8,7 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
 {
     public class Model_WorkshopPlanCreate
     {
-        [Display(Name = "عنوان")]
+        [Display(Name = "کارگاه")]
         [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public string Workshop { get; set; }
 

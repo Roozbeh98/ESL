@@ -150,7 +150,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                     case ProductType.ExamRemotely:
 
-                        var _UserExam = db.Tbl_ExamRemotelyPlan.Where(x => x.ERP_ID  == id).SingleOrDefault();
+                        var _UserExam = db.Tbl_ExamRemotelyPlan.Where(x => x.ERP_ID == id).SingleOrDefault();
 
                         if (_UserExam != null)
                         {
@@ -200,6 +200,15 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                             if (_WorkshopPlan != null)
                             {
+                                if (_WorkshopPlan.WP_Capacity <= 0)
+                                {
+                                    TempData["TosterState"] = "info";
+                                    TempData["TosterType"] = TosterType.Maseage;
+                                    TempData["TosterMassage"] = "ظرفیت کارگاه مورد نظر پر شده است";
+
+                                    return RedirectToAction("Index");
+                                }
+
                                 bool smsResult = true;
                                 Tbl_Payment _Payment = Purchase(_User, _WorkshopPlan.WP_Cost, (ProductType)model.Type, out bool walletResult, ref smsResult);
 
@@ -216,10 +225,8 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                                     db.Tbl_Payment.Add(_Payment);
 
-                                    int credit = _Payment.Payment_RemaingWallet - _Payment.Payment_Cost;
-
                                     Tbl_Wallet _Wallet = db.Tbl_Wallet.Where(x => x.Wallet_UserID == _Payment.Payment_UserID).SingleOrDefault();
-                                    _Wallet.Wallet_Credit = credit;
+                                    _Wallet.Wallet_Credit = _Payment.Payment_RemaingWallet - _Payment.Payment_Cost;
                                     _Wallet.Wallet_ModifiedDate = DateTime.Now;
 
                                     db.Entry(_Wallet).State = EntityState.Modified;
@@ -236,6 +243,10 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                                     };
 
                                     db.Tbl_UserWorkshopPlan.Add(_UserWorkshopPlan);
+
+                                    _WorkshopPlan.WP_Capacity -= 1;
+
+                                    db.Entry(_WorkshopPlan).State = EntityState.Modified;
 
                                     if (Convert.ToBoolean(db.SaveChanges() > 0))
                                     {
@@ -265,7 +276,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                                     TempData["TosterType"] = TosterType.Maseage;
                                     TempData["TosterMassage"] = "کارگاه مورد نظر با موفقیت خریداری نشد";
                                 }
-                                
+
                                 return RedirectToAction("Index");
                             }
                             else
@@ -290,6 +301,15 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                             if (_ClassPlan != null)
                             {
+                                if (_ClassPlan.CP_Capacity <= 0)
+                                {
+                                    TempData["TosterState"] = "info";
+                                    TempData["TosterType"] = TosterType.Maseage;
+                                    TempData["TosterMassage"] = "ظرفیت کلاس مورد نظر پر شده است";
+
+                                    return RedirectToAction("Index");
+                                }
+
                                 bool smsResult = true;
                                 Tbl_Payment _Payment = Purchase(_User, _ClassPlan.CP_CostPerSession, (ProductType)model.Type, out bool walletResult, ref smsResult);
 
@@ -319,6 +339,10 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                                         db.Tbl_UserClassPlan.Add(_UserClassPlan);
                                     }
+
+                                    _ClassPlan.CP_Capacity -= 1;
+
+                                    db.Entry(_ClassPlan).State = EntityState.Modified;
 
                                     if (Convert.ToBoolean(db.SaveChanges() > 0))
                                     {
@@ -371,6 +395,15 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                             if (_ExamInPersonPlan != null)
                             {
+                                if (_ExamInPersonPlan.EIPP_Capacity <= 0)
+                                {
+                                    TempData["TosterState"] = "info";
+                                    TempData["TosterType"] = TosterType.Maseage;
+                                    TempData["TosterMassage"] = "ظرفیت آزمون مورد نظر پر شده است";
+
+                                    return RedirectToAction("Index");
+                                }
+
                                 bool smsResult = true;
                                 Tbl_Payment _Payment = Purchase(_User, _ExamInPersonPlan.EIPP_Cost, (ProductType)model.Type, out bool walletResult, ref smsResult);
 
@@ -387,6 +420,12 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                                     db.Tbl_Payment.Add(_Payment);
 
+                                    Tbl_Wallet _Wallet = db.Tbl_Wallet.Where(x => x.Wallet_UserID == _Payment.Payment_UserID).SingleOrDefault();
+                                    _Wallet.Wallet_Credit = _Payment.Payment_RemaingWallet - _Payment.Payment_Cost;
+                                    _Wallet.Wallet_ModifiedDate = DateTime.Now;
+
+                                    db.Entry(_Wallet).State = EntityState.Modified;
+
                                     Tbl_UserExamInPersonPlan _UserExamInPersonPlan = new Tbl_UserExamInPersonPlan()
                                     {
                                         UEIPP_Guid = Guid.NewGuid(),
@@ -400,6 +439,10 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                                     db.Tbl_UserExamInPersonPlan.Add(_UserExamInPersonPlan);
 
+                                    _ExamInPersonPlan.EIPP_Capacity -= 1;
+
+                                    db.Entry(_ExamInPersonPlan).State = EntityState.Modified;
+
                                     if (Convert.ToBoolean(db.SaveChanges() > 0))
                                     {
                                         if (!smsResult)
@@ -412,7 +455,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                                         {
                                             TempData["TosterState"] = "success";
                                             TempData["TosterType"] = TosterType.Maseage;
-                                            TempData["TosterMassage"] = "درخواست خرید آزمون مورد نظر با موفقیت ارسال شد";
+                                            TempData["TosterMassage"] = "آزمون مورد نظر با موفقیت خریداری شد";
                                         }
 
                                         return RedirectToAction("Index");
@@ -420,13 +463,13 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                                     TempData["TosterState"] = "error";
                                     TempData["TosterType"] = TosterType.Maseage;
-                                    TempData["TosterMassage"] = "درخواست خرید آزمون مورد نظر با موفقیت ارسال نشد";
+                                    TempData["TosterMassage"] = "آزمون مورد نظر با موفقیت خریداری نشد";
                                 }
                                 else
                                 {
                                     TempData["TosterState"] = "error";
                                     TempData["TosterType"] = TosterType.Maseage;
-                                    TempData["TosterMassage"] = "درخواست خرید آزمون مورد نظر با موفقیت ارسال نشد";
+                                    TempData["TosterMassage"] = "آزمون مورد نظر با موفقیت خریداری نشد";
                                 }
 
                                 return RedirectToAction("Index");
@@ -451,6 +494,15 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                             //if (_ExamRemotelyPlan != null)
                             //{
+                            //    if (_ExamRemotelyPlan.ERP_Capacity <= 0)
+                            //    {
+                            //        TempData["TosterState"] = "info";
+                            //        TempData["TosterType"] = TosterType.Maseage;
+                            //        TempData["TosterMassage"] = "ظرفیت آزمون مورد نظر پر شده است";
+
+                            //        return RedirectToAction("Index");
+                            //    }
+
                             //    bool smsResult = true;
                             //    Tbl_Payment _Payment = Purchase(_User, _ExamRemotelyPlan.cost, (ProductType)model.Type, out bool walletResult, ref smsResult);
 
@@ -467,7 +519,11 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                             //        db.Tbl_Payment.Add(_Payment);
 
-                            //        Tbl_UserClassPlan _UserClassPlan = new Tbl_UserClassPlan()
+                            //        Tbl_Wallet _Wallet = db.Tbl_Wallet.Where(x => x.Wallet_UserID == _Payment.Payment_UserID).SingleOrDefault();
+                            //        _Wallet.Wallet_Credit = _Payment.Payment_RemaingWallet - _Payment.Payment_Cost;
+                            //        _Wallet.Wallet_ModifiedDate = DateTime.Now;
+
+                            //        Tbl_UserExamRemotelyPlan _UserExamRemotelyPlan = new Tbl_UserExamRemotelyPlan()
                             //        {
                             //            UCP_Guid = Guid.NewGuid(),
                             //            UCP_UserID = _User.User_ID,
@@ -477,7 +533,11 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                             //            UCP_ModifiedDate = DateTime.Now
                             //        };
 
-                            //        db.Tbl_UserClassPlan.Add(_UserClassPlan);
+                            //        db.Tbl_UserExamRemotelyPlan.Add(_UserExamRemotelyPlan);
+
+                            //        _ExamRemotelyPlan.ERP_Capacity -= 1;
+
+                            //        db.Entry(_ExamRemotelyPlan).State = EntityState.Modified;
 
                             //        if (Convert.ToBoolean(db.SaveChanges() > 0))
                             //        {
@@ -491,7 +551,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                             //            {
                             //                TempData["TosterState"] = "success";
                             //                TempData["TosterType"] = TosterType.Maseage;
-                            //                TempData["TosterMassage"] = "درخواست خرید آزمون مورد نظر با موفقیت ارسال شد";
+                            //                TempData["TosterMassage"] = "آزمون مورد نظر با موفقیت خریداری شد";
                             //            }
 
                             //            return RedirectToAction("Index");
@@ -499,13 +559,13 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                             //        TempData["TosterState"] = "error";
                             //        TempData["TosterType"] = TosterType.Maseage;
-                            //        TempData["TosterMassage"] = "درخواست خرید آزمون مورد نظر با موفقیت ارسال نشد";
+                            //        TempData["TosterMassage"] = "آزمون مورد نظر با موفقیت خریداری نشد";
                             //    }
                             //    else
                             //    {
                             //        TempData["TosterState"] = "error";
                             //        TempData["TosterType"] = TosterType.Maseage;
-                            //        TempData["TosterMassage"] = "درخواست خرید آزمون مورد نظر با موفقیت ارسال نشد";
+                            //        TempData["TosterMassage"] = "آزمون مورد نظر با موفقیت خریداری نشد";
                             //    }
 
                             //    return RedirectToAction("Index");

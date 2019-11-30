@@ -11,7 +11,7 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
         [Display(Name = "شناسه")]
         public int ID { get; set; }
 
-        [Display(Name = "عنوان")]
+        [Display(Name = "کارگاه")]
         public string Workshop { get; set; }
 
         [Display(Name = "توضیحات")]
