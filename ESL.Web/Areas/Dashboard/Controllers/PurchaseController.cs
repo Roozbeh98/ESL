@@ -409,7 +409,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                                 if (_Payment != null)
                                 {
-                                    if (!smsResult)
+                                    if (!walletResult)
                                     {
                                         TempData["TosterState"] = "error";
                                         TempData["TosterType"] = TosterType.Maseage;

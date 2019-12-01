@@ -92,81 +92,81 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
-        [Authorize(Roles = "Admin")]
-        public ActionResult Edit(int id)
-        {
-            var _ExamInPersonPlan = db.Tbl_ExamInPersonPlan.Where(x => x.EIPP_ID == id).SingleOrDefault();
+        //[Authorize(Roles = "Admin")]
+        //public ActionResult Edit(int id)
+        //{
+        //    var _ExamInPersonPlan = db.Tbl_ExamInPersonPlan.Where(x => x.EIPP_ID == id).SingleOrDefault();
 
-            if (_ExamInPersonPlan != null)
-            {
-                Model_ExamInPersonPlanEdit model = new Model_ExamInPersonPlanEdit()
-                {
-                    ID = _ExamInPersonPlan.EIPP_ID,
-                    Exam = _ExamInPersonPlan.Tbl_SubExamInPerson.Tbl_ExamInPerson.EIP_Guid.ToString(),
-                    SubExam = _ExamInPersonPlan.Tbl_SubExamInPerson.SEIP_Guid.ToString(),
-                    Description = _ExamInPersonPlan.EIPP_Description,
-                    Cost = _ExamInPersonPlan.EIPP_Cost,
-                    Location = _ExamInPersonPlan.EIPP_Location,
-                    Capacity = _ExamInPersonPlan.EIPP_Capacity,
-                    TotalMark = _ExamInPersonPlan.EIPP_TotalMark,
-                    PassMark = _ExamInPersonPlan.EIPP_PassMark,
-                    Activeness = _ExamInPersonPlan.EIPP_IsActive,
-                    Date = _ExamInPersonPlan.EIPP_Date
-                };
+        //    if (_ExamInPersonPlan != null)
+        //    {
+        //        Model_ExamInPersonPlanEdit model = new Model_ExamInPersonPlanEdit()
+        //        {
+        //            ID = _ExamInPersonPlan.EIPP_ID,
+        //            Exam = _ExamInPersonPlan.Tbl_SubExamInPerson.Tbl_ExamInPerson.EIP_Guid.ToString(),
+        //            SubExam = _ExamInPersonPlan.Tbl_SubExamInPerson.SEIP_Guid.ToString(),
+        //            Description = _ExamInPersonPlan.EIPP_Description,
+        //            Cost = _ExamInPersonPlan.EIPP_Cost,
+        //            Location = _ExamInPersonPlan.EIPP_Location,
+        //            Capacity = _ExamInPersonPlan.EIPP_Capacity,
+        //            TotalMark = _ExamInPersonPlan.EIPP_TotalMark,
+        //            PassMark = _ExamInPersonPlan.EIPP_PassMark,
+        //            Activeness = _ExamInPersonPlan.EIPP_IsActive,
+        //            Date = _ExamInPersonPlan.EIPP_Date
+        //        };
 
-                return View(model);
-            }
+        //        return View(model);
+        //    }
 
-            return HttpNotFound();
-        }
+        //    return HttpNotFound();
+        //}
 
-        [Authorize(Roles = "Admin")]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(Model_ExamInPersonPlanEdit model)
-        {
-            if (ModelState.IsValid)
-            {
-                Tbl_ExamInPersonPlan _ExamInPersonPlan = db.Tbl_ExamInPersonPlan.Where(x => x.EIPP_ID == model.ID).SingleOrDefault();
+        //[Authorize(Roles = "Admin")]
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Edit(Model_ExamInPersonPlanEdit model)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        Tbl_ExamInPersonPlan _ExamInPersonPlan = db.Tbl_ExamInPersonPlan.Where(x => x.EIPP_ID == model.ID).SingleOrDefault();
 
-                if (_ExamInPersonPlan != null)
-                {
-                    _ExamInPersonPlan.EIPP_Description = model.Description;
-                    _ExamInPersonPlan.EIPP_Cost = model.Cost;
-                    _ExamInPersonPlan.EIPP_Capacity = model.Capacity;
-                    _ExamInPersonPlan.EIPP_TotalMark = model.TotalMark;
-                    _ExamInPersonPlan.EIPP_PassMark = model.PassMark;
-                    _ExamInPersonPlan.EIPP_IsActive = model.Activeness;
+        //        if (_ExamInPersonPlan != null)
+        //        {
+        //            _ExamInPersonPlan.EIPP_Description = model.Description;
+        //            _ExamInPersonPlan.EIPP_Cost = model.Cost;
+        //            _ExamInPersonPlan.EIPP_Capacity = model.Capacity;
+        //            _ExamInPersonPlan.EIPP_TotalMark = model.TotalMark;
+        //            _ExamInPersonPlan.EIPP_PassMark = model.PassMark;
+        //            _ExamInPersonPlan.EIPP_IsActive = model.Activeness;
 
-                    _ExamInPersonPlan.EIPP_ModifiedDate = DateTime.Now;
+        //            _ExamInPersonPlan.EIPP_ModifiedDate = DateTime.Now;
 
-                    db.Entry(_ExamInPersonPlan).State = EntityState.Modified;
+        //            db.Entry(_ExamInPersonPlan).State = EntityState.Modified;
 
-                    if (Convert.ToBoolean(db.SaveChanges() > 0))
-                    {
-                        TempData["TosterState"] = "success";
-                        TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "آزمون مورد نظر با موفقیت ویرایش شد";
+        //            if (Convert.ToBoolean(db.SaveChanges() > 0))
+        //            {
+        //                TempData["TosterState"] = "success";
+        //                TempData["TosterType"] = TosterType.Maseage;
+        //                TempData["TosterMassage"] = "آزمون مورد نظر با موفقیت ویرایش شد";
 
-                        return RedirectToAction("Index");
-                    }
-                    else
-                    {
-                        TempData["TosterState"] = "error";
-                        TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "آزمون مورد نظر با موفقیت ویرایش نشد";
+        //                return RedirectToAction("Index");
+        //            }
+        //            else
+        //            {
+        //                TempData["TosterState"] = "error";
+        //                TempData["TosterType"] = TosterType.Maseage;
+        //                TempData["TosterMassage"] = "آزمون مورد نظر با موفقیت ویرایش نشد";
 
-                        return RedirectToAction("Index");
-                    }
-                }
-                else
-                {
-                    return HttpNotFound();
-                }
-            }
+        //                return RedirectToAction("Index");
+        //            }
+        //        }
+        //        else
+        //        {
+        //            return HttpNotFound();
+        //        }
+        //    }
 
-            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        }
+        //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //}
 
         [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)

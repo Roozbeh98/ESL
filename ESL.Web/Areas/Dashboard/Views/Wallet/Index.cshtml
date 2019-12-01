@@ -6,32 +6,30 @@
     Layout = "~/Areas/Dashboard/Views/Shared/_Master.cshtml";
 }
 
-
-<div class="panel panel-body panel-default  navigation">
+<div class="panel panel-body panel-default navigation">
 
     <div class="pull-left">
-        <h4 class="navigation-title"><b>لیست اعتبار کاربران</b></h4>
+        <h4 class="navigation-title"><b>@ViewBag.Title</b></h4>
     </div>
 
 </div>
 
 <div class="panel panel-default">
-
     <div class="panel-body table-body" style="overflow-x:auto;">
-
-        <table id="DateTable" class="table  table-bordered table-striped table-secondary" style="width:100%;">
+        <table id="DateTable" class="table table-bordered table-striped table-secondary" style="width:100%;">
 
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.User)</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.Credit)</th>
-                    <th scope="col"> @Html.DisplayNameFor(model => model.CreationDate)</th>
-                    <th scope="col"> @Html.DisplayNameFor(model => model.ModifiedDate)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.CreationDate)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.ModifiedDate)</th>
                 </tr>
             </thead>
 
             <tbody>
+
                 @{
                     int x = 0;
                 }
@@ -43,16 +41,16 @@
                     <tr>
                         <td scope="row">@x</td>
                         <td scope="row">
-                            <span> @Html.DisplayFor(modelItem => item.User) </span>
+                            <span>@Html.DisplayFor(modelItem => item.User)</span>
                         </td>
                         <td scope="row">
-                            <span> @Html.DisplayFor(modelItem => item.Credit) </span>
+                            <span>@Html.DisplayFor(modelItem => item.Credit)</span>
                         </td>
                         <td scope="row">
-                            <span> @PersianDateExtensionMethods.ToPeString(item.CreationDate, "yyyy/MM/dd HH:mm") </span>
+                            <span>@PersianDateExtensionMethods.ToPeString(item.CreationDate, "yyyy/MM/dd HH:mm")</span>
                         </td>
                         <td scope="row">
-                            <span> @PersianDateExtensionMethods.ToPeString(item.ModifiedDate, "yyyy/MM/dd HH:mm") </span>
+                            <span>@PersianDateExtensionMethods.ToPeString(item.ModifiedDate, "yyyy/MM/dd HH:mm")</span>
                         </td>
                     </tr>
                 }
@@ -60,7 +58,5 @@
             </tbody>
 
         </table>
-
     </div>
-
 </div>

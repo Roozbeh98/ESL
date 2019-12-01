@@ -48,29 +48,11 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                 if (_ExamInPersonPlan != null)
                 {
-                    if (_ExamInPersonPlan.EIPP_Capacity <= 0)
-                    {
-                        TempData["TosterState"] = "info";
-                        TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "ظرفیت آزمون مورد نظر پر شده است";
-
-                        return RedirectToAction("Details", "ExamInPerson", new { area = "Dashboard", id = model.ExamID });
-                    }
-
                     bool smsResult = true;
                     Tbl_Payment _Payment = Purchase(_User, _ExamInPersonPlan.EIPP_Cost, ProductType.ExamInPerson, out bool walletResult, ref smsResult);
 
                     if (_Payment != null)
                     {
-                        if (!walletResult)
-                        {
-                            TempData["TosterState"] = "error";
-                            TempData["TosterType"] = TosterType.Maseage;
-                            TempData["TosterMassage"] = "کمبود موجودی کیف پول کاربر";
-
-                            return RedirectToAction("Details", "ExamInPerson", new { area = "Dashboard", id = model.ExamID });
-                        }
-
                         db.Tbl_Payment.Add(_Payment);
 
                         Tbl_Wallet _Wallet = db.Tbl_Wallet.Where(x => x.Wallet_UserID == _Payment.Payment_UserID).SingleOrDefault();
@@ -84,6 +66,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                             UEIPP_Guid = Guid.NewGuid(),
                             UEIPP_UserID = new Rep_User().Get_UserIDWithGUID(model.UserGuid),
                             UEIPP_EIPPID = model.ExamID,
+                            UEIPP_SeatNumber = 0,
                             Tbl_Payment = _Payment,
                             UEIPP_IsActive = true,
                             UEIPP_CreationDate = DateTime.Now,
@@ -98,7 +81,29 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                         if (Convert.ToBoolean(db.SaveChanges() > 0))
                         {
-                            if (!smsResult)
+                            //if (_ExamInPersonPlan.EIPP_Capacity <= 0)
+                            //{
+                            //    TempData["TosterState"] = "warning";
+                            //    TempData["TosterType"] = TosterType.Maseage;
+                            //    TempData["TosterMassage"] = "ظرفیت آزمون مورد نظر پر شده است";
+
+                            //    return RedirectToAction("Details", "ExamInPerson", new { area = "Dashboard", id = model.ExamID });
+                            //}
+
+                            if (!walletResult && !smsResult)
+                            {
+                                TempData["TosterState"] = "warning";
+                                TempData["TosterType"] = TosterType.WithTitel;
+                                TempData["TosterTitel"] = "خطا در ارسال پیامک";
+                                TempData["TosterMassage"] = "کمبود موجودی کیف پول کاربر";
+                            }
+                            else if (!walletResult)
+                            {
+                                TempData["TosterState"] = "warning";
+                                TempData["TosterType"] = TosterType.Maseage;
+                                TempData["TosterMassage"] = "کمبود موجودی کیف پول کاربر";
+                            }
+                            else if (!smsResult)
                             {
                                 TempData["TosterState"] = "warning";
                                 TempData["TosterType"] = TosterType.Maseage;
@@ -175,7 +180,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     {
                         TempData["TosterState"] = "success";
                         TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام شد";
+                        TempData["TosterMassage"] = "تغییر نمره با موفقیت انجام شد";
 
                         return RedirectToAction("Details", "ExamInPerson", new { area = "Dashboard", id = db.Tbl_UserExamInPersonPlan.Where(x => x.UEIPP_ID == model.ID).SingleOrDefault().UEIPP_EIPPID });
                     }
@@ -183,7 +188,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     {
                         TempData["TosterState"] = "error";
                         TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام نشد";
+                        TempData["TosterMassage"] = "تغییر نمره با موفقیت انجام نشد";
 
                         return HttpNotFound();
                     }
@@ -230,7 +235,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     {
                         TempData["TosterState"] = "success";
                         TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام شد";
+                        TempData["TosterMassage"] = "تغییر شماره صندلی با موفقیت انجام شد";
 
                         return RedirectToAction("Details", "ExamInPerson", new { area = "Dashboard", id = db.Tbl_UserExamInPersonPlan.Where(x => x.UEIPP_ID == model.ID).SingleOrDefault().UEIPP_EIPPID });
                     }
@@ -238,7 +243,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     {
                         TempData["TosterState"] = "error";
                         TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام نشد";
+                        TempData["TosterMassage"] = "تغییر شماره صندلی با موفقیت انجام نشد";
 
                         return HttpNotFound();
                     }
@@ -285,7 +290,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     {
                         TempData["TosterState"] = "success";
                         TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام شد";
+                        TempData["TosterMassage"] = "تغییر وضعیت نمایش با موفقیت انجام شد";
 
                         return RedirectToAction("Details", "ExamInPerson", new { area = "Dashboard", id = db.Tbl_UserExamInPersonPlan.Where(x => x.UEIPP_ID == model.ID).SingleOrDefault().UEIPP_EIPPID });
                     }
@@ -293,7 +298,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     {
                         TempData["TosterState"] = "error";
                         TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام نشد";
+                        TempData["TosterMassage"] = "تغییر وضعیت نمایش با موفقیت انجام نشد";
 
                         return HttpNotFound();
                     }
@@ -307,12 +312,12 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         {
             if (id != null)
             {
-                Model_Message model = new Model_Message();
-
                 var _UserExamInPersonPlan = db.Tbl_UserExamInPersonPlan.Where(x => x.UEIPP_ID == id).SingleOrDefault();
 
                 if (_UserExamInPersonPlan != null)
                 {
+                    Model_Message model = new Model_Message();
+
                     model.ID = id.Value;
                     model.Name = _UserExamInPersonPlan.Tbl_User.User_FirstName + " " + _UserExamInPersonPlan.Tbl_User.User_lastName;
                     model.Description = $"آیا از لغو ثبت نام کاربر { model.Name } اطمینان دارید ؟";
@@ -338,27 +343,53 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                 if (_UserExamInPersonPlan != null)
                 {
-                    _UserExamInPersonPlan.UEIPP_IsDelete = true;
+                    var _Payment = db.Tbl_Payment.Where(x => x.Payment_ID == _UserExamInPersonPlan.UEIPP_PaymentID).SingleOrDefault();
 
-                    db.Entry(_UserExamInPersonPlan).State = EntityState.Modified;
-
-                    if (Convert.ToBoolean(db.SaveChanges() > 0))
+                    if (_Payment != null)
                     {
-                        TempData["TosterState"] = "success";
+                        int newCredit = new Rep_Wallet().Get_WalletCreditWithUserID(_Payment.Payment_UserID) + _Payment.Payment_Cost;
+
+                        _Payment.Payment_StateCodeID = (int)PaymentState.Rejected;
+                        _Payment.Payment_WayCodeID = (int)PaymentWay.Internet;
+                        _Payment.Payment_RemaingWallet = newCredit;
+                        _Payment.Payment_ModifiedDate = DateTime.Now;
+
+                        db.Entry(_Payment).State = EntityState.Modified;
+
+                        Tbl_Wallet _Wallet = db.Tbl_Wallet.Where(x => x.Wallet_UserID == _Payment.Payment_UserID).SingleOrDefault();
+                        _Wallet.Wallet_Credit = newCredit;
+                        _Wallet.Wallet_ModifiedDate = DateTime.Now;
+
+                        db.Entry(_Wallet).State = EntityState.Modified;
+
+                        _UserExamInPersonPlan.UEIPP_IsActive = false;
+                        _UserExamInPersonPlan.UEIPP_ModifiedDate = DateTime.Now;
+                        _UserExamInPersonPlan.Tbl_ExamInPersonPlan.EIPP_Capacity += 1;
+
+                        db.Entry(_UserExamInPersonPlan).State = EntityState.Modified;
+
+                        if (Convert.ToBoolean(db.SaveChanges() > 0))
+                        {
+                            TempData["TosterState"] = "success";
+                            TempData["TosterType"] = TosterType.Maseage;
+                            TempData["TosterMassage"] = "ثبت نام کاربر مورد نظر با موفقیت لغو شد";
+
+                            return RedirectToAction("Details", "ExamInPerson", new { area = "Dashboard", id = db.Tbl_UserExamInPersonPlan.Where(x => x.UEIPP_ID == model.ID).SingleOrDefault().UEIPP_EIPPID });
+                        }
+
+                        TempData["TosterState"] = "error";
                         TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام شد";
+                        TempData["TosterMassage"] = "ثبت نام کاربر مورد نظر با موفقیت لغو نشد";
 
                         return RedirectToAction("Details", "ExamInPerson", new { area = "Dashboard", id = db.Tbl_UserExamInPersonPlan.Where(x => x.UEIPP_ID == model.ID).SingleOrDefault().UEIPP_EIPPID });
                     }
-                    else
-                    {
-                        TempData["TosterState"] = "error";
-                        TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام نشد";
-
-                        return HttpNotFound();
-                    }
                 }
+
+                TempData["TosterState"] = "error";
+                TempData["TosterType"] = TosterType.Maseage;
+                TempData["TosterMassage"] = "ثبت نام کاربر مورد نظر با موفقیت لغو نشد";
+
+                return HttpNotFound();
             }
 
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -368,15 +399,15 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         {
             if (id != null)
             {
-                Model_Message model = new Model_Message();
-
                 var _UserExamInPersonPlan = db.Tbl_UserExamInPersonPlan.Where(x => x.UEIPP_ID == id).SingleOrDefault();
 
                 if (_UserExamInPersonPlan != null)
                 {
+                    Model_Message model = new Model_Message();
+
                     model.ID = id.Value;
                     model.Name = _UserExamInPersonPlan.Tbl_User.User_FirstName + " " + _UserExamInPersonPlan.Tbl_User.User_lastName;
-                    model.Description = $"آیا از ثبت نام مجدد کاربر { model.Name } اطمینان دارید ؟";
+                    model.Description = $"آیا از ثبت نام کاربر { model.Name } اطمینان دارید ؟";
 
                     return PartialView(model);
                 }
@@ -399,27 +430,82 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                 if (_UserExamInPersonPlan != null)
                 {
-                    _UserExamInPersonPlan.UEIPP_IsDelete = false;
+                    var _Payment = db.Tbl_Payment.Where(x => x.Payment_ID == _UserExamInPersonPlan.UEIPP_PaymentID).SingleOrDefault();
 
-                    db.Entry(_UserExamInPersonPlan).State = EntityState.Modified;
-
-                    if (Convert.ToBoolean(db.SaveChanges() > 0))
+                    if (_Payment != null)
                     {
-                        TempData["TosterState"] = "success";
+                        int credit = new Rep_Wallet().Get_WalletCreditWithUserID(_Payment.Payment_UserID);
+                        int newCredit = credit - _Payment.Payment_Cost;
+
+                        _Payment.Payment_StateCodeID = (int)PaymentState.Confirmed;
+                        _Payment.Payment_WayCodeID = (int)PaymentWay.Internet;
+                        _Payment.Payment_RemaingWallet = newCredit;
+                        _Payment.Payment_ModifiedDate = DateTime.Now;
+
+                        db.Entry(_Payment).State = EntityState.Modified;
+
+                        Tbl_Wallet _Wallet = db.Tbl_Wallet.Where(x => x.Wallet_UserID == _Payment.Payment_UserID).SingleOrDefault();
+                        _Wallet.Wallet_Credit = newCredit;
+                        _Wallet.Wallet_ModifiedDate = DateTime.Now;
+
+                        db.Entry(_Wallet).State = EntityState.Modified;
+
+                        _UserExamInPersonPlan.UEIPP_IsActive = true;
+                        _UserExamInPersonPlan.UEIPP_ModifiedDate = DateTime.Now;
+                        _UserExamInPersonPlan.Tbl_ExamInPersonPlan.EIPP_Capacity -= 1;
+
+                        db.Entry(_UserExamInPersonPlan).State = EntityState.Modified;
+
+                        if (Convert.ToBoolean(db.SaveChanges() > 0))
+                        {
+                            //if (_UserExamInPersonPlan.Tbl_ExamInPersonPlan.EIPP_Capacity <= 0)
+                            //{
+                            //    TempData["TosterState"] = "warning";
+                            //    TempData["TosterType"] = TosterType.Maseage;
+                            //    TempData["TosterMassage"] = "ظرفیت آزمون مورد نظر پر شده است";
+
+                            //    return RedirectToAction("Details", "ExamInPerson", new { area = "Dashboard", id = db.Tbl_UserExamInPersonPlan.Where(x => x.UEIPP_ID == model.ID).SingleOrDefault().UEIPP_EIPPID });
+                            //}
+
+                            if (credit + 30000 < _Payment.Payment_Cost)
+                            {
+                                if (new SMSPortal().SendServiceable(_Payment.Tbl_User.User_Mobile, ".", "", "", _Payment.Tbl_User.User_FirstName + " " + _Payment.Tbl_User.User_lastName, SMSTemplate.Charge) != "ارسال به مخابرات")
+                                {
+                                    TempData["TosterState"] = "warning";
+                                    TempData["TosterType"] = TosterType.WithTitel;
+                                    TempData["TosterTitel"] = "خطا در ارسال پیامک";
+                                    TempData["TosterMassage"] = "کمبود موجودی کیف پول کاربر";
+                                }
+                                else
+                                {
+                                    TempData["TosterState"] = "warning";
+                                    TempData["TosterType"] = TosterType.Maseage;
+                                    TempData["TosterMassage"] = "کمبود موجودی کیف پول کاربر";
+                                }
+                            }
+                            else
+                            {
+                                TempData["TosterState"] = "success";
+                                TempData["TosterType"] = TosterType.Maseage;
+                                TempData["TosterMassage"] = "ثبت نام کاربر مورد نظر با موفقیت انجام شد";
+                            }
+
+                            return RedirectToAction("Details", "ExamInPerson", new { area = "Dashboard", id = db.Tbl_UserExamInPersonPlan.Where(x => x.UEIPP_ID == model.ID).SingleOrDefault().UEIPP_EIPPID });
+                        }
+
+                        TempData["TosterState"] = "error";
                         TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام شد";
+                        TempData["TosterMassage"] = "ثبت نام کاربر مورد نظر با موفقیت انجام نشد";
 
                         return RedirectToAction("Details", "ExamInPerson", new { area = "Dashboard", id = db.Tbl_UserExamInPersonPlan.Where(x => x.UEIPP_ID == model.ID).SingleOrDefault().UEIPP_EIPPID });
                     }
-                    else
-                    {
-                        TempData["TosterState"] = "error";
-                        TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "عملیات با موفقیت انجام نشد";
-
-                        return HttpNotFound();
-                    }
                 }
+
+                TempData["TosterState"] = "error";
+                TempData["TosterType"] = TosterType.Maseage;
+                TempData["TosterMassage"] = "ثبت نام کاربر مورد نظر با موفقیت انجام نشد";
+
+                return HttpNotFound();
             }
 
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -457,7 +543,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                         Payment_StateCodeID = (int)PaymentState.Confirmed,
                         Payment_Cost = cost,
                         Payment_Discount = 0,
-                        Payment_RemaingWallet = credit,
+                        Payment_RemaingWallet = credit - cost,
                         Payment_TrackingToken = "ESL-" + new Random().Next(100000, 999999).ToString(),
                         Payment_CreateDate = DateTime.Now,
                         Payment_ModifiedDate = DateTime.Now
@@ -480,7 +566,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                         Payment_StateCodeID = (int)PaymentState.Confirmed,
                         Payment_Cost = cost,
                         Payment_Discount = 0,
-                        Payment_RemaingWallet = credit,
+                        Payment_RemaingWallet = credit - cost,
                         Payment_TrackingToken = "ESL-" + new Random().Next(100000, 999999).ToString(),
                         Payment_CreateDate = DateTime.Now,
                         Payment_ModifiedDate = DateTime.Now

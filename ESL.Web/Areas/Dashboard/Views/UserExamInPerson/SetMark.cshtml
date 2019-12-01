@@ -1,6 +1,4 @@
 ﻿@model ESL.Web.Areas.Dashboard.Models.ViewModels.Model_UserExamInPersonPlanSetMark
-@using ESL.Services.BaseRepository
-
 
 @using (Html.BeginForm())
 {
@@ -8,7 +6,6 @@
     @Html.HiddenFor(model => model.ID)
 
     <div class="modal-main">
-
         <div class="form-group">
             @Html.LabelFor(model => model.Mark, htmlAttributes: new { @class = "control-label" })
 
@@ -19,15 +16,13 @@
 
             @Html.ValidationMessageFor(model => model.Mark, "", new { @class = "text-danger" })
         </div>
-
     </div>
 
     <div style="margin-top:20px;">
         <button class="btn btn-danger modal-btn-Dual pull-left" type="button" data-dismiss="modal">انصراف</button>
-        <button class="btn btn-success modal-btn-Dual pull-right " type="submit" name="btn-Delete">تایید</button>
+        <button class="btn btn-success modal-btn-Dual pull-right" type="submit" name="btn-Delete">تایید</button>
     </div>
 }
-
 
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

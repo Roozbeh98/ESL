@@ -198,24 +198,38 @@
 
     </li>
 
+    <li data-toggle="collapse" data-target="#sub-menu-class">
+
+        <a href="javascript:void(0)">
+            <i class="glyphicon glyphicon-book"></i>
+            کلاس ها
+            <i class="glyphicon glyphicon-chevron-right pull-right"></i>
+        </a>
+
+        <ul class="collapse nav aside-sub-panel" id="sub-menu-class">
+
+            <li>
+                <a href="@Url.Action("Index", "Class")">
+                    <i class="glyphicon glyphicon-book"></i>
+                    لیست کلاس ها
+                </a>
+            </li>
+
+            <li>
+                <a href="@Url.Action("Index", "Presence")">
+                    <i class="glyphicon glyphicon-book"></i>
+                    حضور غیاب
+                </a>
+            </li>
+
+        </ul>
+
+    </li>
+
     <li>
         <a href="@Url.Action("Index", "Workshop", new { area = "Dashboard" })">
             <i class="glyphicon glyphicon-book"></i>
             کارگاه ها
-        </a>
-    </li>
-
-    <li>
-        <a href="@Url.Action("Index", "Class", new { area = "Dashboard" })">
-            <i class="glyphicon glyphicon-book"></i>
-            کلاس ها
-        </a>
-    </li>
-
-    <li>
-        <a href="@Url.Action("Index", "Presence", new { area = "Dashboard" })">
-            <i class="glyphicon glyphicon-book"></i>
-            حضور غیاب
         </a>
     </li>
 

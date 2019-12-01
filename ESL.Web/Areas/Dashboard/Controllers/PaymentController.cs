@@ -155,7 +155,9 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             if (ModelState.IsValid)
             {
                 Rep_Wallet _Wallet = new Rep_Wallet();
-                int credit = _Wallet.Get_WalletCreditWithUserGUID(model.User), newCredit;
+                var _User = db.Tbl_User.Where(x => x.User_Guid == model.User).SingleOrDefault();
+
+                int credit = _Wallet.Get_WalletCreditWithUserGUID(_User.User_Guid), newCredit;
                 int titleCodeId = Rep_CodeGroup.Get_CodeIDWithGUID(model.Title);
 
                 switch ((PaymentTitle)titleCodeId)
@@ -230,12 +232,10 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     db.Tbl_Document.Add(_Document);
                 }
 
-                int userId = new Rep_User().Get_UserIDWithGUID(model.User);
-
                 Tbl_Payment _Payment = new Tbl_Payment
                 {
                     Payment_Guid = Guid.NewGuid(),
-                    Payment_UserID = userId,
+                    Payment_UserID = _User.User_ID,
                     Payment_TitleCodeID = titleCodeId,
                     Payment_WayCodeID = Rep_CodeGroup.Get_CodeIDWithGUID(model.Way),
                     Payment_StateCodeID = (int)PaymentState.Confirmed,
@@ -257,7 +257,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                 if (newCredit != credit)
                 {
-                    Tbl_Wallet w = db.Tbl_Wallet.Where(x => x.Wallet_UserID == userId).SingleOrDefault();
+                    Tbl_Wallet w = db.Tbl_Wallet.Where(x => x.Wallet_UserID == _User.User_ID).SingleOrDefault();
                     w.Wallet_Credit = newCredit;
                     w.Wallet_ModifiedDate = DateTime.Now;
 
@@ -266,9 +266,19 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                 if (Convert.ToBoolean(db.SaveChanges() > 0))
                 {
-                    TempData["TosterState"] = "success";
-                    TempData["TosterType"] = TosterType.Maseage;
-                    TempData["TosterMassage"] = "تراکنش جدید با موفقیت ثبت شد";
+                    if ((PaymentTitle)titleCodeId == PaymentTitle.Charge &&
+                        new SMSPortal().SendServiceable(_User.User_Mobile, (_Payment.Payment_Cost * 10).ToString(), PersianDateExtensionMethods.ToPeString(DateTime.Now, "yyyy/MM/dd"), credit.ToString(), "", SMSTemplate.Success) != "ارسال به مخابرات")
+                    {
+                        TempData["TosterState"] = "warning";
+                        TempData["TosterType"] = TosterType.Maseage;
+                        TempData["TosterMassage"] = "خطا در ارسال پیامک";
+                    }
+                    else
+                    {
+                        TempData["TosterState"] = "success";
+                        TempData["TosterType"] = TosterType.Maseage;
+                        TempData["TosterMassage"] = "تراکنش جدید با موفقیت ثبت شد";
+                    }
 
                     return RedirectToAction("Index");
                 }
@@ -334,7 +344,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                                         case PaymentState.Confirmed:
 
-                                            credit = _Payment.Payment_RemaingWallet + _Payment.Payment_Cost;
+                                            credit = new Rep_Wallet().Get_WalletCreditWithUserID(_Payment.Payment_UserID) + _Payment.Payment_Cost;
 
                                             _Wallet = db.Tbl_Wallet.Where(x => x.Wallet_UserID == _Payment.Payment_UserID).SingleOrDefault();
                                             _Wallet.Wallet_Credit = credit;
@@ -437,7 +447,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                                     {
                                         case PaymentState.WaitForAcceptance:
 
-                                            credit = _Payment.Payment_RemaingWallet - _Payment.Payment_Cost;
+                                            credit = new Rep_Wallet().Get_WalletCreditWithUserID(_Payment.Payment_UserID) - _Payment.Payment_Cost;
 
                                             _Wallet = db.Tbl_Wallet.Where(x => x.Wallet_UserID == _Payment.Payment_UserID).SingleOrDefault();
                                             _Wallet.Wallet_Credit = credit;
@@ -476,7 +486,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                                         case PaymentState.Rejected:
 
-                                            credit = _Payment.Payment_RemaingWallet - _Payment.Payment_Cost;
+                                            credit = new Rep_Wallet().Get_WalletCreditWithUserID(_Payment.Payment_UserID) - _Payment.Payment_Cost;
 
                                             _Wallet = db.Tbl_Wallet.Where(x => x.Wallet_UserID == _Payment.Payment_UserID).SingleOrDefault();
                                             _Wallet.Wallet_Credit = credit;
@@ -511,7 +521,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                                         case PaymentState.Suspended:
 
-                                            credit = _Payment.Payment_RemaingWallet - _Payment.Payment_Cost;
+                                            credit = new Rep_Wallet().Get_WalletCreditWithUserID(_Payment.Payment_UserID) - _Payment.Payment_Cost;
 
                                             _Wallet = db.Tbl_Wallet.Where(x => x.Wallet_UserID == _Payment.Payment_UserID).SingleOrDefault();
                                             _Wallet.Wallet_Credit = credit;
@@ -579,7 +589,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                                         case PaymentState.Confirmed:
 
-                                            credit = _Payment.Payment_RemaingWallet + _Payment.Payment_Cost;
+                                            credit = new Rep_Wallet().Get_WalletCreditWithUserID(_Payment.Payment_UserID) + _Payment.Payment_Cost;
 
                                             _Wallet = db.Tbl_Wallet.Where(x => x.Wallet_UserID == _Payment.Payment_UserID).SingleOrDefault();
                                             _Wallet.Wallet_Credit = credit;
@@ -686,7 +696,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                                         case PaymentState.Confirmed:
 
-                                            credit = _Payment.Payment_RemaingWallet + _Payment.Payment_Cost;
+                                            credit = new Rep_Wallet().Get_WalletCreditWithUserID(_Payment.Payment_UserID) + _Payment.Payment_Cost;
 
                                             _Wallet = db.Tbl_Wallet.Where(x => x.Wallet_UserID == _Payment.Payment_UserID).SingleOrDefault();
                                             _Wallet.Wallet_Credit = credit;

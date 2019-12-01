@@ -1,13 +1,11 @@
 ﻿@model ESL.Web.Areas.Dashboard.Models.ViewModels.Model_UserExamInPersonPlanSetPresence
 
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.ID)
 
     <div class="modal-main">
-
         <div class="form-group material-switch-body">
             <label class="pull-left">حضور</label>
             <div class="material-switch pull-right">
@@ -15,15 +13,13 @@
                 @Html.LabelFor(model => model.Presence, htmlAttributes: new { @class = "label-success" })
             </div>
         </div>
-
     </div>
 
     <div style="margin-top:20px;">
         <button class="btn btn-danger modal-btn-Dual pull-left" type="button" data-dismiss="modal">انصراف</button>
-        <button class="btn btn-success modal-btn-Dual pull-right " type="submit" name="btn-Delete">تایید</button>
+        <button class="btn btn-success modal-btn-Dual pull-right" type="submit" name="btn-Delete">تایید</button>
     </div>
 }
-
 
 <script>
     $(function () {

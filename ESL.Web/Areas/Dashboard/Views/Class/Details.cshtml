@@ -1,5 +1,4 @@
-﻿
-@model IEnumerable<ESL.Web.Areas.Dashboard.Models.ViewModels.Model_UserClassPlan>
+﻿@model IEnumerable<ESL.Web.Areas.Dashboard.Models.ViewModels.Model_UserClassPlan>
 @using ESL.Common.Plugins
 
 @{
@@ -7,26 +6,25 @@
     Layout = "~/Areas/Dashboard/Views/Shared/_Master.cshtml";
 }
 
+<div class="panel panel-body panel-default navigation">
 
-    <div class="panel panel-body panel-default navigation">
-
-        <div class="pull-left" style="margin-left: 10px;">
-            <a href="@Url.Action("Index", "Class")" data-toggle="tooltip" data-placement="auto" title="برگشت به صفحه قبل">
-                <i class="glyphicon glyphicon-arrow-left navigation-btn-icon"></i>
-            </a>
-        </div>
-
-        <div class="pull-left" style="margin-left: 10px;">
-            <h4 class="navigation-title"><b>@ViewBag.Title</b></h4>
-        </div>
-
-        <div class="pull-right">
-            <a href="javascript:void(0)" onclick="Create(@ViewBag.ClassID)" data-toggle="tooltip" data-placement="auto" title="ثبت نام">
-                <i class="glyphicon glyphicon-plus navigation-btn-icon"></i>
-            </a>
-        </div>
-
+    <div class="pull-left" style="margin-left: 10px;">
+        <a href="@Url.Action("Index", "Class")" data-toggle="tooltip" data-placement="auto" title="برگشت به صفحه قبل">
+            <i class="glyphicon glyphicon-arrow-left navigation-btn-icon"></i>
+        </a>
     </div>
+
+    <div class="pull-left" style="margin-left: 10px;">
+        <h4 class="navigation-title"><b>@ViewBag.Title</b></h4>
+    </div>
+
+    <div class="pull-right">
+        <a href="javascript:void(0)" onclick="Create(@ViewBag.ClassID)" data-toggle="tooltip" data-placement="auto" title="ثبت نام">
+            <i class="glyphicon glyphicon-plus navigation-btn-icon"></i>
+        </a>
+    </div>
+
+</div>
 
 <div class="panel panel-default">
     <div class="panel-body table-body" style="overflow-x:auto;">
@@ -87,7 +85,6 @@
 </div>
 
 @Html.Partial("_Modal")
-
 
 @section Scripts {
     <script>

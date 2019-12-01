@@ -9,7 +9,6 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
     public class Model_PaymentChangeState
     {
         [Display(Name = "شناسه")]
-        [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public int ID { get; set; }
 
         [Display(Name = "وضعیت")]

@@ -1,12 +1,10 @@
-﻿
-@model IEnumerable<ESL.Web.Areas.Dashboard.Models.ViewModels.Model_ExamsInPersonPlan>
+﻿@model IEnumerable<ESL.Web.Areas.Dashboard.Models.ViewModels.Model_ExamsInPersonPlan>
 @using ESL.Common.Plugins
 
 @{
     ViewBag.Title = "لیست آزمون های حضوری";
     Layout = "~/Areas/Dashboard/Views/Shared/_Master.cshtml";
 }
-
 
 <div class="panel panel-body panel-default navigation">
 
@@ -87,7 +85,7 @@
                             <span>@PersianDateExtensionMethods.ToPeString(item.ModifiedDate, "yyyy/MM/dd HH:mm")</span>
                         </td>
                         <td scope="row">
-                            <span> @( item.Activeness ? "فعال" : "غیر فعال" )</span>
+                            <span>@( item.Activeness ? "فعال" : "غیر فعال" )</span>
                         </td>
                         <td scope="row">
                             <a class="control btn btn-primary btn-sm glyphicon glyphicon-ok" data-toggle="tooltip" data-placement="auto" title="تغییر وضعیت نمایش"  href="javascript:void(0)" onclick="SetActiveness(@item.ID)"></a>
@@ -105,7 +103,6 @@
 </div>
 
 @Html.Partial("_Modal")
-
 
 @section Modal {
     <script>

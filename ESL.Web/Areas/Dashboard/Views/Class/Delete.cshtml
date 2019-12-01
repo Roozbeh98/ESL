@@ -1,6 +1,5 @@
 ﻿@model ESL.Web.Areas.Dashboard.Models.ViewModels.Model_Message
 
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -10,12 +9,11 @@
     <h4 class="text-center">@Model.Description</h4>
     <br />
 
-    <div class="">
+    <div>
         <button class="btn btn-danger modal-btn-Dual pull-left" type="button" data-dismiss="modal">انصراف</button>
-        <button class="btn btn-success modal-btn-Dual pull-right " type="submit" name="btn-Delete">تایید</button>
+        <button class="btn btn-success modal-btn-Dual pull-right" type="submit" name="btn-Delete">تایید</button>
     </div>
 }
-
 
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

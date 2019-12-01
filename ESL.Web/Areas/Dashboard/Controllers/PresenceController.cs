@@ -168,10 +168,12 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     if (_Payment != null)
                     {
                         _UserClassPlanPresence.UCPP_IsDelete = true;
+                        _UserClassPlanPresence.UCPP_ModifiedDate = DateTime.Now;
                         _Payment.Payment_IsDelete = true;
+                        _Payment.Payment_ModifiedDate = DateTime.Now;
 
                         var _Wallet = db.Tbl_Wallet.Where(x => x.Wallet_UserID == _UserClassPlanPresence.Tbl_UserClassPlan.UCP_UserID).SingleOrDefault();
-                        _Wallet.Wallet_Credit = _Payment.Payment_RemaingWallet + _Payment.Payment_Cost - _Payment.Payment_Discount;
+                        _Wallet.Wallet_Credit = new Rep_Wallet().Get_WalletCreditWithUserID(_Payment.Payment_UserID) + _Payment.Payment_Cost - _Payment.Payment_Discount;
 
                         db.Entry(_UserClassPlanPresence).State = EntityState.Modified;
                         db.Entry(_Payment).State = EntityState.Modified;
@@ -229,6 +231,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                 if (_UserClassPlanPresence != null)
                 {
                     _UserClassPlanPresence.UCPP_IsPresent = model.Activeness;
+                    _UserClassPlanPresence.UCPP_ModifiedDate = DateTime.Now;
 
                     db.Entry(_UserClassPlanPresence).State = EntityState.Modified;
 

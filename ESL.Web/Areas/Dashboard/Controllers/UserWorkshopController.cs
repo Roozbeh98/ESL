@@ -48,29 +48,11 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                 if (_WorkshopPlan != null)
                 {
-                    if (_WorkshopPlan.WP_Capacity <= 0)
-                    {
-                        TempData["TosterState"] = "info";
-                        TempData["TosterType"] = TosterType.Maseage;
-                        TempData["TosterMassage"] = "ظرفیت کارگاه مورد نظر پر شده است";
-
-                        return RedirectToAction("Details", "Workshop", new { area = "Dashboard", id = model.WorkshopID });
-                    }
-
                     bool smsResult = true;
                     Tbl_Payment _Payment = Purchase(_User, _WorkshopPlan.WP_Cost, ProductType.Workshop, out bool walletResult, ref smsResult);
 
                     if (_Payment != null)
                     {
-                        if (!walletResult)
-                        {
-                            TempData["TosterState"] = "error";
-                            TempData["TosterType"] = TosterType.Maseage;
-                            TempData["TosterMassage"] = "کمبود موجودی کیف پول کاربر";
-
-                            return RedirectToAction("Details", "Workshop", new { area = "Dashboard", id = model.WorkshopID });
-                        }
-
                         db.Tbl_Payment.Add(_Payment);
 
                         Tbl_Wallet _Wallet = db.Tbl_Wallet.Where(x => x.Wallet_UserID == _Payment.Payment_UserID).SingleOrDefault();
@@ -98,7 +80,29 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
                         if (Convert.ToBoolean(db.SaveChanges() > 0))
                         {
-                            if (!smsResult)
+                            //if (_WorkshopPlan.WP_Capacity <= 0)
+                            //{
+                            //    TempData["TosterState"] = "warning";
+                            //    TempData["TosterType"] = TosterType.Maseage;
+                            //    TempData["TosterMassage"] = "ظرفیت کارگاه مورد نظر پر شده است";
+
+                            //    return RedirectToAction("Details", "Workshop", new { area = "Dashboard", id = model.WorkshopID });
+                            //}
+
+                            if (!walletResult && !smsResult)
+                            {
+                                TempData["TosterState"] = "warning";
+                                TempData["TosterType"] = TosterType.WithTitel;
+                                TempData["TosterTitel"] = "خطا در ارسال پیامک";
+                                TempData["TosterMassage"] = "کمبود موجودی کیف پول کاربر";
+                            }
+                            else if (!walletResult)
+                            {
+                                TempData["TosterState"] = "warning";
+                                TempData["TosterType"] = TosterType.Maseage;
+                                TempData["TosterMassage"] = "کمبود موجودی کیف پول کاربر";
+                            }
+                            else if (!smsResult)
                             {
                                 TempData["TosterState"] = "warning";
                                 TempData["TosterType"] = TosterType.Maseage;
@@ -347,7 +351,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                         Payment_StateCodeID = (int)PaymentState.Confirmed,
                         Payment_Cost = cost,
                         Payment_Discount = 0,
-                        Payment_RemaingWallet = credit,
+                        Payment_RemaingWallet = credit - cost,
                         Payment_TrackingToken = "ESL-" + new Random().Next(100000, 999999).ToString(),
                         Payment_CreateDate = DateTime.Now,
                         Payment_ModifiedDate = DateTime.Now
@@ -370,7 +374,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                         Payment_StateCodeID = (int)PaymentState.Confirmed,
                         Payment_Cost = cost,
                         Payment_Discount = 0,
-                        Payment_RemaingWallet = credit,
+                        Payment_RemaingWallet = credit - cost,
                         Payment_TrackingToken = "ESL-" + new Random().Next(100000, 999999).ToString(),
                         Payment_CreateDate = DateTime.Now,
                         Payment_ModifiedDate = DateTime.Now

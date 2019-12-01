@@ -12,19 +12,15 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
         public int ID { get; set; }
 
         [Display(Name = "کاربر")]
-        [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public string User { get; set; }
 
         [Display(Name = "اعتبار")]
-        [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public int Credit { get; set; }
 
         [Display(Name = "تاریخ اولین تراکنش")]
-        [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public DateTime CreationDate { get; set; }
 
         [Display(Name = "تاریخ بروزرسانی")]
-        [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public DateTime ModifiedDate { get; set; }
     }
 }

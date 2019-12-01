@@ -1,6 +1,4 @@
 ﻿@model ESL.Web.Areas.Dashboard.Models.ViewModels.Model_UserWorkshopPlanCreate
-@using ESL.Services.BaseRepository
-
 
 @using (Html.BeginForm())
 {
@@ -8,20 +6,17 @@
     @Html.HiddenFor(model => model.WorkshopID)
 
     <div class="modal-main">
-
         <div class="form-group">
             @Html.LabelFor(model => model.UserGuid, htmlAttributes: new { @class = "control-label" })
             @Html.DropDownListFor(model => model.UserGuid, new List<SelectListItem>() { new SelectListItem() { Value = "", Text = "لطفا کاربر مورد نظر را انتخاب کنید ..." } }, new { @class = "form-control Select2_Normal" })
         </div>
-
     </div>
 
     <div style="margin-top:20px;">
         <button class="btn btn-danger modal-btn-Dual pull-left" type="button" data-dismiss="modal">انصراف</button>
-        <button class="btn btn-success modal-btn-Dual pull-right " type="submit" name="btn-Delete">تایید</button>
+        <button class="btn btn-success modal-btn-Dual pull-right" type="submit" name="btn-Delete">تایید</button>
     </div>
 }
-
 
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

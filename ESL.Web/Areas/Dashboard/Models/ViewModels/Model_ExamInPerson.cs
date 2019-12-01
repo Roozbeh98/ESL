@@ -13,15 +13,12 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
         public int? ID { get; set; }
 
         [Display(Name = "عنوان")]
-        [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public string Title { get; set; }
 
         [Display(Name = "نمره")]
-        [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public int Mark { get; set; }
 
         [Display(Name = "حداقل نمره قبولی")]
-        [Required(ErrorMessage = "لطفا مقداری را وارد نمایید")]
         public int PassMark { get; set; }
 
         [Display(Name = "تاریخ ایجاد")]
