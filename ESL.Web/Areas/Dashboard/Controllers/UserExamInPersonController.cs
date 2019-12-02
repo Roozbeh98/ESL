@@ -308,6 +308,80 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
+        public ActionResult GenerateSeatNumbers(int? id)
+        {
+            if (id != null)
+            {
+                var _ExamInPersonPlan = db.Tbl_ExamInPersonPlan.Where(x => x.EIPP_ID == id).SingleOrDefault();
+
+                if (_ExamInPersonPlan != null)
+                {
+                    Model_Message model = new Model_Message
+                    {
+                        ID = id.Value,
+                        Name = _ExamInPersonPlan.Tbl_SubExamInPerson.SEIP_Title,
+                        Description = "آیا از تخصیص شماره صندلی به افراد شرکت کننده در این آزمون اطمینان دارید ؟"
+                    };
+
+                    TempData["ExamInPersonPlanID"] = id.Value;
+
+                    return PartialView(model);
+                }
+                else
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+            }
+
+            return HttpNotFound();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult GenerateSeatNumbers()
+        {
+            if (ModelState.IsValid)
+            {
+                DateTime now = DateTime.Now;
+                int examInPersonPlanId = (int)TempData["ExamInPersonPlanID"], seatNumber = 1;
+
+                var _UsersExamInPersonPlan = db.Tbl_UserExamInPersonPlan.Where(x => x.UEIPP_EIPPID == examInPersonPlanId).OrderBy(x => x.Tbl_User.User_lastName).ToList();
+
+                if (_UsersExamInPersonPlan != null)
+                {
+                    foreach (var user in _UsersExamInPersonPlan)
+                    {
+                        user.UEIPP_SeatNumber = seatNumber++;
+                        user.UEIPP_ModifiedDate = now;
+
+                        db.Entry(user).State = EntityState.Modified;
+                    }
+
+                    if (Convert.ToBoolean(db.SaveChanges() > 0))
+                    {
+                        TempData["TosterState"] = "success";
+                        TempData["TosterType"] = TosterType.Maseage;
+                        TempData["TosterMassage"] = "تخصیص شماره صندلی با موفقیت انجام شد";
+
+                        return RedirectToAction("Details", "ExamInPerson", new { area = "Dashboard", id = db.Tbl_UserExamInPersonPlan.Where(x => x.UEIPP_ID == examInPersonPlanId).SingleOrDefault().UEIPP_EIPPID });
+                    }
+
+                    TempData["TosterState"] = "error";
+                    TempData["TosterType"] = TosterType.Maseage;
+                    TempData["TosterMassage"] = "تخصیص شماره صندلی با موفقیت انجام نشد";
+
+                    return HttpNotFound();
+                }
+            }
+
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        }
+
+        public ActionResult ExamInPersonCertificate(int id)
+        {
+            return PartialView();
+        }
+
         public ActionResult UnRegister(int? id)
         {
             if (id != null)

@@ -1,0 +1,23 @@
+﻿@using Stimulsoft.Report.Mvc
+
+@{
+    ViewBag.Title = "گواهی آزمون حضوری";
+    Layout = "~/Areas/Dashboard/Views/Shared/_Master.cshtml";
+}
+
+<div class="panel panel-body panel-default navigation">
+    <div class="pull-left">
+        <h4 class="navigation-title"><b>@ViewBag.Title</b></h4>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-body" style="direction: ltr;">
+        @Html.Stimulsoft().StiMvcViewer(new StiMvcViewerOptions()
+        {
+            Theme = StiTheme.Office2013,
+            ActionGetReportSnapshot = "PrintExamInPersonCertificate",
+            ActionViewerEvent = "ViewerEvent"
+        })
+    </div>
+</div>

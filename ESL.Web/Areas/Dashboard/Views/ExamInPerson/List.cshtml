@@ -1,0 +1,88 @@
+﻿@model IEnumerable<ESL.Web.Areas.Dashboard.Models.ViewModels.Model_UserExamInPersonPlans>
+@using ESL.Common.Plugins
+
+@{
+    ViewBag.Title = "آزمون های حضوری";
+    Layout = "~/Areas/Dashboard/Views/Shared/_Master.cshtml";
+}
+
+<div class="panel panel-body panel-default navigation">
+
+    <div class="pull-left">
+        <h4 class="navigation-title"><b>لیست آزمون های حضوری ثبت نام شده</b></h4>
+    </div>
+
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-body table-body" style="overflow-x: auto;">
+        <table id="DateTable" class="table table-bordered table-striped table-secondary" style="width:100%;">
+
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.User)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Exam)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.SubExam)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.SeatNumber)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Mark)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Presence)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Location)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Date)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Cost)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.CreationDate)</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @{
+                    int x = 0;
+                }
+
+                @foreach (var item in Model)
+                {
+                    x++;
+
+                    <tr>
+                        <td scope="row">@x</td>
+                        <td scope="row">
+                            <span>@Html.DisplayFor(modelItem => item.User)</span>
+                        </td>
+                        <td scope="row">
+                            <span>@Html.DisplayFor(modelItem => item.Exam)</span>
+                        </td>
+                        <td scope="row">
+                            <span>@Html.DisplayFor(modelItem => item.SubExam)</span>
+                        </td>
+                        <td scope="row">
+                            <span>@Html.DisplayFor(modelItem => item.SeatNumber)</span>
+                        </td>
+                        <td scope="row">
+                            <span>@Html.DisplayFor(modelItem => item.Mark)</span>
+                        </td>
+                        <td scope="row">
+                            <span>@( item.Presence ? "حاضر" : "غایب" )</span>
+                        </td>
+                        <td scope="row">
+                            <span>@Html.DisplayFor(modelItem => item.Location)</span>
+                        </td>
+                        <td scope="row">
+                            <span>@PersianDateExtensionMethods.ToPeString(item.Date, "yyyy/MM/dd HH:mm")</span>
+                        </td>
+                        <td scope="row">
+                            <span>@Html.DisplayFor(modelItem => item.Cost)</span>
+                        </td>
+                        <td scope="row">
+                            <span>@PersianDateExtensionMethods.ToPeString(item.CreationDate, "yyyy/MM/dd HH:mm")</span>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+    </div>
+</div>
+
+@Html.Partial("_Modal")

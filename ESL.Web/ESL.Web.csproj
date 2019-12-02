@@ -284,6 +284,12 @@
     <Content Include="Areas\Dashboard\Views\Payment\ConfirmedList.cshtml" />
     <Content Include="Areas\Dashboard\Views\Payment\Confirmed.cshtml" />
     <Content Include="Areas\Dashboard\Views\Payment\Cancel.cshtml" />
+    <Content Include="Areas\Dashboard\Views\ExamInPerson\List.cshtml" />
+    <Content Include="Areas\Dashboard\Views\UserExamInPerson\PrintExamCertificate.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Reports\PrintExamInPersonCertificate.cshtml" />
+    <Content Include="Reports\ExamCertificate.mrt" />
+    <Content Include="Areas\Dashboard\Views\UserExamInPerson\ExamInPersonCertificate.cshtml" />
+    <Content Include="Areas\Dashboard\Views\UserExamInPerson\GenerateSeatNumbers.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -1354,6 +1360,7 @@
     <Compile Include="Areas\Dashboard\Controllers\PaymentController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\PresenceController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\PurchaseController.cs" />
+    <Compile Include="Areas\Dashboard\Controllers\ReportsController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\SettingController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\ExamRemotelyController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\UploadController.cs" />
@@ -1367,6 +1374,7 @@
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_ChargeWallet.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_ClassPlan.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_ClassPlanCreate.cs" />
+    <Compile Include="Areas\Dashboard\Models\ViewModels\Model_ExamInPersonCertificate.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_Message.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_ExamInPerson.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_ExamInPersonPlanCreate.cs" />
@@ -1388,6 +1396,7 @@
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_UserClassPlanPresence.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_UserClassPlanPresenceCreate.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_UserExamInPersonPlanCreate.cs" />
+    <Compile Include="Areas\Dashboard\Models\ViewModels\Model_UserExamInPersonPlans.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_UserExamInPersonPlanSetMark.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_UserExamInPersonPlanSetPresence.cs" />
     <Compile Include="Areas\Dashboard\Models\ViewModels\Model_UserExamInPersonPlanSetSeatNumber.cs" />

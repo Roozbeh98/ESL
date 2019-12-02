@@ -63,7 +63,7 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     WP_Date = DateConverter.ToGeorgianDateTime(model.Date),
                     WP_IsActive = model.Activeness,
                     WP_CreationDate = DateTime.Now,
-                    WP_ModifiedDate = DateTime.Now,
+                    WP_ModifiedDate = DateTime.Now
                 };
 
                 db.Tbl_WorkshopPlan.Add(_WorkshopPlan);

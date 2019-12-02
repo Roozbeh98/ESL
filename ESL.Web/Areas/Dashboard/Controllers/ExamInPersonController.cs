@@ -318,7 +318,34 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
         #region Student
 
+        [Authorize(Roles = "Student")]
+        public ActionResult List()
+        {
+            var _User = db.Tbl_User.Where(x => x.User_IsDelete == false && x.User_Mobile == User.Identity.Name).SingleOrDefault();
 
+            if (_User != null)
+            {
+                var _ExamsInPersonPlans = db.Tbl_UserExamInPersonPlan.Where(x => x.UEIPP_IsDelete == false && x.UEIPP_IsActive == true && x.UEIPP_UserID == _User.User_ID).Select(x => new Model_UserExamInPersonPlans
+                {
+                    ID = x.UEIPP_ID,
+                    User = x.Tbl_User.User_FirstName + " " + x.Tbl_User.User_lastName,
+                    Exam = x.Tbl_ExamInPersonPlan.Tbl_SubExamInPerson.Tbl_ExamInPerson.EIP_Title,
+                    SubExam = x.Tbl_ExamInPersonPlan.Tbl_SubExamInPerson.SEIP_Title,
+                    SeatNumber = x.UEIPP_SeatNumber,
+                    Mark = x.UEIPP_Mark,
+                    Presence = x.UEIPP_IsPresent,
+                    Location = x.Tbl_ExamInPersonPlan.EIPP_Location,
+                    Date = x.Tbl_ExamInPersonPlan.EIPP_Date,
+                    Cost = x.Tbl_ExamInPersonPlan.EIPP_Cost,
+                    CreationDate = x.UEIPP_CreationDate
+
+                }).ToList();
+
+                return View(_ExamsInPersonPlans);
+            }
+
+            return HttpNotFound();
+        }
 
         #endregion
 

@@ -8,7 +8,7 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
 {
     public class Model_UserClassPlans
     {
-        [Display(Name = "شناسه کلاس")]
+        [Display(Name = "شناسه")]
         public int ID { get; set; }
 
         [Display(Name = "کاربر")]
@@ -20,7 +20,7 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
         [Display(Name = "نوع")]
         public string Type { get; set; }
 
-        [Display(Name = "مکان")]
+        [Display(Name = "مکان برگزاری")]
         public string Location { get; set; }
 
         [Display(Name = "زمان شروع")]

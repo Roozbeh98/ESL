@@ -28,17 +28,17 @@
                 @Html.ValidationMessageFor(model => model.Family, "", new { @class = "text-danger" })
             </div>
                         @Html.LabelFor(model => model.Day, htmlAttributes: new { @class = "control-label " })
-            <div class="form-group " style="display:inline-flex">
+            <div class="form-group" style="display: table; width: 100%;">
 
                     <div class="time">
 
-                        @Html.EditorFor(model => model.Day, new { htmlAttributes = new { @class = "" , @placeholder = "روز" } })
+                        @Html.EditorFor(model => model.Day, new { htmlAttributes = new { @class = "" , @placeholder = "روز", style = "border-left: none;" } })
 
                         @Html.ValidationMessageFor(model => model.Day, "", new { @class = "text-danger" })
                     </div>
                     <div class="time">
 
-                        @Html.EditorFor(model => model.month, new { htmlAttributes = new { @class = "", @placeholder = "ماه" } })
+                        @Html.EditorFor(model => model.month, new { htmlAttributes = new { @class = "", @placeholder = "ماه", style = "border-left: none;" } })
 
                         @Html.ValidationMessageFor(model => model.month, "", new { @class = "text-danger" })
                     </div>

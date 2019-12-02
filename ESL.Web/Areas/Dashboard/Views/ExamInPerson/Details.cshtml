@@ -18,9 +18,15 @@
         <h4 class="navigation-title"><b>@ViewBag.Title</b></h4>
     </div>
 
-    <div class="pull-right">
+    <div class="pull-right" style="margin-right: 5px;">
         <a href="javascript:void(0)" onclick="Create(@ViewBag.ExamID)" data-toggle="tooltip" data-placement="auto" title="ثبت نام">
             <i class="glyphicon glyphicon-plus navigation-btn-icon"></i>
+        </a>
+    </div>
+
+    <div class="pull-right" style="margin-right: 5px;">
+        <a href="javascript:void(0)" onclick="GenerateSeatNumbers(@ViewBag.ExamID)" data-toggle="tooltip" data-placement="auto" title="تخصیص شماره صندلی">
+            <i class="glyphicon glyphicon-wrench navigation-btn-icon"></i>
         </a>
     </div>
 
@@ -80,6 +86,7 @@
                                 <a class="control btn btn-primary btn-sm glyphicon glyphicon-ok" data-toggle="tooltip" data-placement="auto" title="تغییر وضعیت حضور" href="javascript:void(0)" onclick="SetPresence(@item.ID)"></a>
                                 <a class="control btn btn-info btn-sm fas fa-file-excel" data-toggle="tooltip" data-placement="auto" title="تغییر نمره" style="line-height: 18.5px; padding-left: 11px; padding-right: 11px; margin-top: 5px;" href="javascript:void(0)" onclick="SetMark(@item.ID)"></a>
                                 <a class="control btn btn-warning btn-sm fas fa-couch" data-toggle="tooltip" data-placement="auto" title="تغییر شماره صندلی" style="line-height: 18.5px; padding-left: 9px; padding-right: 9px; margin-top: 5px;" href="javascript:void(0)" onclick="SetSeatNumber(@item.ID)"></a>
+                                <a class="control btn esl-btn-success btn-sm fas fa-print" data-toggle="tooltip" data-placement="auto" title="صدور گواهی آزمون" style="line-height: 18.5px; padding-left: 11px; padding-right: 11px; margin-top: 5.75px;" href="javascript:void(0)" onclick="ExamInPersonCertificate(@item.ID)"></a>
                             }
                             else
                             {
@@ -169,6 +176,30 @@
             }).done(function (result) {
                 $('#myModal').modal('show');
                 $('#myModalLabel').html('تغییر وضعیت حضور');
+                $('#myModalBody').html(result);
+            });
+        }
+
+        function GenerateSeatNumbers(id) {
+            $.ajax({
+                url: "/Dashboard/UserExamInPerson/GenerateSeatNumbers/" + id,
+                type: "Get",
+                data: {}
+            }).done(function (result) {
+                $('#myModal').modal('show');
+                $('#myModalLabel').html('تخصیص شماره صندلی');
+                $('#myModalBody').html(result);
+            });
+        }
+
+        function ExamInPersonCertificate(id) {
+            $.ajax({
+                url: "/Dashboard/UserExamInPerson/ExamInPersonCertificate/" + id,
+                type: "Get",
+                data: {}
+            }).done(function (result) {
+                $('#myModal').modal('show');
+                $('#myModalLabel').html('صدور گواهی آزمون');
                 $('#myModalBody').html(result);
             });
         }
