@@ -24,7 +24,8 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             var _WorkshopPlans = db.Tbl_WorkshopPlan.Where(x => x.WP_IsDelete == false).Select(x => new Model_WorkshopPlan
             {
                 ID = x.WP_ID,
-                Workshop = x.Tbl_SubWorkshop.SW_Title,
+                Workshop = x.Tbl_SubWorkshop.Tbl_Workshop.Workshop_Title,
+                SubWorkshop = x.Tbl_SubWorkshop.SW_Title,
                 Description = x.WP_Description,
                 Cost = x.WP_Cost,
                 Location = x.WP_Location,
@@ -300,5 +301,15 @@ namespace ESL.Web.Areas.Dashboard.Controllers
         }
 
         #endregion
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+
+            base.Dispose(disposing);
+        }
     }
 }

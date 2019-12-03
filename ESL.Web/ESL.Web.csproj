@@ -287,9 +287,9 @@
     <Content Include="Areas\Dashboard\Views\ExamInPerson\List.cshtml" />
     <Content Include="Areas\Dashboard\Views\UserExamInPerson\PrintExamCertificate.cshtml" />
     <Content Include="Areas\Dashboard\Views\Reports\PrintExamInPersonCertificate.cshtml" />
-    <Content Include="Reports\ExamCertificate.mrt" />
     <Content Include="Areas\Dashboard\Views\UserExamInPerson\ExamInPersonCertificate.cshtml" />
     <Content Include="Areas\Dashboard\Views\UserExamInPerson\GenerateSeatNumbers.cshtml" />
+    <Content Include="Reports\ExamInPersonCertificate.mrt" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

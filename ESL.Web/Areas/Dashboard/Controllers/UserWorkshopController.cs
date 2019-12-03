@@ -197,127 +197,208 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
-        //public ActionResult UnRegister(int? id)
-        //{
-        //    if (id != null)
-        //    {
-        //        Model_Message model = new Model_Message();
+        public ActionResult UnRegister(int? id)
+        {
+            if (id != null)
+            {
+                var _UserWorkshopPlan = db.Tbl_UserWorkshopPlan.Where(x => x.UWP_ID == id).SingleOrDefault();
 
-        //        var q = db.Tbl_UserWorkshopPlan.Where(x => x.UWP_ID == id).SingleOrDefault();
+                if (_UserWorkshopPlan != null)
+                {
+                    Model_Message model = new Model_Message();
 
-        //        if (q != null)
-        //        {
-        //            model.ID = id.Value;
-        //            model.Name = q.Tbl_User.User_FirstName + " " + q.Tbl_User.User_lastName;
-        //            model.Description = $"آیا از لغو ثبت نام کاربر { model.Name } اطمینان دارید ؟";
+                    model.ID = id.Value;
+                    model.Name = _UserWorkshopPlan.Tbl_User.User_FirstName + " " + _UserWorkshopPlan.Tbl_User.User_lastName;
+                    model.Description = $"آیا از لغو ثبت نام کاربر { model.Name } اطمینان دارید ؟";
 
-        //            return PartialView(model);
-        //        }
-        //        else
-        //        {
-        //            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //        }
-        //    }
+                    return PartialView(model);
+                }
+                else
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+            }
 
-        //    return HttpNotFound();
-        //}
+            return HttpNotFound();
+        }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult UnRegister(Model_Message model)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        var q = db.Tbl_UserWorkshopPlan.Where(x => x.UWP_ID == model.ID).SingleOrDefault();
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UnRegister(Model_Message model)
+        {
+            if (ModelState.IsValid)
+            {
+                var _UserWorkshopPlan = db.Tbl_UserWorkshopPlan.Where(x => x.UWP_ID == model.ID).SingleOrDefault();
 
-        //        if (q != null)
-        //        {
-        //            q.UWP_IsDelete = true;
+                if (_UserWorkshopPlan != null)
+                {
+                    var _Payment = db.Tbl_Payment.Where(x => x.Payment_ID == _UserWorkshopPlan.UWP_PaymentID).SingleOrDefault();
 
-        //            db.Entry(q).State = EntityState.Modified;
+                    if (_Payment != null)
+                    {
+                        int newCredit = new Rep_Wallet().Get_WalletCreditWithUserID(_Payment.Payment_UserID) + _Payment.Payment_Cost;
 
-        //            if (Convert.ToBoolean(db.SaveChanges() > 0))
-        //            {
-        //                TempData["TosterState"] = "success";
-        //                TempData["TosterType"] = TosterType.Maseage;
-        //                TempData["TosterMassage"] = "عملیات با موفقیت انجام شد";
+                        _Payment.Payment_StateCodeID = (int)PaymentState.Rejected;
+                        _Payment.Payment_WayCodeID = (int)PaymentWay.Internet;
+                        _Payment.Payment_RemaingWallet = newCredit;
+                        _Payment.Payment_ModifiedDate = DateTime.Now;
 
-        //                return RedirectToAction("Details", "Workshop", new { area = "Dashboard", id = db.Tbl_UserWorkshopPlan.Where(x => x.UWP_ID == model.ID).SingleOrDefault().UWP_WPID });
-        //            }
-        //            else
-        //            {
-        //                TempData["TosterState"] = "error";
-        //                TempData["TosterType"] = TosterType.Maseage;
-        //                TempData["TosterMassage"] = "عملیات با موفقیت انجام نشد";
+                        db.Entry(_Payment).State = EntityState.Modified;
 
-        //                return HttpNotFound();
-        //            }
-        //        }
-        //    }
+                        Tbl_Wallet _Wallet = db.Tbl_Wallet.Where(x => x.Wallet_UserID == _Payment.Payment_UserID).SingleOrDefault();
+                        _Wallet.Wallet_Credit = newCredit;
+                        _Wallet.Wallet_ModifiedDate = DateTime.Now;
 
-        //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //}
+                        db.Entry(_Wallet).State = EntityState.Modified;
 
-        //public ActionResult Register(int? id)
-        //{
-        //    if (id != null)
-        //    {
-        //        Model_Message model = new Model_Message();
+                        _UserWorkshopPlan.UWP_IsActive = false;
+                        _UserWorkshopPlan.UWP_ModifiedDate = DateTime.Now;
+                        _UserWorkshopPlan.Tbl_WorkshopPlan.WP_Capacity += 1;
 
-        //        var q = db.Tbl_UserWorkshopPlan.Where(x => x.UWP_ID == id).SingleOrDefault();
+                        db.Entry(_UserWorkshopPlan).State = EntityState.Modified;
 
-        //        if (q != null)
-        //        {
-        //            model.ID = id.Value;
-        //            model.Name = q.Tbl_User.User_FirstName + " " + q.Tbl_User.User_lastName;
-        //            model.Description = $"آیا از ثبت نام مجدد کاربر { model.Name } اطمینان دارید ؟";
+                        if (Convert.ToBoolean(db.SaveChanges() > 0))
+                        {
+                            TempData["TosterState"] = "success";
+                            TempData["TosterType"] = TosterType.Maseage;
+                            TempData["TosterMassage"] = "ثبت نام کاربر مورد نظر با موفقیت لغو شد";
 
-        //            return PartialView(model);
-        //        }
-        //        else
-        //        {
-        //            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //        }
-        //    }
+                            return RedirectToAction("Details", "Workshop", new { area = "Dashboard", id = db.Tbl_UserWorkshopPlan.Where(x => x.UWP_ID == model.ID).SingleOrDefault().UWP_WPID });
+                        }
 
-        //    return HttpNotFound();
-        //}
+                        TempData["TosterState"] = "error";
+                        TempData["TosterType"] = TosterType.Maseage;
+                        TempData["TosterMassage"] = "ثبت نام کاربر مورد نظر با موفقیت لغو نشد";
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Register(Model_Message model)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        var q = db.Tbl_UserWorkshopPlan.Where(x => x.UWP_ID == model.ID).SingleOrDefault();
+                        return RedirectToAction("Details", "Workshop", new { area = "Dashboard", id = db.Tbl_UserWorkshopPlan.Where(x => x.UWP_ID == model.ID).SingleOrDefault().UWP_WPID });
+                    }
+                }
 
-        //        if (q != null)
-        //        {
-        //            q.UWP_IsDelete = false;
+                TempData["TosterState"] = "error";
+                TempData["TosterType"] = TosterType.Maseage;
+                TempData["TosterMassage"] = "ثبت نام کاربر مورد نظر با موفقیت لغو نشد";
 
-        //            db.Entry(q).State = EntityState.Modified;
+                return HttpNotFound();
+            }
 
-        //            if (Convert.ToBoolean(db.SaveChanges() > 0))
-        //            {
-        //                TempData["TosterState"] = "success";
-        //                TempData["TosterType"] = TosterType.Maseage;
-        //                TempData["TosterMassage"] = "عملیات با موفقیت انجام شد";
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        }
 
-        //                return RedirectToAction("Details", "Workshop", new { area = "Dashboard", id = db.Tbl_UserWorkshopPlan.Where(x => x.UWP_ID == model.ID).SingleOrDefault().UWP_WPID });
-        //            }
-        //            else
-        //            {
-        //                TempData["TosterState"] = "error";
-        //                TempData["TosterType"] = TosterType.Maseage;
-        //                TempData["TosterMassage"] = "عملیات با موفقیت انجام نشد";
+        public ActionResult Register(int? id)
+        {
+            if (id != null)
+            {
+                var _UserWorkshopPlan = db.Tbl_UserWorkshopPlan.Where(x => x.UWP_ID == id).SingleOrDefault();
 
-        //                return HttpNotFound();
-        //            }
-        //        }
-        //    }
+                if (_UserWorkshopPlan != null)
+                {
+                    Model_Message model = new Model_Message();
 
-        //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //}
+                    model.ID = id.Value;
+                    model.Name = _UserWorkshopPlan.Tbl_User.User_FirstName + " " + _UserWorkshopPlan.Tbl_User.User_lastName;
+                    model.Description = $"آیا از ثبت نام کاربر { model.Name } اطمینان دارید ؟";
+
+                    return PartialView(model);
+                }
+                else
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+            }
+
+            return HttpNotFound();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Register(Model_Message model)
+        {
+            if (ModelState.IsValid)
+            {
+                var _UserWorkshopPlan = db.Tbl_UserWorkshopPlan.Where(x => x.UWP_ID == model.ID).SingleOrDefault();
+
+                if (_UserWorkshopPlan != null)
+                {
+                    var _Payment = db.Tbl_Payment.Where(x => x.Payment_ID == _UserWorkshopPlan.UWP_PaymentID).SingleOrDefault();
+
+                    if (_Payment != null)
+                    {
+                        int credit = new Rep_Wallet().Get_WalletCreditWithUserID(_Payment.Payment_UserID);
+                        int newCredit = credit - _Payment.Payment_Cost;
+
+                        _Payment.Payment_StateCodeID = (int)PaymentState.Confirmed;
+                        _Payment.Payment_WayCodeID = (int)PaymentWay.Internet;
+                        _Payment.Payment_RemaingWallet = newCredit;
+                        _Payment.Payment_ModifiedDate = DateTime.Now;
+
+                        db.Entry(_Payment).State = EntityState.Modified;
+
+                        Tbl_Wallet _Wallet = db.Tbl_Wallet.Where(x => x.Wallet_UserID == _Payment.Payment_UserID).SingleOrDefault();
+                        _Wallet.Wallet_Credit = newCredit;
+                        _Wallet.Wallet_ModifiedDate = DateTime.Now;
+
+                        db.Entry(_Wallet).State = EntityState.Modified;
+
+                        _UserWorkshopPlan.UWP_IsActive = true;
+                        _UserWorkshopPlan.UWP_ModifiedDate = DateTime.Now;
+                        _UserWorkshopPlan.Tbl_WorkshopPlan.WP_Capacity -= 1;
+
+                        db.Entry(_UserWorkshopPlan).State = EntityState.Modified;
+
+                        if (Convert.ToBoolean(db.SaveChanges() > 0))
+                        {
+                            //if (_UserWorkshopPlan.Tbl_WorkshopPlan.WP_Capacity <= 0)
+                            //{
+                            //    TempData["TosterState"] = "warning";
+                            //    TempData["TosterType"] = TosterType.Maseage;
+                            //    TempData["TosterMassage"] = "ظرفیت کارگاه مورد نظر پر شده است";
+
+                            //    return RedirectToAction("Details", "Workshop", new { area = "Dashboard", id = db.Tbl_UserWorkshopPlan.Where(x => x.UWP_ID == model.ID).SingleOrDefault().UWP_WPID });
+                            //}
+
+                            if (credit + 30000 < _Payment.Payment_Cost)
+                            {
+                                if (new SMSPortal().SendServiceable(_Payment.Tbl_User.User_Mobile, ".", "", "", _Payment.Tbl_User.User_FirstName + " " + _Payment.Tbl_User.User_lastName, SMSTemplate.Charge) != "ارسال به مخابرات")
+                                {
+                                    TempData["TosterState"] = "warning";
+                                    TempData["TosterType"] = TosterType.WithTitel;
+                                    TempData["TosterTitel"] = "خطا در ارسال پیامک";
+                                    TempData["TosterMassage"] = "کمبود موجودی کیف پول کاربر";
+                                }
+                                else
+                                {
+                                    TempData["TosterState"] = "warning";
+                                    TempData["TosterType"] = TosterType.Maseage;
+                                    TempData["TosterMassage"] = "کمبود موجودی کیف پول کاربر";
+                                }
+                            }
+                            else
+                            {
+                                TempData["TosterState"] = "success";
+                                TempData["TosterType"] = TosterType.Maseage;
+                                TempData["TosterMassage"] = "ثبت نام کاربر مورد نظر با موفقیت انجام شد";
+                            }
+
+                            return RedirectToAction("Details", "Workshop", new { area = "Dashboard", id = db.Tbl_UserWorkshopPlan.Where(x => x.UWP_ID == model.ID).SingleOrDefault().UWP_WPID });
+                        }
+
+                        TempData["TosterState"] = "error";
+                        TempData["TosterType"] = TosterType.Maseage;
+                        TempData["TosterMassage"] = "ثبت نام کاربر مورد نظر با موفقیت انجام نشد";
+
+                        return RedirectToAction("Details", "Workshop", new { area = "Dashboard", id = db.Tbl_UserWorkshopPlan.Where(x => x.UWP_ID == model.ID).SingleOrDefault().UWP_WPID });
+                    }
+                }
+
+                TempData["TosterState"] = "error";
+                TempData["TosterType"] = TosterType.Maseage;
+                TempData["TosterMassage"] = "ثبت نام کاربر مورد نظر با موفقیت انجام نشد";
+
+                return HttpNotFound();
+            }
+
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        }
 
         private Tbl_Payment Purchase(Tbl_User user, int cost, ProductType type, out bool walletResult, ref bool smsResult)
         {
@@ -416,6 +497,16 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             }
 
             return Json(q, JsonRequestBehavior.AllowGet);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+
+            base.Dispose(disposing);
         }
     }
 }

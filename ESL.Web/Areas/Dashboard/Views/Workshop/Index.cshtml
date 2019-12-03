@@ -28,6 +28,7 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.Workshop)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.SubWorkshop)</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.Description)</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.Cost)</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.Location)</th>
@@ -56,7 +57,10 @@
                             <span>@Html.DisplayFor(modelItem => item.Workshop)</span>
                         </td>
                         <td scope="row">
-                            <span>@( item.Description == null ? "ثبت نشده" : item.Description )</span>
+                            <span>@(item.SubWorkshop == null ? "ثبت نشده" : item.SubWorkshop)</span>
+                        </td>
+                        <td scope="row">
+                            <span>@(item.Description == null ? "ثبت نشده" : item.Description)</span>
                         </td>
                         <td scope="row">
                             <span>@Html.DisplayFor(modelItem => item.Cost)</span>
@@ -77,7 +81,7 @@
                             <span>@PersianDateExtensionMethods.ToPeString(item.ModifiedDate, "yyyy/MM/dd HH:mm")</span>
                         </td>
                         <td scope="row">
-                            <span>@( item.Activeness ? "فعال" : "غیر فعال" )</span>
+                            <span>@(item.Activeness ? "فعال" : "غیر فعال")</span>
                         </td>
                         <td scope="row">
                             <a class="control btn btn-primary btn-sm glyphicon glyphicon-ok" data-toggle="tooltip" data-placement="auto" title="تغییر وضعیت نمایش" href="javascript:void(0)" onclick="SetActiveness(@item.ID)"></a>

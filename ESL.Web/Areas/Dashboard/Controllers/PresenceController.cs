@@ -256,5 +256,15 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+
+            base.Dispose(disposing);
+        }
     }
 }

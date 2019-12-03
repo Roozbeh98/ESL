@@ -8,15 +8,14 @@ using System.Web.Mvc;
 
 namespace ESL.Web.Areas.Dashboard.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class WalletController : Controller
     {
-        private ESLEntities db = new ESLEntities();
+        private readonly ESLEntities db = new ESLEntities();
 
-        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
-            var q = db.Tbl_Wallet.Select(x => new Model_Wallet
+            var q = db.Tbl_Wallet.Where(x => x.Tbl_User.User_RoleID == (int)Role.Student).Select(x => new Model_Wallet
             {
                 ID = x.Wallet_ID,
                 User = x.Tbl_User.User_FirstName + " " + x.Tbl_User.User_lastName,
@@ -27,6 +26,16 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             }).ToList();
 
             return View(q);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+
+            base.Dispose(disposing);
         }
     }
 }

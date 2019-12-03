@@ -14,6 +14,9 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
         [Display(Name = "آزمون")]
         public string Exam { get; set; }
 
+        [Display(Name = "عنوان")]
+        public string SubExam { get; set; }
+
         [Display(Name = "توضیحات")]
         public string Description { get; set; }
 

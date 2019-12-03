@@ -659,5 +659,15 @@ namespace ESL.Web.Areas.Dashboard.Controllers
                     return null;
             }
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+
+            base.Dispose(disposing);
+        }
     }
 }

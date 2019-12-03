@@ -28,6 +28,7 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.Exam)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.SubExam)</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.Description)</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.Cost)</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.Location)</th>
@@ -58,6 +59,9 @@
                             <span>@Html.DisplayFor(modelItem => item.Exam)</span>
                         </td>
                         <td scope="row">
+                            <span>@(item.SubExam == null ? "ثبت نشده" : item.SubExam)</span>
+                        </td>
+                        <td scope="row">
                             <span>@(item.Description == null ? "ثبت نشده" : item.Description)</span>
                         </td>
                         <td scope="row">
@@ -85,10 +89,10 @@
                             <span>@PersianDateExtensionMethods.ToPeString(item.ModifiedDate, "yyyy/MM/dd HH:mm")</span>
                         </td>
                         <td scope="row">
-                            <span>@( item.Activeness ? "فعال" : "غیر فعال" )</span>
+                            <span>@(item.Activeness ? "فعال" : "غیر فعال")</span>
                         </td>
                         <td scope="row">
-                            <a class="control btn btn-primary btn-sm glyphicon glyphicon-ok" data-toggle="tooltip" data-placement="auto" title="تغییر وضعیت نمایش"  href="javascript:void(0)" onclick="SetActiveness(@item.ID)"></a>
+                            <a class="control btn btn-primary btn-sm glyphicon glyphicon-ok" data-toggle="tooltip" data-placement="auto" title="تغییر وضعیت نمایش" href="javascript:void(0)" onclick="SetActiveness(@item.ID)"></a>
                             <a class="control btn btn-info btn-sm glyphicon glyphicon-list" data-toggle="tooltip" data-placement="auto" title="افراد شرکت کننده در آزمون" href="@Url.Action("Details", "ExamInPerson", new { area = "Dashboard", id = item.ID })"></a>
                             <a class="control btn btn-warning btn-sm glyphicon glyphicon-pencil" data-toggle="tooltip" data-placement="auto" title="ویرایش" href="@Url.Action("Edit", "ExamInPerson", new { area = "Dashboard", id = item.ID })"></a>
                             <a class="control btn btn-danger btn-sm glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="auto" title="حذف" href="javascript:void(0)" onclick="Delete(@item.ID)"></a>

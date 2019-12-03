@@ -683,5 +683,15 @@ namespace ESL.Web.Areas.Dashboard.Controllers
 
             return Json(q, JsonRequestBehavior.AllowGet);
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+
+            base.Dispose(disposing);
+        }
     }
 }

@@ -14,6 +14,9 @@ namespace ESL.Web.Areas.Dashboard.Models.ViewModels
         [Display(Name = "کارگاه")]
         public string Workshop { get; set; }
 
+        [Display(Name = "عنوان")]
+        public string SubWorkshop { get; set; }
+
         [Display(Name = "توضیحات")]
         public string Description { get; set; }
 

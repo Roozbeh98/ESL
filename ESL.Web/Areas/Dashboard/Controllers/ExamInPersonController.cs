@@ -24,7 +24,8 @@ namespace ESL.Web.Areas.Dashboard.Controllers
             var _ExamsInPersonPlans = db.Tbl_ExamInPersonPlan.Where(x => x.EIPP_IsDelete == false).Select(x => new Model_ExamsInPersonPlan
             {
                 ID = x.EIPP_ID,
-                Exam = x.Tbl_SubExamInPerson.SEIP_Title,
+                Exam = x.Tbl_SubExamInPerson.Tbl_ExamInPerson.EIP_Title,
+                SubExam = x.Tbl_SubExamInPerson.SEIP_Title,
                 Description = x.EIPP_Description,
                 Cost = x.EIPP_Cost,
                 Location = x.EIPP_Location,

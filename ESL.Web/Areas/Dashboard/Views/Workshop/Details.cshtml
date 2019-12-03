@@ -66,7 +66,15 @@
                             <span>@( item.Activeness ? "تایید شده" : "تایید نشده" )</span>
                         </td>
                         <td scope="row">
-                            <a class="control btn btn-primary btn-sm glyphicon glyphicon-ok" href="javascript:void(0)" onclick="SetPresence(@item.ID)"></a>
+                            @if (item.Activeness)
+                            {
+                                <a class="control btn btn-danger btn-sm glyphicon glyphicon-user" data-toggle="tooltip" data-placement="auto" title="لغو ثبت نام" href="javascript:void(0)" onclick="UnRegister(@item.ID)"></a>
+                                <a class="control btn btn-primary btn-sm glyphicon glyphicon-ok" data-toggle="tooltip" data-placement="auto" title="تغییر وضعیت حضور" href="javascript:void(0)" onclick="SetPresence(@item.ID)"></a>
+                            }
+                            else
+                            {
+                                <a class="control btn btn-success btn-sm glyphicon glyphicon-user" data-toggle="tooltip" data-placement="auto" title="ثبت نام" href="javascript:void(0)" onclick="Register(@item.ID)"></a>
+                            }
                         </td>
                     </tr>
                 }
@@ -95,29 +103,29 @@
             });
         }
 
-        //function UnRegister(id) {
-        //    $.ajax({
-        //        url: "/Dashboard/UserWorkshop/UnRegister/" + id,
-        //        type: "Get",
-        //        data: {}
-        //    }).done(function (result) {
-        //        $('#myModal').modal('show');
-        //        $('#myModalLabel').html('لغو ثبت نام');
-        //        $('#myModalBody').html(result);
-        //    });
-        //}
+        function UnRegister(id) {
+            $.ajax({
+                url: "/Dashboard/UserWorkshop/UnRegister/" + id,
+                type: "Get",
+                data: {}
+            }).done(function (result) {
+                $('#myModal').modal('show');
+                $('#myModalLabel').html('لغو ثبت نام');
+                $('#myModalBody').html(result);
+            });
+        }
 
-        //function Register(id) {
-        //    $.ajax({
-        //        url: "/Dashboard/UserWorkshop/Register/" + id,
-        //        type: "Get",
-        //        data: {}
-        //    }).done(function (result) {
-        //        $('#myModal').modal('show');
-        //        $('#myModalLabel').html('ثبت نام مجدد');
-        //        $('#myModalBody').html(result);
-        //    });
-        //}
+        function Register(id) {
+            $.ajax({
+                url: "/Dashboard/UserWorkshop/Register/" + id,
+                type: "Get",
+                data: {}
+            }).done(function (result) {
+                $('#myModal').modal('show');
+                $('#myModalLabel').html('ثبت نام');
+                $('#myModalBody').html(result);
+            });
+        }
 
         function SetPresence(id) {
             $.ajax({
